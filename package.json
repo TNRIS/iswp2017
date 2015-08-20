@@ -1,0 +1,39 @@
+{
+  "name": "iswp2017",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server/index.es6",
+  "scripts": {
+    "start": "babel-node server/index.es6",
+    "babel-node": "babel-node --stage 0",
+    "dev-server": "nodemon --exec npm run babel-node -- server/index.es6",
+    "dev-client": "webpack --progress --colors --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tnris/iswp2017.git"
+  },
+  "author": "TNRIS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tnris/iswp2017/issues"
+  },
+  "homepage": "https://github.com/tnris/iswp2017",
+  "dependencies": {
+    "alt": "^0.17.1",
+    "babel-core": "^5.8.22",
+    "hapi": "^9.0.3",
+    "react": "^0.13.3"
+  },
+  "devDependencies": {
+    "babel-loader": "^5.3.2",
+    "css-loader": "^0.16.0",
+    "extract-text-webpack-plugin": "^0.8.2",
+    "node-sass": "^3.2.0",
+    "nodemon": "^1.4.1",
+    "sass-loader": "^2.0.1",
+    "style-loader": "^0.12.3",
+    "webpack": "^1.11.0"
+  }
+}
