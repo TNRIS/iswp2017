@@ -2,11 +2,11 @@
   "name": "iswp2017",
   "version": "0.0.1",
   "description": "",
-  "main": "server/index.es6",
+  "main": "app/index.es6",
   "scripts": {
-    "start": "babel-node server/index.es6",
+    "start": "babel-node app/index.es6",
     "babel-node": "babel-node --stage 0",
-    "dev-server": "nodemon --exec npm run babel-node -- server/index.es6",
+    "dev-server": "nodemon --exec npm run babel-node -- app/index.es6",
     "dev-client": "webpack --progress --colors --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
