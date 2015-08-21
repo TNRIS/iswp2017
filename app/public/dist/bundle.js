@@ -49,7 +49,7 @@
 	__webpack_require__(1);
 
 	var avar = 'james';
-	alert("hi " + avar);
+	console.log("hi " + avar);
 
 /***/ },
 /* 1 */

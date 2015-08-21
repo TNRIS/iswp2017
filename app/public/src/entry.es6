@@ -1,4 +1,4 @@
 require("./sass/main.scss");
 
 let avar = 'james';
-alert(`hi ${avar}`);
+console.log(`hi ${avar}`);

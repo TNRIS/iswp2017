@@ -1,7 +1,7 @@
 # iswp2017
 
-`npm run dev-server`
-`npm run dev-client`
+`npm run dev-server` in one terminal
+`npm run dev-webpack` in another
 
 ## Arch
 
