@@ -1,4 +1,8 @@
 
-body {
-  background: pink;
+.header {
+  @media (min-width: 550px) {
+    margin-top: 8rem;
+  }
+
+  margin-top: 4rem;
 }

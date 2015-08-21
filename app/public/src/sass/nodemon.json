@@ -1,0 +1,8 @@
+{
+  "verbose": true,
+  "ignore": ["public/"],
+  "ext": "swig es6 js",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

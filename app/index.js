@@ -1,8 +1,8 @@
 import Hapi from 'hapi';
 import Inert from 'inert'; //for static directory serving
 import Vision from 'vision'; //for view rendering
-import path from 'path';
 import swig from 'swig';
+import path from 'path';
 
 const server = new Hapi.Server();
 server.register([Inert, Vision], () => {
