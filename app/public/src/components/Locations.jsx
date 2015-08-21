@@ -2,7 +2,7 @@ import React from 'react';
 import LocationStore from '../stores/LocationStore';
 import LocationActions from '../actions/LocationActions';
 
-const Locations = React.createClass({
+export default React.createClass({
   getInitialState() {
     return LocationStore.getState();
   },
@@ -35,12 +35,10 @@ const Locations = React.createClass({
       <ul>
         {this.state.locations.map((location) => {
           return (
-            <li>{location.name}</li>
+            <li key={location.id}>{location.name}</li>
           );
         })}
       </ul>
     );
   }
 });
-
-export default  Locations;

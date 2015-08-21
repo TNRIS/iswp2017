@@ -1,6 +1,7 @@
 {
   "verbose": true,
-  "ignore": ["public/"],
+  "ignore": ["app/public/"],
+  "watch": ["app/"],
   "ext": "swig es6 js",
   "env": {
     "NODE_ENV": "development"
