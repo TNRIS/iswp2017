@@ -26,16 +26,18 @@ export default React.createClass({
         <div>Something is wrong</div>
       );
     }
-    if (!this.state.locations.length) {
+
+    if (!this.state.locations.size) {
       return (
         <div><img src="/spinner.gif" /></div>
       );
     }
+
     return (
       <ul>
         {this.state.locations.map((location) => {
           return (
-            <li key={location.id}>{location.name}</li>
+            <li key={location.get('id')}>{location.get('name')}</li>
           );
         })}
       </ul>

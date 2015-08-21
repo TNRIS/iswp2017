@@ -2,7 +2,6 @@
 import React from 'react';
 import Locations from './components/Locations.jsx';
 import Map from './components/Map.jsx';
-
 import L from 'leaflet';
 
 const App = React.createClass({

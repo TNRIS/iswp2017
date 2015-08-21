@@ -1,3 +1,5 @@
+import Immutable from 'immutable';
+
 const mockData = [
   { id: 0, name: 'Abu Dhabi' },
   { id: 1, name: 'Berlin' },
@@ -16,9 +18,9 @@ const mockData = [
 
 export default {
   fetch: () => {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve/*, reject*/) {
       setTimeout(() => {
-        resolve(mockData);
+        resolve(Immutable.fromJS(mockData));
       }, 250);
     });
   }

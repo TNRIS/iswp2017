@@ -1,10 +1,12 @@
+import Immutable from 'immutable';
+
 import alt from '../alt';
 import LocationActions from '../actions/LocationActions';
 import FavoritesStore from '../stores/FavoritesStore';
 
 class LocationStore {
   constructor() {
-    this.locations = [];
+    this.locations = Immutable.List();
     this.errorMessage = null;
 
     this.bindListeners({
@@ -20,7 +22,7 @@ class LocationStore {
   }
 
   handleFetchLocations() {
-    this.locations = [];
+    this.locations = Immutable.List();
   }
 
   handleLocationsFailed(errorMessage) {
@@ -29,11 +31,11 @@ class LocationStore {
 
   resetAllFavorites() {
     this.locations = this.locations.map((location) => {
-      return {
+      return Immutable.fromJS({
         id: location.id,
         name: location.name,
         has_favorite: false
-      };
+      });
     });
   }
 
@@ -45,9 +47,9 @@ class LocationStore {
     this.resetAllFavorites();
 
     favoritedLocations.forEach((faveLocation) => {
-      for (let i=0; i<this.locations.length; i++) {
-        if (this.locations[i].id === faveLocation.id) {
-          this.locations[i].has_favorite = true;
+      for (let i=0; i<this.locations.size; i++) {
+        if (this.locations[i].get('id') === faveLocation.get('id')) {
+          this.locations[i] = this.locations[i].set('has_favorite', true);
           break;
         }
       }
