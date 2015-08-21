@@ -6,7 +6,7 @@
   </head>
   <body>
 
-    hi {{ someone }}
+    <div id="ReactApp"></div>
     <script type="text/javascript" src="public/bundle.js" charset="utf-8"></script>
   </body>
 </html>
