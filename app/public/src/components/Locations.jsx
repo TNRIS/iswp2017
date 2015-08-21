@@ -29,7 +29,7 @@ export default React.createClass({
 
     if (!this.state.locations.size) {
       return (
-        <div><img src="/spinner.gif" /></div>
+        <div>LOADING...</div>
       );
     }
 
