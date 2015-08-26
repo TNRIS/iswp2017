@@ -14,9 +14,17 @@ server.register([Inert, Vision], () => {
       swig: swig
     },
     relativeTo: __dirname,
-    path: './views',
-    layoutPath: './views/layout'
-    //helpersPath: './views/helpers'
+    path: './views'
+  });
+
+  server.route({
+    method: 'GET',
+    path: '/public/static/{param*}',
+    handler: {
+      directory: {
+        path: path.normalize(__dirname + '/public/static/')
+      }
+    }
   });
 
   server.route({
