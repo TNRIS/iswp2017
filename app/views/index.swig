@@ -1,9 +1,18 @@
 {% extends 'layout/layout.swig' %}
 
+{% block styles %}
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<link rel="stylesheet" type="text/css" href="/public/styles.css">
+{% endblock styles %}
+
+{% block title %}
+<title>2017 Texas State Water Plan</title>
+{% endblock title %}
+
 {% block body %}
 <div class="container">
   <section class="header">
-    <img src="/public/static/img/twdb_logo_color.png" />
+    <img src="/public/static/img/twdb_logo_color.png" class="logo show-large" />
     <h1>Texas State Water Plan 2017</h1>
   </section>
   

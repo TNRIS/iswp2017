@@ -842,11 +842,36 @@ there.
 
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
+/*
+Larger than mobile
+@media (min-width: 400px) {}
+
+Larger than phablet
+@media (min-width: 550px) {}
+
+Larger than tablet
+@media (min-width: 750px) {}
+
+Larger than desktop
+@media (min-width: 1000px) {}
+
+Larger than Desktop HD
+@media (min-width: 1200px) {}
+*/
 .header {
-  margin-top: 4rem; }
+  margin-top: 2rem;
+  border-bottom: 1px solid #e0e0e0; }
   @media (min-width: 550px) {
     .header {
-      margin-top: 8rem; } }
+      margin-top: 2rem; } }
+  .header .logo {
+    width: 200px; }
+  .header > h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem; }
+
+.content {
+  padding-top: 1rem; }
 
 .footer {
   text-align: center;
@@ -855,5 +880,11 @@ there.
 
 #mainMap {
   height: 300px; }
+
+.show-large {
+  display: none; }
+  @media (min-width: 750px) {
+    .show-large {
+      display: block; } }
 
 /*# sourceMappingURL=styles.css.map*/
