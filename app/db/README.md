@@ -1,0 +1,1 @@
+Put a copy of the SQLite `cache.db` in this directory
