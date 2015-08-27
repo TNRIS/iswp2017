@@ -1,36 +1,24 @@
 
+import L from 'leaflet'; //eslint-disable-line
 import React from 'react';
-import Locations from './components/Locations.jsx';
+import {RouteHandler} from 'react-router';
+
 import Map from './components/Map.jsx';
-import L from 'leaflet';
+import f from './utils/ThemeDataFetcher';
 
-const App = React.createClass({
-  getInitialState() {
-    return null;
-  },
+f.fetch({theme: 'demands', year: '2010', type: 'summary'})
+  .then((res) => {
+    console.log(res);
+  });
 
-  componentDidMount() {
-  },
 
-  componentWillUnmount() {
-  },
-
+export default React.createClass({
   render() {
     return (
-      <div className="row">
-        <div className="four columns">
-          <Locations />
-        </div>
-        <div className="eight columns">
-          <Map />
-        </div>
+      <div className="james row">
+        <h1>JAMES</h1>
+        <RouteHandler/>
       </div>
     );
   }
 });
-
-
-React.render(
-  <App />,
-  document.getElementById('reactApp')
-);

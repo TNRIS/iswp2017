@@ -12,7 +12,7 @@ export default React.createClass({
       zoom: 5
     });
 
-    var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    const layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     });
 
@@ -28,5 +28,4 @@ export default React.createClass({
       <div id="mainMap">map div</div>
     );
   }
-})
-
+});

@@ -1,5 +1,7 @@
 
 cache.db
+app/public/dist/*
+!app/public/dist/.gitkeep
 
 # Logs
 logs

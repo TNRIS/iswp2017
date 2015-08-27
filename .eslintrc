@@ -1,0 +1,17 @@
+{
+  "ecmaFeatures": {
+    "modules": true,
+    "jsx": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "strict": 1,
+    "comma-dangle": 0,
+    "brace-style": [2, "stroustrup", { "allowSingleLine": true }] 
+  },
+  "environment": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": "airbnb"
+}

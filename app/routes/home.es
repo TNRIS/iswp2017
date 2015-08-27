@@ -1,10 +1,14 @@
 
-export default [
-  {
+const themes = ['', 'demands', 'population', 'needs', 'supplies', 'strategies'];
+
+const routes = themes.map((theme) => {
+  return {
     method: 'GET',
-    path: '/',
+    path: `/${theme}`,
     handler: (request, reply) => {
-      reply.view('index', {someone: 'james'});
+      reply.view('index');
     }
-  }
-];
+  };
+});
+
+export default routes;
