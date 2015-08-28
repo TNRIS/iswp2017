@@ -1,6 +1,6 @@
 import Hapi from 'hapi';
-import Inert from 'inert'; //for static directory serving
-import Vision from 'vision'; //for view rendering
+import Inert from 'inert'; // for static directory serving
+import Vision from 'vision'; // for view rendering
 import swig from 'swig';
 
 import homeRoutes from './routes/home';
@@ -12,19 +12,18 @@ function addRoutes(server, routes, base = '') {
     throw new Error('Routes must be an array');
   }
 
-  if (base.lastIndexOf('/') === base.length-1) {
-    base = base.slice(0, base.length-1);
+  if (base.lastIndexOf('/') === base.length - 1) {
+    base = base.slice(0, base.length - 1);
   }
 
   routes.forEach((route) => {
     route.path = base + route.path;
-    server.route(route);   
+    server.route(route);
   });
 }
 
-const server = new Hapi.Server();
+const server = new Hapi.Server({debug: {request: ['*']}});
 server.register([Inert, Vision], () => {
-
   server.connection({port: 3333});
 
   server.views({
