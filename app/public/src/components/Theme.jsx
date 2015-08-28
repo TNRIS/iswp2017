@@ -2,15 +2,13 @@ import React from 'react';
 import ThemeDataStore from '../stores/ThemeDataStore';
 import ThemeDataActions from '../actions/ThemeDataActions';
 
-import constants from '../constants';
-
 export default React.createClass({
   getInitialState() {
     return ThemeDataStore.getState();
   },
 
   componentDidMount() {
-    console.log("Route params: ", this.props.params);
+    // console.log("Route params: ", this.props.params);
 
     ThemeDataStore.listen(this.onChange);
     ThemeDataActions.fetchThemeData({
