@@ -1,13 +1,13 @@
 import React from 'react';
 import L from 'leaflet';
 
+import ThemePropTypes from '../mixins/ThemePropTypes';
+
 export default React.createClass({
-  getInitialState() {
-    return null;
-  },
+  mixins: [ThemePropTypes],
 
   componentDidMount() {
-    this.map = L.map('mainMap', {
+    this.map = L.map('main-map', {
       center: [31.2, -99],
       zoom: 5
     });
@@ -19,13 +19,9 @@ export default React.createClass({
     this.map.addLayer(layer);
   },
 
-  componentWillUnmount() {
-
-  },
-
   render() {
     return (
-      <div id="mainMap">map div</div>
+      <div id="main-map">map div</div>
     );
   }
 });
