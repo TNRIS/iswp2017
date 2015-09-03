@@ -1,7 +1,6 @@
 
 import R from 'ramda';
 import xhr from 'xhr';
-import Immutable from 'immutable';
 import constants from '../constants';
 
 export default {
@@ -27,14 +26,14 @@ export default {
           const yearThemeKey = themeKey + year;
           const omitList = constants.DECADES.map((d) => themeKey + d);
 
-          const forYear = body.filter(R.has(yearThemeKey))
+          const dataForYear = body.filter(R.has(yearThemeKey))
             .map((row) => {
               const obj = R.omit(omitList, row);
               obj.Value = row[yearThemeKey];
               return obj;
             });
 
-          resolve(Immutable.fromJS(forYear));
+          resolve(dataForYear);
         }
       });
     });

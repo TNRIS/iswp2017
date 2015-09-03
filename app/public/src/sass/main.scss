@@ -27,11 +27,13 @@ $border-color: #e0e0e0;
 
   .logo {
     width: 200px;
+    float: left;
   }
 
   > h1 {
    font-size: 4rem; 
    margin-bottom: 1rem;
+   padding-top: 6px;
   }
 }
 
@@ -43,6 +45,18 @@ $border-color: #e0e0e0;
   text-align: center;
   border-top: 1px solid $border-color;
   padding-top: 2.5rem;
+}
+
+.chart-container {
+
+}
+
+.map-container {
+
+}
+
+.table-container {
+  margin-top: 2rem;
 }
 
 #main-map {

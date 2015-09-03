@@ -1,11 +1,10 @@
-import Immutable from 'immutable';
 
 import alt from '../alt';
 import ThemeDataActions from '../actions/ThemeDataActions';
 
 class ThemeDataStore {
   constructor() {
-    this.themeData = Immutable.List();
+    this.themeData = [];
     this.errorMessage = null;
 
     this.bindListeners({
@@ -21,7 +20,7 @@ class ThemeDataStore {
 
   handleFetchThemeData() {
     // reset to new empty list during fetch
-    this.themeData = Immutable.List();
+    this.themeData = [];
     this.errorMessage = null;
   }
 

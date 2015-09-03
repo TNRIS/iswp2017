@@ -1,4 +1,5 @@
 import React from 'react';
+import {PureRenderMixin} from 'react/addons';
 import DataGrid from 'react-datagrid';
 
 import ThemeDataStore from '../stores/ThemeDataStore';
@@ -18,10 +19,8 @@ const columns = [
 ];
 
 export default React.createClass({
-  mixins: [ThemePropTypes],
+  mixins: [ThemePropTypes, PureRenderMixin],
 
-  // TODO: I think these 4 methods could be better expressed in a mixin,
-  // or through using the React ES6 class syntax: https://facebook.github.io/react/docs/reusable-components.html
   getInitialState() {
     return ThemeDataStore.getState();
   },
@@ -40,12 +39,10 @@ export default React.createClass({
 
   render() {
     return (
-      <div>
-        <DataGrid dataSource={this.state.themeData.toJS()}
-            columns={columns}
-            idProperty={'EntityId'}
-            withColumnMenu={false} />
-      </div>
+      <DataGrid dataSource={this.state.themeData}
+          columns={columns}
+          idProperty={'EntityId'}
+          withColumnMenu={false} />
     );
   }
 });
