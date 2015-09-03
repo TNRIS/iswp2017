@@ -3,6 +3,8 @@ import Router from 'react-router';
 import routes from './routes';
 
 import L from 'leaflet'; //eslint-disable-line
+L.Icon.Default.imagePath = '/public/static/img/';
+
 
 import './vendor/css/normalize.css';
 import './vendor/css/skeleton.css';

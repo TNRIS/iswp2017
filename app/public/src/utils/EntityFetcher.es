@@ -1,11 +1,12 @@
 
-import R from 'ramda';
 import xhr from 'xhr';
 
 import constants from '../constants';
 
 export default {
-  fetch: ({entityIds = null} = {}) => {
+  // TODO: This should take theme params and the server API
+  // should return the entities according to that theme
+  fetch: () => {
     return new Promise((resolve, reject) => {
       const uri = `//${constants.API_BASE}/entity/`;
 
@@ -17,13 +18,7 @@ export default {
           reject(err);
         }
         else {
-          if (entityIds) {
-            const filtered = R.filter(R.where({EntityId: R.contains(R.__, entityIds)}))(body);
-            resolve(filtered);
-          }
-          else {
-            resolve(body);
-          }
+          resolve(body);
         }
       });
     });

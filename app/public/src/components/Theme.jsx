@@ -2,16 +2,26 @@
 import React from 'react';
 import {State, Link} from 'react-router';
 
+import constants from '../constants';
 import ThemeDataStore from '../stores/ThemeDataStore';
 import ThemeDataActions from '../actions/ThemeDataActions';
 import ThemeChart from './ThemeChart';
 import ThemeMap from './ThemeMap';
 import ThemeTable from './ThemeTable';
-import ThemePropTypes from '../mixins/ThemePropTypes';
 
 export default React.createClass({
   // TODO: More validation on properties
-  mixins: [State, ThemePropTypes],
+  propTypes: {
+    params: React.PropTypes.shape({
+      theme: React.PropTypes.string.isRequired,
+      year: React.PropTypes.string.isRequired,
+      type: React.PropTypes.string.isRequired,
+      typeId: React.PropTypes.string
+    }).isRequired
+  },
+
+  // State mixin is for components that need the active params from react router
+  mixins: [State],
 
   getInitialState() {
     return ThemeDataStore.getState();
@@ -52,10 +62,9 @@ export default React.createClass({
     }
 
     // TODO: REMOVE: temporary view switching by picking random year
-    const years = ['2010', '2030', '2040', '2050', '2060'];
     let yearStr = '';
     do {
-      yearStr = years[Math.floor(Math.random() * years.length)];
+      yearStr = constants.DECADES[Math.floor(Math.random() * constants.DECADES.length)];
     } while (yearStr === params.year)
 
     return (
@@ -65,19 +74,19 @@ export default React.createClass({
         <div className="row">
           <div className="six columns">
             <div className="chart-container">
-              <ThemeChart {...this.props} />
+              <ThemeChart dataRows={this.state.themeData.dataRows} />
             </div>
           </div>
           <div className="six columns">
             <div className="map-container">
-              <ThemeMap {...this.props} />
+              <ThemeMap id="main-map" entities={this.state.themeData.entities} />
             </div>
           </div>
         </div>
         <div className="row">
           <div className="twelve columns">
             <div className="table-container">
-              <ThemeTable {...this.props} />
+              <ThemeTable dataRows={this.state.themeData.dataRows} />
             </div>
           </div>
         </div>

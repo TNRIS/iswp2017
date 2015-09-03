@@ -1,9 +1,7 @@
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import DataGrid from 'react-datagrid';
-
-import ThemeDataStore from '../stores/ThemeDataStore';
-import ThemePropTypes from '../mixins/ThemePropTypes';
+import Spinner from 'react-spinkit';
 
 const columns = [
   {
@@ -19,30 +17,22 @@ const columns = [
 ];
 
 export default React.createClass({
-  mixins: [ThemePropTypes, PureRenderMixin],
-
-  getInitialState() {
-    return ThemeDataStore.getState();
+  propTypes: {
+    dataRows: React.PropTypes.array
   },
 
-  componentDidMount() {
-    ThemeDataStore.listen(this.onChange);
-  },
-
-  componentWillUnmount() {
-    ThemeDataStore.unlisten(this.onChange);
-  },
-
-  onChange(state) {
-    this.setState(state);
-  },
+  mixins: [PureRenderMixin],
 
   render() {
+    if (this.props.dataRows) {
+      return (<DataGrid dataSource={this.props.dataRows}
+        columns={columns}
+        idProperty={'EntityId'}
+        withColumnMenu={false} />
+      );
+    }
     return (
-      <DataGrid dataSource={this.state.themeData}
-          columns={columns}
-          idProperty={'EntityId'}
-          withColumnMenu={false} />
+      <Spinner spinnerName="double-bounce" />
     );
   }
 });
