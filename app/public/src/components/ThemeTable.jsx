@@ -1,20 +1,7 @@
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
-import DataGrid from 'react-datagrid';
+import {Table, Column} from 'fixed-data-table';
 import Spinner from 'react-spinkit';
-
-const columns = [
-  {
-    name: 'EntityName',
-    title: 'Name',
-    flex: 2
-  },
-  {
-    name: 'Value',
-    title: 'Value',
-    flex: 1
-  }
-];
 
 export default React.createClass({
   propTypes: {
@@ -24,11 +11,24 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   render() {
+    // TODO: See https://github.com/facebook/fixed-data-table/blob/master/site/examples/SortExample.js
     if (this.props.dataRows) {
-      return (<DataGrid dataSource={this.props.dataRows}
-        columns={columns}
-        idProperty={'EntityId'}
-        withColumnMenu={false} />
+      return (
+        <Table rowHeight={50}
+          width={980}
+          height={400}
+          rowGetter={(rowIndex) => this.props.dataRows[rowIndex]}
+          rowsCount={this.props.dataRows.length}
+          headerHeight={50}>
+          <Column label="Name"
+            flexGrow={1}
+            width={200}
+            dataKey="EntityName" />
+          <Column label="Value (acre-feet/year)"
+            flexGrow={1}
+            width={200}
+            dataKey="Value" />
+        </Table>
       );
     }
     return (
