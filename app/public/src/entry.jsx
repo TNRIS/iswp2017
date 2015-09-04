@@ -8,7 +8,7 @@ L.Icon.Default.imagePath = '/public/static/img/';
 
 import './vendor/css/normalize.css';
 import './vendor/css/skeleton.css';
-import 'react-datagrid/index.css';
+import 'fixed-data-table/dist/fixed-data-table.css';
 
 import './sass/main.scss';
 
