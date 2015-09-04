@@ -5,9 +5,12 @@ import React from 'react';
 
 import MapStateStore from '../stores/MapStateStore';
 import MapStateActions from '../actions/MapStateActions';
+import entityMapStyles from '../utils/EntityMapStyles';
 
 export default React.createClass({
   propTypes: {
+    id: React.PropTypes.string,
+    theme: React.PropTypes.string,
     entities: React.PropTypes.array
   },
 
@@ -34,7 +37,6 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    console.log("in componentWillReceiveProps");
     const entities = nextProps.entities;
     if (!entities) { return; }
     const entityFeatures = entities.map((entity) => {
@@ -44,7 +46,7 @@ export default React.createClass({
           type: 'Point',
           coordinates: [entity.Longitude, entity.Latitude]
         },
-        properties: R.pick(['EntityId', 'EntityName'], entity)
+        properties: R.pick(['EntityId', 'EntityName', 'Value'], entity)
       };
     });
 
@@ -53,12 +55,14 @@ export default React.createClass({
     }
     this.entitiesLayer = L.geoJson(entityFeatures, {
       pointToLayer: (feat, latlng) => {
-        return L.circleMarker(latlng, {
-          radius: 6
-        });
+        return L.circleMarker(latlng, entityMapStyles(this.props.theme));
+      },
+      onEachFeature: (feat, layer) => {
+        layer.bindPopup(feat.properties.EntityName + ': ' + feat.properties.Value);
       }
     });
     this.map.addLayer(this.entitiesLayer);
+    this.map.fitBounds(this.entitiesLayer.getBounds());
   },
 
   shouldComponentUpdate() {
