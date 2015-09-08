@@ -24,6 +24,7 @@
   "dependencies": {
     "alt": "^0.17.1",
     "babel-core": "^5.8.22",
+    "chartist": "^0.9.4",
     "faucet": "0.0.1",
     "fixed-data-table": "^0.4.6",
     "hapi": "^9.0.3",
@@ -34,6 +35,7 @@
     "node-config": "0.0.2",
     "ramda": "^0.17.1",
     "react": "^0.13.3",
+    "react-chartist": "^0.8.0",
     "react-router": "^0.13.3",
     "react-spinkit": "^1.1.4",
     "sqlite3": "^3.0.10",
