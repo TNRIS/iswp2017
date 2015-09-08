@@ -11,15 +11,7 @@ export default {
       EntityFetcher.fetch()
     ]).then(([dataRows, allEntities]) => {
       const entityIds = R.pluck('EntityId', dataRows);
-
       const findByEntityId = (fe) => R.find(R.whereEq(R.pluck(['EntityId'], fe)));
-
-      console.time('process');
-      // TODO: FIX: THIS IS CRAZY SLOW!!!! -- R.where appears to be the issue
-      // const containedIn = R.flip(R.contains);
-      // const valuedEntities = allEntities
-      //   .filter(R.where({EntityId: containedIn(entityIds)}))
-      //   .map((fe) => R.merge(R.pick(['Value'], findByEntityId(fe)(dataRows)))(fe));
 
       const valuedEntities = allEntities
         .filter((e) => {
