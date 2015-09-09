@@ -30,7 +30,8 @@ export default React.createClass({
       };
 
       const chartOptions = {
-        height: '300px'
+        height: '300px',
+        axisX: {position: 'start'}
       };
 
       return (
