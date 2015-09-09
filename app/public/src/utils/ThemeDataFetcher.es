@@ -11,14 +11,16 @@ export default {
       EntityFetcher.fetch()
     ]).then(([dataRows, allEntities]) => {
       const entityIds = R.pluck('EntityId', dataRows);
-      const findByEntityId = (fe) => R.find(R.whereEq(R.pluck(['EntityId'], fe)));
+      const sumValues = R.compose(R.sum, R.pluck('Value'));
+      const hasSameId = R.compose(R.propEq('EntityId'), R.prop('EntityId'));
 
       const valuedEntities = allEntities
         .filter((e) => {
           return entityIds.indexOf(e.EntityId) !== -1;
         })
         .map((e) => {
-          return R.merge(R.pick(['Value'], findByEntityId(e)(dataRows)))(e);
+          const totalValue = sumValues(dataRows.filter(hasSameId(e)));
+          return R.assoc('Value', totalValue, e);
         });
 
       return {
