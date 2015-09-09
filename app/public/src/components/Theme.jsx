@@ -62,19 +62,25 @@ export default React.createClass({
     }
 
     // TODO: REMOVE: temporary view switching by picking random year
-    let yearStr = '';
-    do {
-      yearStr = constants.DECADES[Math.floor(Math.random() * constants.DECADES.length)];
-    } while (yearStr === params.year)
+    const sample = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const sampleNotVal = (arr, val) => {
+      let sampleVal = '';
+      do {
+        sampleVal = sample(arr);
+      } while (sampleVal === val)
+      return sampleVal;
+    };
+    const randYear = sampleNotVal(constants.DECADES, params.year);
+    const randRegion = sampleNotVal(constants.REGIONS, params.typeId);
 
     return (
       <div className={`theme-container theme-${params.theme}`}>
         <h3>{title.toUpperCase()}</h3>
-        <Link to="theme" params={{theme: 'demands', year: yearStr, 'type': 'region', typeId: 'g'}}>change</Link>
+        <Link to="theme" params={{theme: 'demands', year: randYear, 'type': 'region', typeId: randRegion}}>change</Link>
         <div className="row">
           <div className="six columns">
             <div className="chart-container">
-              <ThemeChart dataRows={this.state.themeData.dataRows} />
+              <ThemeChart theme={params.theme} dataRows={this.state.themeData.dataRows} />
             </div>
           </div>
           <div className="six columns">

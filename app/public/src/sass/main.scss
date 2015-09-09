@@ -48,7 +48,9 @@ $border-color: #e0e0e0;
 }
 
 .chart-container {
-
+  .spinner {
+    margin: 2rem auto;
+  }
 }
 
 .map-container {
@@ -71,5 +73,11 @@ $border-color: #e0e0e0;
   display: none;
   @media (min-width: 750px) {
     display: block;
+  }
+}
+
+.chart-demands {
+  .ct-bar {
+    stroke: #ff00ff;
   }
 }

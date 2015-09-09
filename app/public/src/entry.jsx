@@ -9,7 +9,7 @@ L.Icon.Default.imagePath = '/public/static/img/';
 import './vendor/css/normalize.css';
 import './vendor/css/skeleton.css';
 import 'fixed-data-table/dist/fixed-data-table.css';
-import 'react-chartist/node_modules/chartist/dist/chartist.min.css';
+import 'chartist/dist/chartist.min.css';
 
 import './sass/main.scss';
 
