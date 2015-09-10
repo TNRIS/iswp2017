@@ -76,13 +76,16 @@ export default React.createClass({
           // TODO: SMIL is being deprecated, so this needs to be done in CSS ?
           data.element.animate({
             y2: {
-              from: data.y1,
+              from: this.prevChartData ? this.prevChartData.y2 : data.y1,
               to: data.y2,
               begin: 80,
               dur: 800,
               easing: Chartist.Svg.Easing.easeOutExpo
             }
           });
+
+          // save previous chartData for animation purposes
+          this.prevChartData = data;
         }
       });
     }
