@@ -4,14 +4,17 @@ import L from 'leaflet';
 import React from 'react';
 
 import MapStateStore from '../stores/MapStateStore';
-import MapStateActions from '../actions/MapStateActions';
+// import MapStateActions from '../actions/MapStateActions';
 import entityMapStyles from '../utils/EntityMapStyles';
 
 export default React.createClass({
   propTypes: {
     id: React.PropTypes.string,
     theme: React.PropTypes.string,
-    entities: React.PropTypes.array
+    type: React.PropTypes.string,
+    typeId: React.PropTypes.string,
+    entities: React.PropTypes.array,
+    boundary: React.PropTypes.object
   },
 
   getInitialState() {
@@ -24,20 +27,20 @@ export default React.createClass({
       zoom: this.state.zoom || 5
     });
 
-    const layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    const layer = L.tileLayer('//stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
+      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
     });
 
     this.map.addLayer(layer);
 
-    this.map.on('zoomend', this.setMapState);
-    this.map.on('moveend', this.setMapState);
+    // this.map.on('zoomend', this.setMapState);
+    // this.map.on('moveend', this.setMapState);
 
     MapStateStore.listen(this.onChange);
   },
 
-  componentWillReceiveProps(nextProps) {
-    const entities = nextProps.entities;
+  componentDidUpdate() {
+    const entities = this.props.entities;
     if (!entities) { return; }
     const entityFeatures = entities.map((entity) => {
       return {
@@ -61,17 +64,29 @@ export default React.createClass({
         layer.bindPopup(feat.properties.EntityName + ': ' + feat.properties.Value);
       }
     });
+
+    if (this.boundaryLayer && this.map.hasLayer(this.boundaryLayer)) {
+      this.map.removeLayer(this.boundaryLayer);
+    }
+
+    if (this.props.boundary) {
+      this.boundaryLayer = L.geoJson(this.props.boundary, {
+        style: {
+          fillOpacity: 0,
+          color: '#000000',
+          weight: 2
+        }
+      });
+      this.map.addLayer(this.boundaryLayer);
+    }
+
     this.map.addLayer(this.entitiesLayer);
     this.map.fitBounds(this.entitiesLayer.getBounds());
   },
 
-  shouldComponentUpdate() {
-    return false;
-  },
-
   componentWillUnmount() {
-    this.map.off('zoomend', this.setMapState);
-    this.map.off('moveend', this.setMapState);
+    // this.map.off('zoomend', this.setMapState);
+    // this.map.off('moveend', this.setMapState);
 
     MapStateStore.unlisten(this.onChange);
   },
@@ -80,15 +95,14 @@ export default React.createClass({
     this.setState(state);
   },
 
-  setMapState() {
-    MapStateActions.updateMapState({
-      center: [this.map.getCenter().lat, this.map.getCenter().lng],
-      zoom: this.map.getZoom()
-    });
-  },
+  // setMapState() {
+  //   MapStateActions.updateMapState({
+  //     center: [this.map.getCenter().lat, this.map.getCenter().lng],
+  //     zoom: this.map.getZoom()
+  //   });
+  // },
 
   render() {
-    console.log("in map render");
     return (
       <div id={this.props.id}></div>
     );

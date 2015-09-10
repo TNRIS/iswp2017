@@ -39,6 +39,7 @@
     "react-spinkit": "^1.1.4",
     "sqlite3": "^3.0.10",
     "swig": "^1.4.2",
+    "topojson": "^1.6.19",
     "underscore": "^1.8.3",
     "vision": "^3.0.0",
     "xhr": "^2.0.4"

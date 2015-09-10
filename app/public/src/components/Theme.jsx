@@ -85,7 +85,12 @@ export default React.createClass({
           </div>
           <div className="six columns">
             <div className="map-container">
-              <ThemeMap id="main-map" theme={params.theme} entities={this.state.themeData.entities} />
+              <ThemeMap id="main-map"
+                theme={params.theme}
+                type={params.type}
+                typeId={params.typeId}
+                entities={this.state.themeData.entities}
+                boundary={this.state.themeData.boundary} />
             </div>
           </div>
         </div>
