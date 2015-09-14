@@ -12,19 +12,26 @@ function addRoutes(server, routes, base = '') {
     throw new Error('Routes must be an array');
   }
 
-  if (base.lastIndexOf('/') === base.length - 1) {
-    base = base.slice(0, base.length - 1);
+  let basePath = base;
+  if (basePath.lastIndexOf('/') === basePath.length - 1) {
+    basePath = basePath.slice(0, basePath.length - 1);
   }
 
   routes.forEach((route) => {
-    route.path = base + route.path;
+    route.path = basePath + route.path;
     server.route(route);
   });
 }
 
-const server = new Hapi.Server({debug: {request: ['*']}});
+const server = new Hapi.Server({
+  debug: {request: ['*']}, // TODO: Put in config
+});
+
 server.register([Inert, Vision], () => {
-  server.connection({port: 3333});
+  server.connection({
+    port: 3333, // TODO: Put in config
+    router: {stripTrailingSlash: true}
+  });
 
   server.views({
     engines: {
@@ -35,10 +42,14 @@ server.register([Inert, Vision], () => {
   });
 
   addRoutes(server, homeRoutes);
-  addRoutes(server, apiRoutes, '/api');
+  addRoutes(server, apiRoutes, '/api/v1');
   addRoutes(server, publicRoutes, '/public');
 
-  server.start(() => {
-    console.log(`Server running at ${server.info.uri}`);
-  });
+  if (require.main === module) {
+    server.start(() => {
+      console.log(`Server running at ${server.info.uri}`);
+    });
+  }
 });
+
+export default server;

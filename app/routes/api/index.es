@@ -1,3 +1,4 @@
-import db from '../../db';
+import R from 'ramda';
+import demands from './demands';
 
-export default [];
+export default R.reduce(R.concat, [], [demands]);
