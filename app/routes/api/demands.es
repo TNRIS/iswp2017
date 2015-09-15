@@ -13,7 +13,6 @@ const commonSelectArgs = [
   'EntityId as EntityId', 'EntityName', 'WugType', 'WugRegion', 'WugCounty'
 ];
 
-// TODO + ' as Value_YEAR'
 const defaultValueArgs = R.map(renameValCol)(constants.YEARS);
 
 const makeSelectArgs = (params) => {
