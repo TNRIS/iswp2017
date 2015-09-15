@@ -6,9 +6,20 @@ import db from '../../db';
 import constants from '../../lib/constants';
 
 const theme = 'demands';
-const valKeys = R.map(R.concat(constants.VALUE_PREFIXES[theme]))(constants.YEARS);
 
-// TODO: separate handlers from routes for testing
+const renameValCol = (year) => `${constants.VALUE_PREFIXES[theme]}${year} as Value_${year}`;
+
+const commonSelectArgs = [
+  'EntityId as EntityId', 'EntityName', 'WugType', 'WugRegion', 'WugCounty'
+];
+
+// TODO + ' as Value_YEAR'
+const defaultValueArgs = R.map(renameValCol)(constants.YEARS);
+
+const makeSelectArgs = (params) => {
+  return params.year ? R.append(renameValCol(params.year), commonSelectArgs)
+    : R.concat(commonSelectArgs, defaultValueArgs);
+};
 
 const routes = [
   {
@@ -22,17 +33,10 @@ const routes = [
       }
     },
     handler: (request, reply) => {
-      db.select('EntityId as EntityId', 'EntityName', 'WugType', 'WugRegion',
-        'WugCounty', 'D2020', 'D2030', 'D2040', 'D2050', 'D2060')
+      const selectArgs = makeSelectArgs(request.params);
+      db.select.apply(db, selectArgs)
         .from('vwMapWugDemand')
         .then((results) => {
-          if (request.params.year) {
-            const rowsWithValue = results.map((row) => {
-              const rowWithValue = R.assoc('Value', R.prop('D2020', row))(row);
-              return R.omit(valKeys, rowWithValue);
-            });
-            return reply(rowsWithValue);
-          }
           reply(results);
         });
     }
