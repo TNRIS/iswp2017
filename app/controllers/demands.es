@@ -17,6 +17,26 @@ class DemandsController extends BaseController {
       });
   }
 
+  getDemandsForRegion(request, reply) {
+    const selectArgs = this.makeSelectArgs(request.params);
+    db.select.apply(db, selectArgs)
+      .from('vwMapWugDemand')
+      .where('WugRegion', request.params.regionLetter.toUpperCase())
+      .then((results) => {
+        reply(results);
+      });
+  }
+
+  getDemandsForCounty(request, reply) {
+    const selectArgs = this.makeSelectArgs(request.params);
+    db.select.apply(db, selectArgs)
+      .from('vwMapWugDemand')
+      .where('WugCounty', request.params.county.toUpperCase())
+      .then((results) => {
+        reply(results);
+      });
+  }
+
 }
 
 const controller = new DemandsController();
