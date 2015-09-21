@@ -1,26 +1,23 @@
 
-import db from 'db';
-
 import BaseController from 'controllers/base';
 
 class DemandsController extends BaseController {
   constructor() {
-    super({theme: 'demands'});
+    super({
+      table: 'vwMapWugDemand',
+      theme: 'demands'
+    });
   }
 
   getDemands(request, reply) {
-    const selectArgs = this.makeSelectArgs(request.params);
-    db.select.apply(db, selectArgs)
-      .from('vwMapWugDemand')
+    this.selectData(request.params)
       .then((results) => {
         reply(results);
       });
   }
 
   getDemandsForRegion(request, reply) {
-    const selectArgs = this.makeSelectArgs(request.params);
-    db.select.apply(db, selectArgs)
-      .from('vwMapWugDemand')
+    this.selectData(request.params)
       .where('WugRegion', request.params.regionLetter.toUpperCase())
       .then((results) => {
         reply(results);
@@ -28,10 +25,24 @@ class DemandsController extends BaseController {
   }
 
   getDemandsForCounty(request, reply) {
-    const selectArgs = this.makeSelectArgs(request.params);
-    db.select.apply(db, selectArgs)
-      .from('vwMapWugDemand')
+    this.selectData(request.params)
       .where('WugCounty', request.params.county.toUpperCase())
+      .then((results) => {
+        reply(results);
+      });
+  }
+
+  getDemandsForType(request, reply) {
+    this.selectData(request.params)
+      .where('WugType', request.params.type.toUpperCase())
+      .then((results) => {
+        reply(results);
+      });
+  }
+
+  getDemandsForEntity(request, reply) {
+    this.selectData(request.params)
+      .where('EntityId', request.params.entityId)
       .then((results) => {
         reply(results);
       });

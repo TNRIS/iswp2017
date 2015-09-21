@@ -2,6 +2,7 @@
 import R from 'ramda';
 import Hoek from 'hoek';
 
+import db from 'db';
 import constants from 'lib/constants';
 
 const commonSelectArgs = [
@@ -13,17 +14,22 @@ const renameValueColumn = (theme) => {
 };
 
 class BaseController {
-  constructor(options) {
-    Hoek.assert(options.theme, 'options.theme must be specified');
+  constructor({table, theme}) {
+    Hoek.assert(theme, 'options.theme must be specified');
+    Hoek.assert(table, 'options.table must be specified');
 
-    this.theme = options.theme;
+    this.theme = theme;
+    this.table = table;
   }
 
-  makeSelectArgs(params) {
+  selectData(params) {
     const defaultValueArgs = R.map(renameValueColumn(this.theme))(constants.YEARS);
 
-    return params.year ? R.append(renameValueColumn(this.theme)(params.year), commonSelectArgs)
+    const selectArgs = params.year ? R.append(renameValueColumn(this.theme)(params.year), commonSelectArgs)
       : R.concat(commonSelectArgs, defaultValueArgs);
+
+    return db.select.apply(db, selectArgs)
+      .from(this.table);
   }
 }
 
