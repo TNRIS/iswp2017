@@ -4,6 +4,8 @@ import Joi from 'joi';
 import constants from 'lib/constants';
 import demandsController from 'controllers/demands';
 
+const bind = (fnName, ctrl) => ctrl[fnName].bind(ctrl);
+
 export default [
   {
     method: 'GET',
@@ -15,6 +17,6 @@ export default [
         }
       }
     },
-    handler: demandsController.getDemands
+    handler: bind('getDemands', demandsController)
   }
 ];

@@ -1,32 +1,15 @@
 
-import R from 'ramda';
-
 import db from 'db';
-import constants from 'lib/constants';
 
-const theme = 'demands';
+import BaseController from 'controllers/base';
 
-const renameValCol = (year) => `${constants.VALUE_PREFIXES[theme]}${year} as Value_${year}`;
-
-const commonSelectArgs = [
-  'EntityId as EntityId', 'EntityName', 'WugType', 'WugRegion', 'WugCounty'
-];
-
-const defaultValueArgs = R.map(renameValCol)(constants.YEARS);
-
-const makeSelectArgs = (params) => {
-  return params.year ? R.append(renameValCol(params.year), commonSelectArgs)
-    : R.concat(commonSelectArgs, defaultValueArgs);
-};
-
-
-class DemandsController {
+class DemandsController extends BaseController {
   constructor() {
-
+    super({theme: 'demands'});
   }
 
   getDemands(request, reply) {
-    const selectArgs = makeSelectArgs(request.params);
+    const selectArgs = this.makeSelectArgs(request.params);
     db.select.apply(db, selectArgs)
       .from('vwMapWugDemand')
       .then((results) => {
