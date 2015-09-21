@@ -4,9 +4,9 @@
   "description": "",
   "main": "app/index.es",
   "scripts": {
-    "start": "babel-node app/index.es",
+    "start": "NODE_PATH=./app babel-node app/index.es",
     "webpack": "webpack -p --config webpack.config.js",
-    "dev-server": "nodemon --exec babel-node -- app/index.es",
+    "dev-server": "NODE_PATH=./app nodemon --exec babel-node -- app/index.es",
     "dev-webpack": "webpack -d --progress --colors --watch --config webpack.config.js",
     "test": "lab -T app/test/transform.js -S app/test",
     "dev-test": "nodemon --exec npm test"

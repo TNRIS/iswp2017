@@ -3,9 +3,9 @@ import Inert from 'inert'; // for static directory serving
 import Vision from 'vision'; // for view rendering
 import swig from 'swig';
 
-import homeRoutes from './routes/home';
-import publicRoutes from './routes/public';
-import apiRoutes from './routes/api';
+import homeRoutes from 'routes/home';
+import publicRoutes from 'routes/public';
+import apiRoutes from 'routes/api';
 
 function addRoutes(server, routes, base = '') {
   if (!Array.isArray(routes)) {
