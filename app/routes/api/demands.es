@@ -3,7 +3,11 @@ import Joi from 'joi';
 
 import constants from 'lib/constants';
 import utils from 'lib/utils';
-import demandsController from 'controllers/demands';
+import PlanningDataController from 'controllers/planningData';
+
+const demandsController = new PlanningDataController(
+  {theme: 'demands', table: 'vwMapWugDemand'}
+);
 
 const routes = [
   {
@@ -11,7 +15,7 @@ const routes = [
     params: {
       year: Joi.string().only(constants.YEARS)
     },
-    handler: 'getDemands'
+    handler: 'getAll'
   },
   {
     path: '/demands/{year}/region/{regionLetter}',
@@ -19,7 +23,7 @@ const routes = [
       year: Joi.string().only(constants.YEARS).required(),
       regionLetter: Joi.string().only(constants.REGIONS).insensitive().required()
     },
-    handler: 'getDemandsForRegion'
+    handler: 'getForRegion'
   },
   {
     path: '/demands/{year}/county/{county}',
@@ -27,7 +31,7 @@ const routes = [
       year: Joi.string().only(constants.YEARS).required(),
       county: Joi.string().required() // TODO: Validate
     },
-    handler: 'getDemandsForCounty'
+    handler: 'getForCounty'
   },
   {
     path: '/demands/{year}/type/{type}',
@@ -35,15 +39,15 @@ const routes = [
       year: Joi.string().only(constants.YEARS).required(),
       type: Joi.string().required() // TODO: Validate
     },
-    handler: 'getDemandsForType'
+    handler: 'getForType'
   },
   {
     path: '/demands/{year}/entity/{entityId}',
     params: {
       year: Joi.string().only(constants.YEARS).required(),
-      entityId: Joi.number().integer().required()
+      entityId: Joi.number().integer().required() // TODO: Validate
     },
-    handler: 'getDemandsForEntity'
+    handler: 'getForEntity'
   }
 ];
 
