@@ -1,6 +1,6 @@
 # iswp2017
 
-** Currently Under Development **
+**Currently Under Development**
 
 Web application for the 2017 Texas State Water Plan.
 
