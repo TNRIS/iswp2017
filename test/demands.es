@@ -1,7 +1,7 @@
 import Code from 'code';
 import Lab from 'lab';
 
-import server from '../index';
+import server from 'index.es';
 
 const lab = Lab.script();
 const years = ['2020', '2030', '2040', '2050', '2060', '2070'];

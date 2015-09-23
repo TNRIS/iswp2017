@@ -8,7 +8,7 @@
     "webpack": "./node_modules/webpack/bin/webpack.js -p --config webpack.config.js",
     "dev-server": "NODE_PATH=./app nodemon --exec babel-node -- app/index.es",
     "dev-webpack": "./node_modules/webpack/bin/webpack.js -d --progress --colors --watch --config webpack.config.js",
-    "test": "NODE_PATH=./app lab -T app/test/transform.js -S app/test",
+    "test": "NODE_PATH=./app lab -T test/transform.js -S test/",
     "dev-test": "nodemon --exec npm test"
   },
   "engines" : {
