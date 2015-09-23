@@ -2,6 +2,10 @@
 
 ** Currently Under Development **
 
+Install Node >= 0.12.x
+
+`npm install -g babel`
+
 `npm run dev-server` in one terminal
 `npm run dev-webpack` in another
 
