@@ -2,29 +2,22 @@
 
 ** Currently Under Development **
 
-Install Node >= 0.12.x
+Web application for the 2017 Texas State Water Plan.
 
-`npm install -g babel`
+## Developing
 
-`npm run dev-server` in one terminal
-`npm run dev-webpack` in another
+### Prerequesites:
 
-## Arch
+Install node >= 0.12.0 and npm >= 3.3.3
 
-es6 with babel `npm install -g babel`
+Install babel: `npm install -g babel`
 
-### Server
+Download a copy of the water plan data sqlite3 database and place it at `/app/db/cache.db`.
 
-HapiJS app
+### Running Development Server
 
-Mostly an API
+`npm run dev-webpack` in one terminal to continuously build client-side scripts and css
 
-Isomorphic rendering with iso, as shown in https://github.com/patrickkim/iso-alt
+`npm run dev-server` in another terminal to run the development web server
 
-### Client
-
-React app built on Alt
-
-Webpack
-
-Try out https://github.com/elementalui/elemental or http://reapp.io/
+`npm test` to run the test scripts
