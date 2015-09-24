@@ -1,4 +1,3 @@
-
 import R from 'ramda';
 import Hoek from 'hoek';
 
@@ -50,33 +49,39 @@ class ThemeDataController {
   }
 
   getForRegion(request, reply) {
+    Hoek.assert(request.params.year, 'request.params.year is required');
+    Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
+
     this.selectData(request.params)
       .where('WugRegion', request.params.regionLetter.toUpperCase())
       .then(reply);
   }
 
   getForCounty(request, reply) {
+    Hoek.assert(request.params.year, 'request.params.year is required');
+    Hoek.assert(request.params.county, 'request.params.county is required');
+
     this.selectData(request.params)
       .where('WugCounty', request.params.county.toUpperCase())
-      .then((results) => {
-        reply(results);
-      });
+      .then(reply);
   }
 
   getForType(request, reply) {
+    Hoek.assert(request.params.year, 'request.params.year is required');
+    Hoek.assert(request.params.type, 'request.params.type is required');
+
     this.selectData(request.params)
       .where('WugType', request.params.type.toUpperCase())
-      .then((results) => {
-        reply(results);
-      });
+      .then(reply);
   }
 
   getForEntity(request, reply) {
+    Hoek.assert(request.params.year, 'request.params.year is required');
+    Hoek.assert(request.params.entityId, 'request.params.entityId is required');
+
     this.selectData(request.params)
       .where('EntityId', request.params.entityId)
-      .then((results) => {
-        reply(results);
-      });
+      .then(reply);
   }
 }
 
