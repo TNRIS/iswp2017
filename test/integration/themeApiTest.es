@@ -13,6 +13,12 @@ function testDataResult(res) {
   Code.expect(res.result.length).to.be.greaterThan(0);
 }
 
+function testDataShape(obj, year) {
+  Code.expect(obj).to.include(['EntityId', 'EntityName', 'WugType',
+    'WugRegion', 'WugCounty', `Value_${year}`
+  ]);
+}
+
 themes.forEach((theme) => {
   lab.test(`${theme} - all`, (done) => {
     server.inject(`/api/v1/${theme}`, (res) => {
@@ -42,14 +48,48 @@ themes.forEach((theme) => {
       server.inject(`/api/v1/${theme}/${year}`, (res) => {
         testDataResult(res);
         const first = res.result[0];
-        Code.expect(first).to.include(['EntityId', 'EntityName', 'WugType',
-          'WugRegion', 'WugCounty', `Value_${year}`
-        ]);
+        testDataShape(first, year);
         done();
       });
     });
 
     // TODO: getForRegion, getForCounty, getForType, getForEntity
+    lab.test(`${theme} - region for ${year}`, (done) => {
+      server.inject(`/api/v1/${theme}/${year}/region/A`, (res) => {
+        testDataResult(res);
+        const first = res.result[0];
+        testDataShape(first, year);
+        done();
+      });
+    });
+
+
+    lab.test(`${theme} - county for ${year}`, (done) => {
+      server.inject(`/api/v1/${theme}/${year}/county/Travis`, (res) => {
+        testDataResult(res);
+        const first = res.result[0];
+        testDataShape(first, year);
+        done();
+      });
+    });
+
+    lab.test(`${theme} - wugType for ${year}`, (done) => {
+      server.inject(`/api/v1/${theme}/${year}/type/Municipal`, (res) => {
+        testDataResult(res);
+        const first = res.result[0];
+        testDataShape(first, year);
+        done();
+      });
+    });
+
+    lab.test(`${theme} - entity for ${year}`, (done) => {
+      server.inject(`/api/v1/${theme}/${year}/entity/123`, (res) => {
+        testDataResult(res);
+        const first = res.result[0];
+        testDataShape(first, year);
+        done();
+      });
+    });
   });
 });
 
