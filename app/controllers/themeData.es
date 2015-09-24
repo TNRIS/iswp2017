@@ -13,7 +13,7 @@ const renameValueColumn = (theme) => {
   return (year) => `${constants.VALUE_PREFIXES[theme]}${year} as Value_${year}`;
 };
 
-class PlanningDataController {
+class ThemeDataController {
   constructor({table, theme}) {
     Hoek.assert(theme, 'options.theme must be specified');
     Hoek.assert(table, 'options.table must be specified');
@@ -68,4 +68,4 @@ class PlanningDataController {
   }
 }
 
-export default PlanningDataController;
+export default ThemeDataController;

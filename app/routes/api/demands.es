@@ -1,8 +1,8 @@
 
 import utils from 'lib/utils';
-import PlanningDataController from 'controllers/planningData';
+import ThemeDataController from 'controllers/themeData';
 
-const demandsController = new PlanningDataController({
+const demandsController = new ThemeDataController({
   theme: 'demands',
   table: 'vwMapWugDemand'
 });
