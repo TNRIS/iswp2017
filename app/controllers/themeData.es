@@ -40,7 +40,7 @@ class ThemeDataController {
     const selectArgs = params.year ? R.append(renameValueColumn(this.theme)(params.year), commonSelectArgs)
       : R.concat(commonSelectArgs, defaultValueArgs);
 
-    return db.select.apply(db, selectArgs)
+    return db.select(selectArgs)
       .from(this.dataTable);
   }
 
