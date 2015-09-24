@@ -12,7 +12,8 @@
     "eol-last": 0,
     "no-undef": 2,
     "no-console": 0,
-    "quotes": 0
+    "quotes": 0,
+    "spaced-comment": 0
   },
   "environment": {
     "browser": true,

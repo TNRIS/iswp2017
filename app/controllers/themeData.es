@@ -14,12 +14,24 @@ const renameValueColumn = (theme) => {
 };
 
 class ThemeDataController {
-  constructor({table, theme}) {
+  constructor({theme, dataTable, summaryTable}) {
     Hoek.assert(theme, 'options.theme must be specified');
-    Hoek.assert(table, 'options.table must be specified');
+    Hoek.assert(dataTable, 'options.dataTable must be specified');
+    Hoek.assert(summaryTable, 'options.summaryTable must be specified');
 
     this.theme = theme;
-    this.table = table;
+    this.dataTable = dataTable;
+    this.summaryTable = summaryTable;
+  }
+
+  getSummary(request, reply) {
+    db.select('REGION as WugRegion', 'MUNICIPAL', 'IRRIGATION',
+      'MANUFACTURING', 'MINING', 'STEAM-ELECTRIC as STEAMELECTRIC', 'LIVESTOCK',
+      'TOTAL')
+      .from(this.summaryTable)
+      .where('DECADE', request.params.year)
+      .orderBy('WugRegion')
+      .then(reply);
   }
 
   selectData(params) {
@@ -29,7 +41,7 @@ class ThemeDataController {
       : R.concat(commonSelectArgs, defaultValueArgs);
 
     return db.select.apply(db, selectArgs)
-      .from(this.table);
+      .from(this.dataTable);
   }
 
   getAll(request, reply) {

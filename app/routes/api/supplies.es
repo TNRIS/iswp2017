@@ -7,7 +7,8 @@ import ThemeDataController from 'controllers/themeData';
 
 const supplies = new ThemeDataController({
   theme: 'supplies',
-  table: 'vwMapExistingWugSupply'
+  dataTable: 'vwMapExistingWugSupply',
+  summaryTable: 'vwMapWugExistingSupplyA1'
 });
 
 export default utils.makeCommonDataRoutes(supplies);

@@ -5,7 +5,7 @@ import server from 'index.es';
 
 const lab = Lab.script();
 const years = ['2020', '2030', '2040', '2050', '2060', '2070'];
-const themes = ['needs', 'demands', 'supplies', 'strategies'];
+const themes = ['needs', 'demands', 'supplies', 'strategies']; //TODO: Population
 
 function testDataResult(res) {
   Code.expect(res.statusCode).to.equal(200);
@@ -25,18 +25,31 @@ themes.forEach((theme) => {
       done();
     });
   });
-});
 
-years.forEach((year) => {
-  lab.test(`demands - all for ${year}`, (done) => {
-    server.inject(`/api/v1/demands/${year}`, (res) => {
-      testDataResult(res);
-      const first = res.result[0];
-      Code.expect(first).to.include(['EntityId', 'EntityName', 'WugType',
-        'WugRegion', 'WugCounty', `Value_${year}`
-      ]);
-      done();
+  years.forEach((year) => {
+    lab.test(`${theme} - regional summary for ${year}`, (done) => {
+      server.inject(`/api/v1/${theme}/${year}/summary/region`, (res) => {
+        testDataResult(res);
+        const first = res.result[0];
+        Code.expect(first).to.include(['WugRegion', 'MUNICIPAL', 'IRRIGATION',
+          'MANUFACTURING', 'MINING', 'STEAMELECTRIC', 'LIVESTOCK', 'TOTAL'
+        ]);
+        done();
+      });
     });
+
+    lab.test(`${theme} - all for ${year}`, (done) => {
+      server.inject(`/api/v1/${theme}/${year}`, (res) => {
+        testDataResult(res);
+        const first = res.result[0];
+        Code.expect(first).to.include(['EntityId', 'EntityName', 'WugType',
+          'WugRegion', 'WugCounty', `Value_${year}`
+        ]);
+        done();
+      });
+    });
+
+    // TODO: getForRegion, getForCounty, getForType, getForEntity
   });
 });
 

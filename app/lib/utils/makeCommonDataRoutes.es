@@ -7,6 +7,14 @@ function makeCommonDataRoutes(controller) {
   const theme = controller.theme;
   const routes = [
     {
+      path: `/${theme}/{year}/summary/region`,
+      params: {
+        year: Joi.string().only(constants.YEARS).required()
+      },
+      handler: 'getSummary'
+    },
+    //TODO: summary/county
+    {
       path: `/${theme}/{year?}`,
       params: {
         year: Joi.string().only(constants.YEARS)
@@ -45,7 +53,7 @@ function makeCommonDataRoutes(controller) {
       },
       handler: 'getForEntity'
     }
-  ]; 
+  ];
 
   return toHapiRoutes(routes, controller);
 }

@@ -4,7 +4,8 @@ import ThemeDataController from 'controllers/themeData';
 
 const needsController = new ThemeDataController({
   theme: 'needs',
-  table: 'vwMapWugNeeds'
+  dataTable: 'vwMapWugNeeds',
+  summaryTable: 'vwMapWugNeedsA1'
 });
 
 export default utils.makeCommonDataRoutes(needsController);
