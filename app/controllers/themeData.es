@@ -4,9 +4,8 @@ import Hoek from 'hoek';
 import db from 'db';
 import constants from 'lib/constants';
 
-const commonSelectArgs = [
-  'EntityId as EntityId', 'EntityName', 'WugType', 'WugRegion', 'WugCounty'
-];
+const entityTable = 'vwMapEntityCoordinates';
+
 
 const renameValueColumn = (theme) => {
   return (year) => `${constants.VALUE_PREFIXES[theme]}${year} as Value_${year}`;
@@ -21,6 +20,12 @@ class ThemeDataController {
     this.theme = theme;
     this.dataTable = dataTable;
     this.summaryTable = summaryTable;
+
+    this.commonSelectArgs = [
+      `${dataTable}.EntityId as EntityId`, `${dataTable}.EntityName`, `${dataTable}.WugType`,
+      `${dataTable}.WugRegion`, `${dataTable}.WugCounty`,
+      `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.entityType`
+    ];
   }
 
   getSummary(request, reply) {
@@ -36,11 +41,12 @@ class ThemeDataController {
   selectData(params) {
     const defaultValueArgs = R.map(renameValueColumn(this.theme))(constants.YEARS);
 
-    const selectArgs = params.year ? R.append(renameValueColumn(this.theme)(params.year), commonSelectArgs)
-      : R.concat(commonSelectArgs, defaultValueArgs);
+    const selectArgs = params.year ? R.append(renameValueColumn(this.theme)(params.year), this.commonSelectArgs)
+      : R.concat(this.commonSelectArgs, defaultValueArgs);
 
     return db.select(selectArgs)
-      .from(this.dataTable);
+      .from(this.dataTable)
+      .join(entityTable, `${entityTable}.EntityId`, `${this.dataTable}.EntityId`);
   }
 
   getAll(request, reply) {
@@ -80,7 +86,7 @@ class ThemeDataController {
     Hoek.assert(request.params.entityId, 'request.params.entityId is required');
 
     this.selectData(request.params)
-      .where('EntityId', request.params.entityId)
+      .where(`${this.dataTable}.EntityId`, request.params.entityId)
       .then(reply);
   }
 }

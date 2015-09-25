@@ -34,6 +34,8 @@ class EntitiesController {
   }
 
   getEntitySummary(request, reply) {
+    //TODO: maybe also require year
+    //TODO: maybe rename fields to Demands, Needs, Supply, StrategySupply
     Hoek.assert(request.params.entityId, 'request.params.entityId is required');
 
     db.select('*').from(entitySummaryTable)
@@ -41,10 +43,6 @@ class EntitiesController {
       .limit(1)
       .then(reply);
   }
-
-  //TODO: Some way to get the entities for a particular data view
-  //Perhaps the data views should join with the entityCoordinatesTable
-  //to do this
 }
 
 export default EntitiesController;

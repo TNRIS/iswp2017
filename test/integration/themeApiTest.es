@@ -14,8 +14,9 @@ function testDataResult(res) {
 }
 
 function testDataShape(obj, year) {
-  Code.expect(obj).to.include(['EntityId', 'EntityName', 'WugType',
-    'WugRegion', 'WugCounty', `Value_${year}`
+  Code.expect(obj).to.include([
+    'EntityId', 'EntityName', 'WugType', 'WugRegion', 'WugCounty',
+    `Value_${year}`, 'Latitude', 'Longitude', 'entityType'
   ]);
 }
 

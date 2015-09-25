@@ -33,7 +33,7 @@ function makeCommonDataRoutes(controller) {
       path: `/${theme}/{year}/county/{county}`,
       params: {
         year: Joi.string().only(constants.YEARS).required(),
-        county: Joi.string().required() // TODO: Validate
+        county: Joi.string().required()
       },
       handler: 'getForCounty'
     },
@@ -41,7 +41,7 @@ function makeCommonDataRoutes(controller) {
       path: `/${theme}/{year}/type/{type}`,
       params: {
         year: Joi.string().only(constants.YEARS).required(),
-        type: Joi.string().required() // TODO: Validate
+        type: Joi.string().required()
       },
       handler: 'getForType'
     },
@@ -49,7 +49,7 @@ function makeCommonDataRoutes(controller) {
       path: `/${theme}/{year}/entity/{entityId}`,
       params: {
         year: Joi.string().only(constants.YEARS).required(),
-        entityId: Joi.number().integer().required() // TODO: Validate
+        entityId: Joi.number().integer().required()
       },
       handler: 'getForEntity'
     }
