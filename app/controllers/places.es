@@ -14,16 +14,32 @@ const rowToFeature = (row) => {
   return feature;
 };
 
-const rowsToFeatureCollection = R.reduce((fc, row) => {
-  fc.features.push(rowToFeature(row));
-  return fc;
-}, {type: 'FeatureCollection', features: []});
+const rowsToFeatureCollection = (rows) => {
+  return R.reduce((fc, row) => {
+    fc.features.push(rowToFeature(row));
+    return fc;
+  }, {type: 'FeatureCollection', features: []}, rows);
+};
+
+const toTopoJson = (request) => {
+  return (fc) => {
+    if (request.query.f === 'topojson') {
+      return topojson.topology({collection: fc}, {
+        'property-transform': (f) => f.properties
+      });
+    }
+    return fc;
+  };
+};
 
 class PlacesController {
   getRegions(request, reply) {
-    //TODO: topojson if request.query.f === topojson
+    const shouldTopo = request.query.f === 'topojson';
     selectRegions
-      .then(R.compose(reply, rowsToFeatureCollection));
+      .then(R.compose(reply,
+        shouldTopo ? toTopoJson(request) : R.identity,
+        rowsToFeatureCollection
+      ));
   }
 
   getRegion(request, reply) {
@@ -41,9 +57,12 @@ class PlacesController {
   }
 
   getCounties(request, reply) {
-    //TODO: topojson if request.query.f === topojson
+    const shouldTopo = request.query.f === 'topojson';
     selectCounties
-      .then(R.compose(reply, rowsToFeatureCollection));
+      .then(R.compose(reply,
+        shouldTopo ? toTopoJson(request) : R.identity,
+        rowsToFeatureCollection
+      ));
   }
 
   getCounty(request, reply) {
