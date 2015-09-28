@@ -9,7 +9,7 @@ export default {
   // Currently it returns all entities.
   fetch: () => {
     return new Promise((resolve, reject) => {
-      const uri = `//${constants.API_BASE}/entity/`;
+      const uri = `${constants.API_BASE}/entities`;
 
       xhr({
         json: true,

@@ -14,9 +14,12 @@ function toHapiRoutes(routeConfigs, controller) {
         validate: {
           params: route.params || {},
           query: route.query || {}
+        },
+        cache: {
+          expiresIn: 60 * 60 * 24 * 1000
         }
       },
-      handler: controller[route.handler].bind(controller)
+      handler: controller[route.handler].bind(controller),
     };
   });
 }

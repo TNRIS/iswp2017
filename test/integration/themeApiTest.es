@@ -54,7 +54,6 @@ themes.forEach((theme) => {
       });
     });
 
-    // TODO: getForRegion, getForCounty, getForType, getForEntity
     lab.test(`${theme} - region for ${year}`, (done) => {
       server.inject(`/api/v1/${theme}/${year}/region/A`, (res) => {
         testDataResult(res);
@@ -63,7 +62,6 @@ themes.forEach((theme) => {
         done();
       });
     });
-
 
     lab.test(`${theme} - county for ${year}`, (done) => {
       server.inject(`/api/v1/${theme}/${year}/county/Travis`, (res) => {

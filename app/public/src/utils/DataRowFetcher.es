@@ -1,5 +1,3 @@
-
-import R from 'ramda';
 import xhr from 'xhr';
 
 import constants from '../constants';
@@ -11,7 +9,7 @@ export default {
         reject(new Error('Missing required parameters'));
       }
 
-      let uri = `//${constants.API_BASE}/${theme}/${type}/`;
+      let uri = `${constants.API_BASE}/${theme}/${year}/${type}/`;
       if (typeId) { uri += typeId; }
 
       xhr({
@@ -22,19 +20,7 @@ export default {
           reject(err);
         }
         else {
-          // TODO: Make filter by year part of API instead
-          const themeKey = constants.THEME_KEYS[theme];
-          const yearThemeKey = themeKey + year;
-          const omitList = constants.DECADES.map((d) => themeKey + d);
-
-          const dataForYear = body.filter(R.has(yearThemeKey))
-            .map((row) => {
-              const obj = R.omit(omitList, row);
-              obj.Value = row[yearThemeKey];
-              return obj;
-            });
-
-          resolve(dataForYear);
+          resolve(body);
         }
       });
     });
