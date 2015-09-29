@@ -103,7 +103,10 @@ export default React.createClass({
         <div className="row">
           <div className="twelve columns">
             <div className="table-container">
-              <ThemeTable dataRows={this.state.themeData.dataRows} />
+              <ThemeTable
+                theme={params.theme}
+                year={params.year}
+                dataRows={this.state.themeData.dataRows} />
             </div>
           </div>
         </div>
