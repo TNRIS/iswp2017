@@ -4,24 +4,28 @@ import topojson from 'topojson';
 
 import db from 'db';
 
-const selectRegions = db.select('LETTER', 'geojson').from('regions');
+function selectRegions() {
+  return db.select('LETTER', 'geojson').from('regions');
+}
 
-const selectCounties = db.select('COUNTY', 'FIPS_NBR', 'geojson').from('counties');
+function selectCounties() {
+  return db.select('COUNTY', 'FIPS_NBR', 'geojson').from('counties');
+}
 
-const rowToFeature = (row) => {
+function rowToFeature(row) {
   const feature = JSON.parse(row.geojson);
   feature.properties = R.omit(['geojson'])(row);
   return feature;
-};
+}
 
-const rowsToFeatureCollection = (rows) => {
+function rowsToFeatureCollection(rows) {
   return R.reduce((fc, row) => {
     fc.features.push(rowToFeature(row));
     return fc;
   }, {type: 'FeatureCollection', features: []}, rows);
-};
+}
 
-const toTopoJson = (request) => {
+function toTopoJson(request) {
   return (fc) => {
     if (request.query.f === 'topojson') {
       return topojson.topology({collection: fc}, {
@@ -30,12 +34,12 @@ const toTopoJson = (request) => {
     }
     return fc;
   };
-};
+}
 
 class PlacesController {
   getRegions(request, reply) {
     const shouldTopo = request.query.f === 'topojson';
-    selectRegions
+    selectRegions()
       .then(R.compose(reply,
         shouldTopo ? toTopoJson(request) : R.identity,
         rowsToFeatureCollection
@@ -45,7 +49,7 @@ class PlacesController {
   getRegion(request, reply) {
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
-    selectRegions
+    selectRegions()
       .where('LETTER', request.params.regionLetter.toUpperCase())
       .limit(1)
       .then(R.compose(reply, rowToFeature, R.nth(0)));
@@ -58,7 +62,7 @@ class PlacesController {
 
   getCounties(request, reply) {
     const shouldTopo = request.query.f === 'topojson';
-    selectCounties
+    selectCounties()
       .then(R.compose(reply,
         shouldTopo ? toTopoJson(request) : R.identity,
         rowsToFeatureCollection
@@ -68,7 +72,7 @@ class PlacesController {
   getCounty(request, reply) {
     Hoek.assert(request.params.countyName, 'request.params.countyName is required');
 
-    selectCounties
+    selectCounties()
       .where('COUNTY', request.params.countyName.toUpperCase())
       .limit(1)
       .then(R.compose(reply, rowToFeature, R.nth(0)));
