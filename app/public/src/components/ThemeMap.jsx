@@ -53,15 +53,16 @@ export default React.createClass({
       // Use the first entity in each group to get the base entity properties
       const entity = R.nth(0, group);
       const valueSum = R.sum(R.pluck(valueKey)(group));
+      const props =  R.assoc('ValueSum', valueSum,
+        R.pick(['EntityId', 'EntityName', 'ValueSum'], entity)
+      );
       return {
         type: 'Feature',
         geometry: {
           type: 'Point',
           coordinates: [entity.Longitude, entity.Latitude]
         },
-        properties: R.assoc('ValueSum', valueSum,
-          R.pick(['EntityId', 'EntityName', 'ValueSum'], entity)
-        )
+        properties: props
       };
     })(R.values(groupedById));
 
@@ -73,7 +74,7 @@ export default React.createClass({
         return L.circleMarker(latlng, entityMapStyles(this.props.theme));
       },
       onEachFeature: (feat, layer) => {
-        layer.bindPopup(feat.properties.EntityName + ': ' + feat.properties.Value);
+        layer.bindPopup(feat.properties.EntityName + '<br>' + feat.properties.ValueSum);
       }
     });
 
