@@ -25,12 +25,12 @@ export default React.createClass({
           rowsCount={this.props.dataRows.length}
           headerHeight={50}>
           <Column label="Name"
-            flexGrow={1}
+            flexGrow={2}
             width={200}
             dataKey="EntityName" />
           <Column label="Region"
-            flexGrow={1}
-            width={200}
+            flexGrow={0.5}
+            width={100}
             dataKey="WugRegion" />
           <Column label="County"
             flexGrow={1}
