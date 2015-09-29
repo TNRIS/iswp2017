@@ -72,6 +72,8 @@ export default React.createClass({
     };
     const randYear = sampleNotVal(constants.DECADES, params.year);
     const randRegion = sampleNotVal(constants.REGIONS, params.typeId);
+    // end TODO
+
 
     return (
       <div className={`theme-container theme-${params.theme}`}>
@@ -80,7 +82,10 @@ export default React.createClass({
         <div className="row">
           <div className="six columns">
             <div className="chart-container">
-              <ThemeChart theme={params.theme} dataRows={this.state.themeData.dataRows} />
+              <ThemeChart
+                theme={params.theme}
+                year={params.year}
+                dataRows={this.state.themeData.dataRows} />
             </div>
           </div>
           <div className="six columns">
@@ -89,7 +94,8 @@ export default React.createClass({
                 theme={params.theme}
                 type={params.type}
                 typeId={params.typeId}
-                entities={this.state.themeData.entities}
+                year={params.year}
+                dataRows={this.state.themeData.dataRows}
                 boundary={this.state.themeData.boundary} />
             </div>
           </div>

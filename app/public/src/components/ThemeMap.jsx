@@ -12,8 +12,9 @@ export default React.createClass({
     id: React.PropTypes.string,
     theme: React.PropTypes.string,
     type: React.PropTypes.string,
+    year: React.PropTypes.string,
     typeId: React.PropTypes.string,
-    entities: React.PropTypes.array,
+    dataRows: React.PropTypes.array,
     boundary: React.PropTypes.object
   },
 
@@ -40,18 +41,29 @@ export default React.createClass({
   },
 
   componentDidUpdate() {
-    const entities = this.props.entities;
-    if (!entities) { return; }
-    const entityFeatures = entities.map((entity) => {
+    if (!this.props.dataRows) { return; }
+
+    const valueKey = `Value_${this.props.year}`;
+
+    // dataRows can have multiple rows for the same EntityId
+    // so group them and sum their current year value to make
+    // mappable entities features
+    const groupedById = R.groupBy(R.prop('EntityId'))(this.props.dataRows);
+    const entityFeatures = R.map((group) => {
+      // Use the first entity in each group to get the base entity properties
+      const entity = R.nth(0, group);
+      const valueSum = R.sum(R.pluck(valueKey)(group));
       return {
         type: 'Feature',
         geometry: {
           type: 'Point',
           coordinates: [entity.Longitude, entity.Latitude]
         },
-        properties: R.pick(['EntityId', 'EntityName', 'Value'], entity)
+        properties: R.assoc('ValueSum', valueSum,
+          R.pick(['EntityId', 'EntityName', 'ValueSum'], entity)
+        )
       };
-    });
+    })(R.values(groupedById));
 
     if (this.entitiesLayer && this.map.hasLayer(this.entitiesLayer)) {
       this.map.removeLayer(this.entitiesLayer);

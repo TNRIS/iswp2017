@@ -4,13 +4,14 @@ import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Chartist from 'chartist';
 
-// TODO: Perhaps replicate how CensusReporter makes bar charts:
+// TODO: Perhaps replicate how CensusReporter makes bar charts (D3):
 // Ref: https://github.com/censusreporter/censusreporter/blob/d45c0e7d420e6c0baf26211ea9df8116ae8707aa/censusreporter/apps/census/static/js/charts.js#L286
 
 // TODO: Tooltips on bars
 export default React.createClass({
   propTypes: {
     theme: React.PropTypes.string,
+    year: React.PropTypes.string,
     dataRows: React.PropTypes.array
   },
 
@@ -38,12 +39,14 @@ export default React.createClass({
   updateChart() {
     if (!this.props.dataRows) { return; }
 
+    console.log("here");
+
     const groupTypes = R.groupBy(R.prop('WugType'));
     const toTypePairs = R.compose(R.toPairs, groupTypes);
     const dataByType = toTypePairs(this.props.dataRows);
 
     const types = R.map(R.nth(0))(dataByType);
-    const sums = R.map(R.compose(R.sum, R.pluck('Value'), R.nth(1)))(dataByType);
+    const sums = R.map(R.compose(R.sum, R.pluck(`Value_${this.props.year}`), R.nth(1)))(dataByType);
 
     const chartData = {
       labels: types,

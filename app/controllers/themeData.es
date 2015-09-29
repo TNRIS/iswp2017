@@ -6,7 +6,6 @@ import constants from 'lib/constants';
 
 const entityTable = 'vwMapEntityCoordinates';
 
-
 const renameValueColumn = (theme) => {
   return (year) => `${constants.VALUE_PREFIXES[theme]}${year} as Value_${year}`;
 };
