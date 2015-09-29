@@ -81,6 +81,8 @@ export default React.createClass({
       this.map.removeLayer(this.boundaryLayer);
     }
 
+    let bounds = this.entitiesLayer.getBounds();
+
     if (this.props.boundary) {
       this.boundaryLayer = L.geoJson(this.props.boundary, {
         style: {
@@ -89,11 +91,12 @@ export default React.createClass({
           weight: 2
         }
       });
+      bounds = bounds.extend(this.boundaryLayer.getBounds());
       this.map.addLayer(this.boundaryLayer);
     }
 
     this.map.addLayer(this.entitiesLayer);
-    this.map.fitBounds(this.entitiesLayer.getBounds());
+    this.map.fitBounds(bounds);
   },
 
   componentWillUnmount() {

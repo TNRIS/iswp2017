@@ -39,8 +39,6 @@ export default React.createClass({
   updateChart() {
     if (!this.props.dataRows) { return; }
 
-    console.log("here");
-
     const groupTypes = R.groupBy(R.prop('WugType'));
     const toTypePairs = R.compose(R.toPairs, groupTypes);
     const dataByType = toTypePairs(this.props.dataRows);
