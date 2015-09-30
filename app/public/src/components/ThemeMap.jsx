@@ -97,7 +97,7 @@ export default React.createClass({
     }
 
     this.map.addLayer(this.entitiesLayer);
-    this.map.fitBounds(bounds);
+    this.map.fitBounds(bounds, {paddingTopLeft: [500, 0]});
   },
 
   componentWillUnmount() {

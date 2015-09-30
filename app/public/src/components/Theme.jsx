@@ -7,6 +7,7 @@ import ThemeDataStore from '../stores/ThemeDataStore';
 import ThemeDataActions from '../actions/ThemeDataActions';
 import ThemeChart from './ThemeChart';
 import ThemeMap from './ThemeMap';
+import ThemeSummary from './ThemeSummary';
 import ThemeTable from './ThemeTable';
 
 export default React.createClass({
@@ -56,10 +57,6 @@ export default React.createClass({
 
   render() {
     const params = this.getParams();
-    let title = `${params.theme} - ${params.year} - ${params.type}`;
-    if (params.typeId) {
-      title += ` - ${params.typeId}`;
-    }
 
     // TODO: REMOVE: temporary view switching by picking random year
     const sample = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -74,39 +71,45 @@ export default React.createClass({
     const randRegion = sampleNotVal(constants.REGIONS, params.typeId);
     // end TODO
 
-
     return (
       <div className={`theme-container theme-${params.theme}`}>
-        <h3>{title.toUpperCase()}</h3>
-        <Link to="theme" params={{theme: 'demands', year: randYear, 'type': 'region', typeId: randRegion}}>change</Link>
-        <div className="row">
-          <div className="six columns">
-            <div className="chart-container">
-              <ThemeChart
-                theme={params.theme}
-                year={params.year}
-                dataRows={this.state.themeData.dataRows} />
-            </div>
-          </div>
-          <div className="six columns">
-            <div className="map-container">
-              <ThemeMap id="main-map"
-                theme={params.theme}
-                type={params.type}
-                typeId={params.typeId}
-                year={params.year}
-                dataRows={this.state.themeData.dataRows}
-                boundary={this.state.themeData.boundary} />
-            </div>
+        <div className="theme-top">
+          <ThemeMap id="main-map"
+            theme={params.theme}
+            type={params.type}
+            typeId={params.typeId}
+            year={params.year}
+            dataRows={this.state.themeData.dataRows}
+            boundary={this.state.themeData.boundary} />
+          <div className="theme-summary-wrapper wrapper">
+            <ThemeSummary
+              theme={params.theme}
+              type={params.type}
+              typeId={params.typeId}
+              year={params.year}
+              dataRows={this.state.themeData.dataRows} />
           </div>
         </div>
-        <div className="row">
-          <div className="twelve columns">
-            <div className="table-container">
-              <ThemeTable
-                theme={params.theme}
-                year={params.year}
-                dataRows={this.state.themeData.dataRows} />
+        <div className="container">
+          <Link to="theme" params={{theme: 'demands', year: randYear, 'type': 'region', typeId: randRegion}}>change</Link>
+          <div className="row">
+            <div className="twelve columns">
+              <div className="chart-container">
+                <ThemeChart
+                  theme={params.theme}
+                  year={params.year}
+                  dataRows={this.state.themeData.dataRows} />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="twelve columns">
+              <div className="table-container">
+                <ThemeTable
+                  theme={params.theme}
+                  year={params.year}
+                  dataRows={this.state.themeData.dataRows} />
+              </div>
             </div>
           </div>
         </div>
