@@ -1,61 +1,112 @@
+
 import Joi from 'joi';
 
 import constants from 'lib/constants';
-import toHapiRoutes from 'lib/utils/toHapiRoutes';
 
 function makeCommonDataRoutes(controller) {
   const theme = controller.theme;
+  const bind = (method) => controller[method].bind(controller);
+
   const routes = [
     {
+      method: 'GET',
       path: `/${theme}/{year}/summary/region`,
-      params: {
-        year: Joi.string().only(constants.YEARS).required()
+      config: {
+        validate: {
+          params: {
+            year: Joi.string().only(constants.YEARS).required()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        }
       },
-      handler: 'getSummary'
+      handler: bind('getSummary')
     },
     //TODO: summary/county
     {
+      method: 'GET',
       path: `/${theme}/{year?}`,
-      params: {
-        year: Joi.string().only(constants.YEARS)
+      config: {
+        validate: {
+          params: {
+            year: Joi.string().only(constants.YEARS).optional()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        }
       },
-      handler: 'getAll'
+      handler: bind('getAll')
     },
     {
+      method: 'GET',
       path: `/${theme}/{year}/region/{regionLetter}`,
-      params: {
-        year: Joi.string().only(constants.YEARS).required(),
-        regionLetter: Joi.string().only(constants.REGIONS).insensitive().required()
+      config: {
+        validate: {
+          params: {
+            year: Joi.string().only(constants.YEARS).required(),
+            regionLetter: Joi.string().only(constants.REGIONS).insensitive().required()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        }
       },
-      handler: 'getForRegion'
+      handler: bind('getForRegion')
     },
     {
+      method: 'GET',
       path: `/${theme}/{year}/county/{county}`,
-      params: {
-        year: Joi.string().only(constants.YEARS).required(),
-        county: Joi.string().required()
+      config: {
+        validate: {
+          params: {
+            year: Joi.string().only(constants.YEARS).required(),
+            county: Joi.string().required()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        }
       },
-      handler: 'getForCounty'
+      handler: bind('getForCounty')
     },
     {
+      method: 'GET',
       path: `/${theme}/{year}/type/{type}`,
-      params: {
-        year: Joi.string().only(constants.YEARS).required(),
-        type: Joi.string().required()
+      config: {
+        validate: {
+          params: {
+            year: Joi.string().only(constants.YEARS).required(),
+            type: Joi.string().required()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        }
       },
-      handler: 'getForType'
+      handler: bind('getForType')
     },
     {
+      method: 'GET',
       path: `/${theme}/{year}/entity/{entityId}`,
-      params: {
-        year: Joi.string().only(constants.YEARS).required(),
-        entityId: Joi.number().integer().required()
+
+      config: {
+        validate: {
+          params: {
+            year: Joi.string().only(constants.YEARS).required(),
+            entityId: Joi.number().integer().required()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        }
       },
-      handler: 'getForEntity'
+      handler: bind('getForEntity')
     }
   ];
 
-  return toHapiRoutes(routes, controller);
+  return routes;
 }
 
 export default makeCommonDataRoutes;
