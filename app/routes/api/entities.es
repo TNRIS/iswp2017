@@ -1,37 +1,68 @@
 
 import Joi from 'joi';
 
-import utils from 'lib/utils';
+import constants from 'lib/constants';
 import EntitiesController from 'controllers/entities';
 
 const entitiesController = new EntitiesController();
+const bind = (method) => entitiesController[method].bind(entitiesController);
 
-const routeConfigs = [
+const routes = [
   {
+    method: 'GET',
     path: '/entities',
-    handler: 'getAll'
+    config: {
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
+    },
+    handler: bind('getAll')
   },
   {
+    method: 'GET',
     path: '/entities/{entityId}',
-    params: {
-      entityId: Joi.number().integer().required()
+    config: {
+      validate: {
+        params: {
+          entityId: Joi.number().integer().required()
+        }
+      },
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
     },
-    handler: 'getOne'
+    handler: bind('getOne')
   },
   {
+    method: 'GET',
     path: '/entities/{entityId}/summary',
-    params: {
-      entityId: Joi.number().integer().required()
+    config: {
+      validate: {
+        params: {
+          entityId: Joi.number().integer().required()
+        }
+      },
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
     },
-    handler: 'getEntitySummary'
+    handler: bind('getEntitySummary')
   },
   {
+    method: 'GET',
     path: '/entities/search',
-    query: {
-      name: Joi.string().min(3).required()
+    config: {
+      validate: {
+        query: {
+          name: Joi.string().min(3).required()
+        }
+      },
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
     },
-    handler: 'getByNamePartial'
+    handler: bind('getByNamePartial')
   }
 ];
 
-export default utils.toHapiRoutes(routeConfigs, entitiesController);
+export default routes;

@@ -6,5 +6,6 @@ export default {
     needs: 'N',
     supplies: 'WS',
     strategies: 'SS'
-  }
+  },
+  API_CACHE_EXPIRES_IN: 60 * 60 * 24 * 1000
 };

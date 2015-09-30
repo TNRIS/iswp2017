@@ -1,47 +1,92 @@
 import Joi from 'joi';
 
-import utils from 'lib/utils';
+import constants from 'lib/constants';
 import PlacesController from 'controllers/places';
 
 const placesController = new PlacesController();
+const bind = (method) => placesController[method].bind(placesController);
 
-const routeConfigs = [
+const routes = [
   {
+    method: 'GET',
     path: '/places/regions',
-    query: {
-      f: Joi.string().only(['geojson', 'topojson']).optional()
+    config: {
+      validate: {
+        query: {
+          f: Joi.string().only(['geojson', 'topojson']).optional()
+        }
+      },
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
     },
-    handler: 'getRegions'
+    handler: bind('getRegions')
   },
   {
+    method: 'GET',
     path: '/places/regions/{regionLetter}',
-    params: {
-      regionLetter: Joi.string().length(1).required()
+    config: {
+      validate: {
+        params: {
+          regionLetter: Joi.string().length(1).required()
+        }
+      },
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
     },
-    handler: 'getRegion'
+    handler: bind('getRegion')
   },
   {
+    method: 'GET',
     path: '/places/regions/names',
-    handler: 'getRegionLetters'
+    config: {
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
+    },
+    handler: bind('getRegionLetters')
   },
   {
+    method: 'GET',
     path: '/places/counties',
-    query: {
-      f: Joi.string().only(['geojson', 'topojson']).optional()
+    config: {
+      validate: {
+        query: {
+          f: Joi.string().only(['geojson', 'topojson']).optional()
+        }
+      },
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
     },
-    handler: 'getCounties'
+    handler: bind('getCounties')
   },
   {
+    method: 'GET',
     path: '/places/counties/{countyName}',
-    params: {
-      countyName: Joi.string().required()
+    config: {
+      validate: {
+        params: {
+          countyName: Joi.string().required()
+        }
+      },
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
     },
-    handler: 'getCounty'
+    handler: bind('getCounty')
   },
   {
+    method: 'GET',
     path: '/places/counties/names',
-    handler: 'getCountyNames'
+    config: {
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
+    },
+    handler: bind('getCountyNames')
   }
 ];
 
-export default utils.toHapiRoutes(routeConfigs, placesController);
+export default routes;
