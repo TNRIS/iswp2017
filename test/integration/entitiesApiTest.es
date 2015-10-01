@@ -54,4 +54,26 @@ lab.test('entities - search by name', (done) => {
   });
 });
 
+lab.test('entities - get in region', (done) => {
+  server.inject('/api/v1/entities/region/K', (res) => {
+    Code.expect(res.statusCode).to.equal(200);
+    Code.expect(res.result).to.be.an.array();
+    Code.expect(res.result.length).to.be.greaterThan(0);
+    const first = res.result[0];
+    testEntityShape(first);
+    done();
+  });
+});
+
+lab.test('entities - get in county', (done) => {
+  server.inject('/api/v1/entities/county/Nueces', (res) => {
+    Code.expect(res.statusCode).to.equal(200);
+    Code.expect(res.result).to.be.an.array();
+    Code.expect(res.result.length).to.be.greaterThan(0);
+    const first = res.result[0];
+    testEntityShape(first);
+    done();
+  });
+});
+
 export default {lab};

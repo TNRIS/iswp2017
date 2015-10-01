@@ -62,6 +62,36 @@ const routes = [
       }
     },
     handler: bind('getByNamePartial')
+  },
+  {
+    method: 'GET',
+    path: '/entities/region/{regionLetter}',
+    config: {
+      validate: {
+        params: {
+          regionLetter: Joi.string().only(constants.REGIONS).insensitive().required()
+        }
+      },
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
+    },
+    handler: bind('getInRegion')
+  },
+  {
+    method: 'GET',
+    path: '/entities/county/{county}',
+    config: {
+      validate: {
+        params: {
+          county: Joi.string().required()
+        }
+      },
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
+    },
+    handler: bind('getInCounty')
   }
 ];
 
