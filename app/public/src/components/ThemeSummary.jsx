@@ -13,17 +13,23 @@ export default React.createClass({
   render() {
     const props = this.props;
     let typeAndId = `${props.type}`;
-    if (props.typeId) {
+    if (props.type === 'region') {
       typeAndId += ` ${props.typeId}`;
+    }
+    else if (props.type === 'county') {
+      typeAndId = `${props.typeId} County`;
     }
 
     return (
       <div className="theme-summary">
         <h3>
-          {props.year} {props.theme.toUpperCase()}<br/>
+          {props.year}<br/>
           {typeAndId.toUpperCase()}
         </h3>
-        <p>summary text and statistics summary text and statistics summary text and statistics summary text and statistics summary text and statistics summary text and statistics </p>
+        <strong>Total Demands:</strong> 1234<br/>
+        <strong>Total Existing Supplies:</strong> 1234<br/>
+        <strong>Total Need (Potential Shortage):</strong> 1234 (Visualize)<br/>
+        <strong>Total Strategy Supplies:</strong> 1234
       </div>
     );
   }
