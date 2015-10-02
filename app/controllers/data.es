@@ -36,7 +36,8 @@ function dataSelectionsByTheme(year, whereKey, whereVal) {
 
     return Promise.all([selectData, selectSums])
       .then(([data, totals]) => {
-        return R.assoc(theme, {data, totals}, {});
+        const totalsByType = R.zipObj(R.pluck('WugType', totals), R.pluck('Total', totals));
+        return R.assoc(theme, {data: data, totals: totalsByType}, {});
       });
   };
 }
