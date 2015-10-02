@@ -4,7 +4,7 @@ import ThemeDataActions from '../actions/ThemeDataActions';
 
 class ThemeDataStore {
   constructor() {
-    this.themeData = {};
+    this.themeData = [];
     this.errorMessage = null;
 
     this.bindListeners({
@@ -20,7 +20,7 @@ class ThemeDataStore {
 
   handleFetchThemeData() {
     // reset to new empty object during fetch
-    this.themeData = {};
+    this.themeData = [];
     this.errorMessage = null;
   }
 

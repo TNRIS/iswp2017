@@ -1,18 +1,17 @@
 
-const themes = ['demands', 'population', 'needs', 'supplies', 'strategies'];
+const indexPaths = [
+  '/',
+  '/region/{params*}',
+  '/county/{params*}',
+  '/entity/{params*}',
+];
 
-const routes = themes.map((theme) => {
+const routes = indexPaths.map((path) => {
   return {
     method: 'GET',
-    path: `/${theme}/{params*}`,
+    path: path,
     handler: (request, reply) => reply.view('index')
   };
-});
-
-routes.unshift({
-  method: 'GET',
-  path: '/',
-  handler: (request, reply) => reply.view('index')
 });
 
 export default routes;

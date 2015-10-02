@@ -3,15 +3,14 @@ import xhr from 'xhr';
 import constants from '../constants';
 
 export default {
-  fetch: ({theme, year, type, typeId}) => {
+  fetch: ({year, type, typeId}) => {
     return new Promise((resolve, reject) => {
-      if (!theme || !type || !year) {
+      if (!year || !type || !typeId) {
         reject(new Error('Missing required parameters'));
         return;
       }
 
-      let uri = `${constants.API_BASE}/${theme}/${year}/${type}/`;
-      if (typeId) { uri += typeId; }
+      const uri = `${constants.API_BASE}/data/${year}/${type}/${typeId}`;
 
       xhr({
         json: true,
