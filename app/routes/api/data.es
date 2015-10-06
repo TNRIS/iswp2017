@@ -10,11 +10,10 @@ const bind = (method) => dataController[method].bind(dataController);
 const routes = [
   {
     method: 'GET',
-    path: '/data/{year}/region/{regionLetter}',
+    path: '/data/region/{regionLetter}',
     config: {
       validate: {
         params: {
-          year: Joi.string().only(constants.YEARS).required(),
           regionLetter: Joi.string().only(constants.REGIONS).insensitive().required()
         }
       },
@@ -26,11 +25,10 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/data/{year}/county/{county}',
+    path: '/data/county/{county}',
     config: {
       validate: {
         params: {
-          year: Joi.string().only(constants.YEARS).required(),
           county: Joi.string().required()
         }
       },
@@ -42,11 +40,10 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/data/{year}/entity/{entityId}',
+    path: '/data/entity/{entityId}',
     config: {
       validate: {
         params: {
-          year: Joi.string().only(constants.YEARS).required(),
           entityId: Joi.number().integer().required()
         }
       },

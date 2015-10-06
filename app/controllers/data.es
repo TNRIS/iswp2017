@@ -15,40 +15,64 @@ const themes = R.keys(dataTables);
 
 const commonFields = ['entityId as EntityId', 'EntityName', 'WugType', 'WugRegion', 'WugCounty'];
 
-const renameValueField = (theme, year, newName = 'Value') => {
-  return `${constants.VALUE_PREFIXES[theme]}${year} as ${newName}`;
+const renameValueFields = (theme) => {
+  return constants.YEARS.map((year) => {
+    return `${constants.VALUE_PREFIXES[theme]}${year} as Value_${year}`;
+  });
 };
 
-function dataSelectionsByTheme(year, whereKey, whereVal) {
+const makeTypeSumFields = (theme) => {
+  return constants.YEARS.map((year) => {
+    return `${constants.VALUE_PREFIXES[theme]}${year} as Total_${year}`;
+  });
+};
+
+const makeDecadeSumFields = (theme) => {
+  return constants.YEARS.map((year) => {
+    return `${constants.VALUE_PREFIXES[theme]}${year} as ${year}`;
+  });
+};
+
+function dataSelectionsByTheme(whereKey, whereVal) {
   return (theme) => {
     const table = dataTables[theme];
-    const columns = R.append(renameValueField(theme, year), commonFields);
-
-    const selectData = db.select(columns).from(table)
-        .where(whereKey, whereVal); //'WugRegion', request.params.regionLetter.toUpperCase());
+    const dataSelectFields = R.concat(renameValueFields(theme), commonFields);
+    const selectData = db.select(dataSelectFields).from(table)
+        .where(whereKey, whereVal);
 
     //TODO: What to do with negative values (as in some strategies)?
-    const selectSums = db.select('WugType')
-      .sum(renameValueField(theme, year, 'Total'))
-      .from(table)
-      .where(whereKey, whereVal) //'WugRegion', request.params.regionLetter.toUpperCase())
+    const typeSumFields = makeTypeSumFields(theme);
+    let typeSumChain = db.select('WugType');
+    typeSumFields.forEach((f) => { typeSumChain = typeSumChain.sum(f); });
+    const selectTypeSums = typeSumChain.from(table)
+      .where(whereKey, whereVal)
       .groupBy('WugType');
 
-    return Promise.all([selectData, selectSums])
-      .then(([data, totals]) => {
-        const totalsByType = R.zipObj(R.pluck('WugType', totals), R.pluck('Total', totals));
-        return R.assoc(theme, {data: data, totals: totalsByType}, {});
+    const decadeSumFields = makeDecadeSumFields(theme);
+    let decadeSumChain = db;
+    decadeSumFields.forEach((f) => { decadeSumChain = decadeSumChain.sum(f); });
+    const selectDecadeSums = decadeSumChain.from(table)
+      .where(whereKey, whereVal);
+
+    return Promise.all([selectData, selectTypeSums, selectDecadeSums])
+      .then(([data, typeSums, decadeSums]) => {
+        const totalsByType = R.zipObj(R.pluck('WugType', typeSums), R.map(R.omit(['WugType']), typeSums));
+        const totalsByDecade = R.nth(0, decadeSums);
+        return R.assoc(theme, {
+          data: data,
+          typeTotals: totalsByType,
+          decadeTotals: totalsByDecade
+        }, {});
       });
   };
 }
 
 class DataController {
   getForRegion(request, reply) {
-    Hoek.assert(request.params.year, 'request.params.year is required');
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
     const dataPromises = themes.map(dataSelectionsByTheme(
-      request.params.year, 'WugRegion', request.params.regionLetter.toUpperCase())
+      'WugRegion', request.params.regionLetter.toUpperCase())
     );
 
     Promise.all(dataPromises)
@@ -56,11 +80,10 @@ class DataController {
   }
 
   getForCounty(request, reply) {
-    Hoek.assert(request.params.year, 'request.params.year is required');
     Hoek.assert(request.params.county, 'request.params.county is required');
 
     const dataPromises = themes.map(dataSelectionsByTheme(
-      request.params.year, 'WugCounty', request.params.county.toUpperCase())
+      'WugCounty', request.params.county.toUpperCase())
     );
 
     Promise.all(dataPromises)
@@ -68,11 +91,10 @@ class DataController {
   }
 
   getForEntity(request, reply) {
-    Hoek.assert(request.params.year, 'request.params.year is required');
     Hoek.assert(request.params.entityId, 'request.params.entityId is required');
 
     const dataPromises = themes.map(dataSelectionsByTheme(
-      request.params.year, 'entityID', request.params.entityId)
+      'entityID', request.params.entityId)
     );
 
     Promise.all(dataPromises)
