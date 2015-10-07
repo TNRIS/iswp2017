@@ -108,3 +108,34 @@ $twdb-blue: #3F556D;
     stroke-width: 2rem;
   }
 }
+
+$demandsColor: #1FC684;
+$suppliesColor: #FBB50D;
+$needsColor: #AA0000;
+$strategiesColor: #FF7518;
+
+.ct-chart {
+  .series-demands {
+    .ct-point, .ct-line {
+      stroke: $demandsColor;
+    }
+  }
+
+  .series-supplies {
+    .ct-point, .ct-line {
+      stroke: $suppliesColor;
+    }
+  }
+
+  .series-needs {
+    .ct-point, .ct-line {
+      stroke: $needsColor;
+    }
+  }
+
+  .series-strategies {
+    .ct-point, .ct-line {
+      stroke: $strategiesColor;
+    }
+  }
+}

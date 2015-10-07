@@ -4,13 +4,11 @@ import {Route, NotFoundRoute} from 'react-router';
 
 import App from './App';
 import NotFound from './components/NotFound';
-import Theme from './components/Theme';
-import PlaceData from './components/PlaceData';
+import PlaceView from './components/PlaceView';
 
 export default (
   <Route handler={App}>
-    <Route name="theme" path=":theme/:year/:type/:typeId" handler={Theme}/>
-    <Route name="placedata" path=":type/:typeId/:year" handler={PlaceData}/>
+    <Route name="placeview" path=":type/:typeId" handler={PlaceView}/>
     <NotFoundRoute handler={NotFound}/>
   </Route>
 );

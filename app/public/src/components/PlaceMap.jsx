@@ -10,12 +10,9 @@ import entityMapStyles from '../utils/EntityMapStyles';
 export default React.createClass({
   propTypes: {
     id: React.PropTypes.string,
-    theme: React.PropTypes.string,
     type: React.PropTypes.string,
-    year: React.PropTypes.string,
     typeId: React.PropTypes.string,
-    dataRows: React.PropTypes.array,
-    boundary: React.PropTypes.object
+    placeData: React.PropTypes.object
   },
 
   getInitialState() {
@@ -34,25 +31,22 @@ export default React.createClass({
 
     this.map.addLayer(layer);
 
-    // this.map.on('zoomend', this.setMapState);
-    // this.map.on('moveend', this.setMapState);
-
     MapStateStore.listen(this.onChange);
   },
 
   componentDidUpdate() {
-    if (!this.props.dataRows) { return; }
-
-    const valueKey = `Value_${this.props.year}`;
+    if (!this.props.placeData.data) { return; }
 
     // dataRows can have multiple rows for the same EntityId
     // so group them and sum their current year value to make
     // mappable entities features
-    const groupedById = R.groupBy(R.prop('EntityId'))(this.props.dataRows);
+
+    //TODO: Just using demands entities temporarily
+    const groupedById = R.groupBy(R.prop('EntityId'))(this.props.placeData.data.demands.rows);
     const entityFeatures = R.map((group) => {
       // Use the first entity in each group to get the base entity properties
       const entity = R.nth(0, group);
-      const valueSum = R.sum(R.pluck(valueKey)(group));
+      const valueSum = R.sum(R.pluck('Value_2020')(group));
       const props =  R.assoc('ValueSum', valueSum,
         R.pick(['EntityId', 'EntityName', 'ValueSum'], entity)
       );
@@ -71,21 +65,22 @@ export default React.createClass({
     }
     this.entitiesLayer = L.geoJson(entityFeatures, {
       pointToLayer: (feat, latlng) => {
-        return L.circleMarker(latlng, entityMapStyles(this.props.theme));
+        return L.circleMarker(latlng, entityMapStyles('demands'));
       },
       onEachFeature: (feat, layer) => {
-        layer.bindPopup(feat.properties.EntityName + '<br>' + feat.properties.ValueSum);
+        layer.bindPopup(feat.properties.EntityName + '<br>Sum 2020: ' + feat.properties.ValueSum);
       }
     });
+
+
+    let bounds = this.entitiesLayer.getBounds();
 
     if (this.boundaryLayer && this.map.hasLayer(this.boundaryLayer)) {
       this.map.removeLayer(this.boundaryLayer);
     }
 
-    let bounds = this.entitiesLayer.getBounds();
-
-    if (this.props.boundary) {
-      this.boundaryLayer = L.geoJson(this.props.boundary, {
+    if (this.props.placeData.boundary) {
+      this.boundaryLayer = L.geoJson(this.props.placeData.boundary, {
         style: {
           fillOpacity: 0,
           color: '#000000',
@@ -96,7 +91,7 @@ export default React.createClass({
       this.map.addLayer(this.boundaryLayer);
     }
 
-    this.map.addLayer(this.entitiesLayer);
+    this.map.addLayer(this.entitiesLayer); // Must be added after the boundary to get click events
     this.map.fitBounds(bounds, {paddingTopLeft: [500, 0]});
   },
 

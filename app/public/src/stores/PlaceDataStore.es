@@ -4,7 +4,7 @@ import PlaceDataActions from '../actions/PlaceDataActions';
 
 class PlaceDataStore {
   constructor() {
-    this.placeData = [];
+    this.placeData = {};
     this.errorMessage = null;
 
     this.bindListeners({
@@ -20,7 +20,7 @@ class PlaceDataStore {
 
   handleFetchPlaceData() {
     //reset to new empty object during fetch
-    this.placeData = [];
+    this.placeData = {};
     this.errorMessage = null;
   }
 

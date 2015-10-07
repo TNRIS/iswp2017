@@ -16,6 +16,7 @@ const routes = [
           f: Joi.string().only(['geojson', 'topojson']).optional()
         }
       },
+      //TODO: ETags instead of cache expires
       cache: {
         expiresIn: constants.API_CACHE_EXPIRES_IN
       }

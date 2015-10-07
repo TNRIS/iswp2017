@@ -13,7 +13,7 @@ const dataTables = {
 
 const themes = R.keys(dataTables);
 
-const commonFields = ['entityId as EntityId', 'EntityName', 'WugType', 'WugRegion', 'WugCounty'];
+const entityTable = 'vwMapEntityCoordinates';
 
 const renameValueFields = (theme) => {
   return constants.YEARS.map((year) => {
@@ -36,8 +36,14 @@ const makeDecadeSumFields = (theme) => {
 function dataSelectionsByTheme(whereKey, whereVal) {
   return (theme) => {
     const table = dataTables[theme];
+    const commonFields = [`${table}.EntityId as EntityId`, `${table}.EntityName`,
+      `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
+      `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.entityType as EntityType`
+    ];
+
     const dataSelectFields = R.concat(renameValueFields(theme), commonFields);
     const selectData = db.select(dataSelectFields).from(table)
+        .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`)
         .where(whereKey, whereVal);
 
     //TODO: What to do with negative values (as in some strategies)?
@@ -59,7 +65,7 @@ function dataSelectionsByTheme(whereKey, whereVal) {
         const totalsByType = R.zipObj(R.pluck('WugType', typeSums), R.map(R.omit(['WugType']), typeSums));
         const totalsByDecade = R.nth(0, decadeSums);
         return R.assoc(theme, {
-          data: data,
+          rows: data,
           typeTotals: totalsByType,
           decadeTotals: totalsByDecade
         }, {});

@@ -2,6 +2,7 @@
 
 export default {
   API_BASE: '/api/v1',
+  THEMES: ['demands', 'supplies', 'needs', 'strategies'],
   THEME_KEYS: {
     'demands': 'D',
     'needs': 'N',
