@@ -47,7 +47,7 @@ export default React.createClass({
     return (
       <div className="row">
         <div className="twelve columns">
-          <h4>Data by Year</h4>
+          <h4>Data Totals</h4>
           <LineChart chartData={chartData} chartOptions={chartOptions} />
           <p>Legend: Demands Existing Supplies Needs (Potential Shortages) Strategy Supplies</p>
         </div>
