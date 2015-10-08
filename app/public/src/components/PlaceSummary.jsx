@@ -3,9 +3,9 @@ import {PureRenderMixin} from 'react/addons';
 
 export default React.createClass({
   propTypes: {
-    theme: React.PropTypes.string,
-    year: React.PropTypes.string,
-    dataRows: React.PropTypes.array
+    type: React.PropTypes.string,
+    typeId: React.PropTypes.string,
+    placeData: React.PropTypes.object
   },
 
   mixins: [PureRenderMixin],
@@ -21,11 +21,8 @@ export default React.createClass({
     }
 
     return (
-      <div className="theme-summary">
-        <h3>
-          {props.year}<br/>
-          {typeAndId.toUpperCase()}
-        </h3>
+      <div className="place-summary">
+        <h3>{typeAndId.toUpperCase()}</h3>
         <strong>Total Demands:</strong> 1234<br/>
         <strong>Total Existing Supplies:</strong> 1234<br/>
         <strong>Total Need (Potential Shortage):</strong> 1234 (Visualize)<br/>

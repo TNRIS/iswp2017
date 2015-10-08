@@ -33,6 +33,7 @@
     "chartist": "^0.9.4",
     "faucet": "0.0.1",
     "fixed-data-table": "^0.4.6",
+    "format-number": "^2.0.0",
     "hapi": "^9.3.1",
     "hoek": "^2.16.3",
     "inert": "^3.0.1",

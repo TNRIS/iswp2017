@@ -1,0 +1,74 @@
+
+@mixin series-color($color) {
+  .ct-point, .ct-line, .ct-bar {
+    stroke: $color;
+  }
+}
+
+@mixin tooltip-color($color) {
+  background: $color;
+  &:after {
+    border-top-color: $color;
+  }
+}
+
+.ct-chart {
+  .ct-label {
+    font-size: 1rem;
+  }
+
+  .series-demands {
+    @include series-color($demandsColor);
+  }
+
+  .series-supplies {
+    @include series-color($suppliesColor);
+  }
+
+  .series-needs {
+    @include series-color($needsColor);
+  }
+
+  .series-strategies {
+    @include series-color($strategiesColor);
+  }
+
+  .tooltip {
+    color: #fff;
+    display: inline-block;
+    font-weight: 700;
+    min-width: 5em;
+    padding: .5em;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+    z-index: 1;
+
+    &:after {
+      border: 15px solid transparent;
+      content: "";
+      height: 0;
+      left: 50%;
+      margin-left: -15px;
+      position: absolute;
+      top: 100%;
+      width: 0;
+    }
+
+    &.tooltip-demands {
+      @include tooltip-color($demandsColor);
+    }
+
+    &.tooltip-supplies {
+      @include tooltip-color($suppliesColor);
+    }
+
+    &.tooltip-needs {
+      @include tooltip-color($needsColor);
+    }
+
+    &.tooltip-strategies {
+      @include tooltip-color($strategiesColor);
+    }
+  }
+}

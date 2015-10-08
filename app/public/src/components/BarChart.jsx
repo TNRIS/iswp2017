@@ -38,8 +38,8 @@ export default React.createClass({
       this.chart.update(this.props.chartData, this.props.chartOptions);
     }
     else {
-      this.chart = new Chartist.Line(this.getDOMNode(), this.props.chartData, this.props.chartOptions);
-
+      this.chart = new Chartist.Bar(this.getDOMNode(), this.props.chartData, this.props.chartOptions);
+      //TODO: animate maybe
       const $chart = $(this.getDOMNode());
       const $tooltip = $chart.append('<div class="tooltip"></div>')
         .find('.tooltip')
@@ -47,7 +47,7 @@ export default React.createClass({
 
       let currClass = '';
 
-      $chart.on('mouseenter', '.ct-point', function showTooltip() {
+      $chart.on('mouseenter', '.ct-bar', function showTooltip() {
         const $point = $(this);
         const value = $point.attr('ct:value');
         const seriesName = $point.parent().attr('ct:series-name');
@@ -56,19 +56,18 @@ export default React.createClass({
         $tooltip.html(format()(value)).show();
       });
 
-      $chart.on('mouseleave', '.ct-point', () => {
+      $chart.on('mouseleave', '.ct-bar', () => {
         $tooltip.hide();
         $tooltip.removeClass(currClass);
       });
 
+      //TODO: FIXME: tooltip position
       $chart.on('mousemove', (event) => {
         $tooltip.css({
           left: event.offsetX - $tooltip.width() / 2,
-          top: event.offsetY + 20
+          top: event.offsetY
         });
       });
-
-      //TODO: animate maybe
     }
   },
 

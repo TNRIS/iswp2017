@@ -8,7 +8,8 @@ import PlaceDataStore from '../stores/PlaceDataStore';
 
 import PlaceMap from './PlaceMap';
 import PlaceSummary from './PlaceSummary';
-import DataByYearChart from './DataByYearChart';
+import DataTotalsChart from './DataTotalsChart';
+import DataByTypeChart from './DataByTypeChart';
 import DataTable from './DataTable';
 
 export default React.createClass({
@@ -32,7 +33,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps() {
-    // Route params are in this.props, and when route changes the theme data
+    // Route params are in this.props, and when route changes the data
     // need to be fetched again
     this.fetchPlaceData();
   },
@@ -68,13 +69,13 @@ export default React.createClass({
     // end TODO
 
     return (
-      <div className={`theme-container theme-${params.theme}`}>
-        <div className="theme-top">
+      <div className="place-view">
+        <div className="place-view-top">
           <PlaceMap id="main-map"
             type={params.type}
             typeId={params.typeId}
             placeData={this.state.placeData} />
-          <div className="theme-summary-wrapper wrapper">
+          <div className="place-summary-wrapper wrapper">
             <PlaceSummary
               type={params.type}
               typeId={params.typeId}
@@ -86,14 +87,14 @@ export default React.createClass({
           <div className="row">
             <div className="twelve columns">
               <div className="chart-container">
-                <DataByYearChart placeData={this.state.placeData} />
+                <DataTotalsChart placeData={this.state.placeData} />
               </div>
             </div>
           </div>
           <div className="row">
             <div className="twelve columns">
               <div className="chart-container">
-                <div>DataByTypeChart</div>
+                <DataByTypeChart placeData={this.state.placeData} />
               </div>
             </div>
           </div>

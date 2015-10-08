@@ -8,7 +8,10 @@ import LineChart from './LineChart';
 
 const chartOptions = {
   fullWidth: true,
-  height: '200px'
+  height: '200px',
+  chartPadding: {
+    right: 30
+  }
 };
 
 export default React.createClass({
@@ -37,17 +40,16 @@ export default React.createClass({
 
     const chartData = {
       labels: constants.DECADES,
-      series: series
+      series
     };
 
+    //TODO: Legend
     return (
       <div className="row">
-        <div className="ten columns">
+        <div className="twelve columns">
           <h4>Data by Year</h4>
           <LineChart chartData={chartData} chartOptions={chartOptions} />
-        </div>
-        <div className="two columns">
-          <h4>Legend</h4>
+          <p>Legend: Demands Existing Supplies Needs (Potential Shortages) Strategy Supplies</p>
         </div>
       </div>
     );

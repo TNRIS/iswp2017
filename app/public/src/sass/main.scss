@@ -17,6 +17,13 @@ Larger than Desktop HD
 
 $border-color: #e0e0e0;
 $twdb-blue: #3F556D;
+$demandsColor: #1FC684;
+$suppliesColor: #FBB50D;
+$needsColor: #AA0000;
+$strategiesColor: #FF7518;
+
+@import "charts";
+@import "maps";
 
 .wrapper {
   @media (min-width: 1000px) {
@@ -71,15 +78,15 @@ $twdb-blue: #3F556D;
   }
 }
 
-.theme-top {
+.place-view-top {
   position: relative;
   height: 40rem;
 
-  .theme-summary-wrapper {
+  .place-summary-wrapper {
     position: relative;
   }
 
-  .theme-summary {
+  .place-summary {
     width: 48%;
     float: left;
     margin: 3rem 2% 0 0;
@@ -94,48 +101,15 @@ $twdb-blue: #3F556D;
   }
 }
 
-#main-map {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
+
+h4 {
+  font-size: 2.5rem;
+  color: $twdb-blue;
+  margin-bottom: 0.5rem;
 }
 
-.chart-demands {
-  .ct-bar {
-    stroke: #ff00ff;
-    stroke-width: 2rem;
-  }
-}
-
-$demandsColor: #1FC684;
-$suppliesColor: #FBB50D;
-$needsColor: #AA0000;
-$strategiesColor: #FF7518;
-
-.ct-chart {
-  .series-demands {
-    .ct-point, .ct-line {
-      stroke: $demandsColor;
-    }
-  }
-
-  .series-supplies {
-    .ct-point, .ct-line {
-      stroke: $suppliesColor;
-    }
-  }
-
-  .series-needs {
-    .ct-point, .ct-line {
-      stroke: $needsColor;
-    }
-  }
-
-  .series-strategies {
-    .ct-point, .ct-line {
-      stroke: $strategiesColor;
-    }
-  }
+h5 {
+  font-size: 2rem;
+  color: $twdb-blue;
+  margin-bottom: 0.5rem;
 }
