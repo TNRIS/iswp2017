@@ -11,10 +11,13 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   render() {
-    // TODO: See https://github.com/facebook/fixed-data-table/blob/master/site/examples/SortExample.js
+    //TODO: Sorting - see https://github.com/facebook/fixed-data-table/blob/master/site/examples/SortExample.js
+    //TODO: Switcher to change the year of data
+    //TODO: Show all themes in the table?
     if (this.props.placeData && this.props.placeData.data) {
       return (
         <div>
+          <h4>Raw Data</h4>
           <div><p><strong>2020</strong> | 2030 | 2040 | 2050 | 2060 | 2070</p></div>
           <Table rowHeight={50}
             width={980}

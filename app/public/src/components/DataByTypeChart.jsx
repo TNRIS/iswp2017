@@ -5,7 +5,7 @@ import Spinner from 'react-spinkit';
 
 import constants from '../constants';
 import BarChart from './BarChart';
-import LineChart from './LineChart';
+// import LineChart from './LineChart';
 
 const chartOptions = {
   height: '200px',

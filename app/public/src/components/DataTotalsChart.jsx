@@ -5,6 +5,7 @@ import Spinner from 'react-spinkit';
 
 import constants from '../constants';
 import LineChart from './LineChart';
+import ChartLegend from './ChartLegend';
 
 const chartOptions = {
   fullWidth: true,
@@ -49,7 +50,7 @@ export default React.createClass({
         <div className="twelve columns">
           <h4>Data Totals</h4>
           <LineChart chartData={chartData} chartOptions={chartOptions} />
-          <p>Legend: Demands Existing Supplies Needs (Potential Shortages) Strategy Supplies</p>
+          <ChartLegend />
         </div>
       </div>
     );

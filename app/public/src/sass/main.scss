@@ -71,8 +71,6 @@ $strategiesColor: #FF7518;
 }
 
 .table-container {
-  margin-top: 2rem;
-
   .spinner {
     margin: 2rem auto;
   }
@@ -91,7 +89,7 @@ $strategiesColor: #FF7518;
     float: left;
     margin: 3rem 2% 0 0;
     background: rgba(255, 255, 255, 0.9);
-    border: 2px solid lighten($twdb-blue, 20%);
+    border-bottom: 1px solid lighten($twdb-blue, 20%);
     border-radius: 4px;
     padding: 1rem;
 
@@ -112,4 +110,16 @@ h5 {
   font-size: 2rem;
   color: $twdb-blue;
   margin-bottom: 0.5rem;
+}
+
+section.content {
+  background-color: #F9F4EE;
+}
+
+.data-section-row {
+  margin: 2rem 0;
+  border-radius: 4px;
+  padding: 1rem;
+  background-color: #fbfbfb;
+  border-bottom: 1px solid #e2e2e2;
 }
