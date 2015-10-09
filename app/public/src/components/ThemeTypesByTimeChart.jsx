@@ -8,11 +8,7 @@ import LineChart from './LineChart';
 import ChartLegend from './ChartLegend';
 
 const chartOptions = {
-  fullWidth: true,
-  height: '200px',
-  chartPadding: {
-    right: 30
-  }
+  height: '240px'
 };
 
 export default React.createClass({
@@ -29,31 +25,34 @@ export default React.createClass({
       );
     }
 
-    const series = constants.THEMES.map((theme) => {
-      return {
-        name: theme,
-        className: `series-${theme}`,
-        data: constants.DECADES.map((year) => {
-          return this.props.placeData.data[theme].decadeTotals[year];
-        })
-      };
-    });
+    const theme = 'demands';
+    const themeTitle = constants.THEME_TITLES[theme];
 
     const chartData = {
       labels: constants.DECADES,
-      series
+      series: constants.DECADES.map((year) => {
+        return constants.USAGE_TYPES.map((type) => {
+          if (this.props.placeData.data[theme].typeTotals[type]) {
+            return this.props.placeData.data[theme].typeTotals[type][`Total_${year}`];
+          }
+          return 0;
+        });
+      })
     };
 
-    //TODO: Legend
     return (
       <div className="row">
         <div className="twelve columns">
-          <h4>Data Totals</h4>
-          <LineChart chartData={chartData} chartOptions={chartOptions} />
-          <ChartLegend />
+          <div className="chart-header">
+            <h4>{themeTitle} by Usage Type</h4>
+            <ChartLegend />
+          </div>
+          <div>Select Theme: Demands | Supplies | Needs | Strategy Supplies</div>
+          <LineChart
+            chartData={chartData}
+            chartOptions={chartOptions} />
         </div>
       </div>
     );
   }
-
 });

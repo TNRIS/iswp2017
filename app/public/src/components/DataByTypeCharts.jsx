@@ -4,12 +4,13 @@ import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
 
 import constants from '../constants';
-import BarChart from './BarChart';
-// import LineChart from './LineChart';
+import LineChart from './LineChart';
+import ChartLegend from './ChartLegend';
 
+//TODO: maybe shade area between demands and existing supplies in red
+//TODO: normalize to all be on the y-axis?
 const chartOptions = {
-  height: '200px',
-  width: '100%'
+  height: '200px'
 };
 
 export default React.createClass({
@@ -47,19 +48,22 @@ export default React.createClass({
     return (
       <div className="row">
         <div className="twelve columns">
-          <h4>Data by Usage Type</h4>
+          <div className="chart-header">
+            <h4>Data by Usage Type</h4>
+            <ChartLegend />
+          </div>
           {everyTwoTypes.map(([groupOne, groupTwo], i) => {
             return (
               <div className="row" key={i}>
                 <div className="six columns">
                   <h5>{groupOne}</h5>
-                  <BarChart
+                  <LineChart
                     chartData={{labels: constants.DECADES, series: seriesByType[groupOne]}}
                     chartOptions={chartOptions} />
                 </div>
                 <div className="six columns">
                   <h5>{groupTwo}</h5>
-                  <BarChart
+                  <LineChart
                     chartData={{labels: constants.DECADES, series: seriesByType[groupTwo]}}
                     chartOptions={chartOptions} />
                 </div>

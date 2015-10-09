@@ -8,7 +8,8 @@ import PlaceDataStore from '../stores/PlaceDataStore';
 
 import PlaceMap from './PlaceMap';
 import PlaceSummary from './PlaceSummary';
-import DataTotalsChart from './DataTotalsChart';
+import ThemeTotalsByTimeChart from './ThemeTotalsByTimeChart';
+import ThemeTypesByTimeChart from './ThemeTypesByTimeChart';
 import DataByTypeCharts from './DataByTypeCharts';
 import DataTable from './DataTable';
 
@@ -86,16 +87,17 @@ export default React.createClass({
           <Link to="placeview" params={{type: 'region', typeId: randRegion}}>random region</Link>
           <div className="row data-section-row">
             <div className="twelve columns">
-              <div className="chart-container">
-                <DataTotalsChart placeData={this.state.placeData} />
-              </div>
+              <ThemeTotalsByTimeChart placeData={this.state.placeData} />
             </div>
           </div>
           <div className="row data-section-row">
             <div className="twelve columns">
-              <div className="chart-container">
-                <DataByTypeCharts placeData={this.state.placeData} />
-              </div>
+              <ThemeTypesByTimeChart placeData={this.state.placeData} />
+            </div>
+          </div>
+          <div className="row data-section-row">
+            <div className="twelve columns">
+              <DataByTypeCharts placeData={this.state.placeData} />
             </div>
           </div>
           <div className="row data-section-row">

@@ -3,6 +3,12 @@
 export default {
   API_BASE: '/api/v1',
   THEMES: ['demands', 'supplies', 'needs', 'strategies'],
+  THEME_TITLES: {
+    'demands': 'Demands',
+    'supplies': 'Existing Supplies',
+    'needs': 'Needs (Potential Shortages)',
+    'strategies': 'Strategy Supplies'
+  },
   THEME_KEYS: {
     'demands': 'D',
     'supplies': 'WS',

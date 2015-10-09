@@ -22,7 +22,7 @@ export default React.createClass({
 
     return (
       <div className="place-summary">
-        <h3>{typeAndId.toUpperCase()}</h3>
+        <h2>{typeAndId.toUpperCase()}</h2>
         <strong>Total Demands:</strong> 1234<br/>
         <strong>Total Existing Supplies:</strong> 1234<br/>
         <strong>Total Need (Potential Shortage):</strong> 1234 (Visualize)<br/>

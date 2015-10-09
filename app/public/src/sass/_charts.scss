@@ -12,6 +12,17 @@
   }
 }
 
+.chart-header {
+  h4 {
+    display: inline-block;
+    margin-right: 20px;
+  }
+
+  .chart-legend {
+    display: inline-block;
+  }
+}
+
 .ct-chart {
   .ct-label {
     font-size: 1rem;
@@ -32,43 +43,45 @@
   .series-strategies {
     @include series-color($strategiesColor);
   }
+}
 
-  .tooltip {
-    color: #fff;
-    display: inline-block;
-    font-weight: 700;
-    min-width: 5em;
-    padding: .5em;
-    pointer-events: none;
+.ct-tooltip {
+  color: #fff;
+  background-color: #2e2e2e;
+  display: inline-block;
+  font-weight: 700;
+  min-width: 5em;
+  padding: .5em;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  z-index: 1;
+
+  &:after {
+    border: 15px solid transparent;
+    border-top-color: #2e2e2e;
+    content: "";
+    height: 0;
+    left: 50%;
+    margin-left: -15px;
     position: absolute;
-    text-align: center;
-    z-index: 1;
+    top: 100%;
+    width: 0;
+  }
 
-    &:after {
-      border: 15px solid transparent;
-      content: "";
-      height: 0;
-      left: 50%;
-      margin-left: -15px;
-      position: absolute;
-      top: 100%;
-      width: 0;
-    }
+  &.tooltip-demands {
+    @include tooltip-color($demandsColor);
+  }
 
-    &.tooltip-demands {
-      @include tooltip-color($demandsColor);
-    }
+  &.tooltip-supplies {
+    @include tooltip-color($suppliesColor);
+  }
 
-    &.tooltip-supplies {
-      @include tooltip-color($suppliesColor);
-    }
+  &.tooltip-needs {
+    @include tooltip-color($needsColor);
+  }
 
-    &.tooltip-needs {
-      @include tooltip-color($needsColor);
-    }
-
-    &.tooltip-strategies {
-      @include tooltip-color($strategiesColor);
-    }
+  &.tooltip-strategies {
+    @include tooltip-color($strategiesColor);
   }
 }

@@ -8,7 +8,7 @@ export default React.createClass({
   render() {
     return (
       <div className="chart-legend">
-
+        TODO: Legend
       </div>
     );
   }

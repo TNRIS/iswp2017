@@ -30,6 +30,5 @@
   </p>
 </footer>
 
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="/public/bundle.js" charset="utf-8"></script>
 {% endblock body %}
