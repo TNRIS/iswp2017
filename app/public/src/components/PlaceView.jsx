@@ -9,7 +9,7 @@ import PlaceDataStore from '../stores/PlaceDataStore';
 import PlaceMap from './PlaceMap';
 import PlaceSummary from './PlaceSummary';
 import DataTotalsChart from './DataTotalsChart';
-import DataByTypeChart from './DataByTypeChart';
+import DataByTypeCharts from './DataByTypeCharts';
 import DataTable from './DataTable';
 
 export default React.createClass({
@@ -94,7 +94,7 @@ export default React.createClass({
           <div className="row data-section-row">
             <div className="twelve columns">
               <div className="chart-container">
-                <DataByTypeChart placeData={this.state.placeData} />
+                <DataByTypeCharts placeData={this.state.placeData} />
               </div>
             </div>
           </div>

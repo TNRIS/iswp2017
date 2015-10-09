@@ -22,7 +22,8 @@ export default React.createClass({
   componentDidMount() {
     this.map = L.map(this.getDOMNode(), {
       center: this.state.center || [31.2, -99],
-      zoom: this.state.zoom || 5
+      zoom: this.state.zoom || 5,
+      scrollWheelZoom: false
     });
 
     const layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
