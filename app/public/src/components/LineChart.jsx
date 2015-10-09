@@ -4,6 +4,7 @@ import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Chartist from 'chartist';
 import format from 'format-number';
+import classnames from 'classnames';
 
 export default React.createClass({
   propTypes: {
@@ -50,11 +51,14 @@ export default React.createClass({
       const tooltipRect = React.findDOMNode(this.refs.tooltip).getBoundingClientRect();
       const name = parent.attributes['ct:series-name'] ?
         parent.attributes['ct:series-name'].value : 'default';
-      const val = event.target.attributes['ct:value'].value;
+
+      // bug in chartist results in 0s not being attached via ct:value
+      // ref: https://github.com/gionkunz/chartist-js/issues/464
+      const val = event.target.attributes['ct:value'].value || 0;
 
       this.setState({
         tooltip: {
-          className: `tooltip-${name}`,
+          className: `tooltip-${name.toLowerCase()}`,
           value: format()(val),
           bottom: chartRect.bottom - targetRect.bottom + 20,
           left: targetRect.left - chartRect.left - tooltipRect.width / 2,
@@ -95,35 +99,6 @@ export default React.createClass({
         this.props.chartData, chartOptions
       );
 
-      // const $chart = $(this.getDOMNode());
-      // const $tooltip = $chart.append('<div class="tooltip"></div>')
-      //   .find('.tooltip')
-      //   .hide();
-
-      // let currClass = '';
-
-      // $chart.on('mouseenter', '.ct-point', function showTooltip() {
-      //   const $point = $(this);
-      //   const value = $point.attr('ct:value');
-      //   const seriesName = $point.parent().attr('ct:series-name');
-      //   currClass = `tooltip-${seriesName}`;
-      //   $tooltip.addClass(currClass);
-      //   $tooltip.html(format()(value)).show();
-      // });
-
-      // $chart.on('mouseleave', '.ct-point', () => {
-      //   $tooltip.hide();
-      //   $tooltip.removeClass(currClass);
-      // });
-
-      // $chart.on('mousemove', (event) => {
-      //   console.log(event);
-      //   $tooltip.css({
-      //     left: event.pageX - $tooltip.width() / 2,
-      //     top: event.pageY + 20
-      //   });
-      // });
-
       //TODO: animate maybe
     }
   },
@@ -132,7 +107,7 @@ export default React.createClass({
     return (
       <div style={{position: 'relative'}}>
         <div ref="chart" className="ct-chart" onMouseOver={this.onMouseOver}></div>
-        <div ref="tooltip" className={'ct-tooltip ' + this.state.tooltip.className}
+        <div ref="tooltip" className={classnames('ct-tooltip', this.state.tooltip.className)}
           style={{
             bottom: this.state.tooltip.bottom,
             left: this.state.tooltip.left,
@@ -140,6 +115,7 @@ export default React.createClass({
           }}>
           {this.state.tooltip.value}
         </div>
+        <div className="u-pull-right"><small>TODO: Show Table</small></div>
       </div>
     );
   }

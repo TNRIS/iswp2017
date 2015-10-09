@@ -30,13 +30,17 @@ export default React.createClass({
 
     const chartData = {
       labels: constants.DECADES,
-      series: constants.DECADES.map((year) => {
-        return constants.USAGE_TYPES.map((type) => {
-          if (this.props.placeData.data[theme].typeTotals[type]) {
-            return this.props.placeData.data[theme].typeTotals[type][`Total_${year}`];
-          }
-          return 0;
-        });
+      series: constants.USAGE_TYPES.map((type) => {
+        return {
+          name: type,
+          className: `series-${type.toLowerCase()}`,
+          data: constants.DECADES.map((year) => {
+            if (this.props.placeData.data[theme].typeTotals[type]) {
+              return this.props.placeData.data[theme].typeTotals[type][`Total_${year}`];
+            }
+            return 0;
+          })
+        };
       })
     };
 

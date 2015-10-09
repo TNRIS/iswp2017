@@ -43,6 +43,34 @@
   .series-strategies {
     @include series-color($strategiesColor);
   }
+
+  .series-irrigation {
+    @include series-color($irrigationColor);
+  }
+
+  .series-livestock {
+    @include series-color($livestockColor);
+  }
+
+  .series-manufacturing {
+    @include series-color($manufacturingColor);
+  }
+
+  .series-mining {
+    @include series-color($miningColor);
+  }
+
+  .series-municipal {
+    @include series-color($municipalColor);
+  }
+
+  .series-steam-electric {
+    @include series-color($steamElectricColor);
+  }
+}
+
+.ct-series {
+  @include series-color(#000);
 }
 
 .ct-tooltip {
@@ -83,5 +111,29 @@
 
   &.tooltip-strategies {
     @include tooltip-color($strategiesColor);
+  }
+
+  &.tooltip-irrigation {
+    @include tooltip-color($irrigationColor);
+  }
+
+  &.tooltip-livestock {
+    @include tooltip-color($livestockColor);
+  }
+
+  &.tooltip-manufacturing {
+    @include tooltip-color($manufacturingColor);
+  }
+
+  &.tooltip-mining {
+    @include tooltip-color($miningColor);
+  }
+
+  &.tooltip-municipal {
+    @include tooltip-color($municipalColor);
+  }
+
+  &.tooltip-steam-electric {
+    @include tooltip-color($steamElectricColor);
   }
 }
