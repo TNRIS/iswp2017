@@ -40,13 +40,20 @@ export default React.createClass({
       series
     };
 
+    const legendEntries = constants.THEMES.map((theme) => {
+      return {
+        className: `series-${theme}`,
+        display: constants.THEME_TITLES[theme]
+      };
+    });
+
     //TODO: Legend - place next to end of h4 in .chart-header
     return (
       <div className="row">
         <div className="twelve columns">
           <div className="chart-header">
             <h4>Data Totals</h4>
-            <ChartLegend />
+            <ChartLegend entries={legendEntries} />
           </div>
           <LineChart chartData={chartData} chartOptions={chartOptions} />
         </div>

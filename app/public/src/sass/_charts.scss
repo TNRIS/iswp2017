@@ -12,6 +12,10 @@
   }
 }
 
+@mixin legend-color($color) {
+  fill: $color;
+}
+
 .chart-header {
   h4 {
     display: inline-block;
@@ -20,6 +24,40 @@
 
   .chart-legend {
     display: inline-block;
+
+    > ul {
+      list-style: none;
+
+      > li {
+        display: inline-block;
+        margin: 0 0 0 10px;
+        color: #3e3e3e;
+      }
+    }
+
+    svg.legend-marker {
+      width: 14px;
+      height: 13px;
+      margin-right: 2px;
+
+      @each $theme in $themes {
+        $name: nth($theme, 1);
+        $color: nth($theme, 2);
+
+        circle.series-#{$name} {
+          @include legend-color($color);
+        }
+      }
+
+      @each $type in $usageTypes {
+        $name: nth($type, 1);
+        $color: nth($type, 2);
+
+        .series-#{$name} {
+          @include legend-color($color);
+        }
+      }
+    }
   }
 }
 
@@ -28,44 +66,22 @@
     font-size: 1rem;
   }
 
-  .series-demands {
-    @include series-color($demandsColor);
+  @each $theme in $themes {
+    $name: nth($theme, 1);
+    $color: nth($theme, 2);
+
+    .series-#{$name} {
+      @include series-color($color);
+    }
   }
 
-  .series-supplies {
-    @include series-color($suppliesColor);
-  }
+  @each $type in $usageTypes {
+    $name: nth($type, 1);
+    $color: nth($type, 2);
 
-  .series-needs {
-    @include series-color($needsColor);
-  }
-
-  .series-strategies {
-    @include series-color($strategiesColor);
-  }
-
-  .series-irrigation {
-    @include series-color($irrigationColor);
-  }
-
-  .series-livestock {
-    @include series-color($livestockColor);
-  }
-
-  .series-manufacturing {
-    @include series-color($manufacturingColor);
-  }
-
-  .series-mining {
-    @include series-color($miningColor);
-  }
-
-  .series-municipal {
-    @include series-color($municipalColor);
-  }
-
-  .series-steam-electric {
-    @include series-color($steamElectricColor);
+    .series-#{$name} {
+      @include series-color($color);
+    }
   }
 }
 
@@ -97,43 +113,21 @@
     width: 0;
   }
 
-  &.tooltip-demands {
-    @include tooltip-color($demandsColor);
+  @each $theme in $themes {
+    $name: nth($theme, 1);
+    $color: nth($theme, 2);
+
+    &.tooltip-#{$name} {
+      @include tooltip-color($color);
+    }
   }
 
-  &.tooltip-supplies {
-    @include tooltip-color($suppliesColor);
-  }
+  @each $type in $usageTypes {
+    $name: nth($type, 1);
+    $color: nth($type, 2);
 
-  &.tooltip-needs {
-    @include tooltip-color($needsColor);
-  }
-
-  &.tooltip-strategies {
-    @include tooltip-color($strategiesColor);
-  }
-
-  &.tooltip-irrigation {
-    @include tooltip-color($irrigationColor);
-  }
-
-  &.tooltip-livestock {
-    @include tooltip-color($livestockColor);
-  }
-
-  &.tooltip-manufacturing {
-    @include tooltip-color($manufacturingColor);
-  }
-
-  &.tooltip-mining {
-    @include tooltip-color($miningColor);
-  }
-
-  &.tooltip-municipal {
-    @include tooltip-color($municipalColor);
-  }
-
-  &.tooltip-steam-electric {
-    @include tooltip-color($steamElectricColor);
+    &.tooltip-#{$name} {
+      @include tooltip-color($color);
+    }
   }
 }

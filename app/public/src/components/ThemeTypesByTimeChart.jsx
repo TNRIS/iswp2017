@@ -2,6 +2,7 @@
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
+import titleize from 'titleize';
 
 import constants from '../constants';
 import LineChart from './LineChart';
@@ -44,12 +45,19 @@ export default React.createClass({
       })
     };
 
+    const legendEntries = constants.USAGE_TYPES.map((type) => {
+      return {
+        className: `series-${type}`,
+        display: titleize(type)
+      };
+    });
+
     return (
       <div className="row">
         <div className="twelve columns">
           <div className="chart-header">
             <h4>{themeTitle} by Usage Type</h4>
-            <ChartLegend />
+            <ChartLegend entries={legendEntries} />
           </div>
           <div>Select Theme: Demands | Supplies | Needs | Strategy Supplies</div>
           <LineChart

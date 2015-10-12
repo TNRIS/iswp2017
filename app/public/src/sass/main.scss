@@ -19,20 +19,20 @@ Larger than Desktop HD
 
 $border-color: #e0e0e0;
 $twdb-blue: #3F556D;
-$demandsColor: #1FC684;
-$suppliesColor: #FBB50D;
-$needsColor: #AA0000;
-$strategiesColor: #FF7518;
 
-$irrigationColor: #66c2a5;
-$livestockColor: #fc8d62;
-$manufacturingColor: #8da0cb;
-$miningColor: #e78ac3;
-$municipalColor: #a6d854;
-$steamElectricColor: #ffd92f;
+$themes: ('demands', #1FC684), ('supplies', #FBB50D),
+  ('needs', #AA0000), ('strategies',  #FF7518);
+
+$usageTypes: ('irrigation' #66c2a5), ('livestock', #fc8d62),
+  ('manufacturing', #8da0cb), ('mining', #e78ac3),
+  ('municipal', #a6d854), ('steam-electric', #ffd92f);
 
 @import "charts";
 @import "maps";
+
+body {
+  color: #3e3e3e;
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Roboto Slab', serif;

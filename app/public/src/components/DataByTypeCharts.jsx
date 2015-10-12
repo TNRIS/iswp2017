@@ -28,6 +28,7 @@ export default React.createClass({
     }
 
     const seriesByType = {};
+
     constants.USAGE_TYPES.forEach((type) => {
       seriesByType[type] = constants.THEMES.map((theme) => {
         return {
@@ -43,6 +44,13 @@ export default React.createClass({
       });
     });
 
+    const legendEntries = constants.THEMES.map((theme) => {
+      return {
+        className: `series-${theme}`,
+        display: constants.THEME_TITLES[theme]
+      };
+    });
+
     const everyTwoTypes = R.splitEvery(2, constants.USAGE_TYPES);
 
     return (
@@ -50,7 +58,7 @@ export default React.createClass({
         <div className="twelve columns">
           <div className="chart-header">
             <h4>Data by Usage Type</h4>
-            <ChartLegend />
+            <ChartLegend entries={legendEntries} />
           </div>
           {everyTwoTypes.map(([groupOne, groupTwo], i) => {
             return (
