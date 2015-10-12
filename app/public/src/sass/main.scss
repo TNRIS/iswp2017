@@ -50,7 +50,6 @@ h5 {
   margin-bottom: 0.5rem;
 }
 
-
 .wrapper {
   @media (min-width: 1000px) {
     width: 1000px;
@@ -69,10 +68,6 @@ h5 {
   margin-top: 0;
   padding: 0.5rem 0;
   background: $twdb-blue;
-
-  h1 {
-    font-family: 'Raleway', Helvetica, Arial, sans-serif;
-  }
 
   .logo {
     display: inline-block;
@@ -101,6 +96,11 @@ h5 {
   a {
     color: darken($twdb-blue, 10%);
   }
+
+  .tnris-logo {
+    width: 80px;
+    margin-top: 8px;
+  }
 }
 
 .table-container {
@@ -128,11 +128,9 @@ h5 {
   }
 }
 
-
 section.content {
   background-color: #F9F4EE;
 }
-
 
 .place-view .container {
   min-height: 100%;

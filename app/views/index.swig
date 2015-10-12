@@ -28,6 +28,9 @@
     <a href="http://www2.tsl.state.tx.us/trail" title="TRAIL">TRAIL</a> |
     <a href="mailto:InteractiveSWP@twdb.texas.gov" title="Contact Us">Contact Us</a>
   </p>
+  <a href="http://tnris.org">
+    <img class="tnris-logo" src="/public/static/img/tnris_logo.svg" alt="TNRIS logo" />
+  </a>
 </footer>
 
 <script type="text/javascript" src="/public/bundle.js" charset="utf-8"></script>
