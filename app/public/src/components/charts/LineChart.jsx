@@ -115,7 +115,6 @@ export default React.createClass({
           }}>
           {this.state.tooltip.value}
         </div>
-        <div className="u-pull-right"><small>TODO: Show Table</small></div>
       </div>
     );
   }

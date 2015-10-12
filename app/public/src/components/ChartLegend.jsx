@@ -2,13 +2,15 @@
 import R from 'ramda';
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
+import classnames from 'classnames';
 
 export default React.createClass({
   propTypes: {
     entries: React.PropTypes.arrayOf(React.PropTypes.shape({
       className: React.PropTypes.string.isRequired,
       display: React.PropTypes.string.isRequired
-    })).isRequired
+    })).isRequired,
+    className: React.PropTypes.string
   },
 
   mixins: [PureRenderMixin],
@@ -20,7 +22,7 @@ export default React.createClass({
     }
 
     return (
-      <div className="chart-legend">
+      <div className={classnames("chart-legend", this.props.className)}>
         <ul>
           {this.props.entries.map((entry, i) => {
             return (

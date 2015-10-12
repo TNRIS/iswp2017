@@ -4,9 +4,10 @@ import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
 import titleize from 'titleize';
 
-import constants from '../constants';
+import constants from '../../constants';
 import LineChart from './LineChart';
-import ChartLegend from './ChartLegend';
+import ChartLegend from '../ChartLegend';
+import ChartDataTable from '../ChartDataTable';
 
 const chartOptions = {
   height: '240px'
@@ -57,12 +58,11 @@ export default React.createClass({
         <div className="twelve columns">
           <div className="chart-header">
             <h4>{themeTitle} by Usage Type</h4>
-            <ChartLegend entries={legendEntries} />
+            <ChartLegend entries={legendEntries} className="u-pull-right" />
           </div>
           <div>Select Theme: Demands | Supplies | Needs | Strategy Supplies</div>
-          <LineChart
-            chartData={chartData}
-            chartOptions={chartOptions} />
+          <LineChart chartData={chartData} chartOptions={chartOptions} />
+          <ChartDataTable className="u-pull-right" />
         </div>
       </div>
     );

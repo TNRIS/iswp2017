@@ -3,9 +3,10 @@ import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
 
-import constants from '../constants';
+import constants from '../../constants';
 import LineChart from './LineChart';
-import ChartLegend from './ChartLegend';
+import ChartLegend from '../ChartLegend';
+import ChartDataTable from '../ChartDataTable';
 
 const chartOptions = {
   height: '200px'
@@ -53,9 +54,10 @@ export default React.createClass({
         <div className="twelve columns">
           <div className="chart-header">
             <h4>Data Totals</h4>
-            <ChartLegend entries={legendEntries} />
+            <ChartLegend entries={legendEntries} className="u-pull-right" />
           </div>
           <LineChart chartData={chartData} chartOptions={chartOptions} />
+          <ChartDataTable className="u-pull-right" />
         </div>
       </div>
     );

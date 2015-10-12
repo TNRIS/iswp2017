@@ -8,9 +8,9 @@ import PlaceDataStore from '../stores/PlaceDataStore';
 
 import PlaceMap from './PlaceMap';
 import PlaceSummary from './PlaceSummary';
-import ThemeTotalsByTimeChart from './ThemeTotalsByTimeChart';
-import ThemeTypesByTimeChart from './ThemeTypesByTimeChart';
-import DataByTypeCharts from './DataByTypeCharts';
+import ThemeTotalsByTimeChart from './charts/ThemeTotalsByTimeChart';
+import ThemeTypesByTimeChart from './charts/ThemeTypesByTimeChart';
+import DataByTypeCharts from './charts/DataByTypeCharts';
 import DataTable from './DataTable';
 
 export default React.createClass({
