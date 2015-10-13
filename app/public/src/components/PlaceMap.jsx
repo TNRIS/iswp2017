@@ -6,13 +6,14 @@ import React from 'react';
 import MapStateStore from '../stores/MapStateStore';
 // import MapStateActions from '../actions/MapStateActions';
 import entityMapStyles from '../utils/EntityMapStyles';
+import PropTypes from '../utils/CustomPropTypes';
 
 export default React.createClass({
   propTypes: {
     id: React.PropTypes.string,
     type: React.PropTypes.string,
     typeId: React.PropTypes.string,
-    placeData: React.PropTypes.object
+    placeData: PropTypes.PlaceData
   },
 
   getInitialState() {

@@ -3,6 +3,7 @@ import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
 
+import PropTypes from '../../utils/CustomPropTypes';
 import constants from '../../constants';
 import LineChart from './LineChart';
 import ChartLegend from '../ChartLegend';
@@ -16,7 +17,7 @@ const chartOptions = {
 
 export default React.createClass({
   propTypes: {
-    placeData: React.PropTypes.object
+    placeData: PropTypes.PlaceData
   },
 
   mixins: [PureRenderMixin],
@@ -34,6 +35,7 @@ export default React.createClass({
       seriesByType[type] = constants.THEMES.map((theme) => {
         return {
           name: constants.THEME_TITLES[theme],
+          meta: theme,
           className: `series-${theme}`,
           data: constants.DECADES.map((year) => {
             if (this.props.placeData.data[theme].typeTotals[type]) {
@@ -55,35 +57,33 @@ export default React.createClass({
     const everyTwoTypes = R.splitEvery(2, constants.USAGE_TYPES);
 
     return (
-      <div className="row">
-        <div className="twelve columns">
-          <div className="chart-header">
-            <h4>Data by Usage Type</h4>
-            <ChartLegend className="u-pull-right" entries={legendEntries} />
-          </div>
-          {everyTwoTypes.map(([groupOne, groupTwo], i) => {
-            const groupOneData = {labels: constants.DECADES, series: seriesByType[groupOne]};
-            const groupTwoData = {labels: constants.DECADES, series: seriesByType[groupTwo]};
-            return (
-              <div className="row" key={i}>
-                <div className="six columns">
-                  <h5>{groupOne}</h5>
-                  <LineChart
-                    chartData={groupOneData}
-                    chartOptions={chartOptions} />
-                  <ChartDataTable className="u-full-width" chartData={groupOneData} />
-                </div>
-                <div className="six columns">
-                  <h5>{groupTwo}</h5>
-                  <LineChart
-                    chartData={groupTwoData}
-                    chartOptions={chartOptions} />
-                  <ChartDataTable className="u-full-width" chartData={groupTwoData} />
-                </div>
-              </div>
-            );
-          })}
+      <div>
+        <div className="chart-header">
+          <h4>Data by Usage Type</h4>
+          <ChartLegend className="u-pull-right" entries={legendEntries} />
         </div>
+        {everyTwoTypes.map(([groupOne, groupTwo], i) => {
+          const groupOneData = {labels: constants.DECADES, series: seriesByType[groupOne]};
+          const groupTwoData = {labels: constants.DECADES, series: seriesByType[groupTwo]};
+          return (
+            <div className="row" key={i}>
+              <div className="six columns">
+                <h5>{groupOne}</h5>
+                <LineChart
+                  chartData={groupOneData}
+                  chartOptions={chartOptions} />
+                <ChartDataTable className="u-full-width" chartData={groupOneData} />
+              </div>
+              <div className="six columns">
+                <h5>{groupTwo}</h5>
+                <LineChart
+                  chartData={groupTwoData}
+                  chartOptions={chartOptions} />
+                <ChartDataTable className="u-full-width" chartData={groupTwoData} />
+              </div>
+            </div>
+          );
+        })}
       </div>
     );
   }

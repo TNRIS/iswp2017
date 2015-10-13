@@ -11,6 +11,7 @@ import PlaceSummary from './PlaceSummary';
 import ThemeTotalsByTimeChart from './charts/ThemeTotalsByTimeChart';
 import ThemeTypesByTimeChart from './charts/ThemeTypesByTimeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
+import ThemeMaps from './ThemeMaps';
 import DataTable from './DataTable';
 
 export default React.createClass({
@@ -88,6 +89,11 @@ export default React.createClass({
           <div className="row data-section-row">
             <div className="twelve columns">
               <ThemeTotalsByTimeChart placeData={this.state.placeData} />
+            </div>
+          </div>
+          <div className="row data-section-row">
+            <div className="twelve columns">
+              <ThemeMaps placeData={this.state.placeData} />
             </div>
           </div>
           <div className="row data-section-row">

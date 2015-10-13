@@ -1,11 +1,13 @@
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 
+import PropTypes from '../utils/CustomPropTypes';
+
 export default React.createClass({
   propTypes: {
     type: React.PropTypes.string,
     typeId: React.PropTypes.string,
-    placeData: React.PropTypes.object
+    placeData: PropTypes.PlaceData
   },
 
   mixins: [PureRenderMixin],

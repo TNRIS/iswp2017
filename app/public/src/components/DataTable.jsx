@@ -3,9 +3,11 @@ import {PureRenderMixin} from 'react/addons';
 import {Table, Column} from 'fixed-data-table';
 import Spinner from 'react-spinkit';
 
+import PropTypes from '../utils/CustomPropTypes';
+
 export default React.createClass({
   propTypes: {
-    placeData: React.PropTypes.object
+    placeData: PropTypes.PlaceData
   },
 
   mixins: [PureRenderMixin],

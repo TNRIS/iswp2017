@@ -3,6 +3,7 @@ import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
 
+import PropTypes from '../../utils/CustomPropTypes';
 import constants from '../../constants';
 import LineChart from './LineChart';
 import ChartLegend from '../ChartLegend';
@@ -14,7 +15,7 @@ const chartOptions = {
 
 export default React.createClass({
   propTypes: {
-    placeData: React.PropTypes.object
+    placeData: PropTypes.PlaceData
   },
 
   mixins: [PureRenderMixin],
@@ -29,6 +30,7 @@ export default React.createClass({
     const series = constants.THEMES.map((theme) => {
       return {
         name: constants.THEME_TITLES[theme],
+        meta: theme,
         className: `series-${theme}`,
         data: constants.DECADES.map((year) => {
           return this.props.placeData.data[theme].decadeTotals[year];
@@ -49,15 +51,13 @@ export default React.createClass({
     });
 
     return (
-      <div className="row">
-        <div className="twelve columns">
-          <div className="chart-header">
-            <h4>Data Totals</h4>
-            <ChartLegend entries={legendEntries} className="u-pull-right" />
-          </div>
-          <LineChart chartData={chartData} chartOptions={chartOptions} />
-          <ChartDataTable className="u-full-width" chartData={chartData} />
+      <div>
+        <div className="chart-header">
+          <h4>Data Totals</h4>
+          <ChartLegend entries={legendEntries} className="u-pull-right" />
         </div>
+        <LineChart chartData={chartData} chartOptions={chartOptions} />
+        <ChartDataTable className="u-full-width" chartData={chartData} />
       </div>
     );
   }

@@ -49,8 +49,8 @@ export default React.createClass({
       const targetRect = event.target.getBoundingClientRect();
       const chartRect = React.findDOMNode(this.refs.chart).getBoundingClientRect();
       const tooltipRect = React.findDOMNode(this.refs.tooltip).getBoundingClientRect();
-      const name = parent.attributes['ct:series-name'] ?
-        parent.attributes['ct:series-name'].value : 'default';
+      const meta = parent.attributes['ct:meta'] ?
+        parent.attributes['ct:meta'].value : 'default';
 
       // bug in chartist results in 0s not being attached via ct:value
       // ref: https://github.com/gionkunz/chartist-js/issues/464
@@ -58,7 +58,7 @@ export default React.createClass({
 
       this.setState({
         tooltip: {
-          className: `tooltip-${name.toLowerCase()}`,
+          className: `tooltip-${meta.toLowerCase()}`,
           value: format()(val),
           bottom: chartRect.bottom - targetRect.bottom + 20,
           left: targetRect.left - chartRect.left - tooltipRect.width / 2,
@@ -79,9 +79,6 @@ export default React.createClass({
 
   updateChart() {
     if (!this.props.chartData) { return; }
-
-    //TODO: Fix tooltips to use className or something. name doesn't work
-    // because that needs to be a readable name
 
     const defaultOptions = {
       fullWidth: true,
