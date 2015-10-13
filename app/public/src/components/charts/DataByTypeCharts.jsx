@@ -33,7 +33,7 @@ export default React.createClass({
     constants.USAGE_TYPES.forEach((type) => {
       seriesByType[type] = constants.THEMES.map((theme) => {
         return {
-          name: theme,
+          name: constants.THEME_TITLES[theme],
           className: `series-${theme}`,
           data: constants.DECADES.map((year) => {
             if (this.props.placeData.data[theme].typeTotals[type]) {
@@ -62,21 +62,23 @@ export default React.createClass({
             <ChartLegend className="u-pull-right" entries={legendEntries} />
           </div>
           {everyTwoTypes.map(([groupOne, groupTwo], i) => {
+            const groupOneData = {labels: constants.DECADES, series: seriesByType[groupOne]};
+            const groupTwoData = {labels: constants.DECADES, series: seriesByType[groupTwo]};
             return (
               <div className="row" key={i}>
                 <div className="six columns">
                   <h5>{groupOne}</h5>
                   <LineChart
-                    chartData={{labels: constants.DECADES, series: seriesByType[groupOne]}}
+                    chartData={groupOneData}
                     chartOptions={chartOptions} />
-                  <ChartDataTable className="u-pull-right" />
+                  <ChartDataTable className="u-full-width" chartData={groupOneData} />
                 </div>
                 <div className="six columns">
                   <h5>{groupTwo}</h5>
                   <LineChart
-                    chartData={{labels: constants.DECADES, series: seriesByType[groupTwo]}}
+                    chartData={groupTwoData}
                     chartOptions={chartOptions} />
-                  <ChartDataTable className="u-pull-right" />
+                  <ChartDataTable className="u-full-width" chartData={groupTwoData} />
                 </div>
               </div>
             );

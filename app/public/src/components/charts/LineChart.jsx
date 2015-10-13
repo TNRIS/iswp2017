@@ -80,6 +80,9 @@ export default React.createClass({
   updateChart() {
     if (!this.props.chartData) { return; }
 
+    //TODO: Fix tooltips to use className or something. name doesn't work
+    // because that needs to be a readable name
+
     const defaultOptions = {
       fullWidth: true,
       lineSmooth: false,

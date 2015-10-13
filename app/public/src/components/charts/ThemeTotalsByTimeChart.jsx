@@ -2,6 +2,7 @@
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
+import ToggleDisplay from 'react-toggle-display';
 
 import constants from '../../constants';
 import LineChart from './LineChart';
@@ -19,6 +20,20 @@ export default React.createClass({
 
   mixins: [PureRenderMixin],
 
+  getInitialState() {
+    return {
+      showTable: false
+    };
+  },
+
+  toggleTableClick(event) {
+    console.log('in toggleTable');
+    console.log(this.state.showTable);
+    event.preventDefault();
+    this.state.showTable = !this.state.showTable;
+
+  },
+
   render() {
     if (!this.props.placeData || !this.props.placeData.data) {
       return (
@@ -28,7 +43,7 @@ export default React.createClass({
 
     const series = constants.THEMES.map((theme) => {
       return {
-        name: theme,
+        name: constants.THEME_TITLES[theme],
         className: `series-${theme}`,
         data: constants.DECADES.map((year) => {
           return this.props.placeData.data[theme].decadeTotals[year];
@@ -48,7 +63,6 @@ export default React.createClass({
       };
     });
 
-    //TODO: Legend - place next to end of h4 in .chart-header
     return (
       <div className="row">
         <div className="twelve columns">
@@ -57,7 +71,9 @@ export default React.createClass({
             <ChartLegend entries={legendEntries} className="u-pull-right" />
           </div>
           <LineChart chartData={chartData} chartOptions={chartOptions} />
-          <ChartDataTable className="u-pull-right" />
+          <a href="#" onClick={this.toggleTableClick}>Toggle</a>
+          <ToggleDisplay show={this.state.showTable}>SHOW TABLE</ToggleDisplay>
+          <ChartDataTable className="u-full-width" chartData={chartData} />
         </div>
       </div>
     );
