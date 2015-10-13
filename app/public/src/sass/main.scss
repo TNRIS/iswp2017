@@ -139,6 +139,11 @@ a {
 
 section.content {
   background-color: #F9F4EE;
+  /* Seamless Paper Texture by Merry
+    From: http://subtlepatterns.com/seamless-paper-texture/
+    CC-BY-SA: http://creativecommons.org/licenses/by-sa/3.0/
+  */
+  background: url('/public/static/img/seamless_paper_texture.png');
 }
 
 .place-view .container {
@@ -150,7 +155,7 @@ section.content {
   border-radius: 4px;
   padding: 1rem;
   background-color: #fbfbfb;
-  border-bottom: 1px solid #e2e2e2;
+  border-bottom: 1px solid #a9a9a9;
 
   .spinner {
     margin: 2rem auto;
