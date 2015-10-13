@@ -2,7 +2,6 @@
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
-import ToggleDisplay from 'react-toggle-display';
 
 import constants from '../../constants';
 import LineChart from './LineChart';
@@ -19,20 +18,6 @@ export default React.createClass({
   },
 
   mixins: [PureRenderMixin],
-
-  getInitialState() {
-    return {
-      showTable: false
-    };
-  },
-
-  toggleTableClick(event) {
-    console.log('in toggleTable');
-    console.log(this.state.showTable);
-    event.preventDefault();
-    this.state.showTable = !this.state.showTable;
-
-  },
 
   render() {
     if (!this.props.placeData || !this.props.placeData.data) {
@@ -71,8 +56,6 @@ export default React.createClass({
             <ChartLegend entries={legendEntries} className="u-pull-right" />
           </div>
           <LineChart chartData={chartData} chartOptions={chartOptions} />
-          <a href="#" onClick={this.toggleTableClick}>Toggle</a>
-          <ToggleDisplay show={this.state.showTable}>SHOW TABLE</ToggleDisplay>
           <ChartDataTable className="u-full-width" chartData={chartData} />
         </div>
       </div>

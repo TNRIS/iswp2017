@@ -34,7 +34,7 @@ export default React.createClass({
       labels: constants.DECADES,
       series: constants.USAGE_TYPES.map((type) => {
         return {
-          name: type,
+          name: titleize(type),
           className: `series-${type.toLowerCase()}`,
           data: constants.DECADES.map((year) => {
             if (this.props.placeData.data[theme].typeTotals[type]) {

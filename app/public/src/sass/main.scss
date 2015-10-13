@@ -50,6 +50,15 @@ h5 {
   margin-bottom: 0.5rem;
 }
 
+a {
+  color: $twdb-blue;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .wrapper {
   @media (min-width: 1000px) {
     width: 1000px;
@@ -87,7 +96,7 @@ h5 {
   text-align: center;
   border-top: 1px solid $border-color;
   padding: 2rem 0 2.5rem 0;
-  background-color: #A1B6CC;
+  background-color: #B1BDCA;
 
   p {
     margin: 0;
