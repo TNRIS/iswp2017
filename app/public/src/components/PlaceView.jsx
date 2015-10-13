@@ -6,12 +6,12 @@ import constants from '../constants';
 import PlaceDataActions from '../actions/PlaceDataActions';
 import PlaceDataStore from '../stores/PlaceDataStore';
 
-import PlaceMap from './PlaceMap';
+import PlaceMap from './maps/PlaceMap';
 import PlaceSummary from './PlaceSummary';
 import ThemeTotalsByTimeChart from './charts/ThemeTotalsByTimeChart';
 import ThemeTypesByTimeChart from './charts/ThemeTypesByTimeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
-import ThemeMaps from './ThemeMaps';
+import ThemeMaps from './maps/ThemeMaps';
 import DataTable from './DataTable';
 
 export default React.createClass({

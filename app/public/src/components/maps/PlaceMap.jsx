@@ -3,10 +3,10 @@ import R from 'ramda';
 import L from 'leaflet';
 import React from 'react';
 
-import MapStateStore from '../stores/MapStateStore';
-// import MapStateActions from '../actions/MapStateActions';
-import entityMapStyles from '../utils/EntityMapStyles';
-import PropTypes from '../utils/CustomPropTypes';
+import MapStateStore from '../../stores/MapStateStore';
+// import MapStateActions from '../../actions/MapStateActions';
+import entityMapStyles from '../../utils/EntityMapStyles';
+import PropTypes from '../../utils/CustomPropTypes';
 
 export default React.createClass({
   propTypes: {
