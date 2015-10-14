@@ -11,7 +11,8 @@
     "test": "npm run unit-test && npm run integration-test",
     "unit-test": "NODE_PATH=./app tape test/unit/**.*",
     "integration-test": "NODE_PATH=./app lab -T test/integration/transform.js -S test/integration/",
-    "dev-test": "nodemon --exec npm run unit-test"
+    "dev-test": "nodemon --exec npm run unit-test",
+    "eb-demo-zip": "zip -r demo-$(date +'%s').zip app package.json webpack.config.js Dockerfile Dockerrun.aws.json"
   },
   "engines": {
     "node": ">=0.12.0",
@@ -30,9 +31,11 @@
   "dependencies": {
     "alt": "^0.17.1",
     "babel-core": "^5.8.22",
+    "babel-loader": "^5.3.2",
     "chartist": "^0.9.4",
     "classnames": "^2.1.5",
-    "faucet": "0.0.1",
+    "css-loader": "^0.16.0",
+    "extract-text-webpack-plugin": "^0.8.2",
     "fixed-data-table": "^0.4.6",
     "format-number": "^2.0.0",
     "hapi": "^9.3.1",
@@ -42,35 +45,33 @@
     "joi": "^6.7.0",
     "knex": "^0.8.6",
     "node-config": "0.0.2",
+    "node-sass": "^3.3.3",
     "ramda": "^0.17.1",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "react-spinkit": "^1.1.4",
     "react-toggle-display": "^1.0.0",
+    "sass-loader": "^2.0.1",
     "sqlite3": "^3.0.10",
+    "style-loader": "^0.12.4",
     "swig": "^1.4.2",
     "titleize": "^1.0.0",
     "topojson": "^1.6.19",
     "underscore": "^1.8.3",
     "vision": "^3.0.0",
+    "webpack": "^1.12.2",
     "xhr": "^2.0.4"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.0",
-    "babel-loader": "^5.3.2",
     "code": "^1.5.0",
     "css-loader": "^0.16.0",
     "eslint": "^1.2.1",
     "eslint-config-airbnb": "0.0.8",
     "eslint-plugin-react": "^3.3.0",
-    "extract-text-webpack-plugin": "^0.8.2",
     "lab": "^5.16.1",
-    "node-sass": "^3.2.0",
     "nodemon": "^1.4.1",
     "requiredir": "^1.0.7",
-    "sass-loader": "^2.0.1",
-    "style-loader": "^0.12.3",
-    "tape": "^4.2.0",
-    "webpack": "^1.12.2"
+    "tape": "^4.2.0"
   }
 }
