@@ -18,7 +18,7 @@
   </div>
 </header>
 
-<section class="content" id="reactApp"></section>
+<section class="main-content" id="reactApp"></section>
 
 <footer class="footer">
   <p>This website is brought to you by the <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">Texas Water Development Board</a></p>

@@ -37,6 +37,7 @@ body {
     CC-BY-SA: http://creativecommons.org/licenses/by-sa/3.0/
   */
   background: url('/public/static/img/seamless_paper_texture.png');
+  position: relative;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -80,7 +81,8 @@ a {
   }
 
   margin-top: 0;
-  padding: 0.5rem 0;
+  padding: 8px 0 12px 0;
+  height: 30px;
   background: rgba($twdb-blue, 0.8);
 
   .logo {
@@ -100,7 +102,12 @@ a {
 .footer {
   text-align: center;
   border-top: 1px solid $border-color;
-  padding: 2rem 0 2.5rem 0;
+  padding: 2rem 0;
+  height: 100px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
   background-color: rgba(#B1BDCA, 0.8);
 
   p {
@@ -117,8 +124,8 @@ a {
   }
 }
 
-section.content {
-  background-color: rgba(#F9F4EE, 0.3);
+section.main-content {
+  padding-bottom: 140px; //height of .footer
 }
 
 .table-container {
@@ -150,8 +157,12 @@ section.content {
   min-height: 100%;
 }
 
+.not-found .container {
+  padding-top: 2rem;
+}
+
 .data-section-row {
-  margin: 2rem 0;
+  margin: 0 0 2rem 0;
   border-radius: 4px;
   padding: 1rem 1.4rem;
   background-color: #fbfbfb;

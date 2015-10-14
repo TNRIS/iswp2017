@@ -14,6 +14,7 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   componentDidMount() {
+    console.log(this.props.data);
     this.map = L.map(React.findDOMNode(this.refs.map), {
       center: constants.DEFAULT_MAP_CENTER,
       zoom: constants.DEFAULT_MAP_ZOOM,
