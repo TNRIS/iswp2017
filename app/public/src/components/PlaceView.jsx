@@ -57,6 +57,7 @@ export default React.createClass({
 
   render() {
     const params = this.getParams();
+    const placeData = this.state.placeData;
 
     // TODO: REMOVE: temporary view switching by picking random region
     const sample = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -73,43 +74,43 @@ export default React.createClass({
     return (
       <div className="place-view">
         <div className="place-view-top">
-          <PlaceMap id="main-map"
+          <PlaceMap className="place-map"
             type={params.type}
             typeId={params.typeId}
-            placeData={this.state.placeData} />
+            placeData={placeData} />
           <div className="place-summary-wrapper wrapper">
             <PlaceSummary
               type={params.type}
               typeId={params.typeId}
-              placeData={this.state.placeData} />
+              placeData={placeData} />
           </div>
         </div>
         <div className="container">
           <Link to="placeview" params={{type: 'region', typeId: randRegion}}>random region</Link>
           <div className="row data-section-row">
             <div className="twelve columns">
-              <ThemeTotalsByTimeChart placeData={this.state.placeData} />
+              <ThemeTotalsByTimeChart placeData={placeData} />
             </div>
           </div>
           <div className="row data-section-row">
             <div className="twelve columns">
-              <ThemeMaps placeData={this.state.placeData} />
+              <ThemeMaps placeData={placeData} />
             </div>
           </div>
           <div className="row data-section-row">
             <div className="twelve columns">
-              <ThemeTypesByTimeChart placeData={this.state.placeData} />
+              <DataByTypeCharts placeData={placeData} />
             </div>
           </div>
           <div className="row data-section-row">
             <div className="twelve columns">
-              <DataByTypeCharts placeData={this.state.placeData} />
+              <ThemeTypesByTimeChart placeData={placeData} />
             </div>
           </div>
           <div className="row data-section-row">
             <div className="twelve columns">
               <div className="table-container">
-                <DataTable placeData={this.state.placeData} />
+                <DataTable placeData={placeData} />
               </div>
             </div>
           </div>

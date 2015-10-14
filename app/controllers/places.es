@@ -5,14 +5,17 @@ import topojson from 'topojson';
 import db from 'db';
 
 function selectRegions() {
-  return db.select('LETTER', 'geojson').from('regions');
+  return db.select('LETTER as Name', 'geojson').from('regions');
 }
 
 function selectCounties() {
-  return db.select('COUNTY', 'FIPS_NBR', 'geojson').from('counties');
+  return db.select('COUNTY as Name', 'FIPS_NBR', 'geojson').from('counties');
 }
 
 function rowToFeature(row) {
+  if (!row || !row.geojson) {
+    return null;
+  }
   const feature = JSON.parse(row.geojson);
   feature.properties = R.omit(['geojson'])(row);
   return feature;

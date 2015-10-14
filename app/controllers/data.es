@@ -62,6 +62,10 @@ function dataSelectionsByTheme(whereKey, whereVal) {
 
     return Promise.all([selectData, selectTypeSums, selectDecadeSums])
       .then(([data, typeSums, decadeSums]) => {
+        if (!data || R.isEmpty(data)) {
+          return null;
+        }
+
         const totalsByType = R.zipObj(R.pluck('WugType', typeSums), R.map(R.omit(['WugType']), typeSums));
         const totalsByDecade = R.nth(0, decadeSums);
         return R.assoc(theme, {
