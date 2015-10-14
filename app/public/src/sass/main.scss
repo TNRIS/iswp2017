@@ -38,6 +38,7 @@ body {
   */
   background: url('/public/static/img/seamless_paper_texture.png');
   position: relative;
+  padding-bottom: 140px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -125,7 +126,7 @@ a {
 }
 
 section.main-content {
-  padding-bottom: 140px; //height of .footer
+
 }
 
 .table-container {
