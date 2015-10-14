@@ -16,6 +16,7 @@ const styles = {
   needs: {
     color: '#00ff00'
   }
+  //TODO strategies, supplies
 };
 
 export default function(theme) {

@@ -24,20 +24,21 @@ export default React.createClass({
     return (
       <div>
         <h4>Maps</h4>
+        YEAR: 2020 | 2040 | 2050 | 2060 | 2070
         <div className="row">
           <div className="six columns">
-            <ThemeMap theme={"demands"} data={placeData.demands} />
+            <ThemeMap theme={"demands"} data={placeData.data.demands} />
           </div>
           <div className="six columns">
-            <ThemeMap theme={"supplies"} data={placeData.supplies} />
+            <ThemeMap theme={"supplies"} data={placeData.data.supplies} />
           </div>
         </div>
         <div className="row">
           <div className="six columns">
-            <ThemeMap theme={"needs"} data={placeData.needs} />
+            <ThemeMap theme={"needs"} data={placeData.data.needs} />
           </div>
           <div className="six columns">
-            <ThemeMap theme={"strategies"} data={placeData.strategies} />
+            <ThemeMap theme={"strategies"} data={placeData.data.strategies} />
           </div>
         </div>
       </div>
