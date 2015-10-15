@@ -53,7 +53,7 @@ export default React.createClass({
     return (
       <div>
         <div className="chart-header">
-          <h4>Data Totals</h4>
+          <h4>Totals by Year</h4>
           <ChartLegend entries={legendEntries} className="u-pull-right" />
         </div>
         <LineChart chartData={chartData} chartOptions={chartOptions} />
