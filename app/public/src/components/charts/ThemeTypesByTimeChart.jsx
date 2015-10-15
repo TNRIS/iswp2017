@@ -62,7 +62,7 @@ export default React.createClass({
           <h4>{themeTitle} by Usage Type</h4>
           <ChartLegend entries={legendEntries} className="u-pull-right" />
         </div>
-        <div>Select Theme: Demands | Supplies | Needs | Strategy Supplies</div>
+        <div>Select Theme: <strong>Demands</strong> | Existing Supplies | Needs (Potential Shortages) | Strategy Supplies</div>
         <LineChart chartData={chartData} chartOptions={chartOptions} />
         <ChartDataTable className="u-full-width" chartData={chartData} />
       </div>

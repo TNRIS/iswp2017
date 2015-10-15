@@ -11,12 +11,17 @@ const styleDefault = {
 
 const styles = {
   demands: {
-    color: '#ff00ff'
+    color: '#1FC684'
+  },
+  supplies: {
+    color: '#FBB50D'
   },
   needs: {
-    color: '#00ff00'
+    color: '#AA0000'
+  },
+  strategies: {
+    color: '#FF7518'
   }
-  //TODO strategies, supplies
 };
 
 export default function(theme) {

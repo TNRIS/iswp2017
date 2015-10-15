@@ -20,7 +20,7 @@ export default React.createClass({
       return (
         <div>
           <h4>Raw Data</h4>
-          <div><p><strong>2020</strong> | 2030 | 2040 | 2050 | 2060 | 2070</p></div>
+          <div><p>Select Decade: <strong>2020</strong> | 2030 | 2040 | 2050 | 2060 | 2070</p></div>
           <Table rowHeight={50}
             width={940}
             height={400}

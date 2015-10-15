@@ -24,7 +24,7 @@ export default React.createClass({
     return (
       <div>
         <h4>Maps</h4>
-        YEAR: 2020 | 2040 | 2050 | 2060 | 2070
+        Select Decade: <strong>2020</strong> | 2040 | 2050 | 2060 | 2070
         <div className="row">
           <div className="six columns">
             <ThemeMap theme={"demands"} data={placeData.data.demands} />
