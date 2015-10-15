@@ -12,3 +12,18 @@
   width: 100%;
   margin-bottom: 1.5rem;
 }
+
+@each $theme in $themes {
+  $name: nth($theme, 1);
+  $color: nth($theme, 2);
+
+  .entity-marker-#{$name} {
+    stroke: black;
+    stroke-width: 1px;
+    stroke-opacity: 0.8;
+    fill: $color;
+    fill-opacity: 0.9;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+}

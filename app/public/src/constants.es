@@ -32,5 +32,12 @@ export default {
     }
   },
   DEFAULT_MAP_CENTER: [31.2, -99],
-  DEFAULT_MAP_ZOOM: 5
+  DEFAULT_MAP_ZOOM: 5,
+  BOUNDARY_LAYER_STYLE: {
+    fillOpacity: 0.2,
+    color: '#3F556D',
+    weight: 2
+  },
+  MIN_ENTITY_POINT_RADIUS: 4,
+  MAX_ENTITY_POINT_RADIUS: 12
 };

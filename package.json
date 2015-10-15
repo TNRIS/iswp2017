@@ -52,6 +52,7 @@
     "react-spinkit": "^1.1.4",
     "react-toggle-display": "^1.0.0",
     "sass-loader": "^2.0.1",
+    "scale-number-range": "^1.0.3",
     "sqlite3": "^3.0.10",
     "style-loader": "^0.12.4",
     "swig": "^1.4.2",

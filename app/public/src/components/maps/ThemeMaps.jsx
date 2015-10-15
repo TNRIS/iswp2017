@@ -27,18 +27,18 @@ export default React.createClass({
         Select Decade: <strong>2020</strong> | 2040 | 2050 | 2060 | 2070
         <div className="row">
           <div className="six columns">
-            <ThemeMap theme={"demands"} data={placeData.data.demands} />
+            <ThemeMap theme={"demands"} data={placeData.data.demands} boundary={placeData.boundary} />
           </div>
           <div className="six columns">
-            <ThemeMap theme={"supplies"} data={placeData.data.supplies} />
+            <ThemeMap theme={"supplies"} data={placeData.data.supplies} boundary={placeData.boundary} />
           </div>
         </div>
         <div className="row">
           <div className="six columns">
-            <ThemeMap theme={"needs"} data={placeData.data.needs} />
+            <ThemeMap theme={"needs"} data={placeData.data.needs} boundary={placeData.boundary} />
           </div>
           <div className="six columns">
-            <ThemeMap theme={"strategies"} data={placeData.data.strategies} />
+            <ThemeMap theme={"strategies"} data={placeData.data.strategies} boundary={placeData.boundary} />
           </div>
         </div>
       </div>
