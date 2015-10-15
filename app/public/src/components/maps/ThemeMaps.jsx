@@ -3,6 +3,7 @@ import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
 
+import DecadeSelector from '../DecadeSelector';
 import ThemeMap from './ThemeMap';
 
 export default React.createClass({
@@ -24,7 +25,7 @@ export default React.createClass({
     return (
       <div>
         <h4>Maps</h4>
-        Select Decade: <strong>2020</strong> | 2040 | 2050 | 2060 | 2070
+        <DecadeSelector />
         <div className="row">
           <div className="six columns">
             <ThemeMap theme={"demands"} data={placeData.data.demands} boundary={placeData.boundary} />
