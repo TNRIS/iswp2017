@@ -41,9 +41,9 @@ server.register([Inert, Vision], () => {
     path: './views'
   });
 
-  addRoutes(server, homeRoutes);
-  addRoutes(server, apiRoutes, '/api/v1');
   addRoutes(server, publicRoutes, '/public');
+  addRoutes(server, apiRoutes, '/api/v1');
+  addRoutes(server, homeRoutes);
 
   if (require.main === module) {
     server.start(() => {
