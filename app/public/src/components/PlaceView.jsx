@@ -87,26 +87,31 @@ export default React.createClass({
         </div>
         <div className="container">
           <Link to="placeview" params={{type: 'region', typeId: randRegion}}>random region</Link>
+
           <div className="row data-section-row">
             <div className="twelve columns">
               <ThemeTotalsByTimeChart placeData={placeData} />
             </div>
           </div>
-          <div className="row data-section-row">
-            <div className="twelve columns">
-              <ThemeMaps placeData={placeData} />
-            </div>
-          </div>
-          <div className="row data-section-row">
-            <div className="twelve columns">
-              <DataByTypeCharts placeData={placeData} />
-            </div>
-          </div>
+
           <div className="row data-section-row">
             <div className="twelve columns">
               <ThemeTypesByTimeChart placeData={placeData} />
             </div>
           </div>
+
+          <div className="row data-section-row">
+            <div className="twelve columns">
+              <DataByTypeCharts placeData={placeData} />
+            </div>
+          </div>
+
+          <div className="row data-section-row">
+            <div className="twelve columns">
+              <ThemeMaps placeData={placeData} />
+            </div>
+          </div>
+
           <div className="row data-section-row">
             <div className="twelve columns">
               <div className="table-container">
@@ -114,6 +119,7 @@ export default React.createClass({
               </div>
             </div>
           </div>
+
         </div>
       </div>
     );
