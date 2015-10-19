@@ -10,7 +10,7 @@ export default React.createClass({
   render() {
     return (
       <div className="decade-selector">
-        JAMES Select Decade: <strong>2020</strong> | 2040 | 2050 | 2060 | 2070
+        Select Decade: <strong>2020</strong> | 2040 | 2050 | 2060 | 2070
       </div>
     );
   }
