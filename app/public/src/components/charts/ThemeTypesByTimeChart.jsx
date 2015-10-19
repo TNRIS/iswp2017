@@ -1,4 +1,5 @@
 
+import R from 'ramda';
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
@@ -34,7 +35,8 @@ export default React.createClass({
 
     const chartData = {
       labels: constants.DECADES,
-      series: constants.USAGE_TYPES.map((type) => {
+      // reverse USAGE_TYPES so that the lines z-indices are in official order
+      series: R.reverse(constants.USAGE_TYPES).map((type) => {
         return {
           name: titleize(type),
           meta: type.toLowerCase(),
