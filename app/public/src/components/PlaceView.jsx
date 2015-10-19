@@ -8,8 +8,8 @@ import PlaceDataStore from '../stores/PlaceDataStore';
 
 import PlaceMap from './maps/PlaceMap';
 import PlaceSummary from './PlaceSummary';
-import ThemeTotalsByTimeChart from './charts/ThemeTotalsByTimeChart';
-import ThemeTypesByTimeChart from './charts/ThemeTypesByTimeChart';
+import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
+import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
 import ThemeMaps from './maps/ThemeMaps';
 import DataTable from './DataTable';
@@ -90,13 +90,13 @@ export default React.createClass({
 
           <div className="row data-section-row">
             <div className="twelve columns">
-              <ThemeTotalsByTimeChart placeData={placeData} />
+              <ThemeTotalsByDecadeChart placeData={placeData} />
             </div>
           </div>
 
           <div className="row data-section-row">
             <div className="twelve columns">
-              <ThemeTypesByTimeChart placeData={placeData} />
+              <ThemeTypesByDecadeChart placeData={placeData} />
             </div>
           </div>
 

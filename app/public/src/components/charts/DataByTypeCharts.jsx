@@ -5,7 +5,7 @@ import Spinner from 'react-spinkit';
 
 import PropTypes from '../../utils/CustomPropTypes';
 import constants from '../../constants';
-import LineChart from './LineChart';
+import BarChart from './BarChart';
 import ChartLegend from '../ChartLegend';
 import ChartDataTable from '../ChartDataTable';
 
@@ -69,14 +69,14 @@ export default React.createClass({
             <div className="row" key={i}>
               <div className="six columns">
                 <h5>{groupOne}</h5>
-                <LineChart
+                <BarChart
                   chartData={groupOneData}
                   chartOptions={chartOptions} />
                 <ChartDataTable className="u-full-width" chartData={groupOneData} />
               </div>
               <div className="six columns">
                 <h5>{groupTwo}</h5>
-                <LineChart
+                <BarChart
                   chartData={groupTwoData}
                   chartOptions={chartOptions} />
                 <ChartDataTable className="u-full-width" chartData={groupTwoData} />

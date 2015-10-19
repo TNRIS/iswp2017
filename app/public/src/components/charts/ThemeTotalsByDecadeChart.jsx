@@ -5,7 +5,7 @@ import Spinner from 'react-spinkit';
 
 import PropTypes from '../../utils/CustomPropTypes';
 import constants from '../../constants';
-import LineChart from './LineChart';
+import BarChart from './BarChart';
 import ChartLegend from '../ChartLegend';
 import ChartDataTable from '../ChartDataTable';
 
@@ -53,10 +53,10 @@ export default React.createClass({
     return (
       <div>
         <div className="chart-header">
-          <h4>Totals by Year</h4>
+          <h4>Totals by Decade</h4>
           <ChartLegend entries={legendEntries} className="u-pull-right" />
         </div>
-        <LineChart chartData={chartData} chartOptions={chartOptions} />
+        <BarChart chartData={chartData} chartOptions={chartOptions} />
         <ChartDataTable className="u-full-width" chartData={chartData} />
       </div>
     );
