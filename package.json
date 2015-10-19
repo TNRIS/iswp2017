@@ -38,6 +38,8 @@
     "extract-text-webpack-plugin": "^0.8.2",
     "fixed-data-table": "^0.4.6",
     "format-number": "^2.0.0",
+    "good": "^6.4.0",
+    "good-console": "^5.1.0",
     "hapi": "^9.3.1",
     "hoek": "^2.16.3",
     "inert": "^3.0.1",

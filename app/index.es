@@ -1,6 +1,8 @@
 import Hapi from 'hapi';
 import Inert from 'inert'; // for static directory serving
 import Vision from 'vision'; // for view rendering
+import Good from 'good';
+import GoodConsole from 'good-console';
 import swig from 'swig';
 
 import homeRoutes from 'routes/home';
@@ -27,7 +29,24 @@ const server = new Hapi.Server({
   debug: {request: ['*']}, // TODO: Put in config
 });
 
-server.register([Inert, Vision], () => {
+const loggingOptions = {
+  opsInterval: 1000,
+  reporters: [{
+    reporter: GoodConsole,
+    events: { log: '*', error: '*', request: '*' }
+  }]
+};
+
+server.on('request-error', (request, err) => {
+  console.error(err);
+});
+
+server.register([Inert, Vision, {register: Good, options: loggingOptions}], (err) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+
   server.connection({
     port: 3333, // TODO: Put in config
     router: {stripTrailingSlash: true}
