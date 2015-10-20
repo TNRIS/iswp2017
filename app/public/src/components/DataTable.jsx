@@ -1,54 +1,51 @@
+
+import R from 'ramda';
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
-import {Table, Column} from 'fixed-data-table';
+import {Table} from 'reactable';
 import Spinner from 'react-spinkit';
 
+import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 
 export default React.createClass({
   propTypes: {
-    placeData: PropTypes.PlaceData
+    placeData: PropTypes.PlaceData,
+    decade: React.PropTypes.string
   },
 
   mixins: [PureRenderMixin],
+
+  getDefaultProps() {
+    return {
+      decade: '2020'
+    };
+  },
 
   render() {
     //TODO: Sorting - see https://github.com/facebook/fixed-data-table/blob/master/site/examples/SortExample.js
     //TODO: Switcher to change the year of data
     //TODO: Show all themes in the table?
-    if (this.props.placeData && this.props.placeData.data) {
+    const placeData = this.props.placeData;
+    if (!placeData || !placeData.data) {
       return (
-        <div>
-          <h4>Raw Data</h4>
-          <div><p>Select Decade: <strong>2020</strong> | 2030 | 2040 | 2050 | 2060 | 2070</p></div>
-          <Table rowHeight={50}
-            width={940}
-            height={400}
-            rowGetter={(rowIndex) => this.props.placeData.data.demands.rows[rowIndex]}
-            rowsCount={this.props.placeData.data.demands.rows.length}
-            headerHeight={50}>
-            <Column label="Name"
-              flexGrow={2}
-              width={200}
-              dataKey="EntityName" />
-            <Column label="Region"
-              flexGrow={0.5}
-              width={100}
-              dataKey="WugRegion" />
-            <Column label="County"
-              flexGrow={1}
-              width={200}
-              dataKey="WugCounty" />
-            <Column label="Demands 2020 (acre-feet/year)"
-              flexGrow={1}
-              width={200}
-              dataKey={'Value_2020'} />
-          </Table>
-        </div>
+        <Spinner spinnerName="double-bounce" />
       );
     }
+
+    const tableData = placeData.data.demands.rows;
+
     return (
-      <Spinner spinnerName="double-bounce" />
+      <div>
+        <h4>Raw Data</h4>
+        <div><p>Select Decade: <strong>2020</strong> | 2030 | 2040 | 2050 | 2060 | 2070</p></div>
+        <div className="table-container">
+          <Table className="data-table u-full-width"
+            data={tableData}
+            sortable={true}
+          />
+        </div>
+      </div>
     );
   }
 });
