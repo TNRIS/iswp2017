@@ -19,6 +19,7 @@ Larger than Desktop HD
 
 $border-color: #e0e0e0;
 $twdb-blue: #3F556D;
+$link-hover-color: #0FA0CE;
 
 $themes: ('demands', #1FC684), ('supplies', #FBB50D),
   ('needs', #AA0000), ('strategies',  #FF7518);
@@ -38,6 +39,7 @@ body {
   */
   background: url('/public/static/img/seamless_paper_texture.png');
   position: relative;
+  overflow-x: hidden;
   padding-bottom: 140px;
 }
 
@@ -62,6 +64,7 @@ a {
   text-decoration: underline;
 
   &:hover {
+    color: $link-hover-color;
     text-decoration: underline;
   }
 }
@@ -81,6 +84,20 @@ a {
     margin-top: 0;
   }
 
+  .nav-drawer-toggle {
+    display: block;
+    padding-left: 1rem;
+
+    > svg {
+      height: 100%;
+      fill: white;
+    }
+
+    &:hover > svg {
+      fill: $link-hover-color;
+    }
+  }
+
   margin-top: 0;
   padding: 8px 0 12px 0;
   height: 30px;
@@ -90,6 +107,7 @@ a {
     display: inline-block;
     height: 36px;
     vertical-align: bottom;
+    padding-right: 1rem;
   }
 
   h1 {
@@ -98,6 +116,11 @@ a {
     margin-bottom: 0;
     color: #fff;
   }
+}
+
+.nav-drawer {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2rem 1rem;
 }
 
 .footer {

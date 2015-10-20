@@ -5,7 +5,7 @@ import {State, Link} from 'react-router';
 import constants from '../constants';
 import PlaceDataActions from '../actions/PlaceDataActions';
 import PlaceDataStore from '../stores/PlaceDataStore';
-
+import ViewHeader from './ViewHeader';
 import PlaceMap from './maps/PlaceMap';
 import PlaceSummary from './PlaceSummary';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
@@ -73,52 +73,54 @@ export default React.createClass({
 
     return (
       <div className="place-view">
-        <div className="place-view-top">
-          <PlaceMap className="place-map"
-            type={params.type}
-            typeId={params.typeId}
-            placeData={placeData} />
-          <div className="place-summary-wrapper wrapper">
-            <PlaceSummary
+        <ViewHeader />
+        <section className="main-content">
+          <div className="place-view-top">
+            <PlaceMap className="place-map"
               type={params.type}
               typeId={params.typeId}
               placeData={placeData} />
-          </div>
-        </div>
-        <div className="container">
-          <Link to="placeview" params={{type: 'region', typeId: randRegion}}>random region</Link>
-
-          <div className="row data-section-row">
-            <div className="twelve columns">
-              <ThemeTotalsByDecadeChart placeData={placeData} />
+            <div className="place-summary-wrapper wrapper">
+              <PlaceSummary
+                type={params.type}
+                typeId={params.typeId}
+                placeData={placeData} />
             </div>
           </div>
+          <div className="container">
+            <Link to="placeview" params={{type: 'region', typeId: randRegion}}>random region</Link>
 
-          <div className="row data-section-row">
-            <div className="twelve columns">
-              <ThemeTypesByDecadeChart placeData={placeData} />
+            <div className="row data-section-row">
+              <div className="twelve columns">
+                <ThemeTotalsByDecadeChart placeData={placeData} />
+              </div>
+            </div>
+
+            <div className="row data-section-row">
+              <div className="twelve columns">
+                <ThemeTypesByDecadeChart placeData={placeData} />
+              </div>
+            </div>
+
+            <div className="row data-section-row">
+              <div className="twelve columns">
+                <DataByTypeCharts placeData={placeData} />
+              </div>
+            </div>
+
+            <div className="row data-section-row">
+              <div className="twelve columns">
+                <ThemeMaps placeData={placeData} />
+              </div>
+            </div>
+
+            <div className="row data-section-row">
+              <div className="twelve columns">
+                <DataTable placeData={placeData} />
+              </div>
             </div>
           </div>
-
-          <div className="row data-section-row">
-            <div className="twelve columns">
-              <DataByTypeCharts placeData={placeData} />
-            </div>
-          </div>
-
-          <div className="row data-section-row">
-            <div className="twelve columns">
-              <ThemeMaps placeData={placeData} />
-            </div>
-          </div>
-
-          <div className="row data-section-row">
-            <div className="twelve columns">
-              <DataTable placeData={placeData} />
-            </div>
-          </div>
-
-        </div>
+        </section>
       </div>
     );
   }

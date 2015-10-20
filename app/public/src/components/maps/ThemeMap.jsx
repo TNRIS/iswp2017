@@ -32,8 +32,11 @@ export default React.createClass({
     this.map = L.map(React.findDOMNode(this.refs.map), {
       center: constants.DEFAULT_MAP_CENTER,
       zoom: constants.DEFAULT_MAP_ZOOM,
-      scrollWheelZoom: false
+      scrollWheelZoom: false,
+      zoomControl: false
     });
+
+    L.control.zoom({position: 'topright'}).addTo(this.map)
 
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
       constants.BASE_MAP_LAYER.options
