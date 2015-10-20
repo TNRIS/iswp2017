@@ -114,9 +114,7 @@ export default React.createClass({
 
           <div className="row data-section-row">
             <div className="twelve columns">
-              <div className="table-container">
-                <DataTable placeData={placeData} />
-              </div>
+              <DataTable placeData={placeData} />
             </div>
           </div>
 

@@ -8,7 +8,6 @@ import routes from './routes';
 
 import './vendor/css/normalize.css';
 import './vendor/css/skeleton.css';
-import 'fixed-data-table/dist/fixed-data-table.css';
 import 'chartist/dist/chartist.min.css';
 
 import './sass/main.scss';
