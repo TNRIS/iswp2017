@@ -13,7 +13,7 @@
 {% block body %}
 <header class="header">
   <div class="header-title wrapper">
-    <img src="/public/static/img/twdb-logo-w200px-3c.png" class="logo" />
+    <img src="/public/static/img/twdb-logo-dark-bkgd-w200px-3c.png" class="logo" />
     <h1>Texas State Water Plan 2017</h1>
   </div>
 </header>
