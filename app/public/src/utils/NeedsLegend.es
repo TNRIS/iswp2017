@@ -4,7 +4,7 @@ const entityColors = [
   {limit: 10, color: '#1A9641'}, //green
   {limit: 25, color: '#FFFFBF'},
   {limit: 50, color: '#FDAE61'},
-  {limit: 100, color: '#D7191C'} //red
+  {limit: 100, color: 'rgb(237, 27, 47)'} //red
 ];
 
 
