@@ -68,7 +68,7 @@ export default React.createClass({
           Select Theme: <strong>Demands</strong> | Existing Supplies | Needs (Potential Shortages) | Strategy Supplies
         </div>
         <LineChart chartData={chartData} chartOptions={chartOptions} />
-        <ChartDataTable className="u-full-width" chartData={chartData} />
+        <ChartDataTable className="u-full-width" chartData={chartData} showTotals />
       </div>
     );
   }

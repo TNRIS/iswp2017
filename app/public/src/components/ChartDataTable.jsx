@@ -9,7 +9,8 @@ import ToggleDisplay from 'react-toggle-display';
 export default React.createClass({
   propTypes: {
     className: React.PropTypes.string,
-    chartData: React.PropTypes.object.isRequired
+    chartData: React.PropTypes.object.isRequired,
+    showTotals: React.PropTypes.bool
   },
 
   mixins: [PureRenderMixin],
@@ -23,6 +24,16 @@ export default React.createClass({
   toggleTableClick(event) {
     event.preventDefault();
     this.setState({showTable: !this.state.showTable});
+  },
+
+  makeTotalsTds() {
+    const chartData = this.props.chartData;
+    return chartData.labels.map((decade, i) => {
+      const vals = chartData.series.map((series) => {
+        return R.nth(i, series.data);
+      });
+      return (<td>{format()(R.sum(vals))}</td>);
+    });
   },
 
   render() {
@@ -48,14 +59,21 @@ export default React.createClass({
               {chartData.labels.map(toTh)}
             </thead>
             <tbody>
-              {chartData.series.map((ser, i) => {
+              {chartData.series.map((series, i) => {
                 return (
-                  <tr className={ser.className} key={i}>
-                    <td className="row-label">{ser.name}</td>
-                    {ser.data.map(toTd)}
+                  <tr className={series.className} key={i}>
+                    <td className="row-label">{series.name}</td>
+                    {series.data.map(toTd)}
                   </tr>
                 );
               })}
+              {
+                this.props.showTotals &&
+                <tr className="totals-row">
+                  <td className="row-label">Total</td>
+                  {this.makeTotalsTds()}
+                </tr>
+              }
             </tbody>
           </table>
         </ToggleDisplay>
