@@ -15,7 +15,7 @@ Larger than Desktop HD
 @media (min-width: 1200px) {}
 */
 
-@import url(https://fonts.googleapis.com/css?family=Roboto+Slab);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,400italic,700);
 
 $border-color: #e0e0e0;
 $twdb-blue: #3F556D;
@@ -41,10 +41,12 @@ body {
   position: relative;
   overflow-x: hidden;
   padding-bottom: 140px;
+  font-family: 'Lato', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
   color: darken($twdb-blue, 10%);
 }
 
