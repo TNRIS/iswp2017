@@ -28,11 +28,11 @@ export default React.createClass({
 
   makeTotalsTds() {
     const chartData = this.props.chartData;
-    return chartData.labels.map((decade, i) => {
+    return chartData.labels.map((decade, colIndex) => {
       const vals = chartData.series.map((series) => {
-        return R.nth(i, series.data);
+        return R.nth(colIndex, series.data);
       });
-      return (<td>{format()(R.sum(vals))}</td>);
+      return (<td key={colIndex}>{format()(R.sum(vals))}</td>);
     });
   },
 
