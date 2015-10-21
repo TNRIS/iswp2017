@@ -31,7 +31,9 @@ export default React.createClass({
             </a>
           </div>
           <div className="header-title wrapper">
-            <img src="/public/static/img/twdb-logo-dark-bkgd-w200px-3c.png" className="logo" />
+            <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">
+              <img src="/public/static/img/twdb-logo-dark-bkgd-w200px-3c.png" className="logo" />
+            </a>
             <h1>Texas State Water Plan 2017</h1>
           </div>
         </header>
