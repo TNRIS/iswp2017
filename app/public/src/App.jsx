@@ -1,11 +1,15 @@
 
 import React from 'react';
+import ViewHeader from './components/ViewHeader';
 import {RouteHandler} from 'react-router';
 
 export default React.createClass({
   render() {
     return (
-      <RouteHandler/>
+      <div>
+        <ViewHeader />
+        <RouteHandler/>
+      </div>
     );
   }
 });

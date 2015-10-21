@@ -5,7 +5,6 @@ import {State, Link} from 'react-router';
 import constants from '../constants';
 import PlaceDataActions from '../actions/PlaceDataActions';
 import PlaceDataStore from '../stores/PlaceDataStore';
-import ViewHeader from './ViewHeader';
 import PlaceMap from './maps/PlaceMap';
 import PlaceSummary from './PlaceSummary';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
@@ -73,7 +72,6 @@ export default React.createClass({
 
     return (
       <div className="place-view">
-        <ViewHeader />
         <section className="main-content">
           <div className="place-view-top">
             <PlaceMap className="place-map"
