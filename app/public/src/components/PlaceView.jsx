@@ -1,6 +1,8 @@
 
 import React from 'react';
 import {State, Link} from 'react-router';
+import Helmet from 'react-helmet';
+import titleize from 'titleize';
 
 import constants from '../constants';
 import PlaceDataActions from '../actions/PlaceDataActions';
@@ -70,8 +72,21 @@ export default React.createClass({
     const randRegion = sampleNotVal(constants.REGIONS, params.typeId);
     // end TODO
 
+    let title;
+    switch (params.type.toLowerCase()) {
+    case 'region':
+      title = `Region ${params.typeId.toUpperCase()}`;
+      break;
+    case 'county':
+      title = `${titleize(params.typeId)} County`;
+      break;
+    default:
+      title = `${titleize(params.typeId)}`;
+    }
+
     return (
       <div className="place-view">
+        <Helmet title={title} />
         <section className="main-content">
           <div className="place-view-top">
             <PlaceMap className="place-map"
