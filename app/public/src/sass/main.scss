@@ -15,17 +15,18 @@ Larger than Desktop HD
 @media (min-width: 1200px) {}
 */
 
-@import url(https://fonts.googleapis.com/css?family=Roboto+Slab);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,400italic,700);
 
 $border-color: #e0e0e0;
 $twdb-blue: #3F556D;
+$link-hover-color: #0FA0CE;
 
-$themes: ('demands', #1FC684), ('supplies', #FBB50D),
-  ('needs', #AA0000), ('strategies',  #FF7518);
+$themes: ('demands', rgb(172, 40, 133)), ('supplies', rgb(0, 151, 214)),
+  ('needs', rgb(237, 27, 47)), ('strategies',  rgb(10, 162, 69));
 
-$usageTypes: ('irrigation' #66c2a5), ('livestock', #fc8d62),
-  ('manufacturing', #8da0cb), ('mining', #e78ac3),
-  ('municipal', #a6d854), ('steam-electric', #ffd92f);
+$usageTypes: ('irrigation' rgb(126, 191, 133)), ('livestock', rgb(106, 138, 34)),
+  ('manufacturing', rgb(234, 214, 4)), ('mining', rgb(120, 182, 228)),
+  ('municipal', rgb(237, 27, 47)), ('steam-electric', rgb(0, 155, 144));
 
 @import "charts";
 @import "maps";
@@ -38,11 +39,14 @@ body {
   */
   background: url('/public/static/img/seamless_paper_texture.png');
   position: relative;
+  overflow-x: hidden;
   padding-bottom: 140px;
+  font-family: 'Lato', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
   color: darken($twdb-blue, 10%);
 }
 
@@ -62,6 +66,7 @@ a {
   text-decoration: underline;
 
   &:hover {
+    color: $link-hover-color;
     text-decoration: underline;
   }
 }
@@ -81,6 +86,20 @@ a {
     margin-top: 0;
   }
 
+  .nav-drawer-toggle {
+    display: block;
+    padding-left: 1rem;
+
+    > svg {
+      height: 100%;
+      fill: white;
+    }
+
+    &:hover > svg {
+      fill: $link-hover-color;
+    }
+  }
+
   margin-top: 0;
   padding: 8px 0 12px 0;
   height: 30px;
@@ -90,6 +109,7 @@ a {
     display: inline-block;
     height: 36px;
     vertical-align: bottom;
+    padding-right: 1rem;
   }
 
   h1 {
@@ -98,6 +118,11 @@ a {
     margin-bottom: 0;
     color: #fff;
   }
+}
+
+.nav-drawer {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 2rem 1rem;
 }
 
 .footer {
@@ -130,6 +155,10 @@ section.main-content {
 }
 
 .table-container {
+  max-width: 100%;
+  max-height: 600px;
+  overflow-x: auto;
+
   .spinner {
     margin: 2rem auto;
   }

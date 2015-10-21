@@ -2,6 +2,7 @@ import path from 'path';
 
 const indexPaths = [
   '/',
+  '/statewide',
   '/region/{params*}',
   '/county/{params*}',
   '/entity/{params*}',

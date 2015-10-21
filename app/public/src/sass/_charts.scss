@@ -141,8 +141,13 @@
       padding: 2px;
     }
 
-    td.row-label {
+    .row-label {
       font-weight: bold;
     }
+  }
+
+  .totals-row {
+    font-style: italic;
+    border-top: 2px solid grey;
   }
 }

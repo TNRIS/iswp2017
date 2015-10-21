@@ -2,10 +2,11 @@ import R from 'ramda';
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
+import titleize from 'titleize';
 
 import PropTypes from '../../utils/CustomPropTypes';
 import constants from '../../constants';
-import LineChart from './LineChart';
+import BarChart from './BarChart';
 import ChartLegend from '../ChartLegend';
 import ChartDataTable from '../ChartDataTable';
 
@@ -68,15 +69,15 @@ export default React.createClass({
           return (
             <div className="row" key={i}>
               <div className="six columns">
-                <h5>{groupOne}</h5>
-                <LineChart
+                <h5>{titleize(groupOne)}</h5>
+                <BarChart
                   chartData={groupOneData}
                   chartOptions={chartOptions} />
                 <ChartDataTable className="u-full-width" chartData={groupOneData} />
               </div>
               <div className="six columns">
-                <h5>{groupTwo}</h5>
-                <LineChart
+                <h5>{titleize(groupTwo)}</h5>
+                <BarChart
                   chartData={groupTwoData}
                   chartOptions={chartOptions} />
                 <ChartDataTable className="u-full-width" chartData={groupTwoData} />

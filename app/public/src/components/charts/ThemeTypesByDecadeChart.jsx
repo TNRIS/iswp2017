@@ -1,4 +1,5 @@
 
+import R from 'ramda';
 import React from 'react';
 import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
@@ -34,7 +35,8 @@ export default React.createClass({
 
     const chartData = {
       labels: constants.DECADES,
-      series: constants.USAGE_TYPES.map((type) => {
+      // reverse USAGE_TYPES so that the lines z-indices are in official order
+      series: R.reverse(constants.USAGE_TYPES).map((type) => {
         return {
           name: titleize(type),
           meta: type.toLowerCase(),
@@ -62,9 +64,11 @@ export default React.createClass({
           <h4>{themeTitle} by Usage Type</h4>
           <ChartLegend entries={legendEntries} className="u-pull-right" />
         </div>
-        <div>Select Theme: <strong>Demands</strong> | Existing Supplies | Needs (Potential Shortages) | Strategy Supplies</div>
+        <div className="u-cf">
+          Select Theme: <strong>Demands</strong> | Existing Supplies | Needs (Potential Shortages) | Strategy Supplies
+        </div>
         <LineChart chartData={chartData} chartOptions={chartOptions} />
-        <ChartDataTable className="u-full-width" chartData={chartData} />
+        <ChartDataTable className="u-full-width" chartData={chartData} showTotals />
       </div>
     );
   }

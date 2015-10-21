@@ -11,14 +11,8 @@
 {% endblock title %}
 
 {% block body %}
-<header class="header">
-  <div class="header-title wrapper">
-    <img src="/public/static/img/twdb_logo_color.png" class="logo" />
-    <h1>Texas State Water Plan 2017</h1>
-  </div>
-</header>
 
-<section class="main-content" id="reactApp"></section>
+<div id="reactApp"></div>
 
 <footer class="footer">
   <p>This website is brought to you by the <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">Texas Water Development Board</a></p>

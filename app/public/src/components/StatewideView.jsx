@@ -1,19 +1,18 @@
 
 import React from 'react';
-import {State, Link} from 'react-router';
+import {State} from 'react-router';
 import Helmet from 'react-helmet';
-import titleize from 'titleize';
 
 import constants from '../constants';
 import PlaceDataActions from '../actions/PlaceDataActions';
 import PlaceDataStore from '../stores/PlaceDataStore';
 import PlaceMap from './maps/PlaceMap';
 import PlaceSummary from './PlaceSummary';
-import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
-import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
-import DataByTypeCharts from './charts/DataByTypeCharts';
-import ThemeMaps from './maps/ThemeMaps';
-import DataTable from './DataTable';
+// import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
+// import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
+// import DataByTypeCharts from './charts/DataByTypeCharts';
+// import ThemeMaps from './maps/ThemeMaps';
+// import DataTable from './DataTable';
 
 export default React.createClass({
   propTypes: {
@@ -72,21 +71,9 @@ export default React.createClass({
     const randRegion = sampleNotVal(constants.REGIONS, params.typeId);
     // end TODO
 
-    let title;
-    switch (params.type.toLowerCase()) {
-    case 'region':
-      title = `Region ${params.typeId.toUpperCase()}`;
-      break;
-    case 'county':
-      title = `${titleize(params.typeId)} County`;
-      break;
-    default:
-      title = `${titleize(params.typeId)}`;
-    }
-
     return (
-      <div className="place-view">
-        <Helmet title={title} />
+      <div className="statewide-view">
+        <Helmet title="Statewide" />
         <section className="main-content">
           <div className="place-view-top">
             <PlaceMap className="place-map"
@@ -101,37 +88,7 @@ export default React.createClass({
             </div>
           </div>
           <div className="container">
-            <Link to="placeview" params={{type: 'region', typeId: randRegion}}>random region</Link>
 
-            <div className="row data-section-row">
-              <div className="twelve columns">
-                <ThemeTotalsByDecadeChart placeData={placeData} />
-              </div>
-            </div>
-
-            <div className="row data-section-row">
-              <div className="twelve columns">
-                <ThemeTypesByDecadeChart placeData={placeData} />
-              </div>
-            </div>
-
-            <div className="row data-section-row">
-              <div className="twelve columns">
-                <DataByTypeCharts placeData={placeData} />
-              </div>
-            </div>
-
-            <div className="row data-section-row">
-              <div className="twelve columns">
-                <ThemeMaps placeData={placeData} />
-              </div>
-            </div>
-
-            <div className="row data-section-row">
-              <div className="twelve columns">
-                <DataTable placeData={placeData} />
-              </div>
-            </div>
           </div>
         </section>
       </div>

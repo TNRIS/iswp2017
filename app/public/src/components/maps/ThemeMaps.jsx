@@ -4,14 +4,22 @@ import {PureRenderMixin} from 'react/addons';
 import Spinner from 'react-spinkit';
 
 import DecadeSelector from '../DecadeSelector';
+import PropTypes from '../../utils/CustomPropTypes';
 import ThemeMap from './ThemeMap';
 
 export default React.createClass({
   propTypes: {
-    placeData: React.PropTypes.object
+    placeData: PropTypes.PlaceData,
+    decade: React.PropTypes.string
   },
 
   mixins: [PureRenderMixin],
+
+  getDefaultProps() {
+    return {
+      decade: '2020'
+    };
+  },
 
   render() {
     if (!this.props.placeData || !this.props.placeData.data) {
