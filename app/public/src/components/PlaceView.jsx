@@ -9,12 +9,10 @@ import PlaceDataActions from '../actions/PlaceDataActions';
 import PlaceDataStore from '../stores/PlaceDataStore';
 import PlaceMap from './maps/PlaceMap';
 import PlaceSummary from './PlaceSummary';
+import PlaceViewDecadeSection from './PlaceViewDecadeSection';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
-import ThemeMaps from './maps/ThemeMaps';
-import DataTable from './DataTable';
-import DecadeSelector from './DecadeSelector';
 
 export default React.createClass({
   propTypes: {
@@ -24,7 +22,7 @@ export default React.createClass({
     }).isRequired
   },
 
-  mixins: [React.addons.LinkedStateMixin, State],
+  mixins: [State],
 
   getInitialState() {
     return PlaceDataStore.getState();
@@ -124,25 +122,8 @@ export default React.createClass({
           </div>
 
           <div className="decade-dependent-wrap">
-            <div className="container">
-              <div className="row panel-row">
-                <DecadeSelector valueLink={this.linkState("selectedDecade")} />
-              </div>
-
-              <div className="row panel-row">
-                <div className="twelve columns">
-                  <ThemeMaps placeData={placeData} decade={this.state.selectedDecade} />
-                </div>
-              </div>
-
-              <div className="row panel-row">
-                <div className="twelve columns">
-                  <DataTable placeData={placeData} decade={this.state.selectedDecade} />
-                </div>
-              </div>
-            </div>
+            <PlaceViewDecadeSection placeData={placeData} />
           </div>
-
         </section>
       </div>
     );

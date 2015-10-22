@@ -159,6 +159,16 @@ a {
   background-color: rgba(65, 85, 100, 0.25);
 }
 
+.decade-selector {
+  ul {
+    list-style: none;
+  }
+
+  li {
+    display: inline-block;
+  }
+}
+
 .table-container {
   max-width: 100%;
   max-height: 600px;

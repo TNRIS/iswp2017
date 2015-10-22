@@ -49,11 +49,18 @@ export default React.createClass({
 
     this.map.addLayer(baseLayer);
 
+    this.updateMap(this.props);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.updateMap(nextProps);
+  },
+
+  updateMap(props) {
     // dataRows can have multiple rows for the same EntityId
     // so group them and sum their current year value to make
     // mappable entities features
-
-    const groupedById = R.groupBy(R.prop('EntityId'))(this.props.data.rows);
+    const groupedById = R.groupBy(R.prop('EntityId'))(props.data.rows);
 
     let maxVal = -Infinity;
     let minVal = Infinity;
@@ -61,12 +68,12 @@ export default React.createClass({
     const entityFeatures = R.map((group) => {
       // Use the first entity in each group to get the base entity properties
       const entity = R.nth(0, group);
-      const valueSum = R.sum(R.pluck(`Value_${this.props.decade}`)(group));
+      const valueSum = R.sum(R.pluck(`Value_${props.decade}`)(group));
 
       if (valueSum > maxVal) { maxVal = valueSum; }
       if (valueSum < minVal) { minVal = valueSum; }
 
-      const props =  R.assoc('ValueSum', valueSum,
+      const entityProperties =  R.assoc('ValueSum', valueSum,
         R.pick(['EntityId', 'EntityName', 'ValueSum'], entity)
       );
       return {
@@ -75,7 +82,7 @@ export default React.createClass({
           type: 'Point',
           coordinates: [entity.Longitude, entity.Latitude]
         },
-        properties: props
+        properties: entityProperties
       };
     })(R.values(groupedById));
 
@@ -92,12 +99,12 @@ export default React.createClass({
 
         return L.circleMarker(latlng, {
           radius: scaledRadius,
-          className: `entity-marker-${this.props.theme}`
+          className: `entity-marker-${props.theme}`
         });
       },
       onEachFeature: (feat, layer) => {
         layer.bindPopup(feat.properties.EntityName +
-          `<br>Sum ${this.props.decade}: ` +
+          `<br>Sum ${props.decade}: ` +
           feat.properties.ValueSum
         );
       }
@@ -108,8 +115,8 @@ export default React.createClass({
     if (this.boundaryLayer && this.map.hasLayer(this.boundaryLayer)) {
       this.map.removeLayer(this.boundaryLayer);
     }
-    if (this.props.boundary) {
-      this.boundaryLayer = L.geoJson(this.props.boundary, {
+    if (props.boundary) {
+      this.boundaryLayer = L.geoJson(props.boundary, {
         style: constants.BOUNDARY_LAYER_STYLE
       });
       this.map.addLayer(this.boundaryLayer);

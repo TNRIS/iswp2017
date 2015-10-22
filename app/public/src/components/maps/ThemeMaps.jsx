@@ -33,18 +33,18 @@ export default React.createClass({
         <h4>Maps - {this.props.decade}</h4>
         <div className="row">
           <div className="six columns">
-            <ThemeMap theme={"demands"} data={placeData.data.demands} boundary={placeData.boundary} />
+            <ThemeMap theme={"demands"} data={placeData.data.demands} boundary={placeData.boundary} decade={this.props.decade} />
           </div>
           <div className="six columns">
-            <ThemeMap theme={"supplies"} data={placeData.data.supplies} boundary={placeData.boundary} />
+            <ThemeMap theme={"supplies"} data={placeData.data.supplies} boundary={placeData.boundary} decade={this.props.decade} />
           </div>
         </div>
         <div className="row">
           <div className="six columns">
-            <ThemeMap theme={"needs"} data={placeData.data.needs} boundary={placeData.boundary} />
+            <ThemeMap theme={"needs"} data={placeData.data.needs} boundary={placeData.boundary} decade={this.props.decade} />
           </div>
           <div className="six columns">
-            <ThemeMap theme={"strategies"} data={placeData.data.strategies} boundary={placeData.boundary} />
+            <ThemeMap theme={"strategies"} data={placeData.data.strategies} boundary={placeData.boundary} decade={this.props.decade} />
           </div>
         </div>
       </div>
