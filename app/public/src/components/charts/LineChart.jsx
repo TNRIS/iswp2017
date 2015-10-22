@@ -1,7 +1,6 @@
 
 import R from 'ramda';
-import React from 'react';
-import {PureRenderMixin} from 'react/addons';
+import React from 'react/addons';
 import Chartist from 'chartist';
 import format from 'format-number';
 import classnames from 'classnames';
@@ -12,7 +11,7 @@ export default React.createClass({
     chartOptions: React.PropTypes.object,
   },
 
-  mixins: [PureRenderMixin],
+  mixins: [React.addons.PureRenderMixin],
 
   getInitialState() {
     return {

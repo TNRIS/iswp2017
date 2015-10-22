@@ -134,14 +134,19 @@ a {
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: rgba(#B1BDCA, 0.8);
+  background-color: $twdb-blue;
+  color: white;
 
   p {
     margin: 0;
   }
 
   a {
-    color: darken($twdb-blue, 10%);
+    color: white;
+
+    &:hover {
+      color: $link-hover-color;
+    }
   }
 
   .tnris-logo {
@@ -150,8 +155,8 @@ a {
   }
 }
 
-section.main-content {
-
+.decade-dependent-wrap {
+  background-color: rgba(65, 85, 100, 0.25);
 }
 
 .table-container {
@@ -191,7 +196,7 @@ section.main-content {
   padding-top: 2rem;
 }
 
-.data-section-row {
+.panel-row {
   margin: 0 0 2rem 0;
   border-radius: 4px;
   padding: 1rem 1.4rem;

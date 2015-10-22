@@ -1,8 +1,7 @@
 /*global L:false*/
 
 import R from 'ramda';
-import React from 'react';
-import {PureRenderMixin} from 'react/addons';
+import React from 'react/addons';
 import scale from 'scale-number-range';
 
 import constants from '../../constants';
@@ -17,7 +16,7 @@ export default React.createClass({
     boundary: PropTypes.Feature
   },
 
-  mixins: [PureRenderMixin],
+  mixins: [React.addons.PureRenderMixin],
 
   getDefaultProps() {
     return {

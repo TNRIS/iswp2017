@@ -1,9 +1,7 @@
 
-import React from 'react';
-import {PureRenderMixin} from 'react/addons';
+import React from 'react/addons';
 import Spinner from 'react-spinkit';
 
-import DecadeSelector from '../DecadeSelector';
 import PropTypes from '../../utils/CustomPropTypes';
 import ThemeMap from './ThemeMap';
 
@@ -13,7 +11,7 @@ export default React.createClass({
     decade: React.PropTypes.string
   },
 
-  mixins: [PureRenderMixin],
+  mixins: [React.addons.PureRenderMixin],
 
   getDefaultProps() {
     return {
@@ -32,8 +30,7 @@ export default React.createClass({
 
     return (
       <div>
-        <h4>Maps</h4>
-        <DecadeSelector />
+        <h4>Maps - {this.props.decade}</h4>
         <div className="row">
           <div className="six columns">
             <ThemeMap theme={"demands"} data={placeData.data.demands} boundary={placeData.boundary} />

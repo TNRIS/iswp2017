@@ -1,7 +1,6 @@
 
 import R from 'ramda';
-import React from 'react';
-import {PureRenderMixin} from 'react/addons';
+import React from 'react/addons';
 import classnames from 'classnames';
 
 export default React.createClass({
@@ -13,7 +12,7 @@ export default React.createClass({
     className: React.PropTypes.string
   },
 
-  mixins: [PureRenderMixin],
+  mixins: [React.addons.PureRenderMixin],
 
 
   render() {

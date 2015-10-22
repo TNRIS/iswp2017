@@ -1,11 +1,8 @@
 
-import R from 'ramda';
-import React from 'react';
-import {PureRenderMixin} from 'react/addons';
+import React from 'react/addons';
 import {Table} from 'reactable';
 import Spinner from 'react-spinkit';
 
-import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 
 export default React.createClass({
@@ -14,7 +11,7 @@ export default React.createClass({
     decade: React.PropTypes.string
   },
 
-  mixins: [PureRenderMixin],
+  mixins: [React.addons.PureRenderMixin],
 
   getDefaultProps() {
     return {
@@ -37,12 +34,11 @@ export default React.createClass({
 
     return (
       <div>
-        <h4>Raw Data</h4>
-        <div><p>Select Decade: <strong>2020</strong> | 2030 | 2040 | 2050 | 2060 | 2070</p></div>
+        <h4>Raw Data - {this.props.decade}</h4>
         <div className="table-container">
           <Table className="data-table u-full-width"
             data={tableData}
-            sortable={true}
+            sortable
           />
         </div>
       </div>

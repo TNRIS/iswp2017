@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React from 'react/addons';
 import {State, Link} from 'react-router';
 import Helmet from 'react-helmet';
 import titleize from 'titleize';
@@ -14,6 +14,7 @@ import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
 import ThemeMaps from './maps/ThemeMaps';
 import DataTable from './DataTable';
+import DecadeSelector from './DecadeSelector';
 
 export default React.createClass({
   propTypes: {
@@ -23,7 +24,7 @@ export default React.createClass({
     }).isRequired
   },
 
-  mixins: [State],
+  mixins: [React.addons.LinkedStateMixin, State],
 
   getInitialState() {
     return PlaceDataStore.getState();
@@ -103,36 +104,45 @@ export default React.createClass({
           <div className="container">
             <Link to="placeview" params={{type: 'region', typeId: randRegion}}>random region</Link>
 
-            <div className="row data-section-row">
+            <div className="row panel-row">
               <div className="twelve columns">
                 <ThemeTotalsByDecadeChart placeData={placeData} />
               </div>
             </div>
 
-            <div className="row data-section-row">
+            <div className="row panel-row">
               <div className="twelve columns">
                 <ThemeTypesByDecadeChart placeData={placeData} />
               </div>
             </div>
 
-            <div className="row data-section-row">
+            <div className="row panel-row">
               <div className="twelve columns">
                 <DataByTypeCharts placeData={placeData} />
               </div>
             </div>
+          </div>
 
-            <div className="row data-section-row">
-              <div className="twelve columns">
-                <ThemeMaps placeData={placeData} />
+          <div className="decade-dependent-wrap">
+            <div className="container">
+              <div className="row panel-row">
+                <DecadeSelector valueLink={this.linkState("selectedDecade")} />
               </div>
-            </div>
 
-            <div className="row data-section-row">
-              <div className="twelve columns">
-                <DataTable placeData={placeData} />
+              <div className="row panel-row">
+                <div className="twelve columns">
+                  <ThemeMaps placeData={placeData} decade={this.state.selectedDecade} />
+                </div>
+              </div>
+
+              <div className="row panel-row">
+                <div className="twelve columns">
+                  <DataTable placeData={placeData} decade={this.state.selectedDecade} />
+                </div>
               </div>
             </div>
           </div>
+
         </section>
       </div>
     );

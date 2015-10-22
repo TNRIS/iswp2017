@@ -6,7 +6,7 @@ export default React.createClass({
     return (
       <div className="not-found">
         <div className="container">
-          <div className="row data-section-row">
+          <div className="row panel-row">
             <div className="twelve columns">
               <h3>Not Found</h3>
               <p>The page you requested does not exist.</p>

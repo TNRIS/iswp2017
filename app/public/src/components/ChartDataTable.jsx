@@ -1,7 +1,6 @@
 
 import R from 'ramda';
-import React from 'react';
-import {PureRenderMixin} from 'react/addons';
+import React from 'react/addons';
 import classnames from 'classnames';
 import format from 'format-number';
 import ToggleDisplay from 'react-toggle-display';
@@ -13,7 +12,7 @@ export default React.createClass({
     showTotals: React.PropTypes.bool
   },
 
-  mixins: [PureRenderMixin],
+  mixins: [React.addons.PureRenderMixin],
 
   getInitialState() {
     return {
