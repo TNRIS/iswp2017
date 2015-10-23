@@ -1,5 +1,6 @@
 
-import React from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Table} from 'reactable';
 import Spinner from 'react-spinkit';
 
@@ -11,7 +12,7 @@ export default React.createClass({
     decade: React.PropTypes.string
   },
 
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   getDefaultProps() {
     return {

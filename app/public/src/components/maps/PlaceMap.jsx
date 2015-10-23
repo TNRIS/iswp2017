@@ -2,6 +2,7 @@
 
 import R from 'ramda';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import titleize from 'titleize';
 
 import constants from '../../constants';
@@ -22,7 +23,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    this.map = L.map(React.findDOMNode(this.refs.map), {
+    this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
       center: this.state.center || constants.DEFAULT_MAP_CENTER,
       zoom: this.state.zoom || constants.DEFAULT_MAP_ZOOM,
       scrollWheelZoom: false,

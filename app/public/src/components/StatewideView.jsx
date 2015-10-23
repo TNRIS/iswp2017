@@ -3,7 +3,7 @@ import React from 'react';
 import {State} from 'react-router';
 import Helmet from 'react-helmet';
 
-import constants from '../constants';
+// import constants from '../constants';
 import PlaceDataActions from '../actions/PlaceDataActions';
 import PlaceDataStore from '../stores/PlaceDataStore';
 import PlaceMap from './maps/PlaceMap';
@@ -49,27 +49,15 @@ export default React.createClass({
   },
 
   fetchPlaceData() {
-    const params = this.getParams();
+    const params = this.props.params;
     PlaceDataActions.fetchPlaceData({
       type: params.type, typeId: params.typeId
     });
   },
 
   render() {
-    const params = this.getParams();
+    const params = this.props.params;
     const placeData = this.state.placeData;
-
-    // TODO: REMOVE: temporary view switching by picking random region
-    const sample = (arr) => arr[Math.floor(Math.random() * arr.length)];
-    const sampleNotVal = (arr, val) => {
-      let sampleVal = '';
-      do {
-        sampleVal = sample(arr);
-      } while (sampleVal === val)
-      return sampleVal;
-    };
-    const randRegion = sampleNotVal(constants.REGIONS, params.typeId);
-    // end TODO
 
     return (
       <div className="statewide-view">

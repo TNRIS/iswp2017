@@ -1,5 +1,6 @@
 
-import React from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 
 import PropTypes from '../../utils/CustomPropTypes';
@@ -11,7 +12,7 @@ export default React.createClass({
     decade: React.PropTypes.string
   },
 
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   getDefaultProps() {
     return {

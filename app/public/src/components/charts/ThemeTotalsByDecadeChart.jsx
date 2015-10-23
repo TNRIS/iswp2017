@@ -1,5 +1,6 @@
 
-import React from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 
 import PropTypes from '../../utils/CustomPropTypes';
@@ -17,7 +18,7 @@ export default React.createClass({
     placeData: PropTypes.PlaceData
   },
 
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   render() {
     if (!this.props.placeData || !this.props.placeData.data) {

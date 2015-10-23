@@ -1,5 +1,6 @@
 import R from 'ramda';
-import React from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 import titleize from 'titleize';
 
@@ -20,7 +21,7 @@ export default React.createClass({
     placeData: PropTypes.PlaceData
   },
 
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   render() {
     if (!this.props.placeData || !this.props.placeData.data) {

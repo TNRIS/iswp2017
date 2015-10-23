@@ -1,6 +1,7 @@
 
 import R from 'ramda';
-import React from 'react/addons';
+import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 import format from 'format-number';
 import ToggleDisplay from 'react-toggle-display';
@@ -12,7 +13,7 @@ export default React.createClass({
     showTotals: React.PropTypes.bool
   },
 
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   getInitialState() {
     return {
@@ -54,8 +55,10 @@ export default React.createClass({
         <ToggleDisplay show={this.state.showTable}>
           <table className="u-full-width" >
             <thead>
-              <th></th>
-              {chartData.labels.map(toTh)}
+              <tr>
+                <th></th>
+                {chartData.labels.map(toTh)}
+              </tr>
             </thead>
             <tbody>
               {chartData.series.map((series, i) => {

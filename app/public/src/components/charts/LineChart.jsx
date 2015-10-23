@@ -1,6 +1,8 @@
 
 import R from 'ramda';
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Chartist from 'chartist';
 import format from 'format-number';
 import classnames from 'classnames';
@@ -11,7 +13,7 @@ export default React.createClass({
     chartOptions: React.PropTypes.object,
   },
 
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   getInitialState() {
     return {
@@ -46,8 +48,8 @@ export default React.createClass({
     if (isOverPoint) {
       const parent = event.target.parentNode;
       const targetRect = event.target.getBoundingClientRect();
-      const chartRect = React.findDOMNode(this.refs.chart).getBoundingClientRect();
-      const tooltipRect = React.findDOMNode(this.refs.tooltip).getBoundingClientRect();
+      const chartRect = ReactDOM.findDOMNode(this.refs.chart).getBoundingClientRect();
+      const tooltipRect = ReactDOM.findDOMNode(this.refs.tooltip).getBoundingClientRect();
       const meta = parent.attributes['ct:meta'] ?
         parent.attributes['ct:meta'].value : 'default';
 
@@ -94,7 +96,7 @@ export default React.createClass({
       this.chart.update(this.props.chartData, chartOptions);
     }
     else {
-      this.chart = new Chartist.Line(React.findDOMNode(this.refs.chart),
+      this.chart = new Chartist.Line(ReactDOM.findDOMNode(this.refs.chart),
         this.props.chartData, chartOptions
       );
 

@@ -1,7 +1,9 @@
 /*global L:false*/
 
 import R from 'ramda';
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import scale from 'scale-number-range';
 
 import constants from '../../constants';
@@ -16,7 +18,7 @@ export default React.createClass({
     boundary: PropTypes.Feature
   },
 
-  mixins: [React.addons.PureRenderMixin],
+  mixins: [PureRenderMixin],
 
   getDefaultProps() {
     return {
@@ -29,7 +31,7 @@ export default React.createClass({
     //TODO: Order entities so that larger are on bottom
     //TODO: Use spiderfier Leaflet plugin
 
-    this.map = L.map(React.findDOMNode(this.refs.map), {
+    this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
       center: constants.DEFAULT_MAP_CENTER,
       zoom: constants.DEFAULT_MAP_ZOOM,
       scrollWheelZoom: false,

@@ -1,6 +1,6 @@
 
 import R from 'ramda';
-import React from 'react/addons';
+import React from 'react';
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';

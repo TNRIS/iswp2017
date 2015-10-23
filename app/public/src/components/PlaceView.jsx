@@ -1,5 +1,5 @@
 
-import React from 'react/addons';
+import React from 'react';
 import {State, Link} from 'react-router';
 import Helmet from 'react-helmet';
 import titleize from 'titleize';
@@ -49,14 +49,14 @@ export default React.createClass({
   },
 
   fetchPlaceData() {
-    const params = this.getParams();
+    const params = this.props.params;
     PlaceDataActions.fetchPlaceData({
       type: params.type, typeId: params.typeId
     });
   },
 
   render() {
-    const params = this.getParams();
+    const params = this.props.params;
     const placeData = this.state.placeData;
 
     // TODO: REMOVE: temporary view switching by picking random region
@@ -65,7 +65,7 @@ export default React.createClass({
       let sampleVal = '';
       do {
         sampleVal = sample(arr);
-      } while (sampleVal === val)
+      } while (sampleVal === val);
       return sampleVal;
     };
     const randRegion = sampleNotVal(constants.REGIONS, params.typeId);
