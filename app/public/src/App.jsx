@@ -12,7 +12,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <Helmet titleTemplate="%s | 2017 Texas State Water Plan"/>
+        <Helmet titleTemplate="%s | DRAFT 2017 Texas State Water Plan"/>
         <ViewHeader />
         {this.props.children}
       </div>

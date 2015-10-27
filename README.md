@@ -2,7 +2,7 @@
 
 **Currently Under Development**
 
-Web application for the 2017 Texas State Water Plan.
+Web application for the DRAFT 2017 Texas State Water Plan.
 
 ## Developing
 
