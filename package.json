@@ -61,7 +61,7 @@
     "scale-number-range": "^1.0.3",
     "sqlite3": "^3.0.10",
     "style-loader": "^0.12.4",
-    "svg-react-loader": "^0.2.0",
+    "svg-react-loader": "^0.3.0",
     "swig": "^1.4.2",
     "titleize": "^1.0.0",
     "topojson": "^1.6.19",
