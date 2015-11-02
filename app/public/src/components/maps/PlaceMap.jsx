@@ -1,4 +1,5 @@
-/*global L:false*/
+/*global L*/
+/*global cartodb*/
 
 import R from 'ramda';
 import React from 'react';
@@ -62,6 +63,13 @@ export default React.createClass({
         this.boundaryLayer.bindLabel(`${titleize(name)} County`);
       }
     }
+
+    cartodb.createLayer(this.map, 'https://tnris.cartodb.com/api/v2/viz/eef97f1a-063b-11e5-a187-0e9d821ea90d/viz.json')
+      .addTo(this.map)
+      .on('done', (layer) => {
+        // console.log(layer);
+        //TODO: layer is not added to map
+      });
 
     this.map.fitBounds(this.boundaryLayer.getBounds(), {
       paddingTopLeft: [500, 0] //TODO: Adjust this based on device size
