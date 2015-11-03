@@ -100,7 +100,7 @@ export default React.createClass({
             </div>
           </div>
           <div className="container">
-            <Link to="placeview" params={{type: 'region', typeId: randRegion}}>random region</Link>
+            <Link to={`/region/${randRegion}`}>random region</Link>
 
             <div className="row panel-row">
               <div className="twelve columns">
