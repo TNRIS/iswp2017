@@ -4,6 +4,7 @@
 import R from 'ramda';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 import titleize from 'titleize';
 
 import constants from '../../constants';
@@ -19,6 +20,8 @@ export default React.createClass({
     typeId: React.PropTypes.string,
     placeData: PropTypes.PlaceData
   },
+
+  mixins: [PureRenderMixin],
 
   getInitialState() {
     return MapStateStore.getState();

@@ -31,13 +31,13 @@ export default React.createClass({
   componentDidMount() {
     PlaceDataStore.listen(this.onChange);
 
-    this.fetchPlaceData();
+    this.fetchPlaceData(this.props.params);
   },
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
     // Route params are in this.props, and when route changes the data
     // need to be fetched again
-    this.fetchPlaceData();
+    this.fetchPlaceData(nextProps.params);
   },
 
   componentWillUnmount() {
@@ -48,8 +48,7 @@ export default React.createClass({
     this.setState(state);
   },
 
-  fetchPlaceData() {
-    const params = this.props.params;
+  fetchPlaceData(params) {
     PlaceDataActions.fetchPlaceData({
       type: params.type, typeId: params.typeId
     });
