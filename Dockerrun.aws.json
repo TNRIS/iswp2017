@@ -5,6 +5,5 @@
       "ContainerPort": "3333"
     }
   ],
-  "Logging": "/usr/src/iswp2017/",
   "Volumes": []
 }
