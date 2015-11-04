@@ -6,13 +6,13 @@ RUN npm install -g babel@5
 
 WORKDIR /usr/src/iswp2017
 
-ADD package.json /usr/src/iswp2017/package.json
+ADD package.json package.json
 RUN npm install --production
 
-ADD webpack.config.js /usr/src/iswp2017/webpack.config.js
-ADD app /usr/src/iswp2017/app
+ADD webpack.config.js webpack.config.js
+ADD app app
 RUN npm run webpack
 
 EXPOSE 3333
 
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "run", "-dddd", "start"]
