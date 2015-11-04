@@ -12,7 +12,6 @@
 {% endblock title %}
 
 {% block body %}
-
 <div id="reactApp"></div>
 
 <footer class="footer">

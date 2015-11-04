@@ -39,6 +39,21 @@ export default React.createClass({
 
     this.map.addLayer(baseLayer);
 
+    cartodb.createLayer(this.map, 'https://tnris.cartodb.com/api/v2/viz/11bad656-8275-11e5-928e-0e5db1731f59/viz.json')
+      .addTo(this.map)
+      .on('done', (layer) => {
+        console.log(layer);
+        console.log(layer._url);
+        // setTimeout(() => {
+        //   console.log(layer._url);
+        //   this.map.addLayer(L.tileLayer(layer._url));
+        // }, 2000);
+        //TODO: layer is not added to map
+      })
+      .on('error', (err) => {
+        console.log(err);
+      });
+
     MapStateStore.listen(this.onChange);
   },
 
@@ -54,7 +69,7 @@ export default React.createClass({
         style: constants.BOUNDARY_LAYER_STYLE
       });
 
-      this.map.addLayer(this.boundaryLayer);
+      // this.map.addLayer(this.boundaryLayer);
       const name = R.path(['boundary', 'properties', 'Name'], this.props.placeData);
       if (this.props.type === 'region') {
         this.boundaryLayer.bindLabel(`Region ${name.toUpperCase()}`);
@@ -63,13 +78,6 @@ export default React.createClass({
         this.boundaryLayer.bindLabel(`${titleize(name)} County`);
       }
     }
-
-    cartodb.createLayer(this.map, 'https://tnris.cartodb.com/api/v2/viz/eef97f1a-063b-11e5-a187-0e9d821ea90d/viz.json')
-      .addTo(this.map)
-      .on('done', (layer) => {
-        // console.log(layer);
-        //TODO: layer is not added to map
-      });
 
     this.map.fitBounds(this.boundaryLayer.getBounds(), {
       paddingTopLeft: [500, 0] //TODO: Adjust this based on device size
