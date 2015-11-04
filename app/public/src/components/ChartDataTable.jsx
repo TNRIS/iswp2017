@@ -49,9 +49,9 @@ export default React.createClass({
 
     return (
       <div className={classnames("chart-table-container", this.props.className)}>
-        <a href="#" className="u-pull-right" onClick={this.toggleTableClick}>
+        <button className="button-small u-pull-right" onClick={this.toggleTableClick}>
           <small>{toggleText}</small>
-        </a>
+        </button>
         <ToggleDisplay show={this.state.showTable}>
           <table className="u-full-width" >
             <thead>
