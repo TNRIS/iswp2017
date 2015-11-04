@@ -1,7 +1,6 @@
 {% extends 'layout/layout.swig' %}
 
 {% block styles %}
-<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/plugins/leaflet-label/v0.2.1/leaflet.label.css" />
 <link rel="stylesheet" type="text/css" href="/public/styles.css">
@@ -28,7 +27,7 @@
   </a>
 </footer>
 
-<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.core.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
 <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-label/v0.2.1/leaflet.label.js"></script>
 <script type="text/javascript" src="/public/bundle.js" charset="utf-8"></script>

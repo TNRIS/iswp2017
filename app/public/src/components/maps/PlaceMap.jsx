@@ -10,6 +10,7 @@ import constants from '../../constants';
 import MapStateStore from '../../stores/MapStateStore';
 // import MapStateActions from '../../actions/MapStateActions';
 import PropTypes from '../../utils/CustomPropTypes';
+import CartodbLayers from '../../utils/CartodbLayers';
 
 export default React.createClass({
   propTypes: {
@@ -39,19 +40,9 @@ export default React.createClass({
 
     this.map.addLayer(baseLayer);
 
-    cartodb.createLayer(this.map, 'https://tnris.cartodb.com/api/v2/viz/11bad656-8275-11e5-928e-0e5db1731f59/viz.json')
-      .addTo(this.map)
-      .on('done', (layer) => {
-        console.log(layer);
-        console.log(layer._url);
-        // setTimeout(() => {
-        //   console.log(layer._url);
-        //   this.map.addLayer(L.tileLayer(layer._url));
-        // }, 2000);
-        //TODO: layer is not added to map
-      })
-      .on('error', (err) => {
-        console.log(err);
+    CartodbLayers.createCountiesLayer()
+      .then((countiesLayer) => {
+        this.map.addLayer(countiesLayer);
       });
 
     MapStateStore.listen(this.onChange);
@@ -69,7 +60,7 @@ export default React.createClass({
         style: constants.BOUNDARY_LAYER_STYLE
       });
 
-      // this.map.addLayer(this.boundaryLayer);
+      this.map.addLayer(this.boundaryLayer);
       const name = R.path(['boundary', 'properties', 'Name'], this.props.placeData);
       if (this.props.type === 'region') {
         this.boundaryLayer.bindLabel(`Region ${name.toUpperCase()}`);
