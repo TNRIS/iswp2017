@@ -10,7 +10,7 @@ Web application for the DRAFT 2017 Texas State Water Plan.
 
 Install node >= 0.12.0 and npm >= 3.3.3
 
-Install babel: `npm install -g babel`
+Install babel: `npm install -g babel@5`
 
 Download a copy of the water plan data sqlite3 database and place it at `/app/db/cache.db`.
 
