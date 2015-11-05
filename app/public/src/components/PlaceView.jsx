@@ -5,7 +5,6 @@ import Helmet from 'react-helmet';
 import titleize from 'titleize';
 
 import constants from '../constants';
-import PlaceDataActions from '../actions/PlaceDataActions';
 import PlaceDataStore from '../stores/PlaceDataStore';
 import PlaceMap from './maps/PlaceMap';
 import PlaceSummary from './PlaceSummary';
@@ -47,7 +46,7 @@ export default React.createClass({
   },
 
   fetchPlaceData(params) {
-    PlaceDataActions.fetchPlaceData({
+    PlaceDataStore.fetch({
       type: params.type, typeId: params.typeId
     });
   },
