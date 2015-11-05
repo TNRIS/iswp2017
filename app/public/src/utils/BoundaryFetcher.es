@@ -1,5 +1,5 @@
 
-import xhr from 'xhr';
+import axios from 'axios';
 
 import constants from '../constants';
 
@@ -11,21 +11,8 @@ export default {
   *
   */
   fetch: ({type, typeId}) => {
-    return new Promise((resolve, reject) => {
-      const uri = `${constants.API_BASE}/places/`;
-
-      xhr({
-        json: true,
-        uri: uri + (type === 'region' ? `regions/${typeId}`
-          : `counties/${typeId}`)
-      }, (err, res, body) => {
-        if (err) {
-          reject(err);
-        }
-        else {
-          resolve(body);
-        }
-      });
-    });
+    const uri = `${constants.API_BASE}/places/` +
+      (type === 'region' ? `regions/${typeId}` : `counties/${typeId}`);
+    return axios.get(uri).then((response) => response.data);
   }
 };

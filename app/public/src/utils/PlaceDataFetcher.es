@@ -1,30 +1,17 @@
-import xhr from 'xhr';
+
+import axios from 'axios';
 
 import constants from '../constants';
 import BoundaryFetcher from './BoundaryFetcher';
 
-
 function fetchData({type, typeId}) {
-  return new Promise((resolve, reject) => {
-    if (!type || !typeId) {
-      reject(new Error('Missing required parameters'));
-      return;
-    }
+  if (!type || !typeId) {
+    throw new Error('Missing required parameters');
+  }
 
-    const uri = `${constants.API_BASE}/data/${type}/${typeId}`;
+  const uri = `${constants.API_BASE}/data/${type}/${typeId}`;
 
-    xhr({
-      json: true,
-      uri: uri
-    }, (err, res, body) => {
-      if (err) {
-        reject(err);
-      }
-      else {
-        resolve(body);
-      }
-    });
-  });
+  return axios.get(uri).then((response) => response.data);
 }
 
 export default {
