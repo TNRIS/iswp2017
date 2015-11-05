@@ -1,0 +1,36 @@
+
+$drawerBgColor: rgba(255, 255, 255, 0.9);
+
+.nav-drawer {
+  background-color: $drawerBgColor;
+  padding: 3rem 0;
+  font-size: larger;
+
+  ul.main-nav-list {
+    list-style: none;
+
+    > li {
+      padding: 1rem 0 1rem 2rem;
+      margin: 0;
+      transition: background-color 0.5s ease;
+
+      &:hover {
+        background-color: darken($drawerBgColor, 10%);
+      }
+
+      a {
+        display: block;
+        width: 100%;
+
+        &.active {
+          text-decoration: none;
+          font-weight: bold;
+
+          &:hover {
+            color: inherit;
+          }
+        }
+      }
+    }
+  }
+}

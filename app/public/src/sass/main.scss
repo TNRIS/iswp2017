@@ -30,6 +30,7 @@ $usageTypes: ('irrigation' rgb(126, 191, 133)), ('livestock', rgb(106, 138, 34))
 
 @import "charts";
 @import "maps";
+@import "navdrawer";
 
 body {
   color: #3e3e3e;
@@ -118,11 +119,6 @@ a {
     margin-bottom: 0;
     color: #fff;
   }
-}
-
-.nav-drawer {
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 2rem 1rem;
 }
 
 .footer {
