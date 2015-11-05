@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {State, Link} from 'react-router';
+import {Link} from 'react-router';
 import Helmet from 'react-helmet';
 import titleize from 'titleize';
 
@@ -21,8 +21,6 @@ export default React.createClass({
       typeId: React.PropTypes.string
     }).isRequired
   },
-
-  mixins: [State],
 
   getInitialState() {
     return PlaceDataStore.getState();
