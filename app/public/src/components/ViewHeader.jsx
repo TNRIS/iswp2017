@@ -1,6 +1,6 @@
 
 import React from 'react';
-import NavDrawer from './NavDrawer';
+import NavDrawer from './nav/NavDrawer';
 import MenuIcon from '../../static/img/menu.svg';
 
 export default React.createClass({

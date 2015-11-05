@@ -1,18 +1,17 @@
 
-$drawerBgColor: rgba(255, 255, 255, 0.9);
+$drawerBgColor: rgba(255, 255, 255, 0.95);
 
 .nav-drawer {
   background-color: $drawerBgColor;
   padding: 3rem 0;
   font-size: larger;
 
-  ul.main-nav-list {
+  ul.subnav {
     list-style: none;
 
     > li {
-      padding: 1rem 0 1rem 2rem;
       margin: 0;
-      transition: background-color 0.5s ease;
+      transition: background-color 0.2s ease;
 
       &:hover {
         background-color: darken($drawerBgColor, 10%);
@@ -20,10 +19,16 @@ $drawerBgColor: rgba(255, 255, 255, 0.9);
 
       a {
         display: block;
-        width: 100%;
+        padding: 1rem 0 1rem 2rem;
+        text-decoration: none;
+        cursor: pointer;
+
+        &.nav-back {
+          font-size: smaller;
+          padding: 0.5rem 0 0.5rem 2rem;
+        }
 
         &.active {
-          text-decoration: none;
           font-weight: bold;
 
           &:hover {
