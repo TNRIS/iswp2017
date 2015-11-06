@@ -1,5 +1,5 @@
+
 import alt from '../alt';
-// import PlaceDataFetcher from '../utils/PlaceDataFetcher';
 
 class PlaceDataActions {
   //called once placeData has been successfully fetched

@@ -3,7 +3,7 @@ import alt from '../alt';
 import PlaceDataActions from '../actions/PlaceDataActions';
 import PlaceDataFetcher from '../utils/PlaceDataFetcher';
 
-const PlaceDataSource = {
+export const PlaceDataSource = {
   // "fetch" will become a method on PlaceDataStore --> PlaceDataStore.fetch({type, typeId})
   fetch: {
     remote(state, {type, typeId}) {
