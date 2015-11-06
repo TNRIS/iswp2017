@@ -38,7 +38,9 @@ export default React.createClass({
           this.state.countyNames && this.state.countyNames.map((name, i) => {
             return (
               <li key={i}>
-                <Link to={`/county/${name}`} activeClassName={'active'}>{titleize(name)} County</Link>
+                <Link to={`/county/${titleize(name)}`} activeClassName={'active'}>
+                  {titleize(name)} County
+                </Link>
               </li>
             );
           })
