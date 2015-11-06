@@ -20,7 +20,9 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   render() {
-    if (!this.props.placeData || !this.props.placeData.data) {
+    const placeData = this.props.placeData;
+
+    if (!placeData || !placeData.data) {
       return (
         <div />
       );
@@ -32,7 +34,7 @@ export default React.createClass({
         meta: theme,
         className: `series-${theme}`,
         data: constants.DECADES.map((year) => {
-          return this.props.placeData.data[theme].decadeTotals[year];
+          return placeData.data[theme].decadeTotals[year];
         })
       };
     });

@@ -22,7 +22,9 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   render() {
-    if (!this.props.placeData || !this.props.placeData.data) {
+    const placeData = this.props.placeData;
+
+    if (!placeData || !placeData.data) {
       return (
         <div />
       );
@@ -41,8 +43,8 @@ export default React.createClass({
           meta: type.toLowerCase(),
           className: `series-${type.toLowerCase()}`,
           data: constants.DECADES.map((year) => {
-            if (this.props.placeData.data[theme].typeTotals[type]) {
-              return this.props.placeData.data[theme].typeTotals[type][`Total_${year}`];
+            if (placeData.data[theme].typeTotals[type]) {
+              return placeData.data[theme].typeTotals[type][`Total_${year}`];
             }
             return 0;
           })
