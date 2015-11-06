@@ -1,7 +1,6 @@
 import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import Spinner from 'react-spinkit';
 import titleize from 'titleize';
 
 import PropTypes from '../../utils/CustomPropTypes';
@@ -26,7 +25,7 @@ export default React.createClass({
   render() {
     if (!this.props.placeData || !this.props.placeData.data) {
       return (
-        <Spinner spinnerName="double-bounce" />
+        <div />
       );
     }
 

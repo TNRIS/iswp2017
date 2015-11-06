@@ -12,6 +12,7 @@ import PlaceViewDecadeSection from './PlaceViewDecadeSection';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
+import Spinner from 'react-spinkit';
 
 export default React.createClass({
   propTypes: {
@@ -83,43 +84,63 @@ export default React.createClass({
       <div className="place-view">
         <Helmet title={title} />
         <section className="main-content">
-          <div className="place-view-top">
+          <div className="view-top place-view-top">
             <PlaceMap className="place-map"
               type={params.type}
               typeId={params.typeId}
               placeData={placeData} />
-            <div className="place-summary-wrapper wrapper">
+            <div className="summary-wrapper wrapper">
               <PlaceSummary
                 type={params.type}
                 typeId={params.typeId}
                 placeData={placeData} />
             </div>
           </div>
-          <div className="container">
-            <Link to={`/region/${randRegion}`}>random region</Link>
 
-            <div className="row panel-row">
-              <div className="twelve columns">
-                <ThemeTotalsByDecadeChart placeData={placeData} />
-              </div>
-            </div>
+          {
+            (() => {
+              if (!placeData.data) {
+                return (
+                  <div className="container">
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <Spinner spinnerName="double-bounce" />
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
 
-            <div className="row panel-row">
-              <div className="twelve columns">
-                <ThemeTypesByDecadeChart placeData={placeData} />
-              </div>
-            </div>
+              return (
+                <div>
+                  <div className="container">
+                    <Link to={`/region/${randRegion}`}>random region</Link>
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <ThemeTotalsByDecadeChart placeData={placeData} />
+                      </div>
+                    </div>
 
-            <div className="row panel-row">
-              <div className="twelve columns">
-                <DataByTypeCharts placeData={placeData} />
-              </div>
-            </div>
-          </div>
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <ThemeTypesByDecadeChart placeData={placeData} />
+                      </div>
+                    </div>
 
-          <div className="decade-dependent-wrap">
-            <PlaceViewDecadeSection placeData={placeData} />
-          </div>
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <DataByTypeCharts placeData={placeData} />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="decade-dependent-wrap">
+                    <PlaceViewDecadeSection placeData={placeData} />
+                  </div>
+                </div>
+              );
+            })()
+          }
         </section>
       </div>
     );

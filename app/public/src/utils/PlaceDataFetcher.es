@@ -10,7 +10,6 @@ function fetchData({type, typeId}) {
   }
 
   const uri = `${constants.API_BASE}/data/${type}/${typeId}`;
-
   return axios.get(uri).then((response) => response.data);
 }
 

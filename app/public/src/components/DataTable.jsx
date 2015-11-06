@@ -2,7 +2,6 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Table} from 'reactable';
-import Spinner from 'react-spinkit';
 
 import PropTypes from '../utils/CustomPropTypes';
 
@@ -27,7 +26,7 @@ export default React.createClass({
     const placeData = this.props.placeData;
     if (!placeData || !placeData.data) {
       return (
-        <Spinner spinnerName="double-bounce" />
+        <div />
       );
     }
 

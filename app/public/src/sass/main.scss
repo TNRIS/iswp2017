@@ -182,15 +182,16 @@ a {
   }
 }
 
-.place-view-top {
+.view-top {
   position: relative;
   height: 40rem;
+  margin-bottom: 2rem;
 
-  .place-summary-wrapper {
+  .summary-wrapper {
     position: relative;
   }
 
-  .place-summary {
+  .view-summary {
     width: 48%;
     float: left;
     margin: 3rem 2% 0 0;

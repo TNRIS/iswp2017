@@ -13,10 +13,6 @@ export const PlaceDataSource = {
     success: PlaceDataActions.updatePlaceData,
     error: PlaceDataActions.fetchPlaceDataFailed,
     loading: PlaceDataActions.fetchPlaceData
-
-    // local(state) {
-    //   //TODO: cache locally and check if already exists?
-    // }
   }
 };
 

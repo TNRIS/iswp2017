@@ -24,7 +24,7 @@ export default React.createClass({
     }
 
     return (
-      <div className="place-summary">
+      <div className="view-summary">
         <h2>{typeAndId.toUpperCase()}</h2>
         <strong>Total Demands:</strong> 1234<br/>
         <strong>Total Existing Supplies:</strong> 1234<br/>
