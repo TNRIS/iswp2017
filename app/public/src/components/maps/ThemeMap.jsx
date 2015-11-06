@@ -92,15 +92,26 @@ export default React.createClass({
       this.map.removeLayer(this.entitiesLayer);
     }
 
+    if (!entityFeatures || entityFeatures.length === 0) {
+      return;
+    }
+
     this.entitiesLayer = L.geoJson(entityFeatures, {
       pointToLayer: (feat, latlng) => {
-        const scaledRadius = scale(feat.properties.ValueSum,
-          minVal, maxVal,
-          constants.MIN_ENTITY_POINT_RADIUS, constants.MAX_ENTITY_POINT_RADIUS
-        );
+        let radius;
+        if (minVal === maxVal) {
+          //don't need/can't scale -> just use min radius
+          radius = constants.MIN_ENTITY_POINT_RADIUS;
+        }
+        else {
+          radius = scale(feat.properties.ValueSum,
+            minVal, maxVal,
+            constants.MIN_ENTITY_POINT_RADIUS, constants.MAX_ENTITY_POINT_RADIUS
+          );
+        }
 
         return L.circleMarker(latlng, {
-          radius: scaledRadius,
+          radius: radius,
           className: `entity-marker-${props.theme}`
         });
       },
