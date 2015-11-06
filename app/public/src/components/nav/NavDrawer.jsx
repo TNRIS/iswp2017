@@ -5,6 +5,7 @@ import Drawer from 'react-motion-drawer';
 import NavStateStore from '../../stores/NavStateStore';
 import DefaultSubNav from './DefaultSubNav';
 import RegionSubNav from './RegionSubNav';
+import CountySubNav from './CountySubNav';
 
 export default React.createClass({
   getInitialState() {
@@ -32,6 +33,9 @@ export default React.createClass({
     }
     else if (selectedSubNav === 'regions') {
       subnavComponent = <RegionSubNav />;
+    }
+    else if (selectedSubNav === 'counties') {
+      subnavComponent = <CountySubNav />;
     }
 
     return (

@@ -18,9 +18,12 @@ export default React.createClass({
         <li>
           <a onClick={this.selectSubnav.bind(this, 'regions')}>Regions</a>
         </li>
-        <li><a>Counties</a></li>
-        <li><a>Entities</a></li>
-        <li><a>Water Use Type</a></li>
+        <li>
+          <a onClick={this.selectSubnav.bind(this, 'counties')}>Counties</a>
+        </li>
+
+        <li><a>TODO: Entities</a></li>
+        <li><a>TODO: Water Use Type</a></li>
       </ul>
     );
   }
