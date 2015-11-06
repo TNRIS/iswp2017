@@ -1,4 +1,5 @@
 
+import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
@@ -34,7 +35,10 @@ export default React.createClass({
         meta: theme,
         className: `series-${theme}`,
         data: constants.DECADES.map((year) => {
-          return placeData.data[theme].decadeTotals[year];
+          if (R.path(['data', theme, 'decadeTotals', year], placeData)) {
+            return placeData.data[theme].decadeTotals[year];
+          }
+          return null;
         })
       };
     });

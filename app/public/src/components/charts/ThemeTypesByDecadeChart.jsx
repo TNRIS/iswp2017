@@ -43,7 +43,7 @@ export default React.createClass({
           meta: type.toLowerCase(),
           className: `series-${type.toLowerCase()}`,
           data: constants.DECADES.map((year) => {
-            if (placeData.data[theme].typeTotals[type]) {
+            if (R.path(['data', theme, 'typeTotals', type], placeData)) {
               return placeData.data[theme].typeTotals[type][`Total_${year}`];
             }
             return 0;
