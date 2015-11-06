@@ -104,7 +104,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" />
+                        <Spinner spinnerName="double-bounce" noFadeIn />
                       </div>
                     </div>
                   </div>
