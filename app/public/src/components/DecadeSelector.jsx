@@ -1,24 +1,33 @@
 
-import R from 'ramda';
+
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import constants from '../constants';
+import DecadeChoiceActions from '../actions/DecadeChoiceActions';
+import DecadeChoiceStore from '../stores/DecadeChoiceStore';
 
 export default React.createClass({
-  propTypes: {
-    value: React.PropTypes.oneOf(constants.DECADES),
-    onChange: React.PropTypes.func,
+  mixins: [PureRenderMixin],
+
+  getInitialState() {
+    return DecadeChoiceStore.getState();
   },
 
-  getDefaultProps() {
-    return {
-      value: R.nth(0, constants.DECADES),
-      onChange: () => {},
-    };
+  componentDidMount() {
+    DecadeChoiceStore.listen(this.onDecadeChange);
+  },
+
+  componentWillUnmount() {
+    DecadeChoiceStore.unlisten(this.onDecadeChange);
+  },
+
+  onDecadeChange(state) {
+    this.setState(state);
   },
 
   selectDecade(decade) {
-    this.props.onChange(decade);
+    DecadeChoiceActions.updateDecadeChoice(decade);
   },
 
   render() {
@@ -28,7 +37,7 @@ export default React.createClass({
         <ul className="options">
         {
           constants.DECADES.map((decade, i) => {
-            const isActive = this.props.value === decade;
+            const isActive = this.state.selectedDecade === decade;
             if (isActive) {
               return (<li key={i} className="active">{decade}</li>);
             }

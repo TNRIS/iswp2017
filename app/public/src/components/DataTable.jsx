@@ -4,19 +4,29 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Table} from 'reactable';
 
 import PropTypes from '../utils/CustomPropTypes';
+import DecadeChoiceStore from '../stores/DecadeChoiceStore';
 
 export default React.createClass({
   propTypes: {
-    placeData: PropTypes.PlaceData,
-    decade: React.PropTypes.string
+    placeData: PropTypes.PlaceData
   },
 
   mixins: [PureRenderMixin],
 
-  getDefaultProps() {
-    return {
-      decade: '2020'
-    };
+  getInitialState() {
+    return DecadeChoiceStore.getState();
+  },
+
+  componentDidMount() {
+    DecadeChoiceStore.listen(this.onDecadeChange);
+  },
+
+  componentWillUnmount() {
+    DecadeChoiceStore.unlisten(this.onDecadeChange);
+  },
+
+  onDecadeChange(state) {
+    this.setState(state);
   },
 
   render() {
@@ -31,10 +41,11 @@ export default React.createClass({
     }
 
     const tableData = placeData.data.demands.rows;
+    const decade = this.state.selectedDecade;
 
     return (
       <div>
-        <h4>Raw Data - {this.props.decade}</h4>
+        <h4>Raw Data - {decade}</h4>
         <div className="table-container">
           <Table className="data-table u-full-width"
             data={tableData}

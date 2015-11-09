@@ -8,11 +8,13 @@ import constants from '../constants';
 import PlaceDataStore from '../stores/PlaceDataStore';
 import PlaceMap from './maps/PlaceMap';
 import PlaceSummary from './PlaceSummary';
-import PlaceViewDecadeSection from './PlaceViewDecadeSection';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
 import Spinner from 'react-spinkit';
+import ThemeMaps from './maps/ThemeMaps';
+import DataTable from './DataTable';
+import DecadeSelector from './DecadeSelector';
 
 export default React.createClass({
   propTypes: {
@@ -135,7 +137,23 @@ export default React.createClass({
                   </div>
 
                   <div className="decade-dependent-wrap">
-                    <PlaceViewDecadeSection placeData={placeData} />
+                    <div className="container">
+                      <div className="row panel-row">
+                        <DecadeSelector />
+                      </div>
+
+                      <div className="row panel-row">
+                        <div className="twelve columns">
+                          <ThemeMaps placeData={placeData} />
+                        </div>
+                      </div>
+
+                      <div className="row panel-row">
+                        <div className="twelve columns">
+                          <DataTable placeData={placeData} />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
