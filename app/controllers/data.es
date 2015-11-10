@@ -108,7 +108,6 @@ class DataController {
     const promises = themes.map((theme) => {
       const table = summaryDataTables[theme];
       return db.select('*').from(table).groupBy('DECADE').then((data) => {
-        console.log(data);
         return R.assoc(theme, {rows: data}, {});
       });
     });
