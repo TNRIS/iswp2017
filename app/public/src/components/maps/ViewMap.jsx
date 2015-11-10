@@ -8,10 +8,11 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import titleize from 'titleize';
 
 import constants from '../../constants';
-import MapStateStore from '../../stores/MapStateStore';
-// import MapStateActions from '../../actions/MapStateActions';
 import PropTypes from '../../utils/CustomPropTypes';
 import CartodbLayers from '../../utils/CartodbLayers';
+
+//TODO: Adjust this based on device size
+const mapPadding =  [500, 0];
 
 export default React.createClass({
   propTypes: {
@@ -23,19 +24,17 @@ export default React.createClass({
 
   mixins: [PureRenderMixin],
 
-  getInitialState() {
-    return MapStateStore.getState();
-  },
-
   componentDidMount() {
     this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
-      center: this.state.center || constants.DEFAULT_MAP_CENTER,
-      zoom: this.state.zoom || constants.DEFAULT_MAP_ZOOM,
       scrollWheelZoom: false,
-      zoomControl: false
+      zoomControl: false,
     });
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
+
+    this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS, {
+      paddingTopLeft: mapPadding
+    });
 
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
       constants.BASE_MAP_LAYER.options
@@ -47,8 +46,6 @@ export default React.createClass({
       .then((countiesLayer) => {
         this.map.addLayer(countiesLayer);
       });
-
-    MapStateStore.listen(this.onChange);
   },
 
   componentDidUpdate() {
@@ -74,31 +71,13 @@ export default React.createClass({
     }
 
     this.map.fitBounds(this.boundaryLayer.getBounds(), {
-      paddingTopLeft: [500, 0] //TODO: Adjust this based on device size
+      paddingTopLeft: mapPadding
     });
   },
 
-  componentWillUnmount() {
-    // this.map.off('zoomend', this.setMapState);
-    // this.map.off('moveend', this.setMapState);
-
-    MapStateStore.unlisten(this.onChange);
-  },
-
-  onChange(state) {
-    this.setState(state);
-  },
-
-  // setMapState() {
-  //   MapStateActions.updateMapState({
-  //     center: [this.map.getCenter().lat, this.map.getCenter().lng],
-  //     zoom: this.map.getZoom()
-  //   });
-  // },
-
   render() {
     return (
-      <div ref="map" className={this.props.className}></div>
+      <div ref="map" className="view-map"></div>
     );
   }
 });

@@ -38,11 +38,11 @@ export default React.createClass({
     //TODO: Use spiderfier Leaflet plugin ?
 
     const map = this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
-      center: constants.DEFAULT_MAP_CENTER,
-      zoom: constants.DEFAULT_MAP_ZOOM,
       scrollWheelZoom: false,
       zoomControl: false
     });
+
+    map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
 

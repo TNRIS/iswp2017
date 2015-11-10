@@ -11,7 +11,12 @@ const dataTables = {
   strategies: 'vwMapWugWms'
 };
 
-const themes = R.keys(dataTables);
+const summaryDataTables = {
+  // demands: 'vwMapWugDemandsA1',
+  // needs: 'vwMapWugNeedsA1',
+  // supplies: 'vwMapWugExistingSupplyA1',
+  strategies: 'vwMapWugWmsA1'
+};
 
 const entityTable = 'vwMapEntityCoordinates';
 
@@ -88,17 +93,34 @@ function dataSelectionsByTheme(whereKey, whereVal) {
   };
 }
 
+
 class DataController {
   getAll(request, reply) {
+    const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme());
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll));
   }
 
+  getSummaries(request, reply) {
+    const themes = R.keys(summaryDataTables);
+    const promises = themes.map((theme) => {
+      const table = summaryDataTables[theme];
+      return db.select('*').from(table).groupBy('DECADE').then((data) => {
+        console.log(data);
+        return R.assoc(theme, {rows: data}, {});
+      });
+    });
+
+    Promise.all(promises)
+      .then(R.compose(reply, R.mergeAll));
+  }
+
   getForRegion(request, reply) {
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
+    const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme(
       'WugRegion', request.params.regionLetter.toUpperCase())
     );
@@ -110,6 +132,7 @@ class DataController {
   getForCounty(request, reply) {
     Hoek.assert(request.params.county, 'request.params.county is required');
 
+    const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme(
       'WugCounty', request.params.county.toUpperCase())
     );
@@ -121,6 +144,7 @@ class DataController {
   getForEntity(request, reply) {
     Hoek.assert(request.params.entityId, 'request.params.entityId is required');
 
+    const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme(
       'entityID', request.params.entityId)
     );

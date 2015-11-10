@@ -31,8 +31,7 @@ export default {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     }
   },
-  DEFAULT_MAP_CENTER: [31.2, -99],
-  DEFAULT_MAP_ZOOM: 5,
+  DEFAULT_MAP_BOUNDS: [[36.5, -106.65], [25.84, -93.51]],
   BOUNDARY_LAYER_STYLE: {
     fillOpacity: 0.2,
     color: '#3F556D',

@@ -18,6 +18,26 @@ const routes = [
     },
     handler: bind('getAll')
   },
+  // {
+  //   method: 'GET',
+  //   path: '/data/summaries',
+  //   config: {
+  //     cache: {
+  //       expiresIn: constants.API_CACHE_EXPIRES_IN
+  //     }
+  //   },
+  //   handler: bind('getSummaries')
+  // },
+  {
+    method: 'GET',
+    path: '/data/statewide',
+    config: {
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
+    },
+    handler: bind('getSummaries')
+  },
   {
     method: 'GET',
     path: '/data/region/{regionLetter}',

@@ -1,13 +1,19 @@
 
 import alt from '../alt';
 import PlaceDataActions from '../actions/PlaceDataActions';
-import PlaceDataFetcher from '../utils/PlaceDataFetcher';
+import DataFetcher from '../utils/DataFetcher';
+import BoundaryFetcher from '../utils/BoundaryFetcher';
 
 export const PlaceDataSource = {
   // "fetch" will become a method on PlaceDataStore --> PlaceDataStore.fetch({type, typeId})
   fetch: {
-    remote(state, {type, typeId}) {
-      return PlaceDataFetcher.fetch({type: type, typeId: typeId});
+    remote(state, params) {
+      return Promise.all([
+        DataFetcher.fetch(params),
+        BoundaryFetcher.fetch(params)
+      ]).then(([data, boundary]) => {
+        return {data, boundary};
+      });
     },
 
     success: PlaceDataActions.updatePlaceData,

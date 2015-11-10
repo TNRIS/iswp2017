@@ -6,7 +6,7 @@ import titleize from 'titleize';
 
 import constants from '../constants';
 import PlaceDataStore from '../stores/PlaceDataStore';
-import PlaceMap from './maps/PlaceMap';
+import ViewMap from './maps/ViewMap';
 import PlaceSummary from './PlaceSummary';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
@@ -87,9 +87,8 @@ export default React.createClass({
         <Helmet title={title} />
         <section className="main-content">
           <div className="view-top place-view-top">
-            <PlaceMap className="place-map"
+            <ViewMap
               type={params.type}
-              typeId={params.typeId}
               placeData={placeData} />
             <div className="summary-wrapper wrapper">
               <PlaceSummary
