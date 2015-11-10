@@ -9,6 +9,8 @@ import scale from 'scale-number-range';
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import NeedsLegend from '../../utils/NeedsLegend';
+import ThemeMapStateActions from '../../actions/ThemeMapStateActions';
+import ThemeMapStateStore from '../../stores/ThemeMapStateStore';
 
 export default React.createClass({
   propTypes: {
@@ -26,12 +28,16 @@ export default React.createClass({
     };
   },
 
+  getInitialState() {
+    return ThemeMapStateStore.getState();
+  },
+
   componentDidMount() {
     //TODO: Graduated colors for Needs entities
     //TODO: Order entities so that larger are on bottom
-    //TODO: Use spiderfier Leaflet plugin
+    //TODO: Use spiderfier Leaflet plugin ?
 
-    this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
+    const map = this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
       center: constants.DEFAULT_MAP_CENTER,
       zoom: constants.DEFAULT_MAP_ZOOM,
       scrollWheelZoom: false,
@@ -42,20 +48,64 @@ export default React.createClass({
 
     if (this.props.theme === 'needs') {
       const legendControl = NeedsLegend.create();
-      this.map.addControl(legendControl);
+      map.addControl(legendControl);
     }
 
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
       constants.BASE_MAP_LAYER.options
     );
 
-    this.map.addLayer(baseLayer);
-
+    map.addLayer(baseLayer);
     this.updateMap(this.props);
+
+    this.enableMapListeners();
+    ThemeMapStateStore.listen(this.onMapStateChange);
   },
 
   componentWillReceiveProps(nextProps) {
     this.updateMap(nextProps);
+  },
+
+  componentWillUpdate(nextProps, nextState) {
+    //turn off the map listeners right before state changes
+    this.disableMapListeners();
+    if (this.map.getZoom() !== nextState.mapState.zoom) {
+      //don't animate when zoom changes because the animation is a bit janky
+      this.map.setView(nextState.mapState.center, nextState.mapState.zoom, {animate: false});
+    }
+    else {
+      this.map.setView(nextState.mapState.center);
+    }
+  },
+
+  componentDidUpdate() {
+    //enable the map listeners after a change
+    this.enableMapListeners();
+  },
+
+  componentWillUnmount() {
+    this.disableMapListeners();
+    ThemeMapStateStore.unlisten(this.onMapStateChange);
+  },
+
+  onMapViewChange() {
+    const center = this.map.getCenter();
+    const zoom = this.map.getZoom();
+    ThemeMapStateActions.updateMapState({center, zoom});
+  },
+
+  onMapStateChange(state) {
+    this.setState(state);
+  },
+
+  disableMapListeners() {
+    this.map.off('zoomend', this.onMapViewChange);
+    this.map.off('moveend', this.onMapViewChange);
+  },
+
+  enableMapListeners() {
+    this.map.on('zoomend', this.onMapViewChange);
+    this.map.on('moveend', this.onMapViewChange);
   },
 
   updateMap(props) {
@@ -137,6 +187,9 @@ export default React.createClass({
     }
 
     this.map.addLayer(this.entitiesLayer);
+    //TODO: Probably need to modify the fitBounds so that it works across all maps
+    // currently all the maps have their bounds dictacted by the last map to render
+    // which results in slightly incorrect bounds if the entities differ among the maps
     this.map.fitBounds(bounds);
   },
 
