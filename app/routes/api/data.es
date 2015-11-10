@@ -10,6 +10,16 @@ const bind = (method) => dataController[method].bind(dataController);
 const routes = [
   {
     method: 'GET',
+    path: '/data',
+    config: {
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
+    },
+    handler: bind('getAll')
+  },
+  {
+    method: 'GET',
     path: '/data/region/{regionLetter}',
     config: {
       validate: {

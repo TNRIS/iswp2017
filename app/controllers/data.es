@@ -42,23 +42,29 @@ function dataSelectionsByTheme(whereKey, whereVal) {
     ];
 
     const dataSelectFields = R.concat(renameValueFields(theme), commonFields);
-    const selectData = db.select(dataSelectFields).from(table)
-        .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`)
-        .where(whereKey, whereVal);
+    let selectData = db.select(dataSelectFields).from(table)
+        .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`);
+    if (whereKey && whereVal) {
+      selectData = selectData.where(whereKey, whereVal);
+    }
 
     //TODO: What to do with negative values (as in some strategies)?
     const typeSumFields = makeTypeSumFields(theme);
     let typeSumChain = db.select('WugType');
     typeSumFields.forEach((f) => { typeSumChain = typeSumChain.sum(f); });
-    const selectTypeSums = typeSumChain.from(table)
-      .where(whereKey, whereVal)
-      .groupBy('WugType');
+    let selectTypeSums = typeSumChain.from(table);
+    if (whereKey && whereVal) {
+      selectTypeSums = selectTypeSums.where(whereKey, whereVal);
+    }
+    selectTypeSums = selectTypeSums.groupBy('WugType');
 
     const decadeSumFields = makeDecadeSumFields(theme);
     let decadeSumChain = db;
     decadeSumFields.forEach((f) => { decadeSumChain = decadeSumChain.sum(f); });
-    const selectDecadeSums = decadeSumChain.from(table)
-      .where(whereKey, whereVal);
+    let selectDecadeSums = decadeSumChain.from(table);
+    if (whereKey && whereVal) {
+      selectDecadeSums = selectDecadeSums.where(whereKey, whereVal);
+    }
 
     return Promise.all([selectData, selectTypeSums, selectDecadeSums])
       .then(([data, typeSums, decadeSums]) => {
@@ -83,6 +89,13 @@ function dataSelectionsByTheme(whereKey, whereVal) {
 }
 
 class DataController {
+  getAll(request, reply) {
+    const dataPromises = themes.map(dataSelectionsByTheme());
+
+    Promise.all(dataPromises)
+      .then(R.compose(reply, R.mergeAll));
+  }
+
   getForRegion(request, reply) {
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
