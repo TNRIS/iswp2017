@@ -25,9 +25,9 @@ export default React.createClass({
       <header className="header">
         <NavDrawer open={this.state.isDrawerOpen} onChange={this.onMenuChange} />
         <div className="u-pull-left">
-          <a className="nav-drawer-toggle" href="" onClick={this.onMenuClick} >
-            <MenuIcon />
-          </a>
+          <button className="nav-drawer-toggle" onClick={this.onMenuClick} >
+            <MenuIcon /> Menu
+          </button>
         </div>
         <div className="header-title wrapper">
           <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">
