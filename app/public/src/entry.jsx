@@ -8,9 +8,9 @@ import 'babel-core/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, Redirect} from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 import App from './App';
+import history from './history';
 import NotFound from './components/NotFound';
 import PlaceView from './components/PlaceView';
 import StatewideView from './components/StatewideView';
@@ -18,10 +18,9 @@ import StatewideView from './components/StatewideView';
 import './vendor/css/normalize.css';
 import './vendor/css/skeleton.css';
 import 'chartist/dist/chartist.min.css';
+import 'react-select/dist/react-select.min.css';
 
 import './sass/main.scss';
-
-const history = createBrowserHistory();
 
 ReactDOM.render((
   <Router history={history}>
