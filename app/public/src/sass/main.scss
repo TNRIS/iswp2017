@@ -88,16 +88,24 @@ a {
   }
 
   .nav-drawer-toggle {
-    display: block;
-    padding-left: 1rem;
+    color: white;
+    font-size: 2rem;
+    line-height: 2rem;
+    height: initial;
+    padding: 0;
+    margin: 1.2rem 0 0 1rem;
+    font-weight: normal;
+    border: none;
+    border-radius: 0;
 
-    > svg {
-      height: 100%;
-      fill: white;
+    &:hover {
+      border-bottom: 1px solid white;
     }
 
-    &:hover > svg {
-      fill: $link-hover-color;
+    > svg {
+      height: 2.1rem;
+      fill: white;
+      vertical-align: text-bottom;
     }
   }
 
