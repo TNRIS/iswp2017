@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import history from '../../history';
 import constants from '../../constants';
 import CartodbLayers from '../../utils/CartodbLayers';
 
@@ -30,22 +31,24 @@ export default React.createClass({
 
     this.map.addLayer(baseLayer);
 
-    //TODO: UTFGrid hover to show label
-    //TODO: styling according to water plan
     CartodbLayers.createRegionsLayer()
       .then((result) => {
         this.map.addLayer(L.tileLayer(result.tilesUrl));
 
-        // const utfGrid = new L.UtfGrid(layerDefinition.grids[0][0], {
-        //   useJsonP: false
-        // });
-        // this.map.addLayer(utfGrid);
-        // utfGrid.on('mouseover', (e) => {
-        //   if (e.data) {
-        //     console.log(e.data);
-        //   }
-        // });
+        this.utfGrid = L.utfGrid(result.gridUrl, {
+          useJsonP: false
+        });
+        this.map.addLayer(this.utfGrid);
+        this.utfGrid.on('click', this.navigateToRegion);
       });
+  },
+
+  componentWillUnmount() {
+    this.utfGrid.off('click', this.navigateToRegion);
+  },
+
+  navigateToRegion({data}) {
+    history.pushState(null, `/region/${data.letter}`);
   },
 
   render() {
