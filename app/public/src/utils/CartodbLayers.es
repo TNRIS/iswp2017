@@ -1,24 +1,24 @@
 /*global L*/
 /*global cartodb*/
 
-function getTiles({sql, cartocss}) {
+function getLayer(opts) {
   return new Promise((resolve, reject) => {
     cartodb.Tiles.getTiles({
       user_name: "tnris",
-      sublayers: [{sql, cartocss}]
+      sublayers: [opts]
     }, (layerDefinitions, err) => {
-      if (!layerDefinitions || !layerDefinitions.tiles[0]) {
+      if (!layerDefinitions) {
         reject(err);
       }
       else {
-        resolve(L.tileLayer(layerDefinitions.tiles[0]));
+        resolve(layerDefinitions);
       }
     });
   });
 }
 
 function createCountiesLayer() {
-  return getTiles({
+  return getLayer({
     sql: "SELECT * FROM county_extended",
     cartocss: `
       #county_extended {
@@ -31,8 +31,9 @@ function createCountiesLayer() {
 }
 
 function createRegionsLayer() {
-  return getTiles({
+  return getLayer({
     sql: "SELECT * FROM rwpas",
+    // interactivity: ['letter'],
     cartocss: `
       Map {
         buffer-size:128;
@@ -43,7 +44,7 @@ function createRegionsLayer() {
         line-width: 1;
         line-opacity: 1;
         ::labels {
-          text-name: [reg_name];
+          text-name: 'Region ' +  [letter];
           text-face-name: 'Open Sans Regular';
           text-size: 14;
           text-fill: #000;
