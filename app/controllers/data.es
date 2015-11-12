@@ -11,13 +11,6 @@ const dataTables = {
   strategies: 'vwMapWugWms'
 };
 
-const summaryDataTables = {
-  // demands: 'vwMapWugDemandsA1',
-  // needs: 'vwMapWugNeedsA1',
-  // supplies: 'vwMapWugExistingSupplyA1',
-  strategies: 'vwMapWugWmsA1'
-};
-
 const entityTable = 'vwMapEntityCoordinates';
 
 const renameValueFields = (theme) => {
@@ -38,20 +31,12 @@ const makeDecadeSumFields = (theme) => {
   });
 };
 
-function dataSelectionsByTheme(whereKey, whereVal) {
+//TODO: Refactor. Split out various promises into separate functions then have the main methods
+// call the ones they need.
+function dataSelectionsByTheme({whereKey, whereVal, includeRows = true}) {
   return (theme) => {
+    const dataPromises = [];
     const table = dataTables[theme];
-    const commonFields = [`${table}.EntityId as EntityId`, `${table}.EntityName`,
-      `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
-      `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.entityType as EntityType`
-    ];
-
-    const dataSelectFields = R.concat(renameValueFields(theme), commonFields);
-    let selectData = db.select(dataSelectFields).from(table)
-        .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`);
-    if (whereKey && whereVal) {
-      selectData = selectData.where(whereKey, whereVal);
-    }
 
     //TODO: What to do with negative values (as in some strategies)?
     const typeSumFields = makeTypeSumFields(theme);
@@ -62,6 +47,7 @@ function dataSelectionsByTheme(whereKey, whereVal) {
       selectTypeSums = selectTypeSums.where(whereKey, whereVal);
     }
     selectTypeSums = selectTypeSums.groupBy('WugType');
+    dataPromises.push(selectTypeSums);
 
     const decadeSumFields = makeDecadeSumFields(theme);
     let decadeSumChain = db;
@@ -70,24 +56,40 @@ function dataSelectionsByTheme(whereKey, whereVal) {
     if (whereKey && whereVal) {
       selectDecadeSums = selectDecadeSums.where(whereKey, whereVal);
     }
+    dataPromises.push(selectDecadeSums);
 
-    return Promise.all([selectData, selectTypeSums, selectDecadeSums])
-      .then(([data, typeSums, decadeSums]) => {
+    if (includeRows) {
+      const commonFields = [`${table}.EntityId as EntityId`, `${table}.EntityName`,
+        `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
+        `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.entityType as EntityType`
+      ];
+
+      const dataSelectFields = R.concat(renameValueFields(theme), commonFields);
+      let selectData = db.select(dataSelectFields).from(table)
+          .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`);
+      if (whereKey && whereVal) {
+        selectData = selectData.where(whereKey, whereVal);
+      }
+      dataPromises.push(selectData);
+    }
+
+    return Promise.all(dataPromises)
+      .then(([typeSums, decadeSums, data]) => {
+        const typeTotals = R.zipObj(R.pluck('WugType', typeSums), R.map(R.omit(['WugType']), typeSums));
+        const decadeTotals = R.nth(0, decadeSums);
+
+        let rows;
         if (!data || R.isEmpty(data)) {
-          //return empty properties
-          return R.assoc(theme, {
-            rows: [],
-            typeTotals: {},
-            decadeTotals: {}
-          }, {});
+          rows = [];
+        }
+        else {
+          rows = data;
         }
 
-        const totalsByType = R.zipObj(R.pluck('WugType', typeSums), R.map(R.omit(['WugType']), typeSums));
-        const totalsByDecade = R.nth(0, decadeSums);
         return R.assoc(theme, {
-          rows: data,
-          typeTotals: totalsByType,
-          decadeTotals: totalsByDecade
+          rows,
+          typeTotals,
+          decadeTotals
         }, {});
       });
   };
@@ -103,16 +105,13 @@ class DataController {
       .then(R.compose(reply, R.mergeAll));
   }
 
-  getSummaries(request, reply) {
-    const themes = R.keys(summaryDataTables);
-    const promises = themes.map((theme) => {
-      const table = summaryDataTables[theme];
-      return db.select('*').from(table).groupBy('DECADE').then((data) => {
-        return R.assoc(theme, {rows: data}, {});
-      });
-    });
+  getForState(request, reply) {
+    const themes = R.keys(dataTables);
+    const dataPromises = themes.map(dataSelectionsByTheme(
+      {includeRows: false}
+    ));
 
-    Promise.all(promises)
+    Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll));
   }
 
@@ -121,8 +120,8 @@ class DataController {
 
     const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme(
-      'WugRegion', request.params.regionLetter.toUpperCase())
-    );
+      {whereKey: 'WugRegion', whereVal: request.params.regionLetter.toUpperCase()}
+    ));
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll));
@@ -133,8 +132,8 @@ class DataController {
 
     const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme(
-      'WugCounty', request.params.county.toUpperCase())
-    );
+      {whereKey: 'WugCounty', whereVal: request.params.county.toUpperCase()}
+    ));
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll));
@@ -145,8 +144,8 @@ class DataController {
 
     const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme(
-      'entityID', request.params.entityId)
-    );
+      {whereKey: 'entityID', whereVal: request.params.entityId}
+    ));
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll));
