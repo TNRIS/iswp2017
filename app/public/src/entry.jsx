@@ -29,7 +29,7 @@ ReactDOM.render((
     <Route component={App}>
       <Route name="stateview" path="statewide" component={StatewideView}/>
       <Route name="placeview" path=":type/:typeId" component={PlaceView}/>
-      <Redirect from="/" to="/region/K" />
+      <Redirect from="/" to="/statewide" />
       <Route path="*" component={NotFound} />
     </Route>
   </Router>
