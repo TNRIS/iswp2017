@@ -15,8 +15,8 @@ module.exports = {
           path.resolve(__dirname, 'app/public/src/vendor/'),
           path.resolve(__dirname, 'node_modules'),
         ],
-        loader: ExtractTextPlugin.extract('css'
-)      },
+        loader: ExtractTextPlugin.extract('css')
+      },
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract('css!sass')
