@@ -11,9 +11,6 @@ import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import CartodbLayers from '../../utils/CartodbLayers';
 
-//TODO: Adjust this based on device size
-const mapPadding =  [500, 0];
-
 export default React.createClass({
   propTypes: {
     className: React.PropTypes.string,
@@ -33,7 +30,7 @@ export default React.createClass({
     L.control.zoom({position: 'topright'}).addTo(this.map);
 
     this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS, {
-      paddingTopLeft: mapPadding
+      paddingTopLeft: constants.VIEW_MAP_PADDING
     });
 
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
@@ -71,7 +68,7 @@ export default React.createClass({
     }
 
     this.map.fitBounds(this.boundaryLayer.getBounds(), {
-      paddingTopLeft: mapPadding
+      paddingTopLeft: constants.VIEW_MAP_PADDING
     });
   },
 

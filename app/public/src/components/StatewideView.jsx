@@ -6,7 +6,7 @@ import constants from '../constants';
 import PlaceDataActions from '../actions/PlaceDataActions';
 import PlaceDataStore from '../stores/PlaceDataStore';
 
-import ViewMap from './maps/ViewMap';
+import StatewideViewMap from './maps/StatewideViewMap';
 import StatewideSummary from './StatewideSummary';
 // import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 // import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
@@ -16,32 +16,32 @@ import StatewideSummary from './StatewideSummary';
 
 export default React.createClass({
 
-  getInitialState() {
-    return PlaceDataStore.getState();
-  },
+  // getInitialState() {
+  //   return PlaceDataStore.getState();
+  // },
 
-  componentDidMount() {
-    PlaceDataStore.listen(this.onChange);
+  // componentDidMount() {
+  //   PlaceDataStore.listen(this.onChange);
 
-    this.fetchData();
-  },
+  //   this.fetchData();
+  // },
 
-  componentWillReceiveProps() {
-    this.fetchData();
-  },
+  // componentWillReceiveProps() {
+  //   this.fetchData();
+  // },
 
-  componentWillUnmount() {
-    PlaceDataStore.unlisten(this.onChange);
-  },
+  // componentWillUnmount() {
+  //   PlaceDataStore.unlisten(this.onChange);
+  // },
 
-  onChange(state) {
-    this.setState(state);
-  },
+  // onChange(state) {
+  //   this.setState(state);
+  // },
 
-  fetchData() {
-    //TODO: Fetch statewide data
-    PlaceDataStore.fetch({type: 'statewide'});
-  },
+  // fetchData() {
+  //   //TODO: Fetch statewide data
+  //   PlaceDataStore.fetch({type: 'statewide'});
+  // },
 
   render() {
     // const placeData = this.state.placeData;
@@ -51,7 +51,7 @@ export default React.createClass({
         <Helmet title="Statewide" />
         <section className="main-content">
           <div className="view-top statewide-view-top">
-            <ViewMap />
+            <StatewideViewMap />
             <div className="summary-wrapper wrapper">
               <StatewideSummary />
             </div>

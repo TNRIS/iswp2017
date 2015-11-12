@@ -31,6 +31,7 @@ export default {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     }
   },
+  VIEW_MAP_PADDING: [500, 0],
   DEFAULT_MAP_BOUNDS: [[36.5, -106.65], [25.84, -93.51]],
   BOUNDARY_LAYER_STYLE: {
     fillOpacity: 0.2,
