@@ -36,6 +36,7 @@
     "chartist": "^0.9.4",
     "classnames": "^2.1.5",
     "css-loader": "^0.16.0",
+    "extend": "^3.0.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "format-number": "^2.0.0",
     "good": "^6.4.0",
