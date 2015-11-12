@@ -40,8 +40,8 @@ export default React.createClass({
     this.map.addLayer(baseLayer);
 
     CartodbLayers.createCountiesLayer()
-      .then((layerDefinition) => {
-        this.map.addLayer(L.tileLayer(layerDefinition.tiles[0]));
+      .then((result) => {
+        this.map.addLayer(L.tileLayer(result.tilesUrl));
       });
   },
 

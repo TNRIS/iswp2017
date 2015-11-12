@@ -1,20 +1,29 @@
 /*global L*/
-/*global cartodb*/
+
+import extend from 'extend';
+import axios from 'axios';
 
 function getLayer(opts) {
-  return new Promise((resolve, reject) => {
-    cartodb.Tiles.getTiles({
-      user_name: "tnris",
-      sublayers: [opts]
-    }, (layerDefinitions, err) => {
-      if (!layerDefinitions) {
-        reject(err);
+  const mapConfig = {
+    version: "1.0.1",
+    layers: [{
+      type: 'cartodb',
+      options: extend({cartocss_version: "2.1.1"}, opts)
+    }]
+  };
+
+  return axios.post('http://tnris.cartodb.com/api/v1/map/', mapConfig)
+    .then(({data}) => {
+      const layerid = data.layergroupid;
+      const tilesUrl = `http://tnris.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`;
+      if (opts.interactivity) {
+        return {
+          tilesUrl,
+          gridUrl: `http://tnris.cartodb.com/api/v1/map/${layerid}/0/{z}/{x}/{y}.grid.json`
+        };
       }
-      else {
-        resolve(layerDefinitions);
-      }
+      return {tilesUrl};
     });
-  });
 }
 
 function createCountiesLayer() {
@@ -33,7 +42,7 @@ function createCountiesLayer() {
 function createRegionsLayer() {
   return getLayer({
     sql: "SELECT * FROM rwpas",
-    // interactivity: ['letter'],
+    interactivity: ['letter'],
     cartocss: `
       Map {
         buffer-size:128;

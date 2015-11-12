@@ -33,8 +33,8 @@ export default React.createClass({
     //TODO: UTFGrid hover to show label
     //TODO: styling according to water plan
     CartodbLayers.createRegionsLayer()
-      .then((layerDefinition) => {
-        this.map.addLayer(L.tileLayer(layerDefinition.tiles[0]));
+      .then((result) => {
+        this.map.addLayer(L.tileLayer(result.tilesUrl));
 
         // const utfGrid = new L.UtfGrid(layerDefinition.grids[0][0], {
         //   useJsonP: false
