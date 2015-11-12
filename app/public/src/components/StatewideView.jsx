@@ -46,7 +46,6 @@ export default React.createClass({
 
   render() {
     const data = this.state.data;
-    console.log(data);
 
     return (
       <div className="statewide-view">
