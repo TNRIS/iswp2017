@@ -163,13 +163,20 @@ a {
   background-color: rgba(65, 85, 100, 0.25);
 }
 
-.decade-selector {
-  ul {
-    list-style: none;
+.selector {
+  .label {
+    margin-right: 1rem;
+    font-weight: bold;
   }
 
-  li {
+  ul.options {
+    list-style: none;
     display: inline-block;
+    margin-bottom: 0;
+
+    > li {
+      display: inline-block;
+    }
   }
 }
 

@@ -10,8 +10,6 @@ import BarChart from './BarChart';
 import ChartLegend from '../ChartLegend';
 import ChartDataTable from '../ChartDataTable';
 
-//TODO: maybe shade area between demands and existing supplies in red
-//TODO: normalize to all be on the y-axis?
 const chartOptions = {
   height: '200px'
 };

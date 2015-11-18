@@ -21,6 +21,16 @@ export default React.createClass({
 
   mixins: [PureRenderMixin],
 
+  getInitialState() {
+    return {
+      selectedTheme: R.nth(0, R.keys(constants.THEME_TITLES))
+    };
+  },
+
+  selectTheme(theme) {
+    this.setState({selectedTheme: theme});
+  },
+
   render() {
     const placeData = this.props.placeData;
 
@@ -29,10 +39,6 @@ export default React.createClass({
         <div />
       );
     }
-
-    //TODO: Make user-selectable
-    const theme = 'demands';
-    const themeTitle = constants.THEME_TITLES[theme];
 
     const chartData = {
       labels: constants.DECADES,
@@ -43,8 +49,8 @@ export default React.createClass({
           meta: type.toLowerCase(),
           className: `series-${type.toLowerCase()}`,
           data: constants.DECADES.map((year) => {
-            if (R.path(['data', theme, 'typeTotals', type], placeData)) {
-              return placeData.data[theme].typeTotals[type][`Total_${year}`];
+            if (R.path(['data', this.state.selectedTheme, 'typeTotals', type], placeData)) {
+              return placeData.data[this.state.selectedTheme].typeTotals[type][`Total_${year}`];
             }
             return 0;
           })
@@ -59,14 +65,32 @@ export default React.createClass({
       };
     });
 
+    const themeKeys = R.keys(constants.THEME_TITLES);
+
     return (
       <div>
         <div className="chart-header">
-          <h4>{themeTitle} by Usage Type</h4>
+          <h4>{constants.THEME_TITLES[this.state.selectedTheme]} by Usage Type</h4>
           <ChartLegend entries={legendEntries} className="u-pull-right" />
         </div>
-        <div className="u-cf">
-          Select Theme: <strong>Demands</strong> | Existing Supplies | Needs (Potential Shortages) | Strategy Supplies
+        <div className="u-cf selector theme-selector">
+          <span className="label">Select Theme:</span>
+          <ul className="options">
+          {
+            themeKeys.map((theme, i) => {
+              const themeTitle = constants.THEME_TITLES[theme];
+              const isActive = this.state.selectedTheme === theme;
+              if (isActive) {
+                return (<li key={i} className="active">{themeTitle}</li>);
+              }
+              return (
+                <li key={i}>
+                  <button className="button" onClick={this.selectTheme.bind(this, theme)}>{themeTitle}</button>
+                </li>
+              );
+            })
+          }
+          </ul>
         </div>
         <LineChart chartData={chartData} chartOptions={chartOptions} />
         <ChartDataTable className="u-full-width" chartData={chartData} showTotals />
