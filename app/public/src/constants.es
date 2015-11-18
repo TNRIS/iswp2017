@@ -34,9 +34,10 @@ export default {
   VIEW_MAP_PADDING: [500, 0],
   DEFAULT_MAP_BOUNDS: [[36.5, -106.65], [25.84, -93.51]],
   BOUNDARY_LAYER_STYLE: {
-    fillOpacity: 0.2,
+    fillOpacity: 0.1,
+    opacity: 1,
     color: '#3F556D',
-    weight: 2
+    weight: 4
   },
   MIN_ENTITY_POINT_RADIUS: 4,
   MAX_ENTITY_POINT_RADIUS: 12

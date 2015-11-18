@@ -44,6 +44,8 @@ function createCountiesLayer() {
           text-face-name: 'Open Sans Regular';
           text-size: 12;
           text-fill: #333;
+          text-halo-fill: rgba(255,255,255,0.8);
+          text-halo-radius: 2;
           text-allow-overlap: true;
           text-label-position-tolerance: 10;
           [zoom >= 9] {
