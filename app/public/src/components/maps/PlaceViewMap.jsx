@@ -74,7 +74,9 @@ export default React.createClass({
   },
 
   navigateToCounty({data}) {
-    history.pushState(null, `/county/${data.name}`);
+    if (data) {
+      history.pushState(null, `/county/${data.name}`);
+    }
   },
 
   render() {
