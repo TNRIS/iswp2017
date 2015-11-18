@@ -21,42 +21,42 @@
     display: inline-block;
     margin-right: 20px;
   }
+}
 
-  .chart-legend {
-    display: inline-block;
+.chart-legend {
+  display: inline-block;
 
-    > ul {
-      list-style: none;
-      margin: 8px 0 0 0;
+  > ul {
+    list-style: none;
+    margin: 8px 0 0 0;
 
-      > li {
-        display: inline-block;
-        margin: 0 0 0 10px;
-        color: #3e3e3e;
+    > li {
+      display: inline-block;
+      margin: 0 0 0 10px;
+      color: #3e3e3e;
+    }
+  }
+
+  svg.legend-marker {
+    width: 14px;
+    height: 13px;
+    margin-right: 2px;
+
+    @each $theme in $themes {
+      $name: nth($theme, 1);
+      $color: nth($theme, 2);
+
+      circle.series-#{$name} {
+        @include legend-color($color);
       }
     }
 
-    svg.legend-marker {
-      width: 14px;
-      height: 13px;
-      margin-right: 2px;
+    @each $type in $usageTypes {
+      $name: nth($type, 1);
+      $color: nth($type, 2);
 
-      @each $theme in $themes {
-        $name: nth($theme, 1);
-        $color: nth($theme, 2);
-
-        circle.series-#{$name} {
-          @include legend-color($color);
-        }
-      }
-
-      @each $type in $usageTypes {
-        $name: nth($type, 1);
-        $color: nth($type, 2);
-
-        .series-#{$name} {
-          @include legend-color($color);
-        }
+      .series-#{$name} {
+        @include legend-color($color);
       }
     }
   }

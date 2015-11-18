@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import titleize from 'titleize';
 
+import history from '../../history';
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import CartodbLayers from '../../utils/CartodbLayers';
@@ -42,6 +43,12 @@ export default React.createClass({
     CartodbLayers.createCountiesLayer()
       .then((result) => {
         this.map.addLayer(L.tileLayer(result.tilesUrl));
+
+        this.utfGrid = L.utfGrid(result.gridUrl, {
+          useJsonP: false
+        });
+        this.map.addLayer(this.utfGrid);
+        this.utfGrid.on('click', this.navigateToCounty);
       });
   },
 
@@ -54,22 +61,20 @@ export default React.createClass({
 
     if (this.props.placeData.boundary) {
       this.boundaryLayer = L.geoJson(this.props.placeData.boundary, {
-        style: constants.BOUNDARY_LAYER_STYLE
+        style: constants.BOUNDARY_LAYER_STYLE,
+        clickable: false
       });
 
       this.map.addLayer(this.boundaryLayer);
-      const name = R.path(['boundary', 'properties', 'Name'], this.props.placeData);
-      if (this.props.type === 'region') {
-        this.boundaryLayer.bindLabel(`Region ${name.toUpperCase()}`);
-      }
-      else if (this.props.type === 'county') {
-        this.boundaryLayer.bindLabel(`${titleize(name)} County`);
-      }
     }
 
     this.map.fitBounds(this.boundaryLayer.getBounds(), {
       paddingTopLeft: constants.VIEW_MAP_PADDING
     });
+  },
+
+  navigateToCounty({data}) {
+    history.pushState(null, `/county/${data.name}`);
   },
 
   render() {

@@ -29,12 +29,33 @@ function getLayer(opts) {
 function createCountiesLayer() {
   return getLayer({
     sql: "SELECT * FROM county_extended",
+    interactivity: ['name'],
     cartocss: `
+      Map {
+        buffer-size: 128;
+      }
       #county_extended {
         polygon-opacity: 0;
         line-color: #777;
         line-width: 1.5;
         line-opacity: 1;
+        ::labels {
+          text-name: [name];
+          text-face-name: 'Open Sans Regular';
+          text-size: 12;
+          text-fill: #333;
+          text-allow-overlap: true;
+          text-label-position-tolerance: 10;
+          [zoom >= 9] {
+            text-size: 14;
+          }
+          [zoom < 8] {
+            text-size: 10;
+          }
+          [zoom < 7] {
+            text-name: '';
+          }
+        }
       }`
   });
 }
@@ -45,7 +66,7 @@ function createRegionsLayer() {
     interactivity: ['letter'],
     cartocss: `
       Map {
-        buffer-size:128;
+        buffer-size: 128;
       }
       #rwpas {
         polygon-opacity: 0.7;
