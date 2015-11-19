@@ -4,7 +4,7 @@ import React from 'react';
 const  Feature = React.PropTypes.shape({
   geometry: React.PropTypes.object,
   properties: React.PropTypes.object,
-  type: React.PropTypes.oneOf(['Feature'])
+  type: React.PropTypes.oneOf(['Feature', 'FeatureCollection'])
 });
 
 const PlaceData = React.PropTypes.shape({

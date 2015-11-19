@@ -1,15 +1,13 @@
-import axios from 'axios';
 
 import alt from '../alt';
-import constants from '../constants';
+import CdbUtil from '../utils/CdbUtil';
 import CountyNamesActions from '../actions/CountyNamesActions';
 
 export const CountyNamesSource = {
   // "fetch" will become a method on CountyNamesStore --> CountyNamesStore.fetch({type, typeId})
   fetch: {
     remote() {
-      const uri = `${constants.API_BASE}/places/counties/names`;
-      return axios.get(uri).then((response) => response.data);
+      return CdbUtil.getCountyNames();
     },
 
     local(state) {

@@ -6,7 +6,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import history from '../../history';
 import constants from '../../constants';
-import CartodbLayers from '../../utils/CartodbLayers';
+import CdbUtil from '../../utils/CdbUtil';
 
 //TODO: Adjust this based on device size
 
@@ -14,10 +14,9 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   componentDidMount() {
-    this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
-      scrollWheelZoom: false,
-      zoomControl: false,
-    });
+    this.map = L.map(ReactDOM.findDOMNode(this.refs.map),
+      constants.VIEW_MAP_OPTIONS
+    );
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
 
@@ -31,7 +30,7 @@ export default React.createClass({
 
     this.map.addLayer(baseLayer);
 
-    CartodbLayers.createRegionsLayer()
+    CdbUtil.createRegionsLayer()
       .then((result) => {
         this.map.addLayer(L.tileLayer(result.tilesUrl));
 

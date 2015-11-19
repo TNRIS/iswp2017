@@ -1,7 +1,11 @@
-/*global L*/
 
+import R from 'ramda';
 import extend from 'extend';
 import axios from 'axios';
+import condenseWhitespace from 'condense-whitespace';
+
+const countyTable = 'county_extended';
+const regionTable = 'rwpas';
 
 function getLayer(opts) {
   const mapConfig = {
@@ -28,13 +32,13 @@ function getLayer(opts) {
 
 function createCountiesLayer() {
   return getLayer({
-    sql: "SELECT * FROM county_extended",
+    sql: `SELECT * FROM ${countyTable}`,
     interactivity: ['name'],
-    cartocss: `
+    cartocss: condenseWhitespace(`
       Map {
         buffer-size: 128;
       }
-      #county_extended {
+      #counties {
         polygon-opacity: 0;
         line-color: #777;
         line-width: 1.5;
@@ -58,15 +62,15 @@ function createCountiesLayer() {
             text-name: '';
           }
         }
-      }`
+      }`)
   });
 }
 
 function createRegionsLayer() {
   return getLayer({
-    sql: "SELECT * FROM rwpas",
+    sql: `SELECT * FROM ${regionTable}`,
     interactivity: ['letter'],
-    cartocss: `
+    cartocss: condenseWhitespace(`
       Map {
         buffer-size: 128;
       }
@@ -137,11 +141,36 @@ function createRegionsLayer() {
         [letter="P"] {
           polygon-fill: rgb(132,109,171);
         }
-      }`
+      }`)
   });
+}
+
+const tolerance = 0.001;
+
+function getCounty(name) {
+  const query = `SELECT name, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
+    FROM ${countyTable} WHERE name ~* '${name}' LIMIT 1`;
+  return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
+    .then(({data}) => data);
+}
+
+function getRegion(letter) {
+  const query = `SELECT letter, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
+    FROM ${regionTable} WHERE letter ~* '${letter}' LIMIT 1`;
+  return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
+    .then(({data}) => data);
+}
+
+function getCountyNames() {
+  const query = `SELECT distinct(name) as name FROM ${countyTable} ORDER BY name ASC`;
+  return axios.get(`https://tnris.cartodb.com/api/v2/sql?q=${query}`)
+    .then(({data}) => R.pluck('name', data.rows));
 }
 
 export default {
   createCountiesLayer,
-  createRegionsLayer
+  createRegionsLayer,
+  getCounty,
+  getRegion,
+  getCountyNames
 };

@@ -1,16 +1,14 @@
 /*global L*/
 /*global cartodb*/
 
-import R from 'ramda';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import titleize from 'titleize';
 
 import history from '../../history';
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
-import CartodbLayers from '../../utils/CartodbLayers';
+import CdbUtil from '../../utils/CdbUtil';
 
 export default React.createClass({
   propTypes: {
@@ -23,10 +21,9 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   componentDidMount() {
-    this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
-      scrollWheelZoom: false,
-      zoomControl: false,
-    });
+    this.map = L.map(ReactDOM.findDOMNode(this.refs.map),
+      constants.VIEW_MAP_OPTIONS
+    );
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
 
@@ -40,7 +37,7 @@ export default React.createClass({
 
     this.map.addLayer(baseLayer);
 
-    CartodbLayers.createCountiesLayer()
+    CdbUtil.createCountiesLayer()
       .then((result) => {
         this.map.addLayer(L.tileLayer(result.tilesUrl));
 

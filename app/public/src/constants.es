@@ -40,5 +40,12 @@ export default {
     weight: 4
   },
   MIN_ENTITY_POINT_RADIUS: 4,
-  MAX_ENTITY_POINT_RADIUS: 12
+  MAX_ENTITY_POINT_RADIUS: 12,
+  VIEW_MAP_OPTIONS: {
+    scrollWheelZoom: false,
+    zoomControl: false,
+    maxZoom: 12,
+    minZoom: 5,
+    maxBounds: [[15, -150], [45, -50]]
+  }
 };
