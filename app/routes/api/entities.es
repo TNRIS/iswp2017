@@ -33,21 +33,22 @@ const routes = [
     },
     handler: bind('getOne')
   },
-  {
-    method: 'GET',
-    path: '/entities/{entityId}/summary',
-    config: {
-      validate: {
-        params: {
-          entityId: Joi.number().integer().required()
-        }
-      },
-      cache: {
-        expiresIn: constants.API_CACHE_EXPIRES_IN
-      }
-    },
-    handler: bind('getEntitySummary')
-  },
+  //TODO: Summary table does not exist yet
+  // {
+  //   method: 'GET',
+  //   path: '/entities/{entityId}/summary',
+  //   config: {
+  //     validate: {
+  //       params: {
+  //         entityId: Joi.number().integer().required()
+  //       }
+  //     },
+  //     cache: {
+  //       expiresIn: constants.API_CACHE_EXPIRES_IN
+  //     }
+  //   },
+  //   handler: bind('getEntitySummary')
+  // },
   {
     method: 'GET',
     path: '/entities/search',

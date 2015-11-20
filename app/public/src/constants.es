@@ -1,19 +1,13 @@
-//TODO: Try to figure out a way to get this from the app constants?
 
 export default {
   API_BASE: '/api/v1',
-  THEMES: ['demands', 'supplies', 'needs', 'strategies'],
+  //TODO: add strategies once DB view is ready, ref #51
+  THEMES: ['demands', 'supplies', 'needs', /*'strategies'*/],
   THEME_TITLES: {
     'demands': 'Demands',
     'supplies': 'Existing Supplies',
     'needs': 'Needs (Potential Shortages)',
-    'strategies': 'Strategy Supplies'
-  },
-  THEME_KEYS: {
-    'demands': 'D',
-    'supplies': 'WS',
-    'needs': 'N',
-    'strategies': 'SS'
+    // 'strategies': 'Strategy Supplies'
   },
   USAGE_TYPES: [
     'IRRIGATION',

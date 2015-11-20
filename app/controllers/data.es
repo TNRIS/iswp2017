@@ -1,17 +1,19 @@
+
 import R from 'ramda';
 import Hoek from 'hoek';
 
 import db from 'db';
 import constants from 'lib/constants';
+import {handleApiError} from 'lib/utils';
 
 const dataTables = {
-  demands: 'vwMapWugDemand',
-  needs: 'vwMapWugNeeds',
-  supplies: 'vwMapExistingWugSupply',
-  strategies: 'vwMapWugWms'
+  demands: 'vw2017MapWugDemand',
+  needs: 'vw2017MapWugNeeds',
+  supplies: 'vw2017MapExistingWugSupply',
+  // strategies: 'vw2017MapWugWms' TODO: Strategy view not yet in DB, ref #51
 };
 
-const entityTable = 'vwMapEntityCoordinates';
+const entityTable = 'vw2017MapEntityCoordinates';
 
 const renameValueFields = (theme) => {
   return constants.YEARS.map((year) => {
@@ -33,7 +35,7 @@ const makeDecadeSumFields = (theme) => {
 
 //TODO: Refactor. Split out various promises into separate functions then have the main methods
 // call the ones they need.
-function dataSelectionsByTheme({whereKey, whereVal, includeRows = true}) {
+function dataSelectionsByTheme({whereKey, whereVal, includeRows = true} = {}) {
   return (theme) => {
     const dataPromises = [];
     const table = dataTables[theme];
@@ -59,16 +61,23 @@ function dataSelectionsByTheme({whereKey, whereVal, includeRows = true}) {
     dataPromises.push(selectDecadeSums);
 
     if (includeRows) {
-      const commonFields = [`${table}.EntityId as EntityId`, `${table}.EntityName`,
+      const commonFields = [`${table}.EntityId`, `${table}.EntityName`,
         `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
-        `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.entityType as EntityType`
+        `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
+        `${entityTable}.EntityIsSplit`
       ];
 
       const dataSelectFields = R.concat(renameValueFields(theme), commonFields);
       let selectData = db.select(dataSelectFields).from(table)
           .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`);
       if (whereKey && whereVal) {
-        selectData = selectData.where(whereKey, whereVal);
+        if (whereKey === 'EntityId') {
+          //TODO: this is a hack. Fix by splitting out this giant method into smaller pieces.
+          selectData = selectData.where(`${table}.EntityId`, whereVal);
+        }
+        else {
+          selectData = selectData.where(whereKey, whereVal);
+        }
       }
       dataPromises.push(selectData);
     }
@@ -95,14 +104,14 @@ function dataSelectionsByTheme({whereKey, whereVal, includeRows = true}) {
   };
 }
 
-
 class DataController {
   getAll(request, reply) {
     const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme());
 
     Promise.all(dataPromises)
-      .then(R.compose(reply, R.mergeAll));
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
   }
 
   getForState(request, reply) {
@@ -112,7 +121,8 @@ class DataController {
     ));
 
     Promise.all(dataPromises)
-      .then(R.compose(reply, R.mergeAll));
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
   }
 
   getForRegion(request, reply) {
@@ -124,7 +134,8 @@ class DataController {
     ));
 
     Promise.all(dataPromises)
-      .then(R.compose(reply, R.mergeAll));
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
   }
 
   getForCounty(request, reply) {
@@ -136,7 +147,8 @@ class DataController {
     ));
 
     Promise.all(dataPromises)
-      .then(R.compose(reply, R.mergeAll));
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
   }
 
   getForEntity(request, reply) {
@@ -144,11 +156,12 @@ class DataController {
 
     const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme(
-      {whereKey: 'entityID', whereVal: request.params.entityId}
+      {whereKey: 'EntityId', whereVal: request.params.entityId}
     ));
 
     Promise.all(dataPromises)
-      .then(R.compose(reply, R.mergeAll));
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
   }
 }
 

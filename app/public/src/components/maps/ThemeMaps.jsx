@@ -1,7 +1,9 @@
 
+import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import DecadeChoiceStore from '../../stores/DecadeChoiceStore';
 import ThemeMap from './ThemeMap';
@@ -39,25 +41,28 @@ export default React.createClass({
     const placeData = this.props.placeData;
     const decade = this.state.selectedDecade;
 
+    const themeGroups = R.splitEvery(2, constants.THEMES);
+
     return (
       <div>
         <h4>Maps - {decade}</h4>
-        <div className="row">
-          <div className="six columns">
-            <ThemeMap theme={"demands"} data={placeData.data.demands} boundary={placeData.boundary} decade={decade} />
-          </div>
-          <div className="six columns">
-            <ThemeMap theme={"supplies"} data={placeData.data.supplies} boundary={placeData.boundary} decade={decade} />
-          </div>
-        </div>
-        <div className="row">
-          <div className="six columns">
-            <ThemeMap theme={"needs"} data={placeData.data.needs} boundary={placeData.boundary} decade={decade} />
-          </div>
-          <div className="six columns">
-            <ThemeMap theme={"strategies"} data={placeData.data.strategies} boundary={placeData.boundary} decade={decade} />
-          </div>
-        </div>
+
+        {themeGroups.map((themes, i) => {
+          return (
+            <div className="row" key={i}>
+              {themes.map((theme, j) => {
+                return (
+                  <div className="six columns" key={j}>
+                    <ThemeMap theme={theme}
+                      data={placeData.data[theme]}
+                      boundary={placeData.boundary}
+                      decade={decade} />
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
     );
   }
