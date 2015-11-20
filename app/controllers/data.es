@@ -35,7 +35,7 @@ const makeDecadeSumFields = (theme) => {
 
 //TODO: Refactor. Split out various promises into separate functions then have the main methods
 // call the ones they need.
-function dataSelectionsByTheme({whereKey, whereVal, includeRows = true} = {}) {
+function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
   return (theme) => {
     const dataPromises = [];
     const table = dataTables[theme];
@@ -60,7 +60,7 @@ function dataSelectionsByTheme({whereKey, whereVal, includeRows = true} = {}) {
     }
     dataPromises.push(selectDecadeSums);
 
-    if (includeRows) {
+    if (!omitRows) {
       const commonFields = [`${table}.EntityId`, `${table}.EntityName`,
         `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
         `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
@@ -107,7 +107,9 @@ function dataSelectionsByTheme({whereKey, whereVal, includeRows = true} = {}) {
 class DataController {
   getAll(request, reply) {
     const themes = R.keys(dataTables);
-    const dataPromises = themes.map(dataSelectionsByTheme());
+    const dataPromises = themes.map(dataSelectionsByTheme(
+      {omitRows: !!request.query.omitRows}
+    ));
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
@@ -117,7 +119,7 @@ class DataController {
   getForState(request, reply) {
     const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme(
-      {includeRows: false}
+      {omitRows: !!request.query.omitRows}
     ));
 
     Promise.all(dataPromises)
@@ -129,9 +131,11 @@ class DataController {
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
     const themes = R.keys(dataTables);
-    const dataPromises = themes.map(dataSelectionsByTheme(
-      {whereKey: 'WugRegion', whereVal: request.params.regionLetter.toUpperCase()}
-    ));
+    const dataPromises = themes.map(dataSelectionsByTheme({
+      whereKey: 'WugRegion',
+      whereVal: request.params.regionLetter.toUpperCase(),
+      omitRows: !!request.query.omitRows
+    }));
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
@@ -142,9 +146,11 @@ class DataController {
     Hoek.assert(request.params.county, 'request.params.county is required');
 
     const themes = R.keys(dataTables);
-    const dataPromises = themes.map(dataSelectionsByTheme(
-      {whereKey: 'WugCounty', whereVal: request.params.county.toUpperCase()}
-    ));
+    const dataPromises = themes.map(dataSelectionsByTheme({
+      whereKey: 'WugCounty',
+      whereVal: request.params.county.toUpperCase(),
+      omitRows: !!request.query.omitRows
+    }));
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
@@ -155,9 +161,11 @@ class DataController {
     Hoek.assert(request.params.entityId, 'request.params.entityId is required');
 
     const themes = R.keys(dataTables);
-    const dataPromises = themes.map(dataSelectionsByTheme(
-      {whereKey: 'EntityId', whereVal: request.params.entityId}
-    ));
+    const dataPromises = themes.map(dataSelectionsByTheme({
+      whereKey: 'EntityId',
+      whereVal: request.params.entityId,
+      omitRows: !!request.query.omitRows
+    }));
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))

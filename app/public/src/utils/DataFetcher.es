@@ -9,6 +9,11 @@ function fetchData({type, typeId}) {
   }
 
   let uri = `${constants.API_BASE}/data/${type}`;
+
+  if (type === 'statewide') {
+    uri += '?omitRows=true';
+  }
+
   if (typeId) {
     uri += `/${typeId}`;
   }

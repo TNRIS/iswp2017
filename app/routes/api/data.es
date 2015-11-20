@@ -12,6 +12,11 @@ const routes = [
     method: 'GET',
     path: '/data',
     config: {
+      validate: {
+        query: {
+          omitRows: Joi.boolean()
+        }
+      },
       cache: {
         expiresIn: constants.API_CACHE_EXPIRES_IN
       }
@@ -22,6 +27,11 @@ const routes = [
     method: 'GET',
     path: '/data/statewide',
     config: {
+      validate: {
+        query: {
+          omitRows: Joi.boolean()
+        }
+      },
       cache: {
         expiresIn: constants.API_CACHE_EXPIRES_IN
       }
@@ -35,6 +45,9 @@ const routes = [
       validate: {
         params: {
           regionLetter: Joi.string().only(constants.REGIONS).insensitive().required()
+        },
+        query: {
+          omitRows: Joi.boolean()
         }
       },
       cache: {
@@ -50,6 +63,9 @@ const routes = [
       validate: {
         params: {
           county: Joi.string().required()
+        },
+        query: {
+          omitRows: Joi.boolean()
         }
       },
       cache: {
@@ -65,6 +81,9 @@ const routes = [
       validate: {
         params: {
           entityId: Joi.number().integer().required()
+        },
+        query: {
+          omitRows: Joi.boolean()
         }
       },
       cache: {
