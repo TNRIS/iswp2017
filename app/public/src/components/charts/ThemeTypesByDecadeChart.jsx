@@ -14,6 +14,10 @@ const chartOptions = {
   height: '240px'
 };
 
+function slugify(s) {
+  return s.replace(/\s+/g, '-');
+}
+
 export default React.createClass({
   propTypes: {
     placeData: PropTypes.PlaceData
@@ -47,7 +51,7 @@ export default React.createClass({
         return {
           name: titleize(type),
           meta: type.toLowerCase(),
-          className: `series-${type.toLowerCase()}`,
+          className: `series-${slugify(type.toLowerCase())}`,
           data: constants.DECADES.map((year) => {
             if (R.path(['data', this.state.selectedTheme, 'typeTotals', type], placeData)) {
               return placeData.data[this.state.selectedTheme].typeTotals[type][`Total_${year}`];
@@ -60,7 +64,7 @@ export default React.createClass({
 
     const legendEntries = constants.USAGE_TYPES.map((type) => {
       return {
-        className: `series-${type}`,
+        className: `series-${slugify(type)}`,
         display: titleize(type)
       };
     });
