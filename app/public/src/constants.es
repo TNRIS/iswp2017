@@ -13,7 +13,7 @@ export default {
     'IRRIGATION',
     'MUNICIPAL',
     'MANUFACTURING',
-    'STEAM-ELECTRIC',
+    'STEAM ELECTRIC POWER',
     'LIVESTOCK',
     'MINING'
   ],
