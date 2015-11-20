@@ -39,7 +39,7 @@ class CountyNamesStore {
   }
 
   handleFetch() {
-    //reset to new empty object during fetch
+    //reset during fetch
     this.countyNames = null;
     this.errorMessage = null;
   }

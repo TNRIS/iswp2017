@@ -1,17 +1,15 @@
 
 import React from 'react';
-import {Link} from 'react-router';
 import Helmet from 'react-helmet';
 import titleize from 'titleize';
+import Spinner from 'react-spinkit';
 
-import constants from '../constants';
 import PlaceDataStore from '../stores/PlaceDataStore';
 import PlaceViewMap from './maps/PlaceViewMap';
 import PlaceSummary from './PlaceSummary';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
-import Spinner from 'react-spinkit';
 import ThemeMaps from './maps/ThemeMaps';
 import DataTable from './DataTable';
 import DecadeSelector from './DecadeSelector';
@@ -58,18 +56,6 @@ export default React.createClass({
     const params = this.props.params;
     const placeData = this.state.placeData;
 
-    // TODO: REMOVE: temporary view switching by picking random region
-    const sample = (arr) => arr[Math.floor(Math.random() * arr.length)];
-    const sampleNotVal = (arr, val) => {
-      let sampleVal = '';
-      do {
-        sampleVal = sample(arr);
-      } while (sampleVal === val);
-      return sampleVal;
-    };
-    const randRegion = sampleNotVal(constants.REGIONS, params.typeId);
-    // end TODO
-
     let title;
     switch (params.type.toLowerCase()) {
     case 'region':
@@ -115,7 +101,6 @@ export default React.createClass({
               return (
                 <div>
                   <div className="container">
-                    <Link to={`/region/${randRegion}`}>random region</Link>
                     <div className="row panel-row">
                       <div className="twelve columns">
                         <ThemeTotalsByDecadeChart placeData={placeData} />

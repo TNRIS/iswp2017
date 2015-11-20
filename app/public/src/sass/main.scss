@@ -214,6 +214,14 @@ a {
     border-bottom: 1px solid lighten($twdb-blue, 20%);
     border-radius: 4px;
     padding: 1rem;
+
+    h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .subhead p {
+      margin-bottom: 0.5rem;
+    }
   }
 }
 
