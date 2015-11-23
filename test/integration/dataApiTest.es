@@ -5,7 +5,7 @@ import Lab from 'lab';
 import server from 'index.es';
 
 const lab = Lab.script();
-const themes = ['demands', 'supplies', 'needs'];
+const themes = ['demands', 'supplies', 'needs', /*'strategies',*/ 'population'];
 
 function testDataShape(data, omitRows = false) {
   //TODO: also include strategies once DB view is done, ref #51

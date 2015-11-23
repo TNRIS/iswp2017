@@ -10,6 +10,7 @@ const dataTables = {
   demands: 'vw2017MapWugDemand',
   needs: 'vw2017MapWugNeeds',
   supplies: 'vw2017MapExistingWugSupply',
+  population: 'vw2017MapWugPopulation'
   // strategies: 'vw2017MapWugWms' TODO: Strategy view not yet in DB, ref #51
 };
 
