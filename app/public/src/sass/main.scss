@@ -180,9 +180,32 @@ a {
     list-style: none;
     display: inline-block;
     margin-bottom: 0;
+    whitespace: nowrap;
 
     > li {
       display: inline-block;
+
+      &.active {
+        font-weight: bold;
+      }
+    }
+
+    button {
+      margin: 0;
+    }
+  }
+}
+
+.decade-selector {
+  ul.options {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+
+    > li {
+      width: auto;
+      display: table-cell;
+      text-align: center;
     }
   }
 }
@@ -192,6 +215,17 @@ a {
   height: 16px;
   line-height: 16px;
   margin-bottom: 0.75rem;
+}
+
+.button.button-primary,
+button.button-primary {
+  background-color: $twdb-blue;
+  border-color: $twdb-blue;
+
+  &:hover, &:active, &:focus {
+    background-color: $twdb-blue;
+    border-color: $twdb-blue;
+  }
 }
 
 .table-container {

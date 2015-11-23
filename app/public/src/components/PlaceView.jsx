@@ -123,6 +123,7 @@ export default React.createClass({
                   <div className="decade-dependent-wrap">
                     <div className="container">
                       <div className="row panel-row">
+                        <h4>Data by Planning Decade</h4>
                         <DecadeSelector />
                       </div>
 

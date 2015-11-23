@@ -97,12 +97,13 @@ export default React.createClass({
                   <div className="decade-dependent-wrap">
                     <div className="container">
                       <div className="row panel-row">
+                        <h4>Data by Planning Decade</h4>
                         <DecadeSelector />
                       </div>
 
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <p>TODO</p>
+                          <h4>Entities by Water Usage Type</h4>
                         </div>
                       </div>
                     </div>

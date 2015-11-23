@@ -33,13 +33,16 @@ export default React.createClass({
   render() {
     return (
       <div className="selector decade-selector">
-        <span className="label">Select Decade:</span>
         <ul className="options">
         {
           constants.DECADES.map((decade, i) => {
             const isActive = this.state.selectedDecade === decade;
             if (isActive) {
-              return (<li key={i} className="active">{decade}</li>);
+              return (
+                <li key={i} className="active">
+                  <button className="button-primary">{decade}</button>
+                </li>
+              );
             }
             return (
               <li key={i}>
