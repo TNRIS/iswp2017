@@ -78,14 +78,17 @@ export default React.createClass({
           <ChartLegend entries={legendEntries} className="u-pull-right legend-types-by-decade" />
         </div>
         <div className="u-cf selector theme-selector">
-          <span className="label">Select Theme:</span>
           <ul className="options">
           {
             themeKeys.map((theme, i) => {
               const themeTitle = constants.THEME_TITLES[theme];
               const isActive = this.state.selectedTheme === theme;
               if (isActive) {
-                return (<li key={i} className="active">{themeTitle}</li>);
+                return (
+                  <li key={i} className="active">
+                    <button className="button-primary">{themeTitle}</button>
+                  </li>
+                );
               }
               return (
                 <li key={i}>
