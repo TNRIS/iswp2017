@@ -1,19 +1,25 @@
 /*
-Larger than mobile
+Larger than mobile (xs)
 @media (min-width: 400px) {}
 
-Larger than phablet
+Larger than phablet (s)
 @media (min-width: 550px) {}
 
-Larger than tablet
+Larger than tablet (m)
 @media (min-width: 750px) {}
 
-Larger than desktop
+Larger than desktop (l)
 @media (min-width: 1000px) {}
 
-Larger than Desktop HD
+Larger than Desktop HD (xl)
 @media (min-width: 1200px) {}
 */
+
+$media-xl: 1200px;
+$media-l: 1000px;
+$media-m: 750px;
+$media-s: 550px;
+$media-xs: 400px;
 
 @import url(https://fonts.googleapis.com/css?family=Lato:400,400italic,700);
 
@@ -73,7 +79,7 @@ a {
 }
 
 .wrapper {
-  @media (min-width: 1000px) {
+  @media (min-width: $media-l) {
     width: 1000px;
     margin: 0 auto;
   }
@@ -83,7 +89,7 @@ a {
 }
 
 .header {
-  @media (min-width: 550px) {
+  @media (min-width: $media-s) {
     margin-top: 0;
   }
 

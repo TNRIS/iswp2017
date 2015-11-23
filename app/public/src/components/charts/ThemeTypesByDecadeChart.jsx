@@ -75,7 +75,7 @@ export default React.createClass({
       <div>
         <div className="chart-header">
           <h4>{constants.THEME_TITLES[this.state.selectedTheme]} by Usage Type</h4>
-          <ChartLegend entries={legendEntries} className="u-pull-right" />
+          <ChartLegend entries={legendEntries} className="u-pull-right legend-types-by-decade" />
         </div>
         <div className="u-cf selector theme-selector">
           <span className="label">Select Theme:</span>
