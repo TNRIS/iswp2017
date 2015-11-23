@@ -7,10 +7,6 @@ import Chartist from 'chartist';
 import format from 'format-number';
 import classnames from 'classnames';
 
-function slugify(s) {
-  return s.replace(/\s+/, '-');
-}
-
 export default React.createClass({
   propTypes: {
     chartData: React.PropTypes.object,

@@ -1,5 +1,5 @@
 //TODO
-import Code from 'code'
+import Code from 'code';
 import Lab from 'lab';
 
 import server from 'index.es';
