@@ -5,10 +5,8 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 
 // import PlaceSummarySubhead from './PlaceSummarySubhead';
-import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
-import LineChart from './charts/LineChart';
-import ChartDataTable from './ChartDataTable';
+import PopulationChart from './charts/PopulationChart';
 
 export default React.createClass({
   propTypes: {
@@ -39,24 +37,6 @@ export default React.createClass({
       );
     }
 
-    const placeData = props.placeData;
-
-    const popChartData = {
-      labels: constants.DECADES,
-      series: [{
-        className: 'series-population',
-        data: constants.DECADES.map((year) => {
-          return R.path(['data', 'population', 'decadeTotals', year], placeData) || 0;
-        }),
-        meta: 'population',
-        name: 'Population'
-      }]
-    };
-
-    const popChartOptions = {
-      height: '100px'
-    };
-
     //TODO include PlaceSummarySubhead
     return (
       <div className="view-summary">
@@ -65,13 +45,7 @@ export default React.createClass({
 
         </div>
 
-        <div>
-          <div className="chart-header">
-            <h4>Population</h4>
-          </div>
-          <LineChart chartData={popChartData} chartOptions={popChartOptions} />
-          <ChartDataTable className="u-full-width" chartData={popChartData} />
-        </div>
+        <PopulationChart placeData={props.placeData} />
 
       </div>
     );

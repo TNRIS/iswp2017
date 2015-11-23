@@ -54,7 +54,7 @@ export default React.createClass({
           <div className="view-top statewide-view-top">
             <StatewideViewMap />
             <div className="summary-wrapper wrapper">
-              <StatewideSummary />
+              <StatewideSummary placeData={data} />
             </div>
           </div>
 
