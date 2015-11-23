@@ -69,6 +69,11 @@ export default React.createClass({
   componentWillUpdate(nextProps, nextState) {
     //turn off the map listeners right before state changes
     this.disableMapListeners();
+
+    if (!nextState.mapState.center || !nextState.mapState.zoom) {
+      return;
+    }
+
     if (this.map.getZoom() !== nextState.mapState.zoom) {
       //don't animate when zoom changes because the animation is a bit janky
       this.map.setView(nextState.mapState.center, nextState.mapState.zoom, {animate: false});
@@ -182,6 +187,8 @@ export default React.createClass({
       this.boundaryLayer = L.geoJson(props.boundary, {
         style: constants.BOUNDARY_LAYER_STYLE
       });
+      console.log(props.boundary);
+      console.log(bounds);
       this.map.addLayer(this.boundaryLayer);
       bounds = bounds.extend(this.boundaryLayer.getBounds());
     }
@@ -191,6 +198,7 @@ export default React.createClass({
     // currently all the maps have their bounds dictacted by the last map to render
     // which results in slightly incorrect bounds if the entities differ among the maps
     this.map.fitBounds(bounds);
+
   },
 
   render() {
