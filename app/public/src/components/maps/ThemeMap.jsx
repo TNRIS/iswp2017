@@ -187,8 +187,7 @@ export default React.createClass({
       this.boundaryLayer = L.geoJson(props.boundary, {
         style: constants.BOUNDARY_LAYER_STYLE
       });
-      console.log(props.boundary);
-      console.log(bounds);
+
       this.map.addLayer(this.boundaryLayer);
       bounds = bounds.extend(this.boundaryLayer.getBounds());
     }
