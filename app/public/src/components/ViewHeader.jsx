@@ -24,7 +24,7 @@ export default React.createClass({
     return (
       <header className="header">
         <NavDrawer open={this.state.isDrawerOpen} onChange={this.onMenuChange} />
-        <div className="u-pull-left">
+        <div className="nav-button-container">
           <button className="nav-drawer-toggle" onClick={this.onMenuClick} >
             <MenuIcon /> Menu
           </button>

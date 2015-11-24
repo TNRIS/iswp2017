@@ -100,6 +100,12 @@ a {
     margin-top: 0;
   }
 
+  .nav-button-container {
+    position: absolute;
+    top: 18px;
+    left: 10px;
+  }
+
   .nav-drawer-toggle {
     color: white;
     font-size: 2rem;
@@ -124,12 +130,11 @@ a {
 
   margin-top: 0;
   padding: 8px 0 12px 0;
-  height: 30px;
   background: rgba($twdb-blue, 0.8);
 
   .logo {
     display: inline-block;
-    height: 36px;
+    width: 200px;
     vertical-align: bottom;
     padding-right: 1rem;
   }
