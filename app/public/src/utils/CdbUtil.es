@@ -94,52 +94,52 @@ function createRegionsLayer() {
           }
         }
         [letter="A"] {
-          polygon-fill: rgb(132,109,171);
+          polygon-fill: rgb(255,249,174);
         }
         [letter="B"] {
-          polygon-fill: rgb(132,109,171);
+          polygon-fill: rgb(170,215,212);
         }
         [letter="C"] {
-          polygon-fill: rgb(131,149,203);
+          polygon-fill: rgb(222,231,145);
         }
         [letter="D"] {
-          polygon-fill: rgb(132,109,171);
-        }
-        [letter="E"] {
-          polygon-fill: rgb(132,109,171);
-        }
-        [letter="F"] {
-          polygon-fill: rgb(132,109,171);
-        }
-        [letter="G"] {
-          polygon-fill: rgb(148,170,36);
-        }
-        [letter="H"] {
-          polygon-fill: rgb(189,111,167);
-        }
-        [letter="I"] {
-          polygon-fill: rgb(132,109,171);
-        }
-        [letter="J"] {
-          polygon-fill: rgb(132,109,171);
-        }
-        [letter="K"] {
-          polygon-fill: rgb(219,77,117);
-        }
-        [letter="L"] {
-          polygon-fill: rgb(244,122,100);
-        }
-        [letter="M"] {
           polygon-fill: rgb(254,195,78);
         }
+        [letter="E"] {
+          polygon-fill: rgb(255,228,175);
+        }
+        [letter="F"] {
+          polygon-fill: rgb(193,225,193);
+        }
+        [letter="G"] {
+          polygon-fill: rgb(168,155,195);
+        }
+        [letter="H"] {
+          polygon-fill: rgb(199,223,244);
+        }
+        [letter="I"] {
+          polygon-fill: rgb(126,191,133);
+        }
+        [letter="J"] {
+          polygon-fill: rgb(249,181,171);
+        }
+        [letter="K"] {
+          polygon-fill: rgb(120,182,228);
+        }
+        [letter="L"] {
+          polygon-fill: rgb(255,230,0);
+        }
+        [letter="M"] {
+          polygon-fill: rgb(87,187,182);
+        }
         [letter="N"] {
-          polygon-fill: rgb(132,109,171);
+          polygon-fill: rgb(182,189,224);
         }
         [letter="O"] {
-          polygon-fill: rgb(132,109,171);
+          polygon-fill: rgb(194,203,32);
         }
         [letter="P"] {
-          polygon-fill: rgb(132,109,171);
+          polygon-fill: rgb(214,170,203);
         }
       }`)
   });
