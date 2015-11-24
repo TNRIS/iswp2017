@@ -43,7 +43,7 @@ export default React.createClass({
     return (
       <div>
         <div className="chart-header">
-          <h4>Population</h4>
+          <h5>Population</h5>
         </div>
         <LineChart chartData={popChartData} chartOptions={chartOptions} />
         <ChartDataTable className="u-full-width" chartData={popChartData} />

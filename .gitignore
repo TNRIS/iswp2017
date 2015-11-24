@@ -3,6 +3,9 @@ cache.db
 app/public/dist/*
 !app/public/dist/.gitkeep
 
+gill-sans/
+gill-sans.*
+
 # Logs
 logs
 *.log
