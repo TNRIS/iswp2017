@@ -24,8 +24,6 @@ $media-xs: 400px;
 
 // see http://qnimate.com/using-font-face-for-bold-and-italic-style/
 $font: GillSansMT, sans-serif;
-$fontBold: GillSansMT-Bold, sans-serif;
-$fontItalic: GillSansMT-Italic, sans-serif;
 
 $border-color: #e0e0e0;
 $twdb-blue: #3F556D;
@@ -58,7 +56,8 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $fontBold;
+  font-family: $font;
+  font-weight: bold;
   color: darken($twdb-blue, 10%);
 }
 
@@ -69,7 +68,9 @@ h4 {
 
 h5 {
   font-size: 2.2rem;
-  font-family: $fontItalic;
+  font-family: $font;
+  font-style: italic;
+  font-weight: normal;
   color: $twdb-blue;
   margin-bottom: 0.5rem;
 }
@@ -211,6 +212,11 @@ a {
       text-align: center;
     }
   }
+}
+
+.button, button {
+  font-weight: normal;
+  font-size: 12px;
 }
 
 .button-small {
