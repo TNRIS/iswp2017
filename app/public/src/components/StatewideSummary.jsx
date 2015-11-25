@@ -30,7 +30,6 @@ export default React.createClass({
     return (
       <div className="view-summary">
         <h2>TEXAS</h2>
-        <p>It's the best!</p>
         <PopulationChart placeData={{data: props.placeData}} />
       </div>
     );
