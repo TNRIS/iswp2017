@@ -2,6 +2,7 @@
 import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import format from 'format-number';
 
 import PropTypes from '../../utils/CustomPropTypes';
 import constants from '../../constants';
@@ -10,8 +11,10 @@ import ChartDataTable from '../ChartDataTable';
 
 const chartOptions = {
   height: '100px',
+  lineSmooth: false,
   axisY: {
-    low: 0
+    low: 0,
+    labelInterpolationFnc: format()
   }
 };
 

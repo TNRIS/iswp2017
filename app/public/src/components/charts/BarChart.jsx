@@ -1,4 +1,5 @@
 
+import R from 'ramda';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
@@ -80,12 +81,25 @@ export default React.createClass({
   updateChart() {
     if (!this.props.chartData) { return; }
 
+    const defaultOptions = {
+      fullWidth: true,
+      width: '100%',
+      chartPadding: {
+        left: 20
+      },
+      axisY: {
+        labelInterpolationFnc: format()
+      }
+    };
+
+    const chartOptions = R.merge(defaultOptions, this.props.chartOptions);
+
     if (this.chart) {
-      this.chart.update(this.props.chartData, this.props.chartOptions);
+      this.chart.update(this.props.chartData, chartOptions);
     }
     else {
       this.chart = new Chartist.Bar(ReactDOM.findDOMNode(this.refs.chart),
-        this.props.chartData, this.props.chartOptions
+        this.props.chartData, chartOptions
       );
       //TODO: tooltips
       //TODO: animate maybe

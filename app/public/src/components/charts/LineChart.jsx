@@ -86,7 +86,11 @@ export default React.createClass({
       lineSmooth: false,
       width: '100%',
       chartPadding: {
+        left: 20,
         right: 30
+      },
+      axisY: {
+        labelInterpolationFnc: format()
       }
     };
 
