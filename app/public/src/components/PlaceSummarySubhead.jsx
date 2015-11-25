@@ -23,9 +23,11 @@ export default React.createClass({
 
     //TODO: the setTimeout is a hack to deal with the dispatch in dispatch error
     //This is also slow and there will be a flicker
-    setTimeout(() => {
-      IntersectingRegionsStore.fetch(this.props.typeId);
-    });
+    if (this.props.type === 'county') {
+      setTimeout(() => {
+        IntersectingRegionsStore.fetch(this.props.typeId);
+      });
+    }
   },
 
   componentWillUnmount() {

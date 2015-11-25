@@ -45,6 +45,8 @@ export default React.createClass({
         });
         this.map.addLayer(this.utfGrid);
         this.utfGrid.on('click', this.navigateToCounty);
+        this.utfGrid.on('mouseover', this.showCountyLabel);
+        this.utfGrid.on('mouseout', this.hideCountyLabel);
       });
   },
 
@@ -69,10 +71,26 @@ export default React.createClass({
     });
   },
 
+  componentWillUnmount() {
+    if (this.utfGrid) {
+      this.utfGrid.off('click', this.navigateToCounty);
+      this.utfGrid.off('mouseover', this.showCountyLabel);
+      this.utfGrid.off('mouseout', this.hideCountyLabel);
+    }
+  },
+
   navigateToCounty({data}) {
     if (data) {
       history.pushState(null, `/county/${data.name}`);
     }
+  },
+
+  showCountyLabel({data}) {
+    console.log('show', data);
+  },
+
+  hideCountyLabel({data}) {
+    console.log('hide', data);
   },
 
   render() {
