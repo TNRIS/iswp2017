@@ -1,12 +1,16 @@
 /*global L:false*/
 
-const entityColors = [
-  {limit: 10, color: '#1A9641'}, //green
-  {limit: 25, color: '#FFFFBF'},
-  {limit: 50, color: '#FDAE61'},
-  {limit: 100, color: 'rgb(237, 27, 47)'} //red
-];
+import R from 'ramda';
 
+import {NEEDS_LEGEND_CLASSES} from '../constants';
+
+function getColorForValue(npdValue) {
+  const legendClass = R.find(
+    (c) => c.limit >= npdValue,
+    NEEDS_LEGEND_CLASSES
+  );
+  return legendClass.color;
+}
 
 function create() {
   const legend = L.control({
@@ -40,12 +44,12 @@ function create() {
 
     const ul = L.DomUtil.create('ul', '', this._div);
 
-    for (let i = entityColors.length - 1; i >= 0; i--) {
-      const colorEntry = entityColors[i];
-      const prevColorEntry = entityColors[i - 1];
+    for (let i = NEEDS_LEGEND_CLASSES.length - 1; i >= 0; i--) {
+      const colorEntry = NEEDS_LEGEND_CLASSES[i];
+      const prevColorEntry = NEEDS_LEGEND_CLASSES[i - 1];
       const legendEntry = L.DomUtil.create('li', 'legend-entry', ul);
 
-      if (colorEntry.limit === entityColors[0].limit) {
+      if (colorEntry.limit === NEEDS_LEGEND_CLASSES[0].limit) {
         legendEntry.innerHTML = `${circleTpl({color: colorEntry.color})} Less than 10%`;
       }
       else {
@@ -61,6 +65,6 @@ function create() {
 }
 
 export default {
-  entityColors,
-  create
+  create,
+  getColorForValue
 };

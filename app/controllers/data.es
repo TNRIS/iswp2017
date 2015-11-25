@@ -14,6 +14,8 @@ const dataTables = {
   // strategies: 'vw2017MapWugWms' TODO: Strategy view not yet in DB, ref #51
 };
 
+const needsPctDemandsTable = 'vw2017MapEntityNeedsAsPctOfDemand';
+
 const entityTable = 'vw2017MapEntityCoordinates';
 
 const renameValueFields = (theme) => {
@@ -68,9 +70,20 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
         `${entityTable}.EntityIsSplit`
       ];
 
-      const dataSelectFields = R.concat(renameValueFields(theme), commonFields);
+      let dataSelectFields = R.concat(renameValueFields(theme), commonFields);
+
+      if (theme === 'needs') {
+        const npdCols = R.map((year) => `NPD${year}`, constants.YEARS);
+        dataSelectFields = R.concat(npdCols, dataSelectFields);
+      }
+
       let selectData = db.select(dataSelectFields).from(table)
           .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`);
+
+      if (theme === 'needs') {
+        selectData = selectData.join(needsPctDemandsTable, `${table}.EntityId`, `${needsPctDemandsTable}.EntityId`);
+      }
+
       if (whereKey && whereVal) {
         if (whereKey === 'EntityId') {
           //TODO: this is a hack. Fix by splitting out this giant method into smaller pieces.
@@ -80,6 +93,7 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
           selectData = selectData.where(whereKey, whereVal);
         }
       }
+
       dataPromises.push(selectData);
     }
 

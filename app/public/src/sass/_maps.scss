@@ -21,10 +21,16 @@
     stroke: black;
     stroke-width: 1px;
     stroke-opacity: 0.8;
-    fill: $color;
     fill-opacity: 0.9;
     stroke-linejoin: round;
     stroke-linecap: round;
+  }
+
+  //needs colors are handled by ThemeMap component
+  @if $name != 'needs' {
+    .entity-marker-#{$name} {
+      fill: $color;
+    }
   }
 }
 

@@ -33,8 +33,6 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    //TODO: Graduated colors for Needs entities
-    //TODO: Order entities so that larger are on bottom
     //TODO: Use spiderfier Leaflet plugin ?
 
     const map = this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
@@ -130,9 +128,12 @@ export default React.createClass({
       if (valueSum > maxVal) { maxVal = valueSum; }
       if (valueSum < minVal) { minVal = valueSum; }
 
+      const npdProps = constants.DECADES.map((d) => `NPD${d}`);
+
       const entityProperties =  R.assoc('ValueSum', valueSum,
-        R.pick(['EntityId', 'EntityName', 'ValueSum'], entity)
-      );
+        R.pick(R.concat(['EntityId', 'EntityName', 'ValueSum', 'NPD2020'], npdProps),
+        entity
+      ));
       return {
         type: 'Feature',
         geometry: {
@@ -143,6 +144,7 @@ export default React.createClass({
       };
     })(R.values(groupedById));
 
+
     if (this.entitiesLayer && this.map.hasLayer(this.entitiesLayer)) {
       this.map.removeLayer(this.entitiesLayer);
     }
@@ -151,7 +153,12 @@ export default React.createClass({
       return;
     }
 
-    this.entitiesLayer = L.geoJson(entityFeatures, {
+    //sort the features in reverse so that entities with lar
+    const sortedFeatures = R.reverse(
+      R.sortBy(R.path(['properties', 'ValueSum']))(entityFeatures)
+    );
+
+    this.entitiesLayer = L.geoJson(sortedFeatures, {
       pointToLayer: (feat, latlng) => {
         let radius;
         if (minVal === maxVal) {
@@ -165,10 +172,18 @@ export default React.createClass({
           );
         }
 
-        return L.circleMarker(latlng, {
+        const markerOpts = {
           radius: radius,
           className: `entity-marker-${props.theme}`
-        });
+        };
+
+        if (this.props.theme === 'needs') {
+          const npdVal = feat.properties[`NPD${props.decade}`];
+          const color = NeedsLegend.getColorForValue(npdVal);
+          markerOpts.color = color;
+        }
+
+        return L.circleMarker(latlng, markerOpts);
       },
       onEachFeature: (feat, layer) => {
         layer.bindPopup(feat.properties.EntityName +
