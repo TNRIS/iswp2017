@@ -10,6 +10,10 @@ export const IntersectingRegionsSource = {
       return CdbUtil.getIntersectingRegions(countyName);
     },
 
+    local() {
+      return null;
+    },
+
     success: IntersectingRegionsActions.updateIntersectingRegions,
     error: IntersectingRegionsActions.fetchIntersectingRegionsFailed,
     loading: IntersectingRegionsActions.fetchIntersectingRegions
@@ -35,7 +39,6 @@ class IntersectingRegionsStore {
   }
 
   handleFetch() {
-    //reset during fetch
     this.intersectingRegions = null;
     this.errorMessage = null;
   }

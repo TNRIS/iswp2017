@@ -4,7 +4,7 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 
-// import PlaceSummarySubhead from './PlaceSummarySubhead';
+import PlaceSummarySubhead from './PlaceSummarySubhead';
 import PropTypes from '../utils/CustomPropTypes';
 import PopulationChart from './charts/PopulationChart';
 
@@ -37,12 +37,11 @@ export default React.createClass({
       );
     }
 
-    //TODO include PlaceSummarySubhead
     return (
       <div className="view-summary">
         <h2>{typeAndId.toUpperCase()}</h2>
         <div className="subhead">
-
+          <PlaceSummarySubhead type={props.type} typeId={props.typeId} />
         </div>
 
         <PopulationChart placeData={props.placeData} />

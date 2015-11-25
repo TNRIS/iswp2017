@@ -2,6 +2,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import intersperse from 'intersperse';
 
 import IntersectingRegionsStore from '../stores/IntersectingRegionsStore';
 
@@ -19,12 +20,12 @@ export default React.createClass({
 
   componentDidMount() {
     IntersectingRegionsStore.listen(this.onGetIntersectingRegions);
-  },
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.type === 'county') {
-      IntersectingRegionsStore.fetch(nextProps.typeId);
-    }
+    //TODO: the setTimeout is a hack to deal with the dispatch in dispatch error
+    //This is also slow and there will be a flicker
+    setTimeout(() => {
+      IntersectingRegionsStore.fetch(this.props.typeId);
+    });
   },
 
   componentWillUnmount() {
@@ -44,14 +45,21 @@ export default React.createClass({
       );
     }
 
+    if (IntersectingRegionsStore.isLoading()) {
+      return (<p/>);
+    }
+
+
     if (this.props.type === 'county' && this.state.intersectingRegions) {
+      const links = this.state.intersectingRegions.map((region, i) => {
+        return (
+          <Link key={i} to={`/region/${region}`}>Region {region.toUpperCase()}</Link>
+        );
+      });
+
       return (
         <p>
-          County in {this.state.intersectingRegions.map((region, i) => {
-            return (
-              <Link key={i} to={`/region/${region}`}>Region {region.toUpperCase()}</Link>
-            );
-          })}
+          County in {intersperse(links, ", ")}
         </p>
       );
     }
