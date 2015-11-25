@@ -9,7 +9,10 @@ import LineChart from './LineChart';
 import ChartDataTable from '../ChartDataTable';
 
 const chartOptions = {
-  height: '100px'
+  height: '100px',
+  axisY: {
+    low: 0
+  }
 };
 
 export default React.createClass({

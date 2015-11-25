@@ -49,7 +49,6 @@ export default React.createClass({
       return (<p/>);
     }
 
-
     if (this.props.type === 'county' && this.state.intersectingRegions) {
       const links = this.state.intersectingRegions.map((region, i) => {
         return (
