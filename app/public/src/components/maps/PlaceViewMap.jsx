@@ -45,7 +45,7 @@ export default React.createClass({
         });
         this.map.addLayer(this.utfGrid);
         this.utfGrid.on('click', this.navigateToCounty);
-        this.utfGrid.on('mouseover', this.showCountyLabel);
+        this.utfGrid.on('mousemove', this.showCountyLabel);
         this.utfGrid.on('mouseout', this.hideCountyLabel);
       });
   },
@@ -74,7 +74,7 @@ export default React.createClass({
   componentWillUnmount() {
     if (this.utfGrid) {
       this.utfGrid.off('click', this.navigateToCounty);
-      this.utfGrid.off('mouseover', this.showCountyLabel);
+      this.utfGrid.off('mousemove', this.showCountyLabel);
       this.utfGrid.off('mouseout', this.hideCountyLabel);
     }
   },
@@ -85,12 +85,22 @@ export default React.createClass({
     }
   },
 
-  showCountyLabel({data}) {
-    console.log('show', data);
+  showCountyLabel(event) {
+    if (!this.label) {
+      this.label = new L.Label({className: 'label-county'});
+    }
+    this.label.setContent(event.data.name);
+    this.label.setLatLng(event.latlng);
+    if (!this.map.hasLayer(this.label)) {
+      this.map.addLayer(this.label);
+    }
   },
 
-  hideCountyLabel({data}) {
-    console.log('hide', data);
+  hideCountyLabel() {
+    if (this.label && this.map.hasLayer(this.label)) {
+      this.map.removeLayer(this.label);
+      this.label = null;
+    }
   },
 
   render() {
