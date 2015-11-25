@@ -149,14 +149,14 @@ const tolerance = 0.001;
 
 function getCounty(name) {
   const query = `SELECT name, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
-    FROM ${countyTable} WHERE name ~* '${name}' LIMIT 1`;
+    FROM ${countyTable} WHERE LOWER(name) = LOWER('${name}') LIMIT 1`;
   return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
     .then(({data}) => data);
 }
 
 function getRegion(letter) {
   const query = `SELECT letter, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
-    FROM ${regionTable} WHERE letter ~* '${letter}' LIMIT 1`;
+    FROM ${regionTable} WHERE UPPER(letter) = UPPER('${letter}') LIMIT 1`;
   return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
     .then(({data}) => data);
 }
