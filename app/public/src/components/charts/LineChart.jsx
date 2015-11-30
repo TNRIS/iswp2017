@@ -6,6 +6,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Chartist from 'chartist';
 import format from 'format-number';
 import classnames from 'classnames';
+import classList from 'dom-classlist';
 
 export default React.createClass({
   propTypes: {
@@ -43,7 +44,8 @@ export default React.createClass({
   },
 
   onMouseOver(event) {
-    const isOverPoint = event.target.classList.contains('ct-point');
+    // use library to check classList because IE doesn't implement classList on SVG elements
+    const isOverPoint = classList(event.target).contains('ct-point');
 
     if (isOverPoint) {
       const parent = event.target.parentNode;
