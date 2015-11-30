@@ -64,7 +64,7 @@ export default React.createClass({
 
     const legendEntries = constants.USAGE_TYPES.map((type) => {
       return {
-        className: `series-${slugify(type)}`,
+        className: `series-${slugify(type.toLowerCase())}`,
         display: titleize(type)
       };
     });
