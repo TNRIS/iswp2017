@@ -86,25 +86,11 @@ export default React.createClass({
                         <ThemeTotalsByDecadeChart placeData={entityData} />
                       </div>
                     </div>
-
-                    <div className="row panel-row">
-                      <div className="twelve columns">
-                        <ThemeTypesByDecadeChart placeData={entityData} />
-                      </div>
-                    </div>
-
-                    <div className="row panel-row">
-                      <div className="twelve columns">
-                        <DataByTypeCharts placeData={entityData} />
-                      </div>
-                    </div>
                   </div>
-
                 </div>
               );
             })()
           }
-
         </section>
       </div>
     );
