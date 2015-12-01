@@ -14,7 +14,7 @@
   <body>
     <div id="wrapper">
       <div id="content">
-        {% block body %}{% endblock body %}
+        {% block content %}{% endblock content %}
       </div>
       <footer id="footer">
         <p>This website is brought to you by the <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">Texas Water Development Board</a></p>
@@ -30,5 +30,7 @@
         </a>
       </footer>
     </div>
+
+    {% block bodyscripts %}{% endblock bodyscripts %}
   </body>
 </html>

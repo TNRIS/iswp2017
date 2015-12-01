@@ -11,12 +11,13 @@
   <title>DRAFT 2017 Texas State Water Plan</title>
 {% endblock title %}
 
-{% block body %}
+{% block content %}
   <div id="reactApp"></div>
+{% endblock content %}
 
 
-
+{% block bodyscripts %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
   <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-label/v0.2.1/leaflet.label.js"></script>
   <script type="text/javascript" src="/public/bundle.js" charset="utf-8"></script>
-{% endblock body %}
+{% endblock bodyscripts %}
