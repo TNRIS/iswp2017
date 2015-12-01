@@ -111,15 +111,17 @@ export default React.createClass({
   },
 
   render() {
+    const tooltipStyle = {
+      bottom: this.state.tooltip.bottom,
+      left: this.state.tooltip.left,
+      visibility: this.state.tooltip.visibility
+    };
+
     return (
       <div style={{position: 'relative'}}>
         <div ref="chart" className="ct-chart" onMouseOver={this.onMouseOver}></div>
         <div ref="tooltip" className={classnames('ct-tooltip', this.state.tooltip.className)}
-          style={{
-            bottom: this.state.tooltip.bottom,
-            left: this.state.tooltip.left,
-            visibility: this.state.tooltip.visibility
-          }}>
+          style={tooltipStyle}>
           {this.state.tooltip.value}
         </div>
       </div>
