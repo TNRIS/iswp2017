@@ -9,11 +9,11 @@ import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import CdbUtil from '../../utils/CdbUtil';
 
+//TODO: Adjust this based on device size
+
 export default React.createClass({
   propTypes: {
-    type: React.PropTypes.string,
-    typeId: React.PropTypes.string,
-    placeData: PropTypes.PlaceData
+    entityData: PropTypes.EntityData
   },
 
   mixins: [PureRenderMixin],
@@ -50,24 +50,25 @@ export default React.createClass({
   },
 
   componentDidUpdate() {
-    if (!this.props.placeData || !this.props.placeData.boundary) {
+    if (!this.props.entityData.entity) {
       return;
     }
 
-    if (this.boundaryLayer && this.map.hasLayer(this.boundaryLayer)) {
-      this.map.removeLayer(this.boundaryLayer);
+    const entity = this.props.entityData.entity;
+
+    if (this.entityLayer && this.map.hasLayer(this.entityLayer)) {
+      this.map.removeLayer(this.entityLayer);
     }
 
-    this.boundaryLayer = L.geoJson(this.props.placeData.boundary, {
-      style: constants.BOUNDARY_LAYER_STYLE,
-      clickable: false
-    });
+    this.entityLayer = L.circleMarker([entity.Latitude, entity.Longitude],
+      constants.ENTITY_LAYER_STYLE,
+    );
 
-    this.map.addLayer(this.boundaryLayer);
+    this.map.addLayer(this.entityLayer);
 
-
-    this.map.fitBounds(this.boundaryLayer.getBounds(), {
-      paddingTopLeft: constants.VIEW_MAP_PADDING
+    this.map.fitBounds(this.entityLayer.getBounds(), {
+      paddingTopLeft: constants.VIEW_MAP_PADDING,
+      maxZoom: 8
     });
   },
 

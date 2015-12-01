@@ -33,6 +33,13 @@ export default {
     color: '#3F556D',
     weight: 4
   },
+  ENTITY_LAYER_STYLE: {
+    radius: 8,
+    fillOpacity: 1,
+    opacity: 1,
+    color: '#3F556D',
+    weight: 2
+  },
   MIN_ENTITY_POINT_RADIUS: 4,
   MAX_ENTITY_POINT_RADIUS: 12,
   VIEW_MAP_OPTIONS: {

@@ -1,0 +1,113 @@
+
+import R from 'ramda';
+import React from 'react';
+import Helmet from 'react-helmet';
+
+import EntityDataStore from '../stores/EntityDataStore';
+
+import EntityViewMap from './maps/EntityViewMap';
+import EntitySummary from './EntitySummary';
+import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
+import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
+import DataByTypeCharts from './charts/DataByTypeCharts';
+import Spinner from 'react-spinkit';
+// import DataTable from './DataTable';
+import DecadeSelector from './DecadeSelector';
+
+export default React.createClass({
+  propTypes: {
+    params: React.PropTypes.shape({
+      entityId: React.PropTypes.integer
+    }).isRequired
+  },
+
+  getInitialState() {
+    return EntityDataStore.getState();
+  },
+
+  componentDidMount() {
+    EntityDataStore.listen(this.onChange);
+
+    this.fetchData(this.props.params);
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.fetchData(nextProps.params);
+  },
+
+  componentWillUnmount() {
+    EntityDataStore.unlisten(this.onChange);
+  },
+
+  onChange(state) {
+    this.setState(state);
+  },
+
+  fetchData(params) {
+    // Fetch statewide data
+    EntityDataStore.fetch({entityId: params.entityId});
+  },
+
+  render() {
+    const entityData = this.state.entityData;
+    const title = entityData.entity ? entityData.entity.EntityName
+      : '';
+
+    return (
+      <div className="entity-view">
+        <Helmet title={title} />
+        <section className="main-content">
+          <div className="view-top entity-view-top">
+            <EntityViewMap entityData={entityData} />
+            <div className="summary-wrapper wrapper">
+              <EntitySummary entityData={entityData} />
+            </div>
+          </div>
+
+          {
+            (() => {
+              if (!entityData || R.isEmpty(R.keys(entityData))) {
+                return (
+                  <div className="container">
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <Spinner spinnerName="double-bounce" noFadeIn />
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
+                <div>
+                  <div className="container">
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <ThemeTotalsByDecadeChart placeData={entityData} />
+                      </div>
+                    </div>
+
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <ThemeTypesByDecadeChart placeData={entityData} />
+                      </div>
+                    </div>
+
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <DataByTypeCharts placeData={entityData} />
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              );
+            })()
+          }
+
+        </section>
+      </div>
+    );
+  }
+
+});

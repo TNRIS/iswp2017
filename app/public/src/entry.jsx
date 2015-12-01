@@ -13,6 +13,7 @@ import App from './App';
 import history from './history';
 import NotFound from './components/NotFound';
 import PlaceView from './components/PlaceView';
+import EntityView from './components/EntityView';
 import StatewideView from './components/StatewideView';
 
 import './vendor/css/normalize.css';
@@ -28,6 +29,7 @@ ReactDOM.render((
   <Router history={history}>
     <Route component={App}>
       <Route name="stateview" path="statewide" component={StatewideView}/>
+      <Route name="entityview" path="entity/:entityId" component={EntityView}/>
       <Route name="placeview" path=":type/:typeId" component={PlaceView}/>
       <Redirect from="/" to="/statewide" />
       <Route path="*" component={NotFound} />

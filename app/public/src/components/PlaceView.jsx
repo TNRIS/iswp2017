@@ -65,7 +65,7 @@ export default React.createClass({
       title = `${titleize(params.typeId)} County`;
       break;
     default:
-      title = `${titleize(params.typeId)}`;
+      title = '';
     }
 
     return (
