@@ -15,6 +15,7 @@ export default React.createClass({
 
   mixins: [PureRenderMixin],
 
+  //TODO: Include "Entity in County/Region" - Will need API to support
   render() {
     const props = this.props;
 
@@ -29,7 +30,7 @@ export default React.createClass({
     return (
       <div className="view-summary">
         <h2>{props.entityData.entity.EntityName}</h2>
-        <PopulationChart placeData={{data: props.entityData.data}} />
+        <PopulationChart viewData={props.entityData.data} />
       </div>
     );
   }

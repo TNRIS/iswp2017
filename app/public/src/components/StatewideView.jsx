@@ -2,6 +2,7 @@
 import R from 'ramda';
 import React from 'react';
 import Helmet from 'react-helmet';
+import Spinner from 'react-spinkit';
 
 import StatewideDataStore from '../stores/StatewideDataStore';
 
@@ -10,7 +11,6 @@ import StatewideSummary from './StatewideSummary';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
-import Spinner from 'react-spinkit';
 // import ThemeMaps from './maps/ThemeMaps';
 // import DataTable from './DataTable';
 import DecadeSelector from './DecadeSelector';
@@ -54,7 +54,7 @@ export default React.createClass({
           <div className="view-top statewide-view-top">
             <StatewideViewMap />
             <div className="summary-wrapper wrapper">
-              <StatewideSummary placeData={data} />
+              <StatewideSummary viewData={data} />
             </div>
           </div>
 
@@ -77,19 +77,19 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <ThemeTotalsByDecadeChart placeData={{data}} />
+                        <ThemeTotalsByDecadeChart viewData={data} />
                       </div>
                     </div>
 
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <ThemeTypesByDecadeChart placeData={{data}} />
+                        <ThemeTypesByDecadeChart viewData={data} />
                       </div>
                     </div>
 
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <DataByTypeCharts placeData={{data}} />
+                        <DataByTypeCharts viewData={data} />
                       </div>
                     </div>
                   </div>

@@ -12,7 +12,7 @@ export default React.createClass({
   propTypes: {
     type: React.PropTypes.string,
     typeId: React.PropTypes.string,
-    placeData: PropTypes.PlaceData
+    viewData: PropTypes.ViewData
   },
 
   mixins: [PureRenderMixin],
@@ -28,7 +28,7 @@ export default React.createClass({
       typeAndId = `${props.typeId} County`;
     }
 
-    if (!props.placeData || R.isEmpty(R.keys(props.placeData))) {
+    if (!props.viewData || R.isEmpty(R.keys(props.viewData))) {
       return (
         <div className="view-summary">
           <h2>{typeAndId.toUpperCase()}</h2>
@@ -44,7 +44,7 @@ export default React.createClass({
           <PlaceSummarySubhead type={props.type} typeId={props.typeId} />
         </div>
 
-        <PopulationChart placeData={props.placeData} />
+        <PopulationChart viewData={props.viewData} />
 
       </div>
     );

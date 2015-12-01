@@ -80,7 +80,7 @@ export default React.createClass({
               <PlaceSummary
                 type={params.type}
                 typeId={params.typeId}
-                placeData={placeData} />
+                viewData={placeData.data} />
             </div>
           </div>
 
@@ -103,19 +103,19 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <ThemeTotalsByDecadeChart placeData={placeData} />
+                        <ThemeTotalsByDecadeChart viewData={placeData.data} />
                       </div>
                     </div>
 
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <ThemeTypesByDecadeChart placeData={placeData} />
+                        <ThemeTypesByDecadeChart viewData={placeData.data} />
                       </div>
                     </div>
 
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <DataByTypeCharts placeData={placeData} />
+                        <DataByTypeCharts viewData={placeData.data} />
                       </div>
                     </div>
                   </div>

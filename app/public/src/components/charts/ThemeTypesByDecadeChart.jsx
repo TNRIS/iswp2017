@@ -20,7 +20,7 @@ function slugify(s) {
 
 export default React.createClass({
   propTypes: {
-    placeData: PropTypes.PlaceData
+    viewData: PropTypes.ViewData
   },
 
   mixins: [PureRenderMixin],
@@ -36,9 +36,9 @@ export default React.createClass({
   },
 
   render() {
-    const placeData = this.props.placeData;
+    const viewData = this.props.viewData;
 
-    if (!placeData || !placeData.data) {
+    if (!viewData) {
       return (
         <div />
       );
@@ -53,8 +53,8 @@ export default React.createClass({
           meta: type.toLowerCase(),
           className: `series-${slugify(type.toLowerCase())}`,
           data: constants.DECADES.map((year) => {
-            if (R.path(['data', this.state.selectedTheme, 'typeTotals', type], placeData)) {
-              return placeData.data[this.state.selectedTheme].typeTotals[type][`Total_${year}`];
+            if (R.path([this.state.selectedTheme, 'typeTotals', type], viewData)) {
+              return viewData[this.state.selectedTheme].typeTotals[type][`Total_${year}`];
             }
             return 0;
           })

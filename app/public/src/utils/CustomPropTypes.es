@@ -6,7 +6,7 @@ const ViewData = React.PropTypes.shape({
   supplies: React.PropTypes.object,
   needs: React.PropTypes.object,
   strategies: React.PropTypes.object
-})
+});
 
 const  Feature = React.PropTypes.shape({
   geometry: React.PropTypes.object,
@@ -29,7 +29,7 @@ const EntityData = React.PropTypes.shape({
     EntityIsSplit: React.PropTypes.string, //TODO: convert to bool?
   }),
   data: ViewData
-})
+});
 
 export default {
   Feature,

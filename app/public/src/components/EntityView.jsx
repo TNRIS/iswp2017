@@ -2,17 +2,13 @@
 import R from 'ramda';
 import React from 'react';
 import Helmet from 'react-helmet';
+import Spinner from 'react-spinkit';
 
 import EntityDataStore from '../stores/EntityDataStore';
 
 import EntityViewMap from './maps/EntityViewMap';
 import EntitySummary from './EntitySummary';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
-import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
-import DataByTypeCharts from './charts/DataByTypeCharts';
-import Spinner from 'react-spinkit';
-// import DataTable from './DataTable';
-import DecadeSelector from './DecadeSelector';
 
 export default React.createClass({
   propTypes: {
@@ -83,7 +79,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <ThemeTotalsByDecadeChart placeData={entityData} />
+                        <ThemeTotalsByDecadeChart viewData={entityData.data} />
                       </div>
                     </div>
                   </div>

@@ -20,15 +20,15 @@ const chartOptions = {
 
 export default React.createClass({
   propTypes: {
-    placeData: PropTypes.PlaceData
+    viewData: PropTypes.ViewData
   },
 
   mixins: [PureRenderMixin],
 
   render() {
-    const placeData = this.props.placeData;
+    const viewData = this.props.viewData;
 
-    if (!placeData || !placeData.data) {
+    if (!viewData) {
       return (
         <div />
       );
@@ -39,7 +39,7 @@ export default React.createClass({
       series: [{
         className: 'series-population',
         data: constants.DECADES.map((year) => {
-          return R.path(['data', 'population', 'decadeTotals', year], placeData) || 0;
+          return R.path(['population', 'decadeTotals', year], viewData) || 0;
         }),
         meta: 'population',
         name: 'Population'

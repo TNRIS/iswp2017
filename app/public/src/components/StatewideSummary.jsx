@@ -4,13 +4,12 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 
-// import PlaceSummarySubhead from './PlaceSummarySubhead';
 import PropTypes from '../utils/CustomPropTypes';
 import PopulationChart from './charts/PopulationChart';
 
 export default React.createClass({
   propTypes: {
-    placeData: PropTypes.PlaceData
+    viewData: PropTypes.ViewData
   },
 
   mixins: [PureRenderMixin],
@@ -18,7 +17,7 @@ export default React.createClass({
   render() {
     const props = this.props;
 
-    if (!props.placeData || R.isEmpty(R.keys(props.placeData))) {
+    if (!props.viewData || R.isEmpty(R.keys(props.viewData))) {
       return (
         <div className="view-summary">
           <h2>TEXAS</h2>
@@ -30,7 +29,7 @@ export default React.createClass({
     return (
       <div className="view-summary">
         <h2>TEXAS</h2>
-        <PopulationChart placeData={{data: props.placeData}} />
+        <PopulationChart viewData={props.viewData} />
       </div>
     );
   }

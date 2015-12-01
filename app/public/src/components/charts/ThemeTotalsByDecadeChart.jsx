@@ -15,15 +15,15 @@ const chartOptions = {
 
 export default React.createClass({
   propTypes: {
-    placeData: PropTypes.PlaceData
+    viewData: PropTypes.ViewData
   },
 
   mixins: [PureRenderMixin],
 
   render() {
-    const placeData = this.props.placeData;
+    const viewData = this.props.viewData;
 
-    if (!placeData || !placeData.data) {
+    if (!viewData) {
       return (
         <div />
       );
@@ -35,8 +35,8 @@ export default React.createClass({
         meta: theme,
         className: `series-${theme}`,
         data: constants.DECADES.map((year) => {
-          if (R.path(['data', theme, 'decadeTotals', year], placeData)) {
-            return placeData.data[theme].decadeTotals[year];
+          if (R.path([theme, 'decadeTotals', year], viewData)) {
+            return viewData[theme].decadeTotals[year];
           }
           return null;
         })
