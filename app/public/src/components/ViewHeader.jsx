@@ -23,12 +23,6 @@ export default React.createClass({
   render() {
     return (
       <header className="header">
-        <NavDrawer open={this.state.isDrawerOpen} onChange={this.onMenuChange} />
-        <div className="nav-button-container">
-          <button className="nav-drawer-toggle" onClick={this.onMenuClick} >
-            <MenuIcon /> Menu
-          </button>
-        </div>
         <div className="header-title wrapper">
           <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">
             <img src="/public/static/img/twdb-logo-dark-bkgd-w200px-3c.png" className="logo" />

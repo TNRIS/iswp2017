@@ -12,7 +12,17 @@
 {% endblock title %}
 
 {% block content %}
-  <div id="reactApp"></div>
+  <div id="reactApp">
+    {# This will get replaced once the react app loads #}
+    <header class="header">
+      <div class="header-title wrapper">
+        <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">
+          <img src="/public/static/img/twdb-logo-dark-bkgd-w200px-3c.png" class="logo" />
+        </a>
+        <h1>DRAFT 2017 Texas State Water Plan</h1>
+      </div>
+    </header>
+  </div>
 {% endblock content %}
 
 

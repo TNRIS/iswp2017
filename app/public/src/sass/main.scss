@@ -37,7 +37,6 @@ $usageTypes: ('irrigation' rgb(126, 191, 133)), ('livestock', rgb(106, 138, 34))
 
 @import "charts";
 @import "maps";
-@import "navdrawer";
 
 html {
   height: 100%;
@@ -110,35 +109,6 @@ a {
 .header {
   @media (min-width: $media-s) {
     margin-top: 0;
-  }
-
-  .nav-button-container {
-    position: absolute;
-    top: 18px;
-    left: 10px;
-  }
-
-  .nav-drawer-toggle {
-    color: white;
-    font-size: 2rem;
-    line-height: 2rem;
-    height: 100%;
-    padding: 0;
-    margin: 1.2rem 2rem 0 1rem;
-    font-weight: normal;
-    border: none;
-    border-radius: 0;
-
-    &:hover {
-      border-bottom: 1px solid white;
-    }
-
-    > svg {
-      height: 2.1rem;
-      width: 2.1rem;
-      fill: white;
-      vertical-align: text-bottom;
-    }
   }
 
   margin-top: 0;
