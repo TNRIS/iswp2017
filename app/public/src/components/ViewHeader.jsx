@@ -2,7 +2,8 @@
 import React from 'react';
 
 
-import MenuIcon from '../../static/img/menu.svg';
+// TODO: delete svg if removing
+// import MenuIcon from '../../static/img/menu.svg';
 
 export default React.createClass({
   getInitialState() {
@@ -33,7 +34,7 @@ export default React.createClass({
             <button className="nav-toggle">Navigate</button>
           </div>
         </div>
-        <div className="header-nav">
+        <div className="header-nav wrapper">
           Put Nav Here
         </div>
       </header>

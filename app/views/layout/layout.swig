@@ -12,7 +12,7 @@
 
   </head>
   <body>
-    <div id="wrapper">
+    <div id="page-wrapper">
       <div id="content">
         {% block content %}{% endblock content %}
       </div>
