@@ -57,10 +57,8 @@ const routes = [
         query: {
           name: Joi.string().min(3).required()
         }
-      },
-      cache: {
-        expiresIn: constants.API_CACHE_EXPIRES_IN
       }
+      //no cache for search
     },
     handler: bind('getByNamePartial')
   },

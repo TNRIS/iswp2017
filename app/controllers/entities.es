@@ -27,7 +27,7 @@ class EntitiesController {
     db.select().from(entityTable)
       .where('EntityName', 'like', nameQuery)
       .orderByRaw(`CASE WHEN EntityName LIKE "${startsWithName}" THEN 1 ELSE 2 END`)
-      .limit(10)
+      .limit(255)
       .then(reply)
       .catch(handleApiError(reply));
   }

@@ -11,7 +11,7 @@ import HeaderNav from './nav/HeaderNav';
 export default React.createClass({
   getInitialState() {
     return {
-      isNavOpen: true //TODO: remove when finished dev
+      isNavOpen: false
     };
   },
 

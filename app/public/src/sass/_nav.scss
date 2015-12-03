@@ -34,7 +34,33 @@ button.nav-toggle {
   label {
     display: inline-block;
     color: white;
-    margin-right: 1rem;
+  }
+
+  select {
+    margin-left: 1rem;
+  }
+
+  .select-auto {
+    display: inline-block;
+    margin-left: 1rem;
+    width: 240px;
+    vertical-align: middle;
+
+    &.entity-select {
+      width: 320px;
+    }
+
+    .Select-control {
+      border-radius: 0;
+    }
+
+    .Select-placeholder {
+      margin-right: 30px;
+    }
+
+    .Select-menu-outer {
+      z-index: 10000;
+    }
   }
 }
 
