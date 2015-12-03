@@ -12,7 +12,7 @@ Install node >= 0.12.0 and npm >= 3.3.3
 
 Install babel: `npm install -g babel@5`
 
-Download a copy of the water plan data sqlite3 database and place it at `/app/db/cache.db`.
+Download a copy of the water plan data sqlite3 database (PROVISIONAL DATA: https://s3.amazonaws.com/tnris-misc/iswp/2017/cache.db) and place it at `/app/db/cache.db`.
 
 #### Webfont
 
