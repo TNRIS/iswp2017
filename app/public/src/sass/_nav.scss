@@ -11,11 +11,28 @@ button.nav-toggle {
   border-bottom: none;
   border-radius: 0;
 
-  .on {
-    border-bottom: 1px solid white;
+  &.on {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+  }
+
+  &:focus, &:hover {
+    border-color: white;
   }
 }
 
 .header-nav {
   transition: all 0.3s ease-in-out;
+  text-align: right;
+  padding-top: 1rem;
+
+  label {
+    display: inline-block;
+    color: white;
+    margin-right: 1rem;
+  }
+}
+
+#nav-category-select {
+  display: inline-block;
 }

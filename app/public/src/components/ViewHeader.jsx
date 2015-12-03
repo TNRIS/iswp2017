@@ -1,6 +1,9 @@
 
 import React from 'react';
+import ToggleDisplay from 'react-toggle-display';
+import classnames from 'classnames';
 
+import HeaderNav from './nav/HeaderNav';
 
 // TODO: delete svg if removing
 // import MenuIcon from '../../static/img/menu.svg';
@@ -8,18 +11,12 @@ import React from 'react';
 export default React.createClass({
   getInitialState() {
     return {
-      isDrawerOpen: false
+      isNavOpen: true //TODO: remove when finished dev
     };
   },
 
-  onMenuClick(evt) {
-    evt.preventDefault();
-    this.setState({isDrawerOpen: true});
-  },
-
-  onMenuChange(isOpen) {
-    this.setState({isDrawerOpen: isOpen});
-    return;
+  toggleNav() {
+    this.setState({isNavOpen: !this.state.isNavOpen});
   },
 
   render() {
@@ -31,12 +28,15 @@ export default React.createClass({
           </a>
           <h1>DRAFT 2017 Texas State Water Plan</h1>
           <div className="nav-toggle-container">
-            <button className="nav-toggle">Navigate</button>
+            <button onClick={this.toggleNav}
+              className={classnames('nav-toggle', {'on': this.state.isNavOpen})}>
+              Navigate
+            </button>
           </div>
         </div>
-        <div className="header-nav wrapper">
-          Put Nav Here
-        </div>
+        <ToggleDisplay show={this.state.isNavOpen}>
+          <HeaderNav />
+        </ToggleDisplay>
       </header>
     );
   }
