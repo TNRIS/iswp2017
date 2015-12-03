@@ -7,17 +7,21 @@
 
 button.nav-toggle {
   color: white;
-  margin: 0;
+  margin: 0 0 -1px 0;
   border-bottom: none;
   border-radius: 0;
 
   &.on {
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
+    border-color: white;
+    border-bottom: 1px solid $twdb-blue;
   }
 
   &:focus, &:hover {
     border-color: white;
+
+    &.on {
+      border-bottom: 1px solid $twdb-blue;
+    }
   }
 }
 
@@ -25,6 +29,7 @@ button.nav-toggle {
   transition: all 0.3s ease-in-out;
   text-align: right;
   padding-top: 1rem;
+  border-top: 1px solid white;
 
   label {
     display: inline-block;
