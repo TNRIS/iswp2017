@@ -5,7 +5,9 @@
   bottom: 0;
 }
 
+$nav-color: lighten($twdb-blue, 10%);
 button.nav-toggle {
+
   color: white;
   margin: 0 0 -1px 0;
   border-bottom: none;
@@ -13,20 +15,23 @@ button.nav-toggle {
 
   &.on {
     border-color: white;
-    border-bottom: 1px solid $twdb-blue;
+    background-color: $nav-color;
+    border-bottom: 1px solid $nav-color;
   }
 
   &:focus, &:hover {
     border-color: white;
+    background-color: $nav-color;
 
     &.on {
-      border-bottom: 1px solid $twdb-blue;
+      border-bottom: 1px solid $nav-color;
     }
   }
 }
 
 .header-nav {
   transition: all 0.3s ease-in-out;
+  background-color: $nav-color;
   text-align: right;
   padding-top: 1rem;
   border-top: 1px solid white;
