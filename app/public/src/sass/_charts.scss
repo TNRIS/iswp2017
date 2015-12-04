@@ -72,6 +72,7 @@
 .ct-chart {
   .ct-label {
     font-size: 1rem;
+    color: #3e3e3e;
   }
 
   @each $theme in $themes {
