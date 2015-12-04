@@ -32,26 +32,20 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="selector decade-selector">
-        <ul className="options">
-        {
-          constants.DECADES.map((decade, i) => {
-            const isActive = this.state.selectedDecade === decade;
-            if (isActive) {
-              return (
-                <li key={i} className="active">
-                  <button className="button-primary">{decade}</button>
-                </li>
-              );
-            }
-            return (
-              <li key={i}>
-                <button className="button" onClick={this.selectDecade.bind(this, decade)}>{decade}</button>
-              </li>
-            );
-          })
-        }
-        </ul>
+      <div className="u-cf selector decade-selector">
+      {
+        constants.DECADES.map((decade, i) => {
+          const isActive = this.state.selectedDecade === decade;
+          if (isActive) {
+            return (<button  key={i} className="active button-primary">{decade}</button>);
+          }
+          return (
+            <button key={i} className="button" onClick={this.selectDecade.bind(this, decade)}>
+              {decade}
+            </button>
+          );
+        })
+      }
       </div>
     );
   }

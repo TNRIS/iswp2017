@@ -179,41 +179,16 @@ select {
   background-color: rgba(65, 85, 100, 0.25);
 }
 
+
 .selector {
+  margin: 1rem auto 0 auto;
 
-  margin-top: 1rem;
-  ul.options {
-    list-style: none;
-    display: inline-block;
-    margin-bottom: 0;
-    whitespace: nowrap;
-
-    > li {
-      display: inline-block;
-
-      &.active {
-        font-weight: bold;
-      }
-    }
-
-    button {
-      margin: 0;
-    }
+  button {
+    margin: 0 1rem 1rem 1rem;
   }
-}
 
-.theme-selector,
-.decade-selector {
-  ul.options {
-    width: 100%;
-    display: table;
-    table-layout: fixed;
-
-    > li {
-      width: auto;
-      display: table-cell;
-      text-align: center;
-    }
+  &.theme-selector {
+    margin-top: 2rem;
   }
 }
 

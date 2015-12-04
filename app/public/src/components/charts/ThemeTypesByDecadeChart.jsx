@@ -78,26 +78,20 @@ export default React.createClass({
           <ChartLegend entries={legendEntries} className="u-pull-right legend-types-by-decade" />
         </div>
         <div className="u-cf selector theme-selector">
-          <ul className="options">
-          {
-            themeKeys.map((theme, i) => {
-              const themeTitle = constants.THEME_TITLES[theme];
-              const isActive = this.state.selectedTheme === theme;
-              if (isActive) {
-                return (
-                  <li key={i} className="active">
-                    <button className="button-primary">{themeTitle}</button>
-                  </li>
-                );
-              }
+        {
+          themeKeys.map((theme, i) => {
+            const themeTitle = constants.THEME_TITLES[theme];
+            const isActive = this.state.selectedTheme === theme;
+            if (isActive) {
               return (
-                <li key={i}>
-                  <button className="button" onClick={this.selectTheme.bind(this, theme)}>{themeTitle}</button>
-                </li>
+                <button key={i} className="active button-primary">{themeTitle}</button>
               );
-            })
-          }
-          </ul>
+            }
+            return (
+              <button key={i} className="button" onClick={this.selectTheme.bind(this, theme)}>{themeTitle}</button>
+            );
+          })
+        }
         </div>
         <LineChart chartData={chartData} chartOptions={chartOptions} />
         <ChartDataTable className="u-full-width" chartData={chartData} showTotals />
