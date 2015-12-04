@@ -14,13 +14,17 @@ button.nav-toggle {
   border-radius: 0;
 
   &.on {
-    border-color: white;
+    border-left-color: white;
+    border-right-color: white;
+    border-top-color: white;
     background-color: $nav-color;
     border-bottom: 1px solid $nav-color;
   }
 
   &:focus, &:hover {
-    border-color: white;
+    border-left-color: white;
+    border-right-color: white;
+    border-top-color: white;
     background-color: $nav-color;
 
     &.on {
