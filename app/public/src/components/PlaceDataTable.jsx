@@ -83,16 +83,16 @@ export default React.createClass({
             {tableData.map((row, i) => {
               return (
                 <Tr key={i}>
-                  <Td column="Entity">
+                  <Td column="Entity" value={row.EntityName}>
                     <Link to={`/entity/${row.EntityId}`}>{row.EntityName}</Link>
                   </Td>
-                  <Td column="Region">
+                  <Td column="Region" value={row.WugRegion}>
                     <Link to={`/region/${row.WugRegion}`}>{row.WugRegion}</Link>
                   </Td>
-                  <Td column="County">
+                  <Td column="County" value={row.WugCounty}>
                     <Link to={`/county/${titleize(row.WugCounty)}`}>{row.WugCounty}</Link>
                   </Td>
-                  <Td column={`${decade} Value`}>
+                  <Td column={`${decade} Value`} value={row[`Value_${decade}`]}>
                     {format()(row[`Value_${decade}`])}
                   </Td>
                 </Tr>
