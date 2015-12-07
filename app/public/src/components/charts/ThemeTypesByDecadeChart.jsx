@@ -9,14 +9,11 @@ import constants from '../../constants';
 import LineChart from './LineChart';
 import ChartLegend from '../ChartLegend';
 import ChartDataTable from '../ChartDataTable';
+import utils from '../../utils';
 
 const chartOptions = {
   height: '240px'
 };
-
-function slugify(s) {
-  return s.replace(/\s+/g, '-');
-}
 
 export default React.createClass({
   propTypes: {
@@ -51,7 +48,7 @@ export default React.createClass({
         return {
           name: titleize(type),
           meta: type.toLowerCase(),
-          className: `series-${slugify(type.toLowerCase())}`,
+          className: `series-${utils.slugify(type.toLowerCase())}`,
           data: constants.DECADES.map((year) => {
             if (R.path([this.state.selectedTheme, 'typeTotals', type], viewData)) {
               return viewData[this.state.selectedTheme].typeTotals[type][`Total_${year}`];
@@ -64,7 +61,7 @@ export default React.createClass({
 
     const legendEntries = constants.USAGE_TYPES.map((type) => {
       return {
-        className: `series-${slugify(type.toLowerCase())}`,
+        className: `series-${utils.slugify(type.toLowerCase())}`,
         display: titleize(type)
       };
     });

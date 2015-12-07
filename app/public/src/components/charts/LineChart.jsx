@@ -8,6 +8,8 @@ import format from 'format-number';
 import classnames from 'classnames';
 import classList from 'dom-classlist';
 
+import utils from '../../utils';
+
 export default React.createClass({
   propTypes: {
     chartData: React.PropTypes.object,
@@ -61,7 +63,7 @@ export default React.createClass({
 
       this.setState({
         tooltip: {
-          className: `tooltip-${meta.toLowerCase()}`,
+          className: `tooltip-${utils.slugify(meta.toLowerCase())}`,
           value: format()(val),
           bottom: chartRect.bottom - targetRect.bottom + 20,
           left: targetRect.left - chartRect.left - tooltipRect.width / 2,
