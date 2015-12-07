@@ -38,6 +38,7 @@ $usageTypes: ('irrigation' rgb(126, 191, 133)), ('livestock', rgb(106, 138, 34))
 @import "charts";
 @import "maps";
 @import "nav";
+@import "datatable";
 
 html {
   height: 100%;
@@ -212,16 +213,6 @@ button.button-primary {
   &:hover, &:active, &:focus {
     background-color: $twdb-blue;
     border-color: $twdb-blue;
-  }
-}
-
-.table-container {
-  max-width: 100%;
-  max-height: 600px;
-  overflow-x: auto;
-
-  .spinner {
-    margin: 2rem auto;
   }
 }
 

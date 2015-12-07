@@ -65,7 +65,7 @@
     "react-select": "^0.9.1",
     "react-spinkit": "^1.1.4",
     "react-toggle-display": "^1.0.0",
-    "reactable": "^0.11.5",
+    "reactable": "^0.12.0",
     "sass-loader": "^2.0.1",
     "scale-number-range": "^1.0.3",
     "sqlite3": "^3.0.10",
