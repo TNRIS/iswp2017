@@ -5,7 +5,7 @@ import axios from 'axios';
 import condenseWhitespace from 'condense-whitespace';
 
 const countyTable = 'county_extended';
-const regionTable = 'rwpas';
+const regionTable = 'regional_water_planning_areas';
 
 function getLayer(opts) {
   const mapConfig = {
