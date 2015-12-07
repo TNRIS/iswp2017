@@ -24,6 +24,11 @@ export default React.createClass({
     );
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
+    L.control.defaultExtent({
+      position: 'topright',
+      text: '',
+      title: 'Zoom to Texas'
+    }).addTo(this.map);
 
     this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS, {
       paddingTopLeft: constants.VIEW_MAP_PADDING

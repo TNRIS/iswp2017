@@ -56,3 +56,9 @@
     margin-bottom: 0;
   }
 }
+
+.leaflet-control-defaultextent a {
+  background-color: #fff;
+  background-image: url('/public/static/img/texas_icon.png');
+  background-size: 16px;
+}

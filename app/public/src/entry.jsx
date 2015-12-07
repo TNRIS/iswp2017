@@ -22,6 +22,7 @@ import 'chartist/dist/chartist.min.css';
 import 'react-select/dist/react-select.min.css';
 
 import './vendor/js/leaflet.utfgrid.js';
+import './vendor/js/leaflet.defaultextent.js';
 
 import './sass/main.scss';
 
