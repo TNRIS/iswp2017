@@ -3,6 +3,9 @@ import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Table, Tr, Td} from 'reactable';
+import {Link} from 'react-router';
+import titleize from 'titleize';
+import format from 'format-number';
 
 import PropTypes from '../utils/CustomPropTypes';
 import DecadeChoiceStore from '../stores/DecadeChoiceStore';
@@ -10,7 +13,7 @@ import constants from '../constants';
 
 export default React.createClass({
   propTypes: {
-    placeData: PropTypes.PlaceData
+    viewData: PropTypes.ViewData
   },
 
   mixins: [PureRenderMixin],
@@ -39,33 +42,21 @@ export default React.createClass({
   },
 
   render() {
-    //TODO: Sorting - see https://github.com/facebook/fixed-data-table/blob/master/site/examples/SortExample.js
-    //TODO: Switcher to change the year of data
-    //TODO: Show all themes in the table?
-    const placeData = this.props.placeData;
-    if (!placeData || !placeData.data) {
+    //TODO: Show all decades for selected theme in the table?
+    const viewData = this.props.viewData;
+    if (!viewData) {
       return (
         <div />
       );
     }
 
-    const tableData = placeData.data[this.state.selectedTheme].rows;
+    const tableData = viewData[this.state.selectedTheme].rows;
     const decade = this.state.selectedDecade;
 
     const themeKeys = R.keys(constants.THEME_TITLES);
 
     //TODO: Extract themeSelector to component.
     //  It is also used in ThemeTypesByDecadeChart.jsx
-
-    //TODO: Table styling (more compact)
-
-    const columns = [
-      {key: 'EntityName', label: 'Entity'},
-      {key: 'WugRegion', label: 'Region'},
-      {key: 'WugCounty', label: 'County'},
-      {key: `Value_${decade}`, label: `${decade} Value`}
-    ];
-
     return (
       <div>
         <h4>Raw Data - {decade}</h4>
@@ -87,10 +78,27 @@ export default React.createClass({
         </div>
         <div className="data-table-container">
           <Table className="data-table u-full-width"
-            sortable
-            data={tableData}
-            columns={columns}
-          />
+            sortable itemsPerPage={20} pageButtonLimit={5}
+          >
+            {tableData.map((row, i) => {
+              return (
+                <Tr key={i}>
+                  <Td column="Entity">
+                    <Link to={`/entity/${row.EntityId}`}>{row.EntityName}</Link>
+                  </Td>
+                  <Td column="Region">
+                    <Link to={`/region/${row.WugRegion}`}>{row.WugRegion}</Link>
+                  </Td>
+                  <Td column="County">
+                    <Link to={`/county/${titleize(row.WugCounty)}`}>{row.WugCounty}</Link>
+                  </Td>
+                  <Td column={`${decade} Value`}>
+                    {format()(row[`Value_${decade}`])}
+                  </Td>
+                </Tr>
+              );
+            })}
+          </Table>
         </div>
       </div>
     );

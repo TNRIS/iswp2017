@@ -11,7 +11,7 @@
 .data-table {
   font-size: smaller;
 
-  tbody tr:nth-child(odd) {
+  tbody.reactable-data tr:nth-child(odd) {
     background-color: lighten($twdb-blue, 60%);
   }
 
@@ -40,6 +40,23 @@
       border-right: 5px solid transparent;
       border-top: 10px solid #000;
     }
+  }
+
+  tbody.reactable-pagination {
+    border-top: 2px solid #999;
+
+    td {
+      padding-top: 4px;
+    }
+  }
+
+  .reactable-page-button {
+    margin: 4px 8px;
+  }
+
+  .reactable-current-page {
+    font-weight: bold;
+    text-decoration: none;
   }
 
 }
