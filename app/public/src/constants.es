@@ -54,5 +54,6 @@ export default {
     {limit: 25, color: '#FFFFBF'},
     {limit: 50, color: '#FDAE61'},
     {limit: 100, color: 'rgb(237, 27, 47)'} //red
-  ]
+  ],
+  DATA_TABLE_ITEMS_PER_PAGE: 20
 };
