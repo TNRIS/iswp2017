@@ -7,7 +7,7 @@ import constants from '../constants';
 
 export default React.createClass({
   propTypes: {
-    initialTheme: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string.isRequired,
     onSelect: React.PropTypes.func.isRequired
   },
 
@@ -15,8 +15,14 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      selectedTheme: this.props.initialTheme
+      selectedTheme: this.props.value
     };
+  },
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value !== this.props.value) {
+      this.setState({selectedTheme: nextProps.value});
+    }
   },
 
   selectTheme(theme) {

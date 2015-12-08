@@ -73,7 +73,7 @@ export default React.createClass({
           <h4>{constants.THEME_TITLES[this.state.selectedTheme]} by Usage Type</h4>
           <ChartLegend entries={legendEntries} className="u-pull-right legend-types-by-decade" />
         </div>
-        <ThemeSelector onSelect={this.selectTheme} initialTheme={this.state.selectedTheme} />
+        <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} />
         <LineChart chartData={chartData} chartOptions={chartOptions} />
         <ChartDataTable className="u-full-width" chartData={chartData} showTotals />
       </div>

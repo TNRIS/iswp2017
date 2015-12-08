@@ -53,15 +53,19 @@ export default React.createClass({
 
     const tableData = viewData[this.state.selectedTheme].rows;
     const decade = this.state.selectedDecade;
+    const themeTitle = constants.THEME_TITLES[this.state.selectedTheme];
+
+    // hide pagination controls if there are fewer than DATA_TABLE_ITEMS_PER_PAGE
+    const itemsPerPage = tableData.length <= constants.DATA_TABLE_ITEMS_PER_PAGE ? 0
+      : constants.DATA_TABLE_ITEMS_PER_PAGE;
 
     return (
       <div>
         <h4>Raw Data - {decade}</h4>
-        <ThemeSelector onSelect={this.selectTheme} initialTheme={this.state.selectedTheme} />
+        <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} />
         <div className="data-table-container">
           <Table className="data-table u-full-width"
-            sortable itemsPerPage={20} pageButtonLimit={5}
-          >
+            sortable itemsPerPage={itemsPerPage} pageButtonLimit={5}>
             {tableData.map((row, i) => {
               return (
                 <Tr key={i}>
@@ -74,7 +78,7 @@ export default React.createClass({
                   <Td column="County" value={row.WugCounty}>
                     <Link to={`/county/${titleize(row.WugCounty)}`}>{row.WugCounty}</Link>
                   </Td>
-                  <Td column={`${decade} Value`} value={row[`Value_${decade}`]}>
+                  <Td column={`${decade} ${themeTitle}`} value={row[`Value_${decade}`]}>
                     {format()(row[`Value_${decade}`])}
                   </Td>
                 </Tr>
