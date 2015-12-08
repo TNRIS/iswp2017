@@ -45,7 +45,7 @@ export default React.createClass({
 
     return (
       <div>
-        <h4>Maps - {decade}</h4>
+        <h4>Water Usage Type Maps - {decade}</h4>
 
         {themeGroups.map((themes, i) => {
           return (

@@ -1,18 +1,34 @@
 
-.nav-toggle-container {
+$nav-color: lighten($twdb-blue, 10%);
+
+.nav-container {
   position: absolute;
   right: 0;
   bottom: 0;
+
+  button, .button {
+    color: white;
+    margin: 0 0 -1px -1px;
+    border-bottom: none;
+    border-radius: 0;
+    display: inline-block;
+
+    &:focus, &:hover {
+      border-left-color: white;
+      border-right-color: white;
+      border-top-color: white;
+      border-bottom: 1px solid white;
+      background-color: $nav-color;
+      text-decoration: none;
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
 }
 
-$nav-color: lighten($twdb-blue, 10%);
 button.nav-toggle {
-
-  color: white;
-  margin: 0 0 -1px 0;
-  border-bottom: none;
-  border-radius: 0;
-
   &.on {
     border-left-color: white;
     border-right-color: white;
@@ -21,15 +37,8 @@ button.nav-toggle {
     border-bottom: 1px solid $nav-color;
   }
 
-  &:focus, &:hover {
-    border-left-color: white;
-    border-right-color: white;
-    border-top-color: white;
-    background-color: $nav-color;
-
-    &.on {
-      border-bottom: 1px solid $nav-color;
-    }
+  &:focus, &:focus.on, &:hover, &:hover.on {
+    border-bottom: 1px solid $nav-color;
   }
 }
 
