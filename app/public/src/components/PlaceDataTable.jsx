@@ -2,6 +2,7 @@
 import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {Table, Tr, Td} from 'reactable';
 import {Link} from 'react-router';
 import titleize from 'titleize';
@@ -17,12 +18,13 @@ export default React.createClass({
     viewData: PropTypes.ViewData
   },
 
-  mixins: [PureRenderMixin],
+  mixins: [LinkedStateMixin, PureRenderMixin],
 
   getInitialState() {
     return {
       selectedDecade: DecadeChoiceStore.getState().selectedDecade,
-      selectedTheme: R.nth(0, R.keys(constants.THEME_TITLES))
+      selectedTheme: R.nth(0, R.keys(constants.THEME_TITLES)),
+      tableFilter: ''
     };
   },
 
@@ -64,8 +66,16 @@ export default React.createClass({
         <h4>Raw Data - {decade}</h4>
         <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} />
         <div className="data-table-container">
+          <div className="data-table-filter">
+            <label htmlFor="dataTableFilter">Filter: </label>
+            <input id="dataTableFilter" type="text"
+              valueLink={this.linkState('tableFilter')} />
+          </div>
           <Table className="data-table u-full-width"
-            sortable itemsPerPage={itemsPerPage} pageButtonLimit={5}>
+            sortable defaultSort={{column: 'Entity', direction: 'asc'}}
+            itemsPerPage={itemsPerPage} pageButtonLimit={5}
+            noDataText="No matching records found."
+            filterable={['Entity', 'County']} filterBy={this.state.tableFilter} hideFilterInput>
             {tableData.map((row, i) => {
               return (
                 <Tr key={i}>

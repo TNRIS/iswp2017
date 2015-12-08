@@ -3,6 +3,20 @@
   overflow-x: auto;
 }
 
+.data-table-filter {
+  text-align: right;
+
+  label {
+    font-size: smaller;
+    display: inline-block;
+  }
+  input {
+    height: 30px;
+    font-size: smaller;
+    margin: 0 0 0.8rem 1rem;
+  }
+}
+
 .data-table {
   font-size: smaller;
 
