@@ -26,4 +26,10 @@ routes.push({
   }
 });
 
+routes.push({
+  method: 'GET',
+  path: '/about',
+  handler: (request, reply) => reply.view('about')
+});
+
 export default routes;
