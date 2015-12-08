@@ -7,9 +7,10 @@ import {Link} from 'react-router';
 import titleize from 'titleize';
 import format from 'format-number';
 
+import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 import DecadeChoiceStore from '../stores/DecadeChoiceStore';
-import constants from '../constants';
+import ThemeSelector from './ThemeSelector';
 
 export default React.createClass({
   propTypes: {
@@ -53,29 +54,10 @@ export default React.createClass({
     const tableData = viewData[this.state.selectedTheme].rows;
     const decade = this.state.selectedDecade;
 
-    const themeKeys = R.keys(constants.THEME_TITLES);
-
-    //TODO: Extract themeSelector to component.
-    //  It is also used in ThemeTypesByDecadeChart.jsx
     return (
       <div>
         <h4>Raw Data - {decade}</h4>
-        <div className="u-cf selector theme-selector">
-        {
-          themeKeys.map((theme, i) => {
-            const themeTitle = constants.THEME_TITLES[theme];
-            const isActive = this.state.selectedTheme === theme;
-            if (isActive) {
-              return (
-                <button key={i} className="active button-primary">{themeTitle}</button>
-              );
-            }
-            return (
-              <button key={i} className="button" onClick={this.selectTheme.bind(this, theme)}>{themeTitle}</button>
-            );
-          })
-        }
-        </div>
+        <ThemeSelector onSelect={this.selectTheme} initialTheme={this.state.selectedTheme} />
         <div className="data-table-container">
           <Table className="data-table u-full-width"
             sortable itemsPerPage={20} pageButtonLimit={5}

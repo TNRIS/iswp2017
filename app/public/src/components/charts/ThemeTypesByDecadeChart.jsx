@@ -9,6 +9,7 @@ import constants from '../../constants';
 import LineChart from './LineChart';
 import ChartLegend from '../ChartLegend';
 import ChartDataTable from '../ChartDataTable';
+import ThemeSelector from '../ThemeSelector';
 import utils from '../../utils';
 
 const chartOptions = {
@@ -24,7 +25,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      selectedTheme: R.nth(0, R.keys(constants.THEME_TITLES))
+      selectedTheme: R.nth(1, R.keys(constants.THEME_TITLES))
     };
   },
 
@@ -66,30 +67,13 @@ export default React.createClass({
       };
     });
 
-    const themeKeys = R.keys(constants.THEME_TITLES);
-
     return (
       <div>
         <div className="chart-header">
           <h4>{constants.THEME_TITLES[this.state.selectedTheme]} by Usage Type</h4>
           <ChartLegend entries={legendEntries} className="u-pull-right legend-types-by-decade" />
         </div>
-        <div className="u-cf selector theme-selector">
-        {
-          themeKeys.map((theme, i) => {
-            const themeTitle = constants.THEME_TITLES[theme];
-            const isActive = this.state.selectedTheme === theme;
-            if (isActive) {
-              return (
-                <button key={i} className="active button-primary">{themeTitle}</button>
-              );
-            }
-            return (
-              <button key={i} className="button" onClick={this.selectTheme.bind(this, theme)}>{themeTitle}</button>
-            );
-          })
-        }
-        </div>
+        <ThemeSelector onSelect={this.selectTheme} initialTheme={this.state.selectedTheme} />
         <LineChart chartData={chartData} chartOptions={chartOptions} />
         <ChartDataTable className="u-full-width" chartData={chartData} showTotals />
       </div>
