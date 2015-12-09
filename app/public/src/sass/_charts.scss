@@ -100,15 +100,17 @@
 
 .ct-tooltip {
   color: #fff;
+  position: absolute;
   background-color: #2e2e2e;
   display: inline-block;
   font-weight: 700;
   min-width: 5em;
   padding: .5em;
   pointer-events: none;
-  position: absolute;
+  position: fixed;
   text-align: center;
   z-index: 1;
+  height: 30px;
 
   &:after {
     border: 15px solid transparent;

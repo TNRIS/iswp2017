@@ -19,7 +19,9 @@ export default React.createClass({
   getInitialState() {
     return {
       tooltip: {
-        visibility: 'hidden'
+        style: {
+          visibility: 'hidden'
+        }
       }
     };
   },
@@ -48,10 +50,16 @@ export default React.createClass({
     const isOverBar = classList(event.target).contains('ct-bar');
 
     if (isOverBar) {
-      const parent = event.target.parentNode;
-      const targetRect = event.target.getBoundingClientRect();
-      const chartRect = ReactDOM.findDOMNode(this.refs.chart).getBoundingClientRect();
-      const tooltipRect = ReactDOM.findDOMNode(this.refs.tooltip).getBoundingClientRect();
+      const me = event.target;
+      const matrix = me.getScreenCTM().translate(
+        +me.getAttribute('x1'), +me.getAttribute('y2')
+      );
+      const parent = me.parentNode;
+      const tooltip = ReactDOM.findDOMNode(this.refs.tooltip);
+      // use constant height adjustment because the offsetHeight cannot
+      // be reliably obtained when the tooltip is hidden
+      const heightAdjust = 64;
+
       const meta = parent.attributes['ct:meta'] ?
         parent.attributes['ct:meta'].value : 'default';
 
@@ -63,18 +71,22 @@ export default React.createClass({
         tooltip: {
           className: `tooltip-${meta.toLowerCase()}`,
           value: format()(val),
-          bottom: chartRect.bottom - targetRect.top + 16,
-          left: targetRect.left - chartRect.left - tooltipRect.width / 2,
-          visibility: 'visible'
+          style: {
+            top: matrix.f - heightAdjust,
+            left: matrix.e - tooltip.offsetWidth / 2,
+            visibility: 'visible'
+          }
         }
       });
     }
     else {
       this.setState({
         tooltip: {
-          bottom: 0,
-          left: 0,
-          visibility: 'hidden',
+          style: {
+            top: 0,
+            left: 0,
+            visibility: 'hidden'
+          }
         }
       });
     }
@@ -103,17 +115,11 @@ export default React.createClass({
       this.chart = new Chartist.Bar(ReactDOM.findDOMNode(this.refs.chart),
         this.props.chartData, chartOptions
       );
-      //TODO: tooltips
-      //TODO: animate maybe
     }
   },
 
   render() {
-    const tooltipStyle = {
-      bottom: this.state.tooltip.bottom,
-      left: this.state.tooltip.left,
-      visibility: this.state.tooltip.visibility
-    };
+    const tooltipStyle = this.state.tooltip.style;
 
     return (
       <div style={{position: 'relative'}}>
