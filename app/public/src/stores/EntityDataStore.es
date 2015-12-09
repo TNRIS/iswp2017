@@ -14,7 +14,6 @@ export const EntityDataSource = {
       ]).then(([data, entity]) => {
         return {data, entity};
       });
-      return ;
     },
 
     success: EntityDataActions.updateData,
