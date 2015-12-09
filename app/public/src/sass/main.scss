@@ -144,6 +144,10 @@ select {
     margin-bottom: 1rem;
     color: #fff;
   }
+
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 #footer {
@@ -176,10 +180,16 @@ select {
   }
 }
 
+.about-content {
+  margin-top: 2rem;
+  ul, ol {
+    margin-left: 1rem;
+  }
+}
+
 .decade-dependent-wrap {
   background-color: rgba(65, 85, 100, 0.25);
 }
-
 
 .selector {
   margin: 1rem auto 0 auto;

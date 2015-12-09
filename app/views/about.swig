@@ -21,7 +21,7 @@
       </div>
     </div>
   </header>
-  <section class="main-content">
+  <section class="about-content">
     <div class="container">
       <div class="row panel-row">
         <div class="twelve columns">
@@ -110,8 +110,10 @@
           <section id="Glossary" class="glossary">
             <h3>Glossary</h3>
 
-            For these and other terms, see also the 2017 State Water Plan
-            <a title="Glossary" href="http://www.twdb.texas.gov/publications/state_water_plan/2017/12.pdf">glossary</a>.
+            <p>
+              For these and other terms, see also the 2017 State Water Plan
+              <a title="Glossary" href="http://www.twdb.texas.gov/publications/state_water_plan/2017/12.pdf">glossary</a>.
+            </p>
 
             <h5 id="acre-foot">ACRE-FOOT</h5>
             <p>
@@ -324,3 +326,6 @@
   </section>
 {% endblock content %}
 
+{% block bodyscripts %}
+
+{% endblock bodyscripts %}
