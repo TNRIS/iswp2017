@@ -51,15 +51,15 @@ export default React.createClass({
   },
 
   onCountySelect(countyName) {
-    history.pushState(null, `/county/${countyName}`);
+    history.push({pathname: `/county/${countyName}`});
   },
 
   onRegionSelect(region) {
-    history.pushState(null, `/region/${region}`);
+    history.push({pathname: `/region/${region}`});
   },
 
   onEntitySelect(entityId) {
-    history.pushState(null, `/entity/${entityId}`);
+    history.push({pathname: `/entity/${entityId}`});
   },
 
   entitySearch(input, callback) {
@@ -84,7 +84,7 @@ export default React.createClass({
     this.setState({navCategory: val});
 
     if (val === 'statewide') {
-      history.pushState(null, '/statewide');
+      history.push({pathname: '/statewide'});
     }
   },
 

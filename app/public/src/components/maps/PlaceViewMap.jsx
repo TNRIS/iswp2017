@@ -86,7 +86,7 @@ export default React.createClass({
 
   navigateToCounty({data}) {
     if (data) {
-      history.pushState(null, `/county/${data.name}`);
+      history.push({pathname: `/county/${data.name}`});
     }
   },
 

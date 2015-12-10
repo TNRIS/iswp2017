@@ -53,7 +53,7 @@ export default React.createClass({
 
   navigateToRegion({data}) {
     if (data) {
-      history.pushState(null, `/region/${data.letter}`);
+      history.push({pathname: `/region/${data.letter}`});
     }
   },
 
