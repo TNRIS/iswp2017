@@ -35,7 +35,7 @@ export default React.createClass({
         meta: theme,
         className: `series-${theme}`,
         data: constants.DECADES.map((year) => {
-          if (R.path([theme, 'decadeTotals', year], viewData)) {
+          if (R.path([theme, 'decadeTotals'], viewData)) {
             return viewData[theme].decadeTotals[year];
           }
           return null;
