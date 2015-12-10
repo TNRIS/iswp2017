@@ -3,8 +3,10 @@ import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
+import classnames from 'classnames';
 
 // import PlaceSummarySubhead from './PlaceSummarySubhead';
+import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 import PopulationChart from './charts/PopulationChart';
 
@@ -27,9 +29,14 @@ export default React.createClass({
       );
     }
 
+    const entityName = props.entityData.entity.EntityName;
+    const isLong = entityName.length > constants.LONG_NAME_THRESHOLD;
+
     return (
       <div className="view-summary">
-        <h2>{props.entityData.entity.EntityName}</h2>
+        <h2 className={classnames({'long-name': isLong})}>
+          {entityName}
+        </h2>
         <PopulationChart viewData={props.entityData.data} />
       </div>
     );

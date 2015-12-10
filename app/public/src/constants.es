@@ -19,6 +19,7 @@ export default {
   ],
   DECADES: ['2020', '2030', '2040', '2050', '2060', '2070'],
   REGIONS: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'],
+  LONG_NAME_THRESHOLD: 18,
   BASE_MAP_LAYER: {
     url: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
     options: {
