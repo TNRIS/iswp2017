@@ -4,10 +4,10 @@ import Select from 'react-select';
 import ToggleDisplay from 'react-toggle-display';
 import titleize from 'titleize';
 
-import constants from '../../constants';
-import history from '../../history';
-import CountyNamesStore from '../../stores/CountyNamesStore';
-import EntityFetcher from '../../utils/EntityFetcher';
+import constants from '../constants';
+import history from '../history';
+import CountyNamesStore from '../stores/CountyNamesStore';
+import EntityFetcher from '../utils/EntityFetcher';
 
 function contains(str, search) {
   return str.toLowerCase().indexOf(search.toLowerCase()) > -1;
@@ -35,27 +35,30 @@ export default React.createClass({
       countyNames: CountyNamesStore.getState().countyNames
     };
   },
-  
+
   componentDidMount() {
     CountyNamesStore.listen(this.onLoadCountyNames);
     CountyNamesStore.fetch();
   },
 
   componentWillUnmount() {
-      CountyNamesStore.unlisten(this.onLoadCountyNames);  
+    CountyNamesStore.unlisten(this.onLoadCountyNames);
   },
 
   onLoadCountyNames(storeState) {
-    this.setState({countyNames: storeState.countyNames})
+    this.setState({countyNames: storeState.countyNames});
   },
 
-  changeNavCategory(e) {
-    const val = e.target.value;
-    this.setState({navCategory: val});
+  onCountySelect(countyName) {
+    history.pushState(null, `/county/${countyName}`);
+  },
 
-    if (val === 'statewide') {
-      history.pushState(null, '/statewide');
-    }
+  onRegionSelect(region) {
+    history.pushState(null, `/region/${region}`);
+  },
+
+  onEntitySelect(entityId) {
+    history.pushState(null, `/entity/${entityId}`);
   },
 
   entitySearch(input, callback) {
@@ -75,16 +78,13 @@ export default React.createClass({
       });
   },
 
-  onCountySelect(countyName) {
-    history.pushState(null, `/county/${countyName}`);
-  },
+  changeNavCategory(e) {
+    const val = e.target.value;
+    this.setState({navCategory: val});
 
-  onRegionSelect(region) {
-    history.pushState(null, `/region/${region}`);
-  },
-
-  onSelectEntity(entityId) {
-    history.pushState(null, `/entity/${entityId}`);
+    if (val === 'statewide') {
+      history.pushState(null, '/statewide');
+    }
   },
 
   render() {
@@ -138,7 +138,7 @@ export default React.createClass({
                 autoload={false}
                 asyncOptions={this.entitySearch}
                 options={countySelectOptions}
-                onChange={this.onSelectEntity} />
+                onChange={this.onEntitySelect} />
             </div>
           </ToggleDisplay>
         </div>

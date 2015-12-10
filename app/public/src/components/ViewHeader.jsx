@@ -3,7 +3,7 @@ import React from 'react';
 import ToggleDisplay from 'react-toggle-display';
 import classnames from 'classnames';
 
-import HeaderNav from './nav/HeaderNav';
+import HeaderNav from './HeaderNav';
 
 // TODO: delete svg if removing
 // import MenuIcon from '../../static/img/menu.svg';
