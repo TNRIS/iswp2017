@@ -13,25 +13,10 @@ function contains(str, search) {
   return str.toLowerCase().indexOf(search.toLowerCase()) > -1;
 }
 
-//TODO: Update the state.navCategory on route change
 export default React.createClass({
   getInitialState() {
-    //This is ugly and fragile, but I can't seem to find
-    // a way to get the current route from react-router
-    const loc = window.location.pathname;
-    let navCategory = 'statewide';
-    if (contains(loc, '/entity')) {
-      navCategory = 'entity';
-    }
-    else if (contains(loc, '/county')) {
-      navCategory = 'county';
-    }
-    else if (contains(loc, '/region')) {
-      navCategory = 'region';
-    }
-
     return {
-      navCategory: navCategory,
+      navCategory: 'statewide',
       countyNames: CountyNamesStore.getState().countyNames
     };
   },
@@ -39,10 +24,26 @@ export default React.createClass({
   componentDidMount() {
     CountyNamesStore.listen(this.onLoadCountyNames);
     CountyNamesStore.fetch();
+    this.historyUnlistener = history.listen(this.onHistoryChange);
   },
 
   componentWillUnmount() {
     CountyNamesStore.unlisten(this.onLoadCountyNames);
+    this.historyUnlistener();
+  },
+
+  onHistoryChange(loc) {
+    let navCategory = 'statewide';
+    if (contains(loc.pathname, '/entity')) {
+      navCategory = 'entity';
+    }
+    else if (contains(loc.pathname, '/county')) {
+      navCategory = 'county';
+    }
+    else if (contains(loc.pathname, '/region')) {
+      navCategory = 'region';
+    }
+    this.setState({navCategory});
   },
 
   onLoadCountyNames(storeState) {
