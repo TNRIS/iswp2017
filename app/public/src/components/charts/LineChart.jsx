@@ -30,6 +30,7 @@ export default React.createClass({
 
   componentDidMount() {
     this.updateChart();
+    window.addEventListener('scroll', this.hideTooltip);
   },
 
   componentDidUpdate() {
@@ -45,6 +46,7 @@ export default React.createClass({
         console.error(err);
       }
     }
+    window.removeEventListener('scroll', this.hideTooltip);
   },
 
   onMouseOver(event) {
@@ -82,16 +84,18 @@ export default React.createClass({
       });
     }
     else {
-      this.setState({
-        tooltip: {
-          style: {
-            top: 0,
-            left: 0,
-            visibility: 'hidden'
-          }
-        }
-      });
+      this.hideTooltip();
     }
+  },
+
+  hideTooltip() {
+    this.setState({
+      tooltip: {
+        style: {
+          visibility: 'hidden'
+        }
+      }
+    });
   },
 
   updateChart() {
