@@ -133,7 +133,7 @@ export default React.createClass({
           </ToggleDisplay>
           <ToggleDisplay show={this.state.navCategory === 'entity'}>
             <div className="select-auto entity-select">
-              <Select matchPos="start"
+              <Select
                 placeholder="Find Water User Group"
                 ignoreCase
                 autoload={false}
