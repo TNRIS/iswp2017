@@ -9,6 +9,7 @@ import ToggleDisplay from 'react-toggle-display';
 export default React.createClass({
   propTypes: {
     className: React.PropTypes.string,
+    alwaysVisible: React.PropTypes.bool,
     chartData: React.PropTypes.object.isRequired,
     showTotals: React.PropTypes.bool
   },
@@ -17,7 +18,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      showTable: false
+      showTable: this.props.alwaysVisible || false
     };
   },
 
@@ -49,9 +50,15 @@ export default React.createClass({
 
     return (
       <div className={classnames("chart-table-container", this.props.className)}>
-        <button className="button-small u-pull-right" onClick={this.toggleTableClick}>
-          <small>{toggleText}</small>
-        </button>
+        {() => {
+          if (!this.props.alwaysVisible) {
+            return (
+              <button className="button-small u-pull-right" onClick={this.toggleTableClick}>
+                <small>{toggleText}</small>
+              </button>
+            );
+          }
+        }()}
         <ToggleDisplay show={this.state.showTable}>
           <table className="u-full-width" >
             <thead>

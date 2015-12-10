@@ -62,7 +62,7 @@ export default React.createClass({
           <ChartLegend entries={legendEntries} className="u-pull-right" />
         </div>
         <BarChart chartData={chartData} chartOptions={chartOptions} />
-        <ChartDataTable className="u-full-width" chartData={chartData} />
+        <ChartDataTable className="u-full-width" chartData={chartData} alwaysVisible />
       </div>
     );
   }
