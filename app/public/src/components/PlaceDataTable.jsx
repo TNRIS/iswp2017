@@ -6,9 +6,9 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {Link} from 'react-router';
 import titleize from 'titleize';
 import format from 'format-number';
+import hat from 'hat';
 import PivotTable from 'babel!react-pivot'; //must use babel loader directly
 
-import utils from '../utils';
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 import DecadeChoiceStore from '../stores/DecadeChoiceStore';
@@ -85,7 +85,7 @@ export default React.createClass({
           <PivotTable
             //assign a unique key to force rerender of table
             // otherwise it will not react to prop changes
-            key={utils.uuid()}
+            key={hat()}
             rows={tableData}
             dimensions={dimensions}
             reduce={reduce}
