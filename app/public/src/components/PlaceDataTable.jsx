@@ -82,7 +82,10 @@ export default React.createClass({
         <h4>Raw Data - {decade}</h4>
         <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} />
         <div className="data-table-container">
-          <PivotTable key={utils.uuid()}
+          <PivotTable
+            //assign a unique key to force rerender of table
+            // otherwise it will not react to prop changes
+            key={utils.uuid()}
             rows={tableData}
             dimensions={dimensions}
             reduce={reduce}
