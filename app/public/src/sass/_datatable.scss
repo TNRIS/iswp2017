@@ -3,73 +3,31 @@
   overflow-x: auto;
 }
 
-.data-table-filter {
-  text-align: right;
+.reactPivot {
+  margin-top: 0;
 
-  label {
-    font-size: smaller;
-    display: inline-block;
+  select {
+    height: auto;
   }
-  input {
-    height: 30px;
-    font-size: smaller;
-    margin: 0 0 0.8rem 1rem;
+
+  button {
+    height: auto;
   }
 }
 
-.data-table {
-  font-size: smaller;
-
-  tbody.reactable-data tr:nth-child(odd) {
-    background-color: lighten($twdb-blue, 60%);
+.reactPivot-results {
+  td {
+    padding: 2px;
   }
+}
 
-  th, td {
-    padding: 0 2px;
-    text-align: center;
-  }
-
-  .reactable-header-sortable {
+.reactPivot-pageNumber {
+  padding: 2px 4px;
+  a {
     cursor: pointer;
   }
 
-  .reactable-header-sort-asc {
-    &:after {
-      content: '';
-      display: inline-block;
-      margin-left: 4px;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-bottom: 10px solid #000;
-    }
-  }
-
-  .reactable-header-sort-desc {
-    &:after {
-      content: '';
-      display: inline-block;
-      margin-left: 4px;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 10px solid #000;
-    }
-  }
-
-  tbody.reactable-pagination {
-    border-top: 2px solid #999;
-
-    td {
-      padding-top: 4px;
-    }
-  }
-
-  .reactable-page-button {
-    margin: 4px 8px;
-  }
-
-  .reactable-current-page {
-    font-weight: bold;
+  &.is-selected a {
     text-decoration: none;
   }
-
 }

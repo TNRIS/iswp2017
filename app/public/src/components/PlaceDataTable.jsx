@@ -3,11 +3,12 @@ import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import {Table, Tr, Td} from 'reactable';
 import {Link} from 'react-router';
 import titleize from 'titleize';
 import format from 'format-number';
+import PivotTable from 'babel!react-pivot'; //must use babel loader directly
 
+import utils from '../utils';
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 import DecadeChoiceStore from '../stores/DecadeChoiceStore';
@@ -55,46 +56,40 @@ export default React.createClass({
 
     const tableData = viewData[this.state.selectedTheme].rows;
     const decade = this.state.selectedDecade;
-    const themeTitle = constants.THEME_TITLES[this.state.selectedTheme];
+    // const themeTitle = constants.THEME_TITLES[this.state.selectedTheme];
 
-    // hide pagination controls if there are fewer than DATA_TABLE_ITEMS_PER_PAGE
-    const itemsPerPage = tableData.length <= constants.DATA_TABLE_ITEMS_PER_PAGE ? 0
-      : constants.DATA_TABLE_ITEMS_PER_PAGE;
+    const dimensions = [
+      {value: 'EntityName', title: 'Entity Name'}, //can use template prop to make links
+      {value: 'WugCounty', title: 'County'},
+      {value: 'WugRegion', title: 'Region'}
+    ];
+
+    const reduce = (row, memo) => {
+      memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${2020}`];
+      return memo;
+    };
+
+    const calculations = [
+      {
+        title: `${decade} Total`,
+        value: 'valueTotal',
+        template: (val) => format()(val)
+      }
+    ];
 
     return (
       <div>
         <h4>Raw Data - {decade}</h4>
         <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} />
         <div className="data-table-container">
-          <div className="data-table-filter">
-            <label htmlFor="dataTableFilter">Filter: </label>
-            <input id="dataTableFilter" type="text"
-              valueLink={this.linkState('tableFilter')} />
-          </div>
-          <Table className="data-table u-full-width"
-            sortable defaultSort={{column: 'Entity', direction: 'asc'}}
-            itemsPerPage={itemsPerPage} pageButtonLimit={5}
-            noDataText="No matching records found."
-            filterable={['Entity', 'County']} filterBy={this.state.tableFilter} hideFilterInput>
-            {tableData.map((row, i) => {
-              return (
-                <Tr key={i}>
-                  <Td column="Entity" value={row.EntityName}>
-                    <Link to={`/entity/${row.EntityId}`}>{row.EntityName}</Link>
-                  </Td>
-                  <Td column="Region" value={row.WugRegion}>
-                    <Link to={`/region/${row.WugRegion}`}>{row.WugRegion}</Link>
-                  </Td>
-                  <Td column="County" value={row.WugCounty}>
-                    <Link to={`/county/${titleize(row.WugCounty)}`}>{row.WugCounty}</Link>
-                  </Td>
-                  <Td column={`${decade} ${themeTitle}`} value={row[`Value_${decade}`]}>
-                    {format()(row[`Value_${decade}`])}
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Table>
+          <PivotTable key={utils.uuid()}
+            rows={tableData}
+            dimensions={dimensions}
+            reduce={reduce}
+            calculations={calculations}
+            activeDimensions={['Region', 'County', 'Entity Name']}
+            nPaginateRows={50}
+          />
         </div>
       </div>
     );
