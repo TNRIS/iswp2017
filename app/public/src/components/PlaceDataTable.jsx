@@ -65,7 +65,7 @@ export default React.createClass({
     ];
 
     const reduce = (row, memo) => {
-      memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${2020}`];
+      memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${decade}`];
       return memo;
     };
 
