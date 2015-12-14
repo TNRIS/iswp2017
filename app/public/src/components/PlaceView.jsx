@@ -11,7 +11,7 @@ import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
 import ThemeMaps from './maps/ThemeMaps';
-import PlaceDataTable from './PlaceDataTable';
+import PlacePivotTable from './PlacePivotTable';
 import DecadeSelector from './DecadeSelector';
 
 export default React.createClass({
@@ -135,7 +135,7 @@ export default React.createClass({
 
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <PlaceDataTable viewData={placeData.data} />
+                          <PlacePivotTable viewData={placeData.data} />
                         </div>
                       </div>
                     </div>

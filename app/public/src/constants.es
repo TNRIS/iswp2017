@@ -4,10 +4,11 @@ export default {
   //TODO: add strategies once DB view is ready, ref #51
   THEMES: ['demands', 'supplies', 'needs', /*'strategies'*/],
   THEME_TITLES: {
-    'demands': 'Demands',
-    'supplies': 'Existing Supplies',
-    'needs': 'Needs (Potential Shortages)',
-    // 'strategies': 'Strategy Supplies'
+    demands: 'Demands',
+    supplies: 'Existing Supplies',
+    needs: 'Needs (Potential Shortages)',
+    strategies: 'Strategy Supplies',
+    population: 'Population'
   },
   USAGE_TYPES: [
     'IRRIGATION',

@@ -24,7 +24,7 @@ export default React.createClass({
   getInitialState() {
     return {
       selectedDecade: DecadeChoiceStore.getState().selectedDecade,
-      selectedTheme: R.nth(0, R.keys(constants.THEME_TITLES)),
+      selectedTheme: R.nth(0, constants.THEMES),
       tableFilter: ''
     };
   },
@@ -80,7 +80,7 @@ export default React.createClass({
     return (
       <div>
         <h4>Raw Data - {decade}</h4>
-        <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} />
+        <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} includePopulation />
         <div className="data-table-container">
           <PivotTable
             //assign a unique key to force rerender of table

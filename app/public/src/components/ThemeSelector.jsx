@@ -8,7 +8,8 @@ import constants from '../constants';
 export default React.createClass({
   propTypes: {
     value: React.PropTypes.string.isRequired,
-    onSelect: React.PropTypes.func.isRequired
+    onSelect: React.PropTypes.func.isRequired,
+    includePopulation: React.PropTypes.bool
   },
 
   mixins: [PureRenderMixin],
@@ -31,7 +32,8 @@ export default React.createClass({
   },
 
   render() {
-    const themeKeys = R.keys(constants.THEME_TITLES);
+    const themeKeys = this.props.includePopulation ? R.prepend('population', constants.THEMES)
+      : constants.THEMES;
 
     return (
       <div className="u-cf selector theme-selector">

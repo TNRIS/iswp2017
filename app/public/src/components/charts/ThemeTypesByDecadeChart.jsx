@@ -25,7 +25,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      selectedTheme: R.nth(1, R.keys(constants.THEME_TITLES))
+      selectedTheme: R.nth(0, constants.THEMES)
     };
   },
 
