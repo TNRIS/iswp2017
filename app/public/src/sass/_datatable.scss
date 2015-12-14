@@ -18,8 +18,12 @@
 .reactPivot-results {
   font-size: smaller;
 
-  td {
+  td, th {
     padding: 2px;
+
+    &:last-child {
+      text-align: right;
+    }
   }
 }
 

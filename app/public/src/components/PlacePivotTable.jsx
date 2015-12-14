@@ -56,6 +56,7 @@ export default React.createClass({
 
     const tableData = viewData[this.state.selectedTheme].rows;
     const decade = this.state.selectedDecade;
+    const themeTitle = constants.THEME_TITLES[this.state.selectedTheme];
 
     const toAnchor = (href, text) => {
       return `<a href="${href}">${text}</a>`;
@@ -87,7 +88,7 @@ export default React.createClass({
 
     const calculations = [
       {
-        title: `${decade} Total`,
+        title: `${decade} ${themeTitle}`,
         value: 'valueTotal',
         template: (val) => format()(val)
       }

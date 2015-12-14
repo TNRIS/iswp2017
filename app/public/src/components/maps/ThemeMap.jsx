@@ -187,7 +187,7 @@ export default React.createClass({
       },
       onEachFeature: (feat, layer) => {
         layer.bindPopup(feat.properties.EntityName +
-          `<br>Sum ${props.decade}: ` +
+          `<br>${props.decade} Total: ` +
           feat.properties.ValueSum
         );
       }
