@@ -90,6 +90,7 @@ export default React.createClass({
             dimensions={dimensions}
             reduce={reduce}
             calculations={calculations}
+            sortBy={'Entity Name'}
             activeDimensions={['Region', 'County', 'Entity Name']}
             nPaginateRows={50}
           />
