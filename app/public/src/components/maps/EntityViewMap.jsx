@@ -65,16 +65,16 @@ export default React.createClass({
       this.map.removeLayer(this.entityLayer);
     }
 
-    this.entityLayer = L.circleMarker([entity.Latitude, entity.Longitude],
-      constants.ENTITY_LAYER_STYLE,
-    );
-
-    this.map.addLayer(this.entityLayer);
-
-    this.map.fitBounds(this.entityLayer.getBounds(), {
-      paddingTopLeft: constants.VIEW_MAP_PADDING,
-      maxZoom: 8
-    });
+    CdbUtil.createEntityLayer(entity)
+      .then((result) => {
+        this.entityLayer = L.tileLayer(result.tilesUrl);
+        this.map.addLayer(this.entityLayer);
+        this.entityLayer.bringToFront();
+        this.map.fitBounds([[entity.Latitude, entity.Longitude], [entity.Latitude, entity.Longitude]], {
+          paddingTopLeft: constants.VIEW_MAP_PADDING,
+          maxZoom: 9
+        });
+      });
   },
 
   componentWillUnmount() {

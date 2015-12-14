@@ -30,6 +30,46 @@ function getLayer(opts) {
     });
 }
 
+function createEntityLayer(entity) {
+  return getLayer({
+    sql: condenseWhitespace(`
+      SELECT
+        ST_Transform(ST_SetSRID(ST_MakePoint(${entity.Longitude}, ${entity.Latitude}),4326),3857) as the_geom_webmercator,
+        '${entity.EntityName}' as name
+      FROM ${countyTable} LIMIT 1
+    `),
+    cartocss: condenseWhitespace(`
+      Map {
+        buffer-size: 128;
+      }
+      #layer {
+        marker-width: 14;
+        marker-fill: #3F556D;
+        marker-line-color: #FFF;
+        marker-line-width: 2;
+        [zoom < 8] {
+          marker-width: 10;
+        }
+        ::labels {
+          text-name: [name];
+          text-face-name: 'Lato Bold';
+          text-placement: point;
+          text-placement-type: simple;
+          text-dx: 0;
+          text-dy: -10;
+          text-size: 14;
+          text-fill: #3F556D;
+          text-halo-fill: #FFF;
+          text-halo-radius: 2;
+          [zoom < 7] {
+            text-name: '';
+          }
+        }
+      }
+    `)
+  });
+}
+
 function createCountiesLayer() {
   return getLayer({
     sql: `SELECT * FROM ${countyTable}`,
@@ -47,7 +87,7 @@ function createCountiesLayer() {
           text-name: [name];
           text-face-name: 'Open Sans Regular';
           text-size: 12;
-          text-fill: #333;
+          text-fill: #888;
           text-halo-fill: rgba(255,255,255,0.8);
           text-halo-radius: 2;
           text-allow-overlap: true;
@@ -179,6 +219,7 @@ function getIntersectingRegions(countyName) {
 }
 
 export default {
+  createEntityLayer,
   createCountiesLayer,
   createRegionsLayer,
   getCounty,

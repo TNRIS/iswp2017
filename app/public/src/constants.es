@@ -22,7 +22,7 @@ export default {
   REGIONS: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'],
   LONG_NAME_THRESHOLD: 18,
   BASE_MAP_LAYER: {
-    url: 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+    url: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
     options: {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     }
@@ -35,19 +35,12 @@ export default {
     color: '#3F556D',
     weight: 4
   },
-  ENTITY_LAYER_STYLE: {
-    radius: 8,
-    fillOpacity: 1,
-    opacity: 1,
-    color: '#3F556D',
-    weight: 2
-  },
   MIN_ENTITY_POINT_RADIUS: 4,
   MAX_ENTITY_POINT_RADIUS: 12,
   VIEW_MAP_OPTIONS: {
     scrollWheelZoom: false,
     zoomControl: false,
-    maxZoom: 12,
+    maxZoom: 10,
     minZoom: 5,
     maxBounds: [[15, -150], [45, -50]]
   },
