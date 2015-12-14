@@ -32,7 +32,8 @@ export default React.createClass({
   },
 
   render() {
-    const themeKeys = this.props.includePopulation ? R.prepend('population', constants.THEMES)
+    const themeKeys = this.props.includePopulation ?
+      R.prepend('population', constants.THEMES)
       : constants.THEMES;
 
     return (
