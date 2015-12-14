@@ -56,16 +56,32 @@ export default React.createClass({
 
     const tableData = viewData[this.state.selectedTheme].rows;
     const decade = this.state.selectedDecade;
-    // const themeTitle = constants.THEME_TITLES[this.state.selectedTheme];
+
+    const toAnchor = (href, text) => {
+      return `<a href="${href}">${text}</a>`;
+    };
 
     const dimensions = [
-      {value: 'EntityName', title: 'Entity Name'}, //can use template prop to make links
-      {value: 'WugCounty', title: 'County'},
-      {value: 'WugRegion', title: 'Region'}
+      {
+        value: 'EntityName',
+        title: 'Entity Name',
+        template: (val, row) => toAnchor(`/entity/${row.entityId}`, val)
+      },
+      {
+        value: 'WugCounty',
+        title: 'County',
+        template: (val) => toAnchor(`/county/${val}`, val)
+      },
+      {
+        value: 'WugRegion',
+        title: 'Region',
+        template: (val) => toAnchor(`/region/${val}`, val)
+      }
     ];
 
     const reduce = (row, memo) => {
       memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${decade}`];
+      memo.entityId = row.EntityId; //save the EntityId so a link can be made
       return memo;
     };
 
