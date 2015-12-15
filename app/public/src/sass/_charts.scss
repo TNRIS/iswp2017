@@ -16,6 +16,12 @@
   fill: $color;
 }
 
+@mixin row-label-decoration($color) {
+  padding: 0 1px;
+  border-bottom: 1px solid $color;
+  display: inline-block;
+}
+
 .chart-header {
   h4 {
     display: inline-block;
@@ -145,6 +151,7 @@
 .chart-table-container {
   table {
     font-size: 0.7em;
+    line-height: 1.4rem;
 
     th, td {
       padding: 2px;
@@ -154,6 +161,25 @@
       font-weight: bold;
       max-width: 60px;
     }
+
+    @each $theme in $themes {
+      $name: nth($theme, 1);
+      $color: nth($theme, 2);
+
+      tr.series-#{$name} .row-label > span {
+        @include row-label-decoration($color);
+      }
+    }
+
+    @each $type in $usageTypes {
+      $name: nth($type, 1);
+      $color: nth($type, 2);
+
+      tr.series-#{$name} .row-label > span {
+        @include row-label-decoration($color);
+      }
+    }
+
   }
 
   .totals-row {

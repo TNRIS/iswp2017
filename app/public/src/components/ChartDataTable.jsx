@@ -43,8 +43,8 @@ export default React.createClass({
       return (<div/>);
     }
 
-    const toTh = (x, i) => (<th key={i}>{x}</th>);
-    const toTd = (x, i) => (<td key={i}>{format()(x)}</td>);
+    const toTh = (text, i) => (<th key={i}>{text}</th>);
+    const toTd = (num, i) => (<td key={i}>{format()(num)}</td>);
 
     const toggleText = this.state.showTable ? "Hide data" : "Show data";
 
@@ -71,7 +71,9 @@ export default React.createClass({
               {chartData.series.map((series, i) => {
                 return (
                   <tr className={series.className} key={i}>
-                    <td className="row-label">{series.name}</td>
+                    <td className="row-label">
+                      <span>{series.name}</span>
+                    </td>
                     {series.data.map(toTd)}
                   </tr>
                 );
