@@ -1,8 +1,11 @@
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Helmet from 'react-helmet';
 import titleize from 'titleize';
 import Spinner from 'react-spinkit';
+import Sticky from 'react-sticky';
+import classnames from 'classnames';
 
 import PlaceDataStore from '../stores/PlaceDataStore';
 import PlaceViewMap from './maps/PlaceViewMap';
@@ -23,11 +26,15 @@ export default React.createClass({
   },
 
   getInitialState() {
-    return PlaceDataStore.getState();
+    return {
+      stickyOffset: 0,
+      isStuck: false,
+      placeData: PlaceDataStore.getState().placeData
+    };
   },
 
   componentDidMount() {
-    PlaceDataStore.listen(this.onChange);
+    PlaceDataStore.listen(this.onPlaceDataChange);
 
     this.fetchPlaceData(this.props.params);
   },
@@ -38,18 +45,39 @@ export default React.createClass({
     this.fetchPlaceData(nextProps.params);
   },
 
-  componentWillUnmount() {
-    PlaceDataStore.unlisten(this.onChange);
+  componentDidUpdate() {
+    const decadeDependentSection = ReactDOM.findDOMNode(this.refs.decadeDependentSection);
+    if (!decadeDependentSection) {
+      return;
+    }
+
+    const stickyOffset = decadeDependentSection.offsetTop;
+    if (this.state.stickyOffset === 0) {
+      /*eslint-disable*/
+      // While setState shouldn't normally be called in componentDidUpdate
+      // we are guarding sure that this won't cause an infinite loop
+      // with the preceding if check
+      this.setState({stickyOffset});
+      /*eslint-enable*/
+    }
   },
 
-  onChange(state) {
-    this.setState(state);
+  componentWillUnmount() {
+    PlaceDataStore.unlisten(this.onPlaceDataChange);
+  },
+
+  onPlaceDataChange(state) {
+    this.setState({placeData: state.placeData});
   },
 
   fetchPlaceData(params) {
     PlaceDataStore.fetch({
       type: params.type, typeId: params.typeId
     });
+  },
+
+  handleStickyStateChange(isSticky) {
+    this.setState({isStuck: isSticky});
   },
 
   render() {
@@ -67,6 +95,8 @@ export default React.createClass({
     default:
       title = '';
     }
+
+    const stickyOffset = this.state.stickyOffset;
 
     return (
       <div className="place-view">
@@ -120,13 +150,18 @@ export default React.createClass({
                     </div>
                   </div>
 
-                  <div className="decade-dependent-wrap">
-                    <div className="container">
-                      <div className="row panel-row">
+                  <div className={classnames({"is-stickied": this.state.isStuck}, "decade-dependent-wrap")}
+                    ref="decadeDependentSection">
+                    <Sticky stickyClass="sticky" stickyStyle={{}}
+                      topOffset={stickyOffset}
+                      onStickyStateChange={this.handleStickyStateChange}>
+                      <div className="decade-selection-container">
                         <h4>Data by Planning Decade</h4>
                         <DecadeSelector />
                       </div>
+                    </Sticky>
 
+                    <div className="container">
                       <div className="row panel-row">
                         <div className="twelve columns">
                           <ThemeMaps placeData={placeData} />
