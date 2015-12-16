@@ -60,9 +60,9 @@ export default React.createClass({
   },
 
   handleScroll() {
-    //TODO: need to save original offsetTop and if the scroll goes back above, unstick it
-    const y = document.body.scrollTop;
+    const y = document.documentElement.scrollTop || document.body.scrollTop || 0;
     const stickyTop = this.refs.decadeDependentSection.offsetTop;
+    console.log(y, stickyTop);
     if (y >= stickyTop) {
       this.setState({isStuck: true});
     }
