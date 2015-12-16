@@ -143,6 +143,11 @@ select {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     color: #fff;
+
+    a, a:hover, a:visited {
+      text-decoration: none;
+      color: inherit;
+    }
   }
 
   a:hover {
