@@ -81,6 +81,11 @@
     color: #3e3e3e;
   }
 
+  .ct-axis-title {
+    color: #3e3e3e;
+    font-size: 1.2rem;
+  }
+
   @each $theme in $themes {
     $name: nth($theme, 1);
     $color: nth($theme, 2);

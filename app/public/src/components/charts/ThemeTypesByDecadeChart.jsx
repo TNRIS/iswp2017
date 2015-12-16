@@ -4,16 +4,24 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import titleize from 'titleize';
 
-import PropTypes from '../../utils/CustomPropTypes';
+import ChartDataTable from '../ChartDataTable';
+import ChartLegend from '../ChartLegend';
 import constants from '../../constants';
 import LineChart from './LineChart';
-import ChartLegend from '../ChartLegend';
-import ChartDataTable from '../ChartDataTable';
+import PropTypes from '../../utils/CustomPropTypes';
 import ThemeSelector from '../ThemeSelector';
+import TitlePlugin from '../../utils/ChartistAxisTitlePlugin';
 import utils from '../../utils';
 
 const chartOptions = {
-  height: '240px'
+  height: '240px',
+  plugins: [
+    TitlePlugin({
+      axisY: {
+        axisTitle: 'acre-feet/year'
+      }
+    })
+  ]
 };
 
 export default React.createClass({

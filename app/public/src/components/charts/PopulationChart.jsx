@@ -4,10 +4,10 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import format from 'format-number';
 
-import PropTypes from '../../utils/CustomPropTypes';
 import constants from '../../constants';
-import LineChart from './LineChart';
 import ChartDataTable from '../ChartDataTable';
+import LineChart from './LineChart';
+import PropTypes from '../../utils/CustomPropTypes';
 
 const chartOptions = {
   height: '100px',

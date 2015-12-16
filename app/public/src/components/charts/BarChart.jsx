@@ -126,8 +126,9 @@ export default React.createClass({
     const tooltipStyle = this.state.tooltip.style;
 
     return (
-      <div style={{position: 'relative'}}>
+      <div>
         <div ref="chart" className="ct-chart" onMouseOver={this.onMouseOver}></div>
+
         <div ref="tooltip" className={classnames('ct-tooltip', this.state.tooltip.className)}
           style={tooltipStyle}>
           {this.state.tooltip.value}
