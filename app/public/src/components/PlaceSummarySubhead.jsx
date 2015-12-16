@@ -58,11 +58,16 @@ export default React.createClass({
         );
       });
 
-      return (
-        <p>
-          County in {intersperse(links, ", ")}
-        </p>
-      );
+      if (links.length === 1) {
+        return (<p>County in {links[0]}</p>);
+      }
+      else if (links.length === 2) {
+        return (<p>County in {intersperse(links, " and ")}</p>);
+      }
+      //else
+      const interspersed = intersperse(links, ", ");
+      interspersed[interspersed.length - 2] = ", and ";
+      return (<p>County in {interspersed}</p>);
     }
 
     return (<div/>);
