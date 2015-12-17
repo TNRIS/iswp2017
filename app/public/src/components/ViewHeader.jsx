@@ -5,9 +5,6 @@ import classnames from 'classnames';
 
 import HeaderNav from './HeaderNav';
 
-// TODO: delete svg if removing
-// import MenuIcon from '../../static/img/menu.svg';
-
 export default React.createClass({
   getInitialState() {
     return {
