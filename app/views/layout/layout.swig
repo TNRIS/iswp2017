@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="/public/static/img/favicon.ico" />
-
+    <!--[IF lte IE 9]>
+      <script src="/public/static/js/matchMedia.js"></script>
+    <![endif]-->
     {% block styles %}
       <link rel="stylesheet" type="text/css" href="/public/static/webfonts/gill-sans.css">
     {% endblock styles %}
