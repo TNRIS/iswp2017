@@ -3,8 +3,6 @@ import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import {Link} from 'react-router';
-import titleize from 'titleize';
 import format from 'format-number';
 import hat from 'hat';
 import PivotTable from 'babel!react-pivot'; //must use babel loader directly
