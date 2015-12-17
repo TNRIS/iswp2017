@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import scale from 'scale-number-range';
 
+import CdbUtil from '../../utils/CdbUtil';
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import NeedsLegend from '../../utils/NeedsLegend';
@@ -54,6 +55,11 @@ export default React.createClass({
     );
 
     map.addLayer(baseLayer);
+    CdbUtil.createCountiesLayer()
+      .then((result) => {
+        this.map.addLayer(L.tileLayer(result.tilesUrl));
+      });
+
     this.updateMap(this.props);
 
     this.enableMapListeners();
