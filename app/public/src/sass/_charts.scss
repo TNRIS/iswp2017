@@ -159,12 +159,18 @@
     line-height: 1.4rem;
 
     th, td {
-      padding: 2px;
+      text-align: right;
+      padding: 3px 20px 1px 0;
     }
 
     .row-label {
       font-weight: bold;
       max-width: 60px;
+      text-align: left;
+    }
+
+    tr.highlight {
+      background: #FFFFB3;
     }
 
     @each $theme in $themes {

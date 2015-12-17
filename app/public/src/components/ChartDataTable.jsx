@@ -6,6 +6,8 @@ import classnames from 'classnames';
 import format from 'format-number';
 import ToggleDisplay from 'react-toggle-display';
 
+import SeriesHighlightStore from '../stores/SeriesHighlightStore';
+
 export default React.createClass({
   propTypes: {
     className: React.PropTypes.string,
@@ -18,13 +20,21 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      showTable: this.props.alwaysVisible || false
+      showTable: this.props.alwaysVisible || false,
+      highlightSeries: SeriesHighlightStore.getState().selectedSeries
     };
   },
 
-  toggleTableClick(event) {
-    event.preventDefault();
-    this.setState({showTable: !this.state.showTable});
+  componentDidMount() {
+    SeriesHighlightStore.listen(this.onSeriesHighlightChange);
+  },
+
+  componentWillUnmount() {
+    SeriesHighlightStore.unlisten(this.onSeriesHighlightChange);
+  },
+
+  onSeriesHighlightChange(storeState) {
+    this.setState({highlightSeries: storeState.selectedSeries});
   },
 
   makeTotalsTds() {
@@ -35,6 +45,11 @@ export default React.createClass({
       });
       return (<td key={colIndex}>{format()(R.sum(vals))}</td>);
     });
+  },
+
+  toggleTableClick(event) {
+    event.preventDefault();
+    this.setState({showTable: !this.state.showTable});
   },
 
   render() {
@@ -69,8 +84,9 @@ export default React.createClass({
             </thead>
             <tbody>
               {chartData.series.map((series, i) => {
+                const isHighlighted = series.meta === this.state.highlightSeries;
                 return (
-                  <tr className={series.className} key={i}>
+                  <tr className={classnames(series.className, {'highlight': isHighlighted})} key={i}>
                     <td className="row-label">
                       <span>{series.name}</span>
                     </td>

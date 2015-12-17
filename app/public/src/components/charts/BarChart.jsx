@@ -8,6 +8,8 @@ import format from 'format-number';
 import classnames from 'classnames';
 import classList from 'dom-classlist';
 
+import SeriesHighlightActions from '../../actions/SeriesHighlightActions';
+
 export default React.createClass({
   propTypes: {
     chartData: React.PropTypes.object,
@@ -28,7 +30,7 @@ export default React.createClass({
 
   componentDidMount() {
     this.updateChart();
-    window.addEventListener('scroll', this.hideTooltip);
+    window.addEventListener('scroll', this.clearInteraction);
   },
 
   componentDidUpdate() {
@@ -44,49 +46,55 @@ export default React.createClass({
         console.error(err);
       }
     }
-    window.removeEventListener('scroll', this.hideTooltip);
+    window.removeEventListener('scroll', this.clearInteraction);
+  },
+
+  onMouseOut() {
+    this.clearInteraction();
   },
 
   onMouseOver(event) {
     // use library to check classList because IE doesn't implement classList on SVG elements
     const isOverBar = classList(event.target).contains('ct-bar');
+    if (!isOverBar) {
+      this.clearInteraction();
+      return;
+    }
+    //else
+    const me = event.target;
+    const matrix = me.getScreenCTM().translate(
+      +me.getAttribute('x1'), +me.getAttribute('y2')
+    );
+    const parent = me.parentNode;
+    const tooltip = ReactDOM.findDOMNode(this.refs.tooltip);
+    // use constant height adjustment because the offsetHeight cannot
+    // be reliably obtained when the tooltip is hidden
+    const heightAdjust = 64;
 
-    if (isOverBar) {
-      const me = event.target;
-      const matrix = me.getScreenCTM().translate(
-        +me.getAttribute('x1'), +me.getAttribute('y2')
-      );
-      const parent = me.parentNode;
-      const tooltip = ReactDOM.findDOMNode(this.refs.tooltip);
-      // use constant height adjustment because the offsetHeight cannot
-      // be reliably obtained when the tooltip is hidden
-      const heightAdjust = 64;
+    const seriesName = parent.attributes['ct:meta'] ?
+      parent.attributes['ct:meta'].value : 'default';
 
-      const meta = parent.attributes['ct:meta'] ?
-        parent.attributes['ct:meta'].value : 'default';
+    SeriesHighlightActions.selectSeries(seriesName);
 
-      // bug in chartist results in 0s not being attached via ct:value
-      // ref: https://github.com/gionkunz/chartist-js/issues/464
-      const val = event.target.attributes['ct:value'].value || 0;
+    // bug in chartist results in 0s not being attached via ct:value
+    // ref: https://github.com/gionkunz/chartist-js/issues/464
+    const val = event.target.attributes['ct:value'].value || 0;
 
-      this.setState({
-        tooltip: {
-          className: `tooltip-${meta.toLowerCase()}`,
-          value: format()(val),
-          style: {
-            top: matrix.f - heightAdjust,
-            left: matrix.e - tooltip.offsetWidth / 2,
-            visibility: 'visible'
-          }
+    this.setState({
+      tooltip: {
+        className: `tooltip-${seriesName.toLowerCase()}`,
+        value: format()(val),
+        style: {
+          top: matrix.f - heightAdjust,
+          left: matrix.e - tooltip.offsetWidth / 2,
+          visibility: 'visible'
         }
-      });
-    }
-    else {
-      this.hideTooltip();
-    }
+      }
+    });
   },
 
-  hideTooltip() {
+  clearInteraction() {
+    SeriesHighlightActions.clearSeries();
     this.setState({
       tooltip: {
         style: {
@@ -127,7 +135,10 @@ export default React.createClass({
 
     return (
       <div>
-        <div ref="chart" className="ct-chart" onMouseOver={this.onMouseOver}></div>
+        <div ref="chart" className="ct-chart"
+          onMouseOver={this.onMouseOver}
+          onMouseOut={this.onMouseOut}>
+        </div>
 
         <div ref="tooltip" className={classnames('ct-tooltip', this.state.tooltip.className)}
           style={tooltipStyle}>
