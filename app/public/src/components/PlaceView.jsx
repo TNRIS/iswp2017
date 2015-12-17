@@ -62,7 +62,6 @@ export default React.createClass({
   handleScroll() {
     const y = document.documentElement.scrollTop || document.body.scrollTop || 0;
     const stickyTop = this.refs.decadeDependentSection.offsetTop;
-    console.log(y, stickyTop);
     if (y >= stickyTop) {
       this.setState({isStuck: true});
     }
