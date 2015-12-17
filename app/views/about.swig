@@ -10,7 +10,7 @@
 {% endblock title %}
 
 {% block content %}
-  <header class="header">
+  <header class="header" id="Top">
     <div class="header-title wrapper">
       <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">
         <img src="/public/static/img/twdb-logo-dark-bkgd-w200px-3c.png" class="logo" />
@@ -26,9 +26,20 @@
       <div class="row panel-row">
         <div class="twelve columns">
           <h2>About</h2>
-
+          <section id="Contents">
+            <ol>
+              <li><a href="#WhatIsThis">What is this site and what does it do?</a></li>
+              <li><a href="#HowDoIFindData">How do I find the information I'm looking for?</a></li>
+              <li><a href="#StateWaterPlanData">State Water Plan Data</a></li>
+              <li><a href="#Glossary">Glossary</a></li>
+              <li><a href="#DownloadingData">Downloading Data</a></li>
+              <li><a href="#AboutUs">About Us</a></li>
+              <li><a href="#SitePolicies">Site Policies</a></li>
+            </ol>
+          </section>
           <section id="WhatIsThis">
             <h3>What is this site and what does it do?</h3>
+            <a href="#Top"><small>Back to Top</small></a>
 
             <p>
               This website lets water users statewide take an up-close look at data in the DRAFT 2017 State Water Plan and how water needs change over time. The user-friendly website, which is also easily viewed on most mobile devices, now shows:
@@ -48,6 +59,7 @@
 
           <section id="HowDoIFindData">
             <h3>How do I find the information I'm looking for?</h3>
+            <a href="#Top"><small>Back to Top</small></a>
 
             <ol>
               <li>
@@ -75,6 +87,7 @@
 
           <section id="StateWaterPlanData">
             <h3>State Water Plan Data</h3>
+            <a href="#Top"><small>Back to Top</small></a>
 
             <p>
               Development of the state water plan is central to the mission of the TWDB.  Based on 16 regional water plans, the plan addresses the needs of all water user groups in the state &ndash; municipal, irrigation, manufacturing, livestock, mining, and steam-electric power &ndash; during a repeat of the drought of record that the state suffered in the 1950s. The regional and state water plans consider a 50-year planning horizon: 2020 through 2070.
@@ -104,6 +117,7 @@
 
           <section id="Glossary" class="glossary">
             <h3>Glossary</h3>
+            <a href="#Top"><small>Back to Top</small></a>
 
             <p>
               For these and other terms, see also the DRAFT 2017 State Water Plan
@@ -163,6 +177,7 @@
 
           <section id="DownloadingData">
             <h3>Downloading Data</h3>
+            <a href="#Top"><small>Back to Top</small></a>
             <p>All water volumes are in units of acre-feet/year.</p>
             <p>
               Below each table is a "Download table" link to download a Comma-Separated Values (CSV) representation of the data in that table. CSV files can be opened with many software applications, including Microsoft Excel.
@@ -174,7 +189,7 @@
               Related data may be viewed through the <a title="Regional Water Planning Data Web Interface" href="https://www.twdb.texas.gov/apps/db17/default.asp">Regional Water Planning Data Web Interface</a>.
             </p>
 
-            <h3 id="API">API</h4>
+            <h4 id="API">API</h4>
             <p>
               Data may be programmatically accessed using the Interactive 2017 State Water Plan API. See the <a href="/api/v1" title="API Description">API Description page</a> for a description of API methods.
             </p>
@@ -182,6 +197,7 @@
 
           <section id="AboutUs">
             <h3>About Us</h3>
+            <a href="#Top"><small>Back to Top</small></a>
             <p>
               This website is a product of the Texas Water Development Board (TWDB). This project is part of our ongoing efforts to communicate information from the DRAFT 2017 State Water Plan to planners, scientists, policy makers, and the public.
             </p>
@@ -214,6 +230,7 @@
 
           <section id="SitePolicies">
             <h3>Site Policies</h3>
+            <a href="#Top"><small>Back to Top</small></a>
             <p>
               This website is an official TWDB ancillary website operated for authorized use only and provided as a public service. This policy describes the TWDB's privacy and security practices regarding information collected from visitors to the website, including what information is collected and how that information is used. Regardless of the information being transmitted to the TWDB, we will protect all such information consistent with applicable law. The privacy of our customers and the security of this website are of utmost importance to the TWDB.
             </p>
@@ -309,6 +326,8 @@
               <li><a href="http://info.sos.texas.gov/pls/pub/readtac$ext.ViewTAC?tac_view=4&amp;ti=1&amp;pt=10&amp;ch=206" title="State Rules: 1 TAC Section 206">State Rules: 1 TAC Section 206</a></li>
               <li><a href="http://www2.dir.texas.gov/SitePolicies/Pages/accessibilitypolicy.aspx" title="Web Accessibility in Texas">Web Accessibility in Texas</a></li>
             </ul>
+
+            <a href="#Top"><small>Back to Top</small></a>
           </section>
         </div>
       </div>
