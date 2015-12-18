@@ -119,22 +119,38 @@ button.button-primary {
   }
 }
 
-.summary-responsive-wrapper {
-  margin-top: 2rem;
-}
-
+$top-height: 34rem;
 .view-top {
   position: relative;
-  height: 34rem;
   margin-bottom: 2rem;
+
+  @media (min-width: $media-m) {
+    height: $top-height;
+  }
+
+  .view-map {
+    height: $top-height;
+    width: 100%;
+
+    @media (min-width: $media-m) {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+    }
+  }
 
   .summary-wrapper {
     position: relative;
+    z-index: 1;
   }
 
   .view-summary {
-    width: 48%;
-    float: left;
+    @media (min-width: $media-m) {
+      width: 48%;
+      float: left;
+    }
+
     margin: 0.9rem 2% 0 0;
     background: rgba(255, 255, 255, 0.9);
     border-bottom: 1px solid lighten($twdb-blue, 20%);

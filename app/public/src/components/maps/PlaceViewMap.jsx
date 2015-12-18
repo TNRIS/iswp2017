@@ -70,7 +70,6 @@ export default React.createClass({
 
     this.map.addLayer(this.boundaryLayer);
 
-
     this.map.fitBounds(this.boundaryLayer.getBounds(), {
       paddingTopLeft: constants.VIEW_MAP_PADDING
     });

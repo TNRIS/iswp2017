@@ -89,27 +89,16 @@ export default React.createClass({
       <div className="place-view">
         <Helmet title={title} />
         <section className="main-content">
-          <div className="container summary-responsive-wrapper hide-medium">
-            <div className="row panel-row">
-              <div className="twelve columns">
-                <PlaceSummary
-                  type={params.type}
-                  typeId={params.typeId}
-                  viewData={placeData.data} />
-              </div>
-            </div>
-          </div>
           <div className="view-top place-view-top">
-            <PlaceViewMap
-              type={params.type}
-              placeData={placeData} />
-            <div className="summary-wrapper wrapper show-medium">
+            <div className="summary-wrapper wrapper">
               <PlaceSummary
                 type={params.type}
                 typeId={params.typeId}
                 viewData={placeData.data} />
             </div>
-
+            <PlaceViewMap
+              type={params.type}
+              placeData={placeData} />
           </div>
 
           {
