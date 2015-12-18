@@ -64,7 +64,7 @@ export default React.createClass({
     const toggleText = this.state.showTable ? "Hide data" : "Show data";
 
     return (
-      <div className={classnames("chart-table-container", this.props.className)}>
+      <div className={classnames("chart-table-container", "u-cf", this.props.className)}>
         {() => {
           if (!this.props.alwaysVisible) {
             return (
