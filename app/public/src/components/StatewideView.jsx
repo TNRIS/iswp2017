@@ -12,7 +12,6 @@ import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
 // import ThemeMaps from './maps/ThemeMaps';
-// import DataTable from './DataTable';
 import DecadeSelector from './DecadeSelector';
 
 export default React.createClass({
