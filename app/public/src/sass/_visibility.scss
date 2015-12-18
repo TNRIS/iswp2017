@@ -1,0 +1,33 @@
+
+//Some simple classes for responsiving hiding and showing
+// based on screen size
+
+.hide-large {
+  @media (min-width: $media-l) {
+    display: none !important;
+  }
+}
+
+.hide-medium {
+  @media (min-width: $media-m) {
+    display: none !important;
+  }
+}
+
+.show-large {
+  @media (max-width: $media-l) {
+    display: none !important;
+  }
+}
+
+.show-medium {
+  @media (max-width: $media-m) {
+    display: none !important;
+  }
+}
+
+.show-small {
+  @media (max-width: $media-s) {
+    display: none !important;
+  }
+}
