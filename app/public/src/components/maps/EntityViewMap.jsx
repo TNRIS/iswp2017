@@ -4,12 +4,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import utils from '../../utils';
 import history from '../../history';
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import CdbUtil from '../../utils/CdbUtil';
-
-//TODO: Adjust this based on device size
 
 export default React.createClass({
   propTypes: {
@@ -31,7 +30,7 @@ export default React.createClass({
     }).addTo(this.map);
 
     this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS, {
-      paddingTopLeft: constants.VIEW_MAP_PADDING
+      paddingTopLeft: utils.getMapPadding()
     });
 
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
@@ -71,7 +70,7 @@ export default React.createClass({
         this.map.addLayer(this.entityLayer);
         this.entityLayer.bringToFront();
         this.map.fitBounds([[entity.Latitude, entity.Longitude], [entity.Latitude, entity.Longitude]], {
-          paddingTopLeft: constants.VIEW_MAP_PADDING,
+          paddingTopLeft: utils.getMapPadding(),
           maxZoom: 9
         });
       });
