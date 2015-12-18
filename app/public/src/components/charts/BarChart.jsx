@@ -110,6 +110,7 @@ export default React.createClass({
     const defaultOptions = {
       fullWidth: true,
       width: '100%',
+      seriesBarDistance: 10,
       chartPadding: {
         left: 20
       },
