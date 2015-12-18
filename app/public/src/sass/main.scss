@@ -131,6 +131,7 @@ $top-height: 34rem;
   .view-map {
     height: $top-height;
     width: 100%;
+    position: relative;
 
     @media (min-width: $media-m) {
       position: absolute;
