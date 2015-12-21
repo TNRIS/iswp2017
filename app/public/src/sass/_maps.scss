@@ -55,3 +55,18 @@
   background-image: url('/public/static/img/texas_icon.png');
   background-size: 16px;
 }
+
+.leaflet-popup {
+  h3 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  p {
+    margin: 0
+  }
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 4px;
+}

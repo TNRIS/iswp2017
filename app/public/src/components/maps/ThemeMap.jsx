@@ -1,4 +1,5 @@
 /*global L:false*/
+/*global OverlappingMarkerSpiderfier:false*/
 
 import R from 'ramda';
 import React from 'react';
@@ -39,6 +40,24 @@ export default React.createClass({
     const map = this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
       scrollWheelZoom: false,
       zoomControl: false
+    });
+
+    this.spiderfier = new OverlappingMarkerSpiderfier(map, {
+      keepSpiderfied: true,
+      nearbyDistance: 5
+    });
+
+    this.spiderfier.addListener('spiderfy', () => {
+      map.closePopup();
+    });
+
+    const popup = L.popup();
+    this.spiderfier.addListener('click', (marker) => {
+      const content = `<h3>${marker.feature.properties.EntityName}</h3>
+        <p>Total: ${marker.feature.properties.ValueSum}</p>`;
+      popup.setContent(content);
+      popup.setLatLng(marker.getLatLng());
+      map.openPopup(popup);
     });
 
     map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
@@ -90,6 +109,8 @@ export default React.createClass({
   componentWillUnmount() {
     this.disableMapListeners();
     ThemeMapStateStore.unlisten(this.onMapStateChange);
+    this.spiderfier.clearListeners('click');
+    this.spiderfier.clearListeners('spiderfy');
   },
 
   onMapViewChange() {
@@ -148,6 +169,7 @@ export default React.createClass({
 
     if (this.entitiesLayer && this.map.hasLayer(this.entitiesLayer)) {
       this.map.removeLayer(this.entitiesLayer);
+      this.spiderfier.clearMarkers();
     }
 
     if (!entityFeatures || entityFeatures.length === 0) {
@@ -185,13 +207,9 @@ export default React.createClass({
           markerOpts.color = color;
         }
 
-        return L.circleMarker(latlng, markerOpts);
-      },
-      onEachFeature: (feat, layer) => {
-        layer.bindPopup(feat.properties.EntityName +
-          `<br>${props.decade} Total: ` +
-          feat.properties.ValueSum
-        );
+        const marker = L.circleMarker(latlng, markerOpts);
+        this.spiderfier.addMarker(marker);
+        return marker;
       }
     });
 
