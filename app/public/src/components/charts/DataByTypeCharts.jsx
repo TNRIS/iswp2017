@@ -76,14 +76,14 @@ export default React.createClass({
           const groupTwoData = {labels: constants.DECADES, series: seriesByType[groupTwo]};
           return (
             <div className="row" key={i}>
-              <div className="six columns">
+              <div className="six columns wide">
                 <h5>{titleize(groupOne)}</h5>
                 <BarChart
                   chartData={groupOneData}
                   chartOptions={chartOptions} />
                 <ChartDataTable className="u-full-width" chartData={groupOneData} />
               </div>
-              <div className="six columns">
+              <div className="six columns wide">
                 <h5>{titleize(groupTwo)}</h5>
                 <BarChart
                   chartData={groupTwoData}

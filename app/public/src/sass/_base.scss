@@ -156,3 +156,13 @@ select {
     margin-top: 8px;
   }
 }
+
+@media (max-width: 900px) {
+  .six.columns.wide {
+    width: 100%;
+  }
+
+  .columns.wide,.column.wide {
+    margin-left: 0;
+  }
+}
