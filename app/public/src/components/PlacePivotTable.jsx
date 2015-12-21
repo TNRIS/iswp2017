@@ -9,7 +9,7 @@ import PivotTable from 'babel!react-pivot'; //must use babel loader directly
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
-import DecadeChoiceStore from '../stores/DecadeChoiceStore';
+import ViewChoiceStore from '../stores/ViewChoiceStore';
 import ThemeSelector from './ThemeSelector';
 
 export default React.createClass({
@@ -21,18 +21,18 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      selectedDecade: DecadeChoiceStore.getState().selectedDecade,
+      selectedDecade: ViewChoiceStore.getState().selectedDecade,
       selectedTheme: R.nth(0, constants.THEMES),
       tableFilter: ''
     };
   },
 
   componentDidMount() {
-    DecadeChoiceStore.listen(this.onDecadeChange);
+    ViewChoiceStore.listen(this.onDecadeChange);
   },
 
   componentWillUnmount() {
-    DecadeChoiceStore.unlisten(this.onDecadeChange);
+    ViewChoiceStore.unlisten(this.onDecadeChange);
   },
 
   onDecadeChange(storeState) {

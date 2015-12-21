@@ -4,22 +4,22 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import constants from '../constants';
-import DecadeChoiceActions from '../actions/DecadeChoiceActions';
-import DecadeChoiceStore from '../stores/DecadeChoiceStore';
+import ViewChoiceActions from '../actions/ViewChoiceActions';
+import ViewChoiceStore from '../stores/ViewChoiceStore';
 
 export default React.createClass({
   mixins: [PureRenderMixin],
 
   getInitialState() {
-    return DecadeChoiceStore.getState();
+    return ViewChoiceStore.getState();
   },
 
   componentDidMount() {
-    DecadeChoiceStore.listen(this.onDecadeChange);
+    ViewChoiceStore.listen(this.onDecadeChange);
   },
 
   componentWillUnmount() {
-    DecadeChoiceStore.unlisten(this.onDecadeChange);
+    ViewChoiceStore.unlisten(this.onDecadeChange);
   },
 
   onDecadeChange(state) {
@@ -27,7 +27,7 @@ export default React.createClass({
   },
 
   selectDecade(decade) {
-    DecadeChoiceActions.updateDecadeChoice(decade);
+    ViewChoiceActions.updateDecadeChoice(decade);
   },
 
   render() {

@@ -1,11 +1,10 @@
 
-import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import constants from '../../constants';
+import ViewChoiceStore from '../../stores/ViewChoiceStore';
 import PropTypes from '../../utils/CustomPropTypes';
-import DecadeChoiceStore from '../../stores/DecadeChoiceStore';
 import ThemeMap from './ThemeMap';
 
 export default React.createClass({
@@ -16,15 +15,15 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   getInitialState() {
-    return DecadeChoiceStore.getState();
+    return ViewChoiceStore.getState();
   },
 
   componentDidMount() {
-    DecadeChoiceStore.listen(this.onDecadeChange);
+    ViewChoiceStore.listen(this.onDecadeChange);
   },
 
   componentWillUnmount() {
-    DecadeChoiceStore.unlisten(this.onDecadeChange);
+    ViewChoiceStore.unlisten(this.onDecadeChange);
   },
 
   onDecadeChange(state) {
@@ -39,30 +38,18 @@ export default React.createClass({
     }
 
     const placeData = this.props.placeData;
-    const decade = this.state.selectedDecade;
-
-    const themeGroups = R.splitEvery(2, constants.THEMES);
+    const selectedDecade = this.state.selectedDecade;
+    const selectedTheme = 'demands'; //TODO: get from store
 
     return (
       <div>
-        <h4>Water Usage Type Maps - {decade}</h4>
-
-        {themeGroups.map((themes, i) => {
-          return (
-            <div className="row" key={i}>
-              {themes.map((theme, j) => {
-                return (
-                  <div className="six columns" key={j}>
-                    <ThemeMap theme={theme}
-                      data={placeData.data[theme]}
-                      boundary={placeData.boundary}
-                      decade={decade} />
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
+        <h4>{constants.THEME_TITLES[selectedTheme]} Entity Map - {selectedDecade}</h4>
+        <div className="twelve columns">
+          <ThemeMap theme={selectedTheme}
+            data={placeData.data[selectedTheme]}
+            boundary={placeData.boundary}
+            decade={selectedDecade} />
+        </div>
       </div>
     );
   }

@@ -1,14 +1,14 @@
 
 import alt from '../alt';
-import DecadeChoiceActions from '../actions/DecadeChoiceActions';
+import ViewChoiceActions from '../actions/ViewChoiceActions';
 import constants from '../constants';
 
-class DecadeChoiceStore {
+class ViewChoiceStore {
   constructor() {
     this.selectedDecade = constants.DECADES[0];
 
     this.bindListeners({
-      handleUpdateDecadeChoice: DecadeChoiceActions.UPDATE_DECADE_CHOICE
+      handleUpdateDecadeChoice: ViewChoiceActions.UPDATE_DECADE_CHOICE
     });
   }
 
@@ -17,4 +17,4 @@ class DecadeChoiceStore {
   }
 }
 
-export default alt.createStore(DecadeChoiceStore, 'DecadeChoiceStore');
+export default alt.createStore(ViewChoiceStore, 'ViewChoiceStore');
