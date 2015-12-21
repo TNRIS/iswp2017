@@ -60,6 +60,9 @@ export default React.createClass({
 
   handleScroll() {
     const y = document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if (!this.refs.viewChoiceSection) {
+      return;
+    }
     const stickyTop = this.refs.viewChoiceSection.offsetTop;
     if (y >= stickyTop) {
       this.setState({isStuck: true});
