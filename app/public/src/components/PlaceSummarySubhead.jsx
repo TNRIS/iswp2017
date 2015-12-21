@@ -58,6 +58,10 @@ export default React.createClass({
         );
       });
 
+      if (!links || !links.length) {
+        return (<div/>);
+      }
+
       if (links.length === 1) {
         return (<p>County in {links[0]}</p>);
       }

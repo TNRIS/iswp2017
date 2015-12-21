@@ -180,8 +180,15 @@ $top-height: 34rem;
       margin: 2rem auto;
     }
 
-    .chart-header h4 {
-      font-size: 1.8rem;
+    .chart-header {
+      h4 {
+        font-size: 1.8rem;
+      }
+
+      .units {
+        font-size: 12px;
+        color: black;
+      }
     }
   }
 }
