@@ -6,14 +6,20 @@ import constants from '../constants';
 class ViewChoiceStore {
   constructor() {
     this.selectedDecade = constants.DECADES[0];
+    this.selectedTheme = constants.THEMES[0];
 
     this.bindListeners({
-      handleUpdateDecadeChoice: ViewChoiceActions.UPDATE_DECADE_CHOICE
+      handleUpdateDecadeChoice: ViewChoiceActions.UPDATE_DECADE_CHOICE,
+      handleUpdateThemeChoice: ViewChoiceActions.UPDATE_THEME_CHOICE
     });
   }
 
   handleUpdateDecadeChoice(selectedDecade) {
     this.selectedDecade = selectedDecade;
+  }
+
+  handleUpdateThemeChoice(selectedTheme) {
+    this.selectedTheme = selectedTheme;
   }
 }
 

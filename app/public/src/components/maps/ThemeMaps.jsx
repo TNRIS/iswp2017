@@ -39,13 +39,15 @@ export default React.createClass({
 
     const placeData = this.props.placeData;
     const selectedDecade = this.state.selectedDecade;
-    const selectedTheme = 'demands'; //TODO: get from store
+    const selectedTheme = this.state.selectedTheme;
+    const themeTitle = constants.THEME_TITLES[selectedTheme];
 
     return (
       <div>
-        <h4>{constants.THEME_TITLES[selectedTheme]} Entity Map - {selectedDecade}</h4>
+        <h4>Water User Groups - {themeTitle} - {selectedDecade}</h4>
         <div className="twelve columns">
-          <ThemeMap theme={selectedTheme}
+          <ThemeMap
+            theme={selectedTheme}
             data={placeData.data[selectedTheme]}
             boundary={placeData.boundary}
             decade={selectedDecade} />

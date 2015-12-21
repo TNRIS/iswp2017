@@ -1,33 +1,32 @@
 
-
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import constants from '../constants';
-import ViewChoiceActions from '../actions/ViewChoiceActions';
-import ViewChoiceStore from '../stores/ViewChoiceStore';
 
 export default React.createClass({
+  propTypes: {
+    value: React.PropTypes.string.isRequired,
+    onSelect: React.PropTypes.func.isRequired
+  },
+
   mixins: [PureRenderMixin],
 
   getInitialState() {
-    return ViewChoiceStore.getState();
+    return {
+      selectedDecade: this.props.value
+    };
   },
 
-  componentDidMount() {
-    ViewChoiceStore.listen(this.onDecadeChange);
-  },
-
-  componentWillUnmount() {
-    ViewChoiceStore.unlisten(this.onDecadeChange);
-  },
-
-  onDecadeChange(state) {
-    this.setState(state);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value !== this.props.value) {
+      this.setState({selectedDecade: nextProps.value});
+    }
   },
 
   selectDecade(decade) {
-    ViewChoiceActions.updateDecadeChoice(decade);
+    this.setState({selectedDecade: decade});
+    this.props.onSelect(decade);
   },
 
   render() {

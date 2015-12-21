@@ -12,7 +12,7 @@ import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
 // import ThemeMaps from './maps/ThemeMaps';
-import DecadeSelector from './DecadeSelector';
+// import DecadeSelector from './DecadeSelector';
 
 export default React.createClass({
 
@@ -89,21 +89,6 @@ export default React.createClass({
                     <div className="row panel-row">
                       <div className="twelve columns">
                         <DataByTypeCharts viewData={data} />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="decade-dependent-wrap">
-                    <div className="container">
-                      <div className="row panel-row">
-                        <h4>Data by Planning Decade</h4>
-                        <DecadeSelector />
-                      </div>
-
-                      <div className="row panel-row">
-                        <div className="twelve columns">
-                          <h4>Entities by Water Usage Type</h4>
-                        </div>
                       </div>
                     </div>
                   </div>

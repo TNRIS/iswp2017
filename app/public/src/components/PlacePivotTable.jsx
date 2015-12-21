@@ -10,7 +10,6 @@ import PivotTable from 'babel!react-pivot'; //must use babel loader directly
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 import ViewChoiceStore from '../stores/ViewChoiceStore';
-import ThemeSelector from './ThemeSelector';
 
 export default React.createClass({
   propTypes: {
@@ -20,27 +19,19 @@ export default React.createClass({
   mixins: [LinkedStateMixin, PureRenderMixin],
 
   getInitialState() {
-    return {
-      selectedDecade: ViewChoiceStore.getState().selectedDecade,
-      selectedTheme: R.nth(0, constants.THEMES),
-      tableFilter: ''
-    };
+    return ViewChoiceStore.getState();
   },
 
   componentDidMount() {
-    ViewChoiceStore.listen(this.onDecadeChange);
+    ViewChoiceStore.listen(this.onChoiceChange);
   },
 
   componentWillUnmount() {
-    ViewChoiceStore.unlisten(this.onDecadeChange);
+    ViewChoiceStore.unlisten(this.onChoiceChange);
   },
 
-  onDecadeChange(storeState) {
-    this.setState({selectedDecade: storeState.selectedDecade});
-  },
-
-  selectTheme(theme) {
-    this.setState({selectedTheme: theme});
+  onChoiceChange(state) {
+    this.setState(state);
   },
 
   render() {
@@ -94,8 +85,7 @@ export default React.createClass({
 
     return (
       <div>
-        <h4>Raw Data - {decade}</h4>
-        <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} includePopulation />
+        <h4>Raw Data - {themeTitle} - {decade}</h4>
         <div className="data-table-container">
           <PivotTable
             //assign a unique key to force rerender of table

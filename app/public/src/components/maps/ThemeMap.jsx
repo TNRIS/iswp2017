@@ -45,11 +45,6 @@ export default React.createClass({
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
 
-    if (this.props.theme === 'needs') {
-      const legendControl = NeedsLegend.create();
-      map.addControl(legendControl);
-    }
-
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
       constants.BASE_MAP_LAYER.options
     );
@@ -137,7 +132,7 @@ export default React.createClass({
       const npdProps = constants.DECADES.map((d) => `NPD${d}`);
 
       const entityProperties =  R.assoc('ValueSum', valueSum,
-        R.pick(R.concat(['EntityId', 'EntityName', 'ValueSum', 'NPD2020'], npdProps),
+        R.pick(R.concat(['EntityId', 'EntityName', 'ValueSum'], npdProps),
         entity
       ));
       return {
@@ -159,7 +154,8 @@ export default React.createClass({
       return;
     }
 
-    //sort the features in reverse so that entities with lar
+    //sort the features in reverse so that entities with larger values are
+    // rendered beneath those with smaller values
     const sortedFeatures = R.reverse(
       R.sortBy(R.path(['properties', 'ValueSum']))(entityFeatures)
     );
@@ -183,7 +179,7 @@ export default React.createClass({
           className: `entity-marker-${props.theme}`
         };
 
-        if (this.props.theme === 'needs') {
+        if (props.theme === 'needs') {
           const npdVal = feat.properties[`NPD${props.decade}`];
           const color = NeedsLegend.getColorForValue(npdVal);
           markerOpts.color = color;
@@ -198,6 +194,16 @@ export default React.createClass({
         );
       }
     });
+
+    if (this.legendControl) {
+      this.map.removeControl(this.legendControl);
+      this.legendControl = null;
+    }
+
+    if (props.theme === 'needs') {
+      this.legendControl = NeedsLegend.create();
+      this.map.addControl(this.legendControl);
+    }
 
     let bounds = this.entitiesLayer.getBounds();
 
@@ -218,13 +224,11 @@ export default React.createClass({
     // currently all the maps have their bounds dictacted by the last map to render
     // which results in slightly incorrect bounds if the entities differ among the maps
     this.map.fitBounds(bounds);
-
   },
 
   render() {
     return (
       <div>
-        <h5>{constants.THEME_TITLES[this.props.theme]}</h5>
         <div className="theme-map" ref="map"></div>
       </div>
     );

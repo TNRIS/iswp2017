@@ -13,7 +13,7 @@ import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
 import ThemeMaps from './maps/ThemeMaps';
 import PlacePivotTable from './PlacePivotTable';
-import DecadeSelector from './DecadeSelector';
+import ViewChoiceSelectors from './ViewChoiceSelectors';
 
 export default React.createClass({
   propTypes: {
@@ -60,7 +60,7 @@ export default React.createClass({
 
   handleScroll() {
     const y = document.documentElement.scrollTop || document.body.scrollTop || 0;
-    const stickyTop = this.refs.decadeDependentSection.offsetTop;
+    const stickyTop = this.refs.viewChoiceSection.offsetTop;
     if (y >= stickyTop) {
       this.setState({isStuck: true});
     }
@@ -137,12 +137,12 @@ export default React.createClass({
                     </div>
                   </div>
 
-                  <div className={classnames({"is-stickied": this.state.isStuck}, "decade-dependent-wrap")} ref="decadeDependentSection">
+                  <div className={classnames({"is-stickied": this.state.isStuck}, "view-choice-wrap")} ref="viewChoiceSection">
 
                     <div className={classnames({"sticky": this.state.isStuck}, "decade-selection-container")}
                       ref="stickyEl">
-                      <h4>Data by Planning Decade</h4>
-                      <DecadeSelector />
+                      <h4>Data by Planning Decade and Theme</h4>
+                      <ViewChoiceSelectors />
                     </div>
 
                     <div className="container">
