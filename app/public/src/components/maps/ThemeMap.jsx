@@ -63,6 +63,11 @@ export default React.createClass({
     map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
+    L.control.defaultExtent({
+      position: 'topright',
+      text: '',
+      title: 'Zoom to Texas'
+    }).addTo(this.map);
 
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
       constants.BASE_MAP_LAYER.options

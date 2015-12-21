@@ -6,7 +6,7 @@ $nav-color: lighten($twdb-blue, 10%);
   right: 0;
   bottom: 0;
 
-  @media (max-width: $media-l) {
+  @media (max-width: 960px) {
     position: relative;
     text-align: right;
   }
