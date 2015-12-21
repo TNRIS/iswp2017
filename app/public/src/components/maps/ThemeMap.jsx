@@ -6,6 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import scale from 'scale-number-range';
+import format from 'format-number';
 
 import CdbUtil from '../../utils/CdbUtil';
 import constants from '../../constants';
@@ -35,8 +36,6 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    //TODO: Use spiderfier Leaflet plugin ?
-
     const map = this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
       scrollWheelZoom: false,
       zoomControl: false
@@ -53,8 +52,9 @@ export default React.createClass({
 
     const popup = L.popup();
     this.spiderfier.addListener('click', (marker) => {
-      const content = `<h3>${marker.feature.properties.EntityName}</h3>
-        <p>Total: ${marker.feature.properties.ValueSum}</p>`;
+      const props = marker.feature.properties;
+      const content = `<h3>${props.EntityName}</h3>
+        <p>Total: ${format()(props.ValueSum)}</p>`;
       popup.setContent(content);
       popup.setLatLng(marker.getLatLng());
       map.openPopup(popup);

@@ -54,7 +54,7 @@ export default React.createClass({
     const dimensions = [
       {
         value: 'EntityName',
-        title: 'Entity Name',
+        title: 'Entity',
         template: (val, row) => toAnchor(`/entity/${row.entityId}`, val)
       },
       {
@@ -95,8 +95,8 @@ export default React.createClass({
             dimensions={dimensions}
             reduce={reduce}
             calculations={calculations}
-            sortBy={'Entity Name'}
-            activeDimensions={['Region', 'County', 'Entity Name']}
+            sortBy={'Entity'}
+            activeDimensions={['Region', 'County', 'Entity']}
             nPaginateRows={50}
           />
         </div>

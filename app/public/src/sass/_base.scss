@@ -81,6 +81,10 @@ select {
     width: 100%;
     padding: 0;
   }
+
+  @media (min-width: $media-m) {
+    width: 90%;
+  }
 }
 .wrapper {
   @media (min-width: $media-l) {
