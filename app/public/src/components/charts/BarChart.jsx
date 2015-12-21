@@ -69,7 +69,7 @@ export default React.createClass({
     const tooltip = ReactDOM.findDOMNode(this.refs.tooltip);
     // use constant height adjustment because the offsetHeight cannot
     // be reliably obtained when the tooltip is hidden
-    const heightAdjust = 64;
+    const heightAdjust = 42;
 
     const seriesName = parent.attributes['ct:meta'] ?
       parent.attributes['ct:meta'].value : 'default';

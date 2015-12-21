@@ -111,24 +111,25 @@
 
 .ct-tooltip {
   color: #fff;
+  font-size: 18px;
+  line-height: 24px;
   position: fixed;
   background-color: #2e2e2e;
   display: inline-block;
-  font-weight: 700;
-  min-width: 5em;
-  padding: .5em;
+  min-width: 5rem;
+  padding: 0.5rem;
+  height: 22px;
   pointer-events: none;
   text-align: center;
   z-index: 1;
-  height: 30px;
 
   &:after {
-    border: 15px solid transparent;
+    border: 9px solid transparent;
     border-top-color: #2e2e2e;
     content: "";
     height: 0;
     left: 50%;
-    margin-left: -15px;
+    margin-left: -9px;
     position: absolute;
     top: 100%;
     width: 0;
