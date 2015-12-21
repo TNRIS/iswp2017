@@ -22,6 +22,18 @@
         <h1>DRAFT 2017 Texas State Water Plan</h1>
       </div>
     </header>
+    <noscript>
+      <div class="container">
+        <div class="row panel-row">
+          <div class="twelve columns">
+            <h4>Error: Javascript is Required!</h4>
+            Javascript is required to use the Interactive State Water Plan Application. <br />
+            Please enable Javascript in your browser, or visit <a title="2016 Regional Water Plans" href="http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/index.asp">http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/index.asp</a>
+            to view Regional Water Plan data in the traditional viewer.
+          </div>
+        </div>
+      </div>
+    </noscript>
   </div>
 {% endblock content %}
 
