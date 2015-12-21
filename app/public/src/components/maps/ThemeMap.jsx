@@ -134,6 +134,8 @@ export default React.createClass({
   },
 
   updateMap(props) {
+    this.map.closePopup();
+
     // dataRows can have multiple rows for the same EntityId
     // so group them and sum their current year value to make
     // mappable entities features
