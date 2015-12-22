@@ -5,10 +5,20 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 import classnames from 'classnames';
 
-// import PlaceSummarySubhead from './PlaceSummarySubhead';
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 import PopulationChart from './charts/PopulationChart';
+
+function aggregateDescription(entityName) {
+  const categories = R.keys(constants.COUNTY_AGGREGATE_DESCS);
+  for (let i = 0; i < categories.length; i++) {
+    const category = categories[i];
+    if (entityName.indexOf(category) === 0) {
+      return constants.COUNTY_AGGREGATE_DESCS[category];
+    }
+  }
+  return null;
+}
 
 export default React.createClass({
   propTypes: {
@@ -37,7 +47,13 @@ export default React.createClass({
         <h2 className={classnames({'long-name': isLong})}>
           {entityName}
         </h2>
-        <PopulationChart viewData={props.entityData.data} />
+        {(() => {
+          const desc = aggregateDescription(entityName);
+          if (desc) {
+            return (<p>{desc}</p>);
+          }
+          return (<PopulationChart viewData={props.entityData.data} />);
+        })()}
       </div>
     );
   }

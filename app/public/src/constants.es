@@ -18,6 +18,13 @@ export default {
     'LIVESTOCK',
     'MINING'
   ],
+  COUNTY_AGGREGATE_DESCS: {
+    IRRIGATION: "Irrigation water demand includes water used in irrigated field crops, vineyards, orchards, and self-supplied golf courses.",
+    MANUFACTURING: "Manufacturing water demand consists of the future water necessary for large facilities including those that process chemicals, oil and gas, food, paper, and other materials.",
+    'STEAM ELECTRIC POWER': "Steam-electric water demand consists of water used for the purpose of generating power.",
+    LIVESTOCK: "Livestock water demand includes water used in the production of various types of livestock including cattle (beef and dairy), hogs, poultry, horses, sheep, and goats.",
+    MINING: "Mining water demand consists of water used in the exploration, development, and extraction of oil, gas, coal, aggregates, and other materials."
+  },
   DECADES: ['2020', '2030', '2040', '2050', '2060', '2070'],
   REGIONS: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'],
   LONG_NAME_THRESHOLD: 18,

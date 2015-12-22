@@ -157,6 +157,7 @@ $top-height: 34rem;
     @media (min-width: $media-m) {
       width: 48%;
       float: left;
+      min-height: 140px;
     }
 
     margin: 0.9rem 2% 1rem 0;
