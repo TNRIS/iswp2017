@@ -43,6 +43,7 @@ export default React.createClass({
       );
     }
 
+    const selectedTheme = this.state.selectedTheme;
     const tableData = viewData[this.state.selectedTheme].rows;
     const decade = this.state.selectedDecade;
     const themeTitle = constants.THEME_TITLES[this.state.selectedTheme];
@@ -83,9 +84,14 @@ export default React.createClass({
       }
     ];
 
+    const units = selectedTheme === 'population' ? "people" : "acre-feet/year";
+
     return (
       <div>
-        <h4>Raw Data - {themeTitle} - {decade}</h4>
+        <h4>
+          Raw Data - {themeTitle} - {decade}
+          <span className="units">({units})</span>
+        </h4>
         <div className="data-table-container">
           <PivotTable
             //assign a unique key to force rerender of table

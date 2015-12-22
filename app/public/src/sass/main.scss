@@ -84,6 +84,13 @@ $usageTypes: ('irrigation' rgb(126, 191, 133)), ('livestock', rgb(106, 138, 34))
   }
 }
 
+h4 > .units {
+  font-weight: normal;
+  font-size: 14px;
+  color: #3e3e3e;
+  margin-left: 0.5rem;
+}
+
 .selector {
   margin: 1rem auto 0 auto;
 
@@ -183,11 +190,6 @@ $top-height: 34rem;
     .chart-header {
       h4 {
         font-size: 1.8rem;
-      }
-
-      .units {
-        font-size: 12px;
-        color: black;
       }
     }
   }

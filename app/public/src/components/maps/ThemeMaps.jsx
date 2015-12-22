@@ -42,9 +42,14 @@ export default React.createClass({
     const selectedTheme = this.state.selectedTheme;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
 
+    const units = selectedTheme === 'population' ? "people" : "acre-feet/year";
+
     return (
       <div>
-        <h4>Water User Groups - {themeTitle} - {selectedDecade}</h4>
+        <h4>
+          Water User Groups - {themeTitle} - {selectedDecade}
+          <span className="units">({units})</span>
+        </h4>
         <div className="twelve columns">
           <ThemeMap
             theme={selectedTheme}
