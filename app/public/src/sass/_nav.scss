@@ -11,6 +11,7 @@ $nav-color: lighten($twdb-blue, 10%);
     text-align: right;
   }
 
+
   button, .button {
     color: white;
     margin: 0 0 -1px -1px;
@@ -29,6 +30,17 @@ $nav-color: lighten($twdb-blue, 10%);
 
     &:first-child {
       margin-left: 0;
+    }
+
+    &.button-home {
+      padding: 0 12px;
+
+      > svg {
+        fill: white;
+        height: 18px;
+        margin-bottom: 4px;
+        vertical-align: middle;
+      }
     }
   }
 }

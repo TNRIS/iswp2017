@@ -3,6 +3,7 @@ import React from 'react';
 import ToggleDisplay from 'react-toggle-display';
 import classnames from 'classnames';
 
+import HomeIcon from '../../static/img/home.svg';
 import HeaderNav from './HeaderNav';
 
 export default React.createClass({
@@ -25,11 +26,12 @@ export default React.createClass({
           </a>
           <h1><a href="/" title="Home">DRAFT 2017 Texas State Water Plan</a></h1>
           <div className="nav-container">
-            <button onClick={this.toggleNav}
+            <a className="button button-home" title="Home" href="/"><HomeIcon/></a>
+            <button onClick={this.toggleNav} title="Navigate"
               className={classnames('nav-toggle', {'on': this.state.isNavOpen})}>
               Navigate
             </button>
-            <a className="button" href="/about">About</a>
+            <a className="button" href="/about" title="About">About</a>
           </div>
         </div>
         <ToggleDisplay show={this.state.isNavOpen}>

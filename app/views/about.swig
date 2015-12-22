@@ -17,7 +17,7 @@
       </a>
       <h1>DRAFT 2017 Texas State Water Plan</h1>
       <div class="nav-container">
-        <a class="button" href="/">Home</a>
+        <a class="button" href="/" title="Home">Home</a>
       </div>
     </div>
   </header>
