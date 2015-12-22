@@ -155,9 +155,9 @@ $top-height: 34rem;
 
   .view-summary {
     @media (min-width: $media-m) {
-      width: 48%;
       float: left;
       min-height: 140px;
+      width: 48%;
     }
 
     margin: 0.9rem 2% 1rem 0;

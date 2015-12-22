@@ -13,7 +13,8 @@ export default React.createClass({
     className: React.PropTypes.string,
     alwaysVisible: React.PropTypes.bool,
     chartData: React.PropTypes.object.isRequired,
-    showTotals: React.PropTypes.bool
+    showTotals: React.PropTypes.bool,
+    omitLabels: React.PropTypes.bool
   },
 
   mixins: [PureRenderMixin],
@@ -78,7 +79,7 @@ export default React.createClass({
           <table className="u-full-width" >
             <thead>
               <tr>
-                <th></th>
+                {!this.props.omitLabels && <th></th>}
                 {chartData.labels.map(toTh)}
               </tr>
             </thead>
@@ -87,15 +88,18 @@ export default React.createClass({
                 const isHighlighted = series.meta === this.state.highlightSeries;
                 return (
                   <tr className={classnames(series.className, {'highlight': isHighlighted})} key={i}>
-                    <td className="row-label">
-                      <span>{series.name}</span>
-                    </td>
+                    {
+                      !this.props.omitLabels &&
+                      <td className="row-label">
+                        <span>{series.name}</span>
+                      </td>
+                    }
                     {series.data.map(toTd)}
                   </tr>
                 );
               })}
               {
-                this.props.showTotals &&
+                this.props.showTotals && !this.props.omitLabels &&
                 <tr className="totals-row">
                   <td className="row-label">Total</td>
                   {this.makeTotalsTds()}

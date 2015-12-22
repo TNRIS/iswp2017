@@ -52,7 +52,7 @@ export default React.createClass({
           <h5>Population</h5>
         </div>
         <LineChart chartData={popChartData} chartOptions={chartOptions} />
-        <ChartDataTable className="u-full-width" chartData={popChartData} />
+        <ChartDataTable className="u-full-width" chartData={popChartData} omitLabels />
       </div>
     );
   }
