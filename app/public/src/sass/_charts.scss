@@ -161,6 +161,15 @@
 }
 
 .chart-table-container {
+  .toggle-container {
+    width: 100%;
+    text-align: right;
+
+    .button-small {
+      margin-bottom: 0;
+    }
+  }
+
   table {
     font-size: 0.7em;
     line-height: 1.4rem;

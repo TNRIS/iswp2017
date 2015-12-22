@@ -69,9 +69,11 @@ export default React.createClass({
         {() => {
           if (!this.props.alwaysVisible) {
             return (
-              <button className="button-small u-pull-right" onClick={this.toggleTableClick}>
-                <small>{toggleText}</small>
-              </button>
+              <div className="toggle-container">
+                <button className="button-small" onClick={this.toggleTableClick}>
+                  <small>{toggleText}</small>
+                </button>
+              </div>
             );
           }
         }()}
