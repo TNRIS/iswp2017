@@ -154,6 +154,12 @@
   }
 }
 
+.table-scroll-container {
+  max-width: 100%;
+  overflow-x: auto;
+  clear: both;
+}
+
 .chart-table-container {
   table {
     font-size: 0.7em;

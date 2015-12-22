@@ -65,7 +65,7 @@ export default React.createClass({
     const toggleText = this.state.showTable ? "Hide data" : "Show data";
 
     return (
-      <div className={classnames("chart-table-container", "u-cf", this.props.className)}>
+      <div className={classnames("chart-table-container", this.props.className)}>
         {() => {
           if (!this.props.alwaysVisible) {
             return (
@@ -76,37 +76,39 @@ export default React.createClass({
           }
         }()}
         <ToggleDisplay show={this.state.showTable}>
-          <table className="u-full-width" >
-            <thead>
-              <tr>
-                {!this.props.omitLabels && <th></th>}
-                {chartData.labels.map(toTh)}
-              </tr>
-            </thead>
-            <tbody>
-              {chartData.series.map((series, i) => {
-                const isHighlighted = series.meta === this.state.highlightSeries;
-                return (
-                  <tr className={classnames(series.className, {'highlight': isHighlighted})} key={i}>
-                    {
-                      !this.props.omitLabels &&
-                      <td className="row-label">
-                        <span>{series.name}</span>
-                      </td>
-                    }
-                    {series.data.map(toTd)}
-                  </tr>
-                );
-              })}
-              {
-                this.props.showTotals && !this.props.omitLabels &&
-                <tr className="totals-row">
-                  <td className="row-label">Total</td>
-                  {this.makeTotalsTds()}
+          <div className="table-scroll-container">
+            <table className="u-full-width" >
+              <thead>
+                <tr>
+                  {!this.props.omitLabels && <th></th>}
+                  {chartData.labels.map(toTh)}
                 </tr>
-              }
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {chartData.series.map((series, i) => {
+                  const isHighlighted = series.meta === this.state.highlightSeries;
+                  return (
+                    <tr className={classnames(series.className, {'highlight': isHighlighted})} key={i}>
+                      {
+                        !this.props.omitLabels &&
+                        <td className="row-label">
+                          <span>{series.name}</span>
+                        </td>
+                      }
+                      {series.data.map(toTd)}
+                    </tr>
+                  );
+                })}
+                {
+                  this.props.showTotals && !this.props.omitLabels &&
+                  <tr className="totals-row">
+                    <td className="row-label">Total</td>
+                    {this.makeTotalsTds()}
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
         </ToggleDisplay>
       </div>
     );
