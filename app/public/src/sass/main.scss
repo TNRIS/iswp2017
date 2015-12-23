@@ -41,7 +41,9 @@ $usageTypes: ('irrigation' rgb(126, 191, 133)), ('livestock', rgb(106, 138, 34))
 @import "visibility";
 
 .about-content {
-  margin-top: 2rem;
+  @media (min-width: $media-m) {
+    margin-top: 2rem;
+  }
   ul, ol {
     margin-left: 1rem;
   }
