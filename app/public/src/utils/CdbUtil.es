@@ -52,7 +52,7 @@ function createEntityLayer(entity) {
         }
         ::labels {
           text-name: [name];
-          text-wrap-width: 1;
+          text-wrap-width: 20;
           text-face-name: 'Lato Bold';
           text-placement: point;
           text-placement-type: simple;
