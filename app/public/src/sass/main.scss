@@ -151,6 +151,12 @@ $top-height: 34rem;
   .summary-wrapper {
     position: relative;
     z-index: 1;
+    &.wrapper {
+      margin: 0;
+      @media (min-width: $media-m) {
+        margin: 0 1.5rem;
+      }
+    }
   }
 
   .view-summary {
@@ -158,12 +164,13 @@ $top-height: 34rem;
       float: left;
       min-height: 140px;
       width: 48%;
+      margin: 0.9rem 2% 1rem 0;
+      border-radius: 4px;
     }
 
-    margin: 0.9rem 2% 1rem 0;
+    margin: 1rem 0;
     background: rgba(255, 255, 255, 0.9);
     border-bottom: 1px solid lighten($twdb-blue, 20%);
-    border-radius: 4px;
     padding: 1rem;
 
     p {
