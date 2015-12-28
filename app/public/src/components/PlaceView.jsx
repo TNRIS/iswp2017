@@ -141,8 +141,7 @@ export default React.createClass({
                   </div>
 
                   <div className={classnames({"is-stickied": this.state.isStuck}, "view-choice-wrap")} ref="viewChoiceSection">
-
-                    <div className={classnames({"sticky": this.state.isStuck}, "decade-selection-container")}
+                    <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
                       ref="stickyEl">
                       <h4>Data by Planning Decade and Theme</h4>
                       <ViewChoiceSelectors />
