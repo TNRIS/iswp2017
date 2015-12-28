@@ -151,13 +151,19 @@ class DataController {
   }
 
   getRegionalSummaries(request, reply) {
+    const selectFields = [
+      'REGION as Region', 'DECADE as Decade', 'IRRIGATION as Irrigation',
+      'LIVESTOCK as Livestock', 'MANUFACTURING as Manufacturing',
+      'MINING as Mining', 'MUNICIPAL as Municipal', 'STEAM ELECTRIC POWER as Steam Electric Power',
+      'TOTAL as Total'
+    ];
     const themes = R.keys(summaryTables);
     const dataPromises = themes.map((theme) => {
       const table = summaryTables[theme];
-      const prom = db.select('*').from(table);
+      const prom = db.select(selectFields).from(table);
       return prom.then((rows) => {
         //Group by DECADE to turn the DECADE into keys of return object
-        const groupedByDecade = R.groupBy(R.prop('DECADE'), rows);
+        const groupedByDecade = R.groupBy(R.prop('Decade'), rows);
         return R.assoc(theme, groupedByDecade, {});
       });
     });
