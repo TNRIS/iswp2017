@@ -3,6 +3,7 @@ import R from 'ramda';
 import React from 'react';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
+import classnames from 'classnames';
 
 import StatewideDataStore from '../stores/StatewideDataStore';
 
@@ -11,18 +12,25 @@ import StatewideSummary from './StatewideSummary';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
+import ViewChoiceSelectors from './ViewChoiceSelectors';
+import RegionalSummaryTable from './RegionalSummaryTable';
+
 // import ThemeMaps from './maps/ThemeMaps';
 // import DecadeSelector from './DecadeSelector';
 
 export default React.createClass({
 
   getInitialState() {
-    return StatewideDataStore.getState();
+    return {
+      isStuck: false,
+      data: StatewideDataStore.getState().data
+    };
   },
 
   componentDidMount() {
     StatewideDataStore.listen(this.onChange);
 
+    window.addEventListener('scroll', this.handleScroll);
     this.fetchData();
   },
 
@@ -32,6 +40,7 @@ export default React.createClass({
 
   componentWillUnmount() {
     StatewideDataStore.unlisten(this.onChange);
+    window.removeEventListener('scroll', this.handleScroll);
   },
 
   onChange(state) {
@@ -41,6 +50,20 @@ export default React.createClass({
   fetchData() {
     // Fetch statewide data
     StatewideDataStore.fetch();
+  },
+
+  handleScroll() {
+    const y = document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if (!this.refs.viewChoiceSection) {
+      return;
+    }
+    const stickyTop = this.refs.viewChoiceSection.offsetTop;
+    if (y >= stickyTop) {
+      this.setState({isStuck: true});
+    }
+    else {
+      this.setState({isStuck: false});
+    }
   },
 
   render() {
@@ -90,6 +113,31 @@ export default React.createClass({
                       <div className="twelve columns">
                         <DataByTypeCharts viewData={data} />
                       </div>
+                    </div>
+                  </div>
+
+                  <div className={classnames({"is-stickied": this.state.isStuck}, "view-choice-wrap")} ref="viewChoiceSection">
+                    <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
+                      ref="stickyEl">
+                      <h4>Data by Planning Decade and Theme</h4>
+                      <ViewChoiceSelectors />
+                    </div>
+
+                    <div className="container">
+                      <div className="row panel-row">
+                        <div className="twelve columns">
+                          <RegionalSummaryTable viewData={data} />
+                        </div>
+                      </div>
+
+                      {
+                        //TODO: TreeMaps of Regional Summary data
+                        /*<div className="row panel-row">
+                          <div className="twelve columns">
+
+                          </div>
+                        </div>*/
+                      }
                     </div>
                   </div>
                 </div>
