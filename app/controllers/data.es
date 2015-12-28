@@ -157,8 +157,6 @@ class DataController {
       const prom = db.select('*').from(table);
       return prom.then((rows) => {
         //Group by DECADE to turn the DECADE into keys of return object
-        //Select the 0th element of the grouped array (which will only have one member)
-        // to get rid of extranneous array
         const groupedByDecade = R.groupBy(R.prop('DECADE'), rows);
         return R.assoc(theme, groupedByDecade, {});
       });
