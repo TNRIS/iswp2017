@@ -40,13 +40,13 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/data/statewide/summary',
+    path: '/data/statewide/regionalsummary',
     config: {
       cache: {
         expiresIn: constants.API_CACHE_EXPIRES_IN
       }
     },
-    handler: bind('getStateSummary')
+    handler: bind('getRegionalSummaries')
   },
   {
     method: 'GET',

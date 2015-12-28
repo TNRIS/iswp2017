@@ -50,14 +50,17 @@ lab.test('data - state with omitRows', (done) => {
   });
 });
 
-lab.test('data - state summary', (done) => {
-  server.inject('/api/v1/data/statewide/summary', (res) => {
+lab.test('data - regional summary', (done) => {
+  server.inject('/api/v1/data/statewide/regionalsummary', (res) => {
     Code.expect(res.statusCode).to.equal(200);
     Code.expect(res.result).to.be.an.object();
     const data = res.result;
     Code.expect(data).to.include(themes);
     themes.forEach((theme) => {
       Code.expect(data[theme]).to.include(decades);
+      decades.forEach((decade) => {
+        Code.expect(data[theme][decade].length).to.equal(16);
+      });
     });
     done();
   });

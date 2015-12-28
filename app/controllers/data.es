@@ -150,16 +150,16 @@ class DataController {
       .catch(handleApiError(reply));
   }
 
-  getStateSummary(request, reply) {
+  getRegionalSummaries(request, reply) {
     const themes = R.keys(summaryTables);
     const dataPromises = themes.map((theme) => {
       const table = summaryTables[theme];
-      const prom = db.select('*').from(table).groupBy('DECADE');
+      const prom = db.select('*').from(table);
       return prom.then((rows) => {
         //Group by DECADE to turn the DECADE into keys of return object
         //Select the 0th element of the grouped array (which will only have one member)
         // to get rid of extranneous array
-        const groupedByDecade = R.map(R.nth(0), R.groupBy(R.prop('DECADE'), rows));
+        const groupedByDecade = R.groupBy(R.prop('DECADE'), rows);
         return R.assoc(theme, groupedByDecade, {});
       });
     });
