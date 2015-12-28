@@ -6,6 +6,7 @@ import server from 'index.es';
 
 const lab = Lab.script();
 const themes = ['demands', 'supplies', 'needs', /*'strategies',*/ 'population'];
+const decades = ['2020', '2030', '2040', '2050', '2060', '2070'];
 
 function testDataShape(data, omitRows = false) {
   //TODO: also include strategies once DB view is done, ref #51
@@ -45,6 +46,19 @@ lab.test('data - state with omitRows', (done) => {
     Code.expect(res.statusCode).to.equal(200);
     Code.expect(res.result).to.be.an.object();
     testDataShape(res.result, true);
+    done();
+  });
+});
+
+lab.test('data - state summary', (done) => {
+  server.inject('/api/v1/data/statewide/summary', (res) => {
+    Code.expect(res.statusCode).to.equal(200);
+    Code.expect(res.result).to.be.an.object();
+    const data = res.result;
+    Code.expect(data).to.include(themes);
+    themes.forEach((theme) => {
+      Code.expect(data[theme]).to.include(decades);
+    });
     done();
   });
 });

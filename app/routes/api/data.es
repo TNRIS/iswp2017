@@ -40,6 +40,16 @@ const routes = [
   },
   {
     method: 'GET',
+    path: '/data/statewide/summary',
+    config: {
+      cache: {
+        expiresIn: constants.API_CACHE_EXPIRES_IN
+      }
+    },
+    handler: bind('getStateSummary')
+  },
+  {
+    method: 'GET',
     path: '/data/region/{regionLetter}',
     config: {
       validate: {

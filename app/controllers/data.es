@@ -18,6 +18,14 @@ const needsPctDemandsTable = 'vw2017MapEntityNeedsAsPctOfDemand';
 
 const entityTable = 'vw2017MapEntityCoordinates';
 
+const summaryTables = {
+  demands: 'vw2017MapWugDemandsA1',
+  needs: 'vw2017MapWugNeedsA1',
+  supplies: 'vw2017MapExistingWugSupplyA1',
+  population: 'vw2017MapWugPopulationA1'
+  // strategies: 'vw2017MapWugWms' TODO: Strategy view not yet in DB, ref #51
+};
+
 const renameValueFields = (theme) => {
   return constants.YEARS.map((year) => {
     return `${constants.VALUE_PREFIXES[theme]}${year} as Value_${year}`;
@@ -136,6 +144,25 @@ class DataController {
     const dataPromises = themes.map(dataSelectionsByTheme(
       {omitRows: !!request.query.omitRows}
     ));
+
+    Promise.all(dataPromises)
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
+  }
+
+  getStateSummary(request, reply) {
+    const themes = R.keys(summaryTables);
+    const dataPromises = themes.map((theme) => {
+      const table = summaryTables[theme];
+      const prom = db.select('*').from(table).groupBy('DECADE');
+      return prom.then((rows) => {
+        //Group by DECADE to turn the DECADE into keys of return object
+        //Select the 0th element of the grouped array (which will only have one member)
+        // to get rid of extranneous array
+        const groupedByDecade = R.map(R.nth(0), R.groupBy(R.prop('DECADE'), rows));
+        return R.assoc(theme, groupedByDecade, {});
+      });
+    });
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
