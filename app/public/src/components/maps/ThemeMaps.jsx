@@ -45,7 +45,7 @@ export default React.createClass({
     return (
       <div>
         <h4>
-          Water User Groups - {themeTitle} - {selectedDecade}
+          Water User Groups - {selectedDecade} - {themeTitle}
           <span className="units">({units})</span>
         </h4>
         <div className="twelve columns">

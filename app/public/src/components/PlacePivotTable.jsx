@@ -88,7 +88,7 @@ export default React.createClass({
     return (
       <div>
         <h4>
-          Raw Data - {themeTitle} - {decade}
+          Raw Data - {decade} - {themeTitle}
           <span className="units">({units})</span>
         </h4>
         <div className="data-table-container">
