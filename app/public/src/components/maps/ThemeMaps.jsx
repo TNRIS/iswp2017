@@ -18,18 +18,6 @@ export default React.createClass({
     return ViewChoiceStore.getState();
   },
 
-  componentDidMount() {
-    ViewChoiceStore.listen(this.onDecadeChange);
-  },
-
-  componentWillUnmount() {
-    ViewChoiceStore.unlisten(this.onDecadeChange);
-  },
-
-  onDecadeChange(state) {
-    this.setState(state);
-  },
-
   render() {
     if (!this.props.placeData || !this.props.placeData.data) {
       return (
