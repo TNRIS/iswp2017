@@ -18,11 +18,21 @@ export default React.createClass({
     return ViewChoiceStore.getState();
   },
 
+  componentDidMount() {
+    ViewChoiceStore.listen(this.onChoiceChange);
+  },
+
+  componentWillUnmount() {
+    ViewChoiceStore.unlisten(this.onChoiceChange);
+  },
+
+  onChoiceChange(state) {
+    this.setState(state);
+  },
+
   render() {
     if (!this.props.placeData || !this.props.placeData.data) {
-      return (
-        <div />
-      );
+      return (<div />);
     }
 
     const placeData = this.props.placeData;
