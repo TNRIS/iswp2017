@@ -5,6 +5,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Table, Tr, Td, Tfoot} from 'reactable';
 import {Link} from 'react-router';
 import format from 'format-number';
+import classnames from 'classnames';
 import titleize from 'titleize';
 
 import constants from '../constants';
@@ -54,6 +55,9 @@ export default React.createClass({
     });
     const totalTotal = R.sum(R.pluck('TOTAL', selectedData));
 
+    //If isPopulation, don't show cells for usageTypes or typeTotals
+    const isPopulation = selectedTheme === 'population';
+
     return (
       <div>
         <h4>
@@ -62,7 +66,7 @@ export default React.createClass({
         </h4>
         <div className="twelve columns">
           <div className="regional-summary-table-container">
-            <Table className="regional-summary-table"
+            <Table className={classnames({'u-full-width': !isPopulation}, "regional-summary-table")}
               defaultSort={{column: 'Region', direction: 'asc'}}
               sortable>
               {selectedData.map((row, i) => {
@@ -71,7 +75,7 @@ export default React.createClass({
                     <Td column="Region" value={row.REGION}>
                       <Link to={`/region/${row.REGION}`}>{row.REGION}</Link>
                     </Td>
-                    {constants.USAGE_TYPES.map((type, j) => {
+                    {!isPopulation && constants.USAGE_TYPES.map((type, j) => {
                       return (
                         <Td key={`${j}${type}`} column={titleize(type)} value={row[type]}>
                           {format()(row[type])}
@@ -87,7 +91,7 @@ export default React.createClass({
               <Tfoot>
                 <tr className="totals-row">
                   <td className="row-label">Total</td>
-                  {typeTotals.map((val, i) => {
+                  {!isPopulation && typeTotals.map((val, i) => {
                     return (<td key={`${i}-${val}`}>{format()(val)}</td>);
                   })}
                   <td className="grand-total">{format()(totalTotal)}</td>
