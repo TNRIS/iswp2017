@@ -111,10 +111,14 @@ select {
 
   .logo {
     display: inline-block;
-    width: 200px;
+    width: 120px;
     vertical-align: bottom;
     padding-right: 1rem;
     margin-bottom: 1rem;
+
+    @media (min-width: $media-m) {
+      width: 200px;
+    }
   }
 
   h1 {
