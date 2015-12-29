@@ -64,7 +64,7 @@ button.nav-toggle {
   transition: all 0.3s ease-in-out;
   background-color: $nav-color;
   text-align: right;
-  padding-top: 1rem;
+  padding: 1rem 0;
   border-top: 1px solid white;
 
   label {
@@ -102,4 +102,5 @@ button.nav-toggle {
 
 #nav-category-select {
   display: inline-block;
+  margin-bottom: 0;
 }
