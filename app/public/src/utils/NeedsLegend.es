@@ -30,12 +30,7 @@ function create() {
   legend.onAdd = function onAdd() {
     this._div = L.DomUtil.create('div', 'leaflet-legend legend-needs');
     this._update();
-    this.isAdded = true;
     return this._div;
-  };
-
-  legend.onRemove = function onRemove() {
-    this.isAdded = false;
   };
 
   legend._update = function _update() {
