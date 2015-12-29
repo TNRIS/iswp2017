@@ -123,13 +123,17 @@ select {
 
   h1 {
     display: inline-block;
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-bottom: 1rem;
     color: #fff;
 
     a, a:hover, a:visited {
       text-decoration: none;
       color: inherit;
+    }
+
+    @media (min-width: $media-m) {
+      font-size: 2.5rem;
     }
   }
 
