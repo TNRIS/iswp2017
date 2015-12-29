@@ -68,6 +68,10 @@ $usageTypes: ('irrigation' rgb(126, 191, 133)), ('livestock', rgb(106, 138, 34))
     color: white;
   }
 
+  label {
+    color: white;
+  }
+
   button {
     background: #FFF;
     border: 1px solid lighten($twdb-blue, 15%);
@@ -103,6 +107,11 @@ h4 > .units {
 
   &.theme-selector {
     text-align: center;
+  }
+
+  label {
+    display: inline-block;
+    margin-right: 1rem;
   }
 }
 

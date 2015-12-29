@@ -2,6 +2,8 @@
 import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import hat from 'hat';
+import classnames from 'classnames';
 
 import constants from '../constants';
 
@@ -26,32 +28,53 @@ export default React.createClass({
     }
   },
 
-  selectTheme(theme) {
+  clickTheme(theme) {
+    this.setState({selectedTheme: theme});
+    this.props.onSelect(theme);
+  },
+
+  selectThemeChange(event) {
+    const theme = event.target.value;
     this.setState({selectedTheme: theme});
     this.props.onSelect(theme);
   },
 
   render() {
+    const selectId = `select-${hat()}`;
+
     const themeKeys = this.props.includePopulation ?
       R.prepend('population', constants.THEMES)
       : constants.THEMES;
 
+    const selectedTheme = this.state.selectedTheme;
+
     return (
       <div className="u-cf selector theme-selector">
-        {
-          themeKeys.map((theme, i) => {
-            const themeTitle = constants.THEME_TITLES[theme];
-            const isActive = this.state.selectedTheme === theme;
-            if (isActive) {
+        <div className="show-medium">
+          {
+            themeKeys.map((theme) => {
+              const themeTitle = constants.THEME_TITLES[theme];
               return (
-                <button key={i} className="active button-primary">{themeTitle}</button>
+                <button key={`button-${theme}`}
+                  className={classnames('button', {'active button-primary': theme === this.state.selectedTheme})}
+                  onClick={this.clickTheme.bind(this, theme)}>
+                  {themeTitle}
+                </button>
               );
+            })
+          }
+        </div>
+        <div className="hide-medium">
+          <label htmlFor={selectId}>Theme:</label>
+          <select id={selectId} value={selectedTheme} onChange={this.selectThemeChange}>
+            {
+              themeKeys.map((theme) => {
+                const themeTitle = constants.THEME_TITLES[theme];
+                return (<option key={`option-${theme}`} value={theme}>{themeTitle}</option>);
+              })
             }
-            return (
-              <button key={i} className="button" onClick={this.selectTheme.bind(this, theme)}>{themeTitle}</button>
-            );
-          })
-        }
+          </select>
+        </div>
       </div>
     );
   }

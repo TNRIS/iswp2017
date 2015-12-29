@@ -1,6 +1,8 @@
 
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import hat from 'hat';
+import classnames from 'classnames';
 
 import constants from '../constants';
 
@@ -24,27 +26,46 @@ export default React.createClass({
     }
   },
 
-  selectDecade(decade) {
+  clickDecade(decade) {
+    this.setState({selectedDecade: decade});
+    this.props.onSelect(decade);
+  },
+
+  selectDecadeChange(event) {
+    const decade = event.target.value;
     this.setState({selectedDecade: decade});
     this.props.onSelect(decade);
   },
 
   render() {
+    const selectId = `select-${hat()}`;
+    const selectedDecade = this.state.selectedDecade;
+
     return (
       <div className="u-cf selector decade-selector">
-      {
-        constants.DECADES.map((decade, i) => {
-          const isActive = this.state.selectedDecade === decade;
-          if (isActive) {
-            return (<button  key={i} className="active button-primary">{decade}</button>);
+        <div className="show-medium">
+          {
+            constants.DECADES.map((decade) => {
+              return (
+                <button key={`button-${decade}`}
+                  className={classnames('button', {'active button-primary': decade === this.state.selectedDecade})}
+                  onClick={this.clickDecade.bind(this, decade)}>
+                  {decade}
+                </button>
+              );
+            })
           }
-          return (
-            <button key={i} className="button" onClick={this.selectDecade.bind(this, decade)}>
-              {decade}
-            </button>
-          );
-        })
-      }
+        </div>
+        <div className="hide-medium">
+          <label htmlFor={selectId}>Decade:</label>
+          <select id={selectId} value={selectedDecade} onChange={this.selectDecadeChange}>
+            {
+              constants.DECADES.map((decade) => {
+                return (<option key={`option-${decade}`} value={decade}>{decade}</option>);
+              })
+            }
+          </select>
+        </div>
       </div>
     );
   }
