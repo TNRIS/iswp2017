@@ -57,7 +57,7 @@ export default React.createClass({
     return (
       <div>
         <h4>
-          Regional Summary - {selectedDecade} - {themeTitle}
+          Regional Summary by Usage Type - {selectedDecade} - {themeTitle}
           <span className="units">({units})</span>
         </h4>
         <div className="twelve columns">
@@ -78,14 +78,14 @@ export default React.createClass({
                         </Td>
                       );
                     })}
-                    <Td className="total-col" column="Total" value={row.TOTAL}>
+                    <Td className="totals-col" column="Total" value={row.TOTAL}>
                       {format()(row.TOTAL)}
                     </Td>
                   </Tr>
                 );
               })}
               <Tfoot>
-                <tr className="total-row">
+                <tr className="totals-row">
                   <td className="row-label">Total</td>
                   {typeTotals.map((val, i) => {
                     return (<td key={`${i}-${val}`}>{format()(val)}</td>);

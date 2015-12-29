@@ -1,0 +1,109 @@
+.data-table-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.reactPivot {
+  margin-top: 0;
+  background: inherit;
+
+  select {
+    height: auto;
+  }
+
+  button {
+    height: auto;
+  }
+}
+
+.reactPivot-results {
+  font-size: smaller;
+
+  td, th {
+    padding: 2px;
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+}
+
+.reactPivot-pageNumber {
+  padding: 2px 4px;
+  a {
+    cursor: pointer;
+  }
+
+  &.is-selected a {
+    text-decoration: none;
+  }
+}
+
+.reactPivot-csvExport {
+  display: none;
+}
+
+.regional-summary-table-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.regional-summary-table {
+  width: 100%;
+  font-size: smaller;
+
+  tr.totals-row {
+    font-style: italic;
+
+    td {
+      border-top: 2px solid gray;
+    }
+  }
+
+  th, td {
+    text-align: right;
+    padding: 2px 20px 0 0;
+    max-width: 100px;
+
+    &.row-label {
+      font-weight: bold;
+    }
+
+    &.totals-col {
+      font-style: italic;
+      border-left: 2px solid gray;
+      width: 80px;
+    }
+
+    &.grand-total {
+      font-weight: bold;
+      border-left: 2px solid gray;
+    }
+  }
+}
+
+.reactable-header-sortable {
+  cursor: pointer;
+}
+
+.reactable-header-sort-asc {
+  &:after {
+    content: '';
+    display: inline-block;
+    margin-left: 2px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid #000;
+  }
+}
+
+.reactable-header-sort-desc {
+  &:after {
+    content: '';
+    display: inline-block;
+    margin-left: 2px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid #000;
+  }
+}
