@@ -1,34 +1,22 @@
 
+import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import constants from '../../constants';
-import ViewChoiceStore from '../../stores/ViewChoiceStore';
 import PropTypes from '../../utils/CustomPropTypes';
 import ThemeMap from './ThemeMap';
+
+const themesAndPopulation = R.append('population', constants.THEMES);
 
 export default React.createClass({
   propTypes: {
     placeData: PropTypes.PlaceData,
+    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
+    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
   },
 
   mixins: [PureRenderMixin],
-
-  getInitialState() {
-    return ViewChoiceStore.getState();
-  },
-
-  componentDidMount() {
-    ViewChoiceStore.listen(this.onChoiceChange);
-  },
-
-  componentWillUnmount() {
-    ViewChoiceStore.unlisten(this.onChoiceChange);
-  },
-
-  onChoiceChange(state) {
-    this.setState(state);
-  },
 
   render() {
     if (!this.props.placeData || !this.props.placeData.data) {
@@ -36,8 +24,8 @@ export default React.createClass({
     }
 
     const placeData = this.props.placeData;
-    const selectedDecade = this.state.selectedDecade;
-    const selectedTheme = this.state.selectedTheme;
+    const selectedDecade = this.props.decade;
+    const selectedTheme = this.props.theme;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
 
     const units = selectedTheme === 'population' ? "people" : "acre-feet/year";

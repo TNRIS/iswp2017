@@ -6,29 +6,28 @@ import Spinner from 'react-spinkit';
 import classnames from 'classnames';
 
 import StatewideDataStore from '../stores/StatewideDataStore';
-
 import StatewideViewMap from './maps/StatewideViewMap';
 import StatewideSummary from './StatewideSummary';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
 import ViewChoiceSelectors from './ViewChoiceSelectors';
+import ViewChoiceStore from '../stores/ViewChoiceStore';
 import RegionalSummaryTable from './RegionalSummaryTable';
-
-// import ThemeMaps from './maps/ThemeMaps';
-// import DecadeSelector from './DecadeSelector';
 
 export default React.createClass({
 
   getInitialState() {
     return {
       isStuck: false,
-      data: StatewideDataStore.getState().data
+      data: StatewideDataStore.getState().data,
+      viewChoice: ViewChoiceStore.getState()
     };
   },
 
   componentDidMount() {
     StatewideDataStore.listen(this.onChange);
+    ViewChoiceStore.listen(this.onViewChoiceChange);
 
     window.addEventListener('scroll', this.handleScroll);
     this.fetchData();
@@ -40,11 +39,17 @@ export default React.createClass({
 
   componentWillUnmount() {
     StatewideDataStore.unlisten(this.onChange);
+    ViewChoiceStore.unlisten(this.onViewChoiceChange);
+
     window.removeEventListener('scroll', this.handleScroll);
   },
 
   onChange(state) {
     this.setState(state);
+  },
+
+  onViewChoiceChange(state) {
+    this.setState({viewChoice: state});
   },
 
   fetchData() {
@@ -120,13 +125,17 @@ export default React.createClass({
                     <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
                       ref="stickyEl">
                       <h4>Data by Planning Decade and Theme</h4>
-                      <ViewChoiceSelectors />
+                      <ViewChoiceSelectors
+                        decade={this.state.viewChoice.selectedDecade}
+                        theme={this.state.viewChoice.selectedTheme} />
                     </div>
 
                     <div className="container">
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <RegionalSummaryTable viewData={data} />
+                          <RegionalSummaryTable viewData={data}
+                            decade={this.state.viewChoice.selectedDecade}
+                            theme={this.state.viewChoice.selectedTheme} />
                         </div>
                       </div>
 

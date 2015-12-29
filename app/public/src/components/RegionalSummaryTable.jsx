@@ -9,39 +9,26 @@ import classnames from 'classnames';
 import titleize from 'titleize';
 
 import constants from '../constants';
-import ViewChoiceStore from '../stores/ViewChoiceStore';
 import PropTypes from '../utils/CustomPropTypes';
+
+const themesAndPopulation = R.append('population', constants.THEMES);
 
 export default React.createClass({
   propTypes: {
-    viewData: PropTypes.ViewData
+    viewData: PropTypes.ViewData,
+    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
+    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
   },
 
   mixins: [PureRenderMixin],
-
-  getInitialState() {
-    return ViewChoiceStore.getState();
-  },
-
-  componentDidMount() {
-    ViewChoiceStore.listen(this.onChoiceChange);
-  },
-
-  componentWillUnmount() {
-    ViewChoiceStore.unlisten(this.onChoiceChange);
-  },
-
-  onChoiceChange(state) {
-    this.setState(state);
-  },
 
   render() {
     if (!this.props.viewData) {
       return (<div />);
     }
 
-    const selectedDecade = this.state.selectedDecade;
-    const selectedTheme = this.state.selectedTheme;
+    const selectedDecade = this.props.decade;
+    const selectedTheme = this.props.theme;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
 
     const units = selectedTheme === 'population' ? "people" : "acre-feet/year";

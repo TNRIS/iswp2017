@@ -1,37 +1,24 @@
 
+import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import format from 'format-number';
 import hat from 'hat';
 import PivotTable from 'babel!react-pivot'; //must use babel loader directly
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
-import ViewChoiceStore from '../stores/ViewChoiceStore';
+
+const themesAndPopulation = R.append('population', constants.THEMES);
 
 export default React.createClass({
   propTypes: {
-    viewData: PropTypes.ViewData
+    viewData: PropTypes.ViewData,
+    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
+    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
   },
 
-  mixins: [LinkedStateMixin, PureRenderMixin],
-
-  getInitialState() {
-    return ViewChoiceStore.getState();
-  },
-
-  componentDidMount() {
-    ViewChoiceStore.listen(this.onChoiceChange);
-  },
-
-  componentWillUnmount() {
-    ViewChoiceStore.unlisten(this.onChoiceChange);
-  },
-
-  onChoiceChange(state) {
-    this.setState(state);
-  },
+  mixins: [PureRenderMixin],
 
   render() {
     //TODO: Show all decades for selected theme in the table?
@@ -42,10 +29,10 @@ export default React.createClass({
       );
     }
 
-    const selectedTheme = this.state.selectedTheme;
-    const tableData = viewData[this.state.selectedTheme].rows;
-    const decade = this.state.selectedDecade;
-    const themeTitle = constants.THEME_TITLES[this.state.selectedTheme];
+    const selectedTheme = this.props.theme;
+    const tableData = viewData[selectedTheme].rows;
+    const decade = this.props.decade;
+    const themeTitle = constants.THEME_TITLES[selectedTheme];
 
     const toAnchor = (href, text) => {
       return `<a href="${href}">${text}</a>`;

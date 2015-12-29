@@ -1,30 +1,22 @@
 
+import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
+import constants from '../constants';
 import DecadeSelector from './DecadeSelector';
 import ThemeSelector from './ThemeSelector';
 import ViewChoiceActions from '../actions/ViewChoiceActions';
-import ViewChoiceStore from '../stores/ViewChoiceStore';
+
+const themesAndPopulation = R.append('population', constants.THEMES);
 
 export default React.createClass({
+  propTypes: {
+    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
+    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
+  },
+
   mixins: [PureRenderMixin],
-
-  getInitialState() {
-    return ViewChoiceStore.getState();
-  },
-
-  componentDidMount() {
-    ViewChoiceStore.listen(this.onChoiceChange);
-  },
-
-  componentWillUnmount() {
-    ViewChoiceStore.unlisten(this.onChoiceChange);
-  },
-
-  onChoiceChange(state) {
-    this.setState(state);
-  },
 
   onDecadeSelect(decade) {
     ViewChoiceActions.updateDecadeChoice(decade);
@@ -38,10 +30,10 @@ export default React.createClass({
     return (
       <div>
         <DecadeSelector
-          value={this.state.selectedDecade}
+          value={this.props.decade}
           onSelect={this.onDecadeSelect} />
         <ThemeSelector
-          value={this.state.selectedTheme}
+          value={this.props.theme}
           onSelect={this.onThemeSelect}
           includePopulation />
       </div>

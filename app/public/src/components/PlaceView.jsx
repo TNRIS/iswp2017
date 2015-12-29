@@ -14,6 +14,7 @@ import DataByTypeCharts from './charts/DataByTypeCharts';
 import ThemeMaps from './maps/ThemeMaps';
 import PlacePivotTable from './PlacePivotTable';
 import ViewChoiceSelectors from './ViewChoiceSelectors';
+import ViewChoiceStore from '../stores/ViewChoiceStore';
 
 export default React.createClass({
   propTypes: {
@@ -26,12 +27,14 @@ export default React.createClass({
   getInitialState() {
     return {
       isStuck: false,
-      placeData: PlaceDataStore.getState().placeData
+      placeData: PlaceDataStore.getState().placeData,
+      viewChoice: ViewChoiceStore.getState()
     };
   },
 
   componentDidMount() {
     PlaceDataStore.listen(this.onPlaceDataChange);
+    ViewChoiceStore.listen(this.onViewChoiceChange);
 
     window.addEventListener('scroll', this.handleScroll);
     this.fetchPlaceData(this.props.params);
@@ -45,11 +48,17 @@ export default React.createClass({
 
   componentWillUnmount() {
     PlaceDataStore.unlisten(this.onPlaceDataChange);
+    ViewChoiceStore.unlisten(this.onViewChoiceChange);
+
     window.removeEventListener('scroll', this.handleScroll);
   },
 
   onPlaceDataChange(state) {
     this.setState({placeData: state.placeData});
+  },
+
+  onViewChoiceChange(state) {
+    this.setState({viewChoice: state});
   },
 
   fetchPlaceData(params) {
@@ -144,19 +153,25 @@ export default React.createClass({
                     <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
                       ref="stickyEl">
                       <h4>Data by Planning Decade and Theme</h4>
-                      <ViewChoiceSelectors />
+                      <ViewChoiceSelectors
+                        decade={this.state.viewChoice.selectedDecade}
+                        theme={this.state.viewChoice.selectedTheme} />
                     </div>
 
                     <div className="container">
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <ThemeMaps placeData={placeData} />
+                          <ThemeMaps placeData={placeData}
+                            decade={this.state.viewChoice.selectedDecade}
+                            theme={this.state.viewChoice.selectedTheme} />
                         </div>
                       </div>
 
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <PlacePivotTable viewData={placeData.data} />
+                          <PlacePivotTable viewData={placeData.data}
+                            decade={this.state.viewChoice.selectedDecade}
+                            theme={this.state.viewChoice.selectedTheme} />
                         </div>
                       </div>
                     </div>
