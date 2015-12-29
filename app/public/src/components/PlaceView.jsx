@@ -85,6 +85,11 @@ export default React.createClass({
     const params = this.props.params;
     const placeData = this.state.placeData;
 
+    const wrapStyle = {};
+    if (this.state.isStuck) {
+      wrapStyle.paddingTop = this.refs.stickyEl.offsetHeight * 1.20;
+    }
+
     let title;
     switch (params.type.toLowerCase()) {
     case 'region':
@@ -149,7 +154,7 @@ export default React.createClass({
                     </div>
                   </div>
 
-                  <div className={classnames({"is-stickied": this.state.isStuck}, "view-choice-wrap")} ref="viewChoiceSection">
+                  <div className="view-choice-wrap" ref="viewChoiceSection" style={wrapStyle}>
                     <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
                       ref="stickyEl">
                       <h4>Data by Planning Decade and Theme</h4>

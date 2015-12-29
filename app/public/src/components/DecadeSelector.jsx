@@ -42,7 +42,7 @@ export default React.createClass({
     const selectedDecade = this.state.selectedDecade;
 
     return (
-      <div className="u-cf selector decade-selector">
+      <div className="selector decade-selector">
         <div className="show-medium">
           {
             constants.DECADES.map((decade) => {

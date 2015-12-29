@@ -81,7 +81,9 @@ export default React.createClass({
           <h4>{constants.THEME_TITLES[this.state.selectedTheme]} by Usage Type <span className="units">(acre-feet/year)</span></h4>
           <ChartLegend entries={legendEntries} className="u-pull-right legend-types-by-decade" />
         </div>
-        <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} />
+        <div className="u-cf u-full-width">
+          <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} />
+        </div>
         <LineChart chartData={chartData} chartOptions={chartOptions} />
         <ChartDataTable className="u-full-width" chartData={chartData} showTotals />
       </div>

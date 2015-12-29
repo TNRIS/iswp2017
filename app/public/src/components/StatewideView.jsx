@@ -73,6 +73,10 @@ export default React.createClass({
 
   render() {
     const data = this.state.data;
+    const wrapStyle = {};
+    if (this.state.isStuck) {
+      wrapStyle.paddingTop = this.refs.stickyEl.offsetHeight * 1.20;
+    }
 
     return (
       <div className="statewide-view">
@@ -121,7 +125,7 @@ export default React.createClass({
                     </div>
                   </div>
 
-                  <div className={classnames({"is-stickied": this.state.isStuck}, "view-choice-wrap")} ref="viewChoiceSection">
+                  <div className="view-choice-wrap" ref="viewChoiceSection" style={wrapStyle}>
                     <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
                       ref="stickyEl">
                       <h4>Data by Planning Decade and Theme</h4>

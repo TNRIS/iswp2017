@@ -52,17 +52,20 @@ $usageTypes: ('irrigation' rgb(126, 191, 133)), ('livestock', rgb(106, 138, 34))
 
 .view-choice-wrap {
   background-color: rgba(65, 85, 100, 0.25);
-
-  &.is-stickied {
-    padding-top: 193px;
-  }
 }
 
 .view-choice-container {
   text-align: center;
   background-color: $twdb-blue;
-  padding: 8px 0 0 0;
+  padding: 1rem 0;
   margin-bottom: 10px;
+
+  @media (max-width: $media-m) {
+    .selector {
+      display: inline-block;
+      margin-right: 4rem;
+    }
+  }
 
   h4 {
     color: white;
@@ -112,6 +115,10 @@ h4 > .units {
   label {
     display: inline-block;
     margin-right: 1rem;
+  }
+
+  select {
+    margin-bottom: 0.5rem;
   }
 }
 

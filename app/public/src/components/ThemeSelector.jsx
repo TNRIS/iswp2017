@@ -49,7 +49,7 @@ export default React.createClass({
     const selectedTheme = this.state.selectedTheme;
 
     return (
-      <div className="u-cf selector theme-selector">
+      <div className="selector theme-selector">
         <div className="show-medium">
           {
             themeKeys.map((theme) => {
