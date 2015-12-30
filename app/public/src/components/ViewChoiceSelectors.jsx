@@ -28,14 +28,20 @@ export default React.createClass({
 
   render() {
     return (
-      <div>
-        <DecadeSelector
-          value={this.props.decade}
-          onSelect={this.onDecadeSelect} />
-        <ThemeSelector
-          value={this.props.theme}
-          onSelect={this.onThemeSelect}
-          includePopulation />
+      <div className="selectors">
+        <div>
+          <span className="inline-label show-medium">Decade: </span>
+          <DecadeSelector
+            value={this.props.decade}
+            onSelect={this.onDecadeSelect} />
+        </div>
+        <div>
+          <span className="inline-label show-medium">Theme: </span>
+          <ThemeSelector
+            value={this.props.theme}
+            onSelect={this.onThemeSelect}
+            includePopulation />
+        </div>
       </div>
     );
   }

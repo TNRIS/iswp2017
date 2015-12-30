@@ -56,7 +56,7 @@ export default React.createClass({
               const themeTitle = constants.THEME_TITLES[theme];
               return (
                 <button key={`button-${theme}`}
-                  className={classnames('button', {'active button-primary': theme === this.state.selectedTheme})}
+                  className={classnames('button', {'active': theme === this.state.selectedTheme})}
                   onClick={this.clickTheme.bind(this, theme)}>
                   {themeTitle}
                 </button>

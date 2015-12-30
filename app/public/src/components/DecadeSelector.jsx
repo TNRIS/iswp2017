@@ -48,7 +48,7 @@ export default React.createClass({
             constants.DECADES.map((decade) => {
               return (
                 <button key={`button-${decade}`}
-                  className={classnames('button', {'active button-primary': decade === this.state.selectedDecade})}
+                  className={classnames('button', {'active': decade === this.state.selectedDecade})}
                   onClick={this.clickDecade.bind(this, decade)}>
                   {decade}
                 </button>
