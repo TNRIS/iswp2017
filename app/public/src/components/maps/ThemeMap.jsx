@@ -53,8 +53,11 @@ export default React.createClass({
     const popup = L.popup();
     this.spiderfier.addListener('click', (marker) => {
       const props = marker.feature.properties;
-      const content = `<h3>${props.EntityName}</h3>
-        <p>Total: ${format()(props.ValueSum)}</p>`;
+      const content = `
+        <h3>${props.EntityName}</h3>
+        <p>Total Value: ${format()(props.ValueSum)}</p>
+        <a href="/entity/${props.EntityId}">View Entity Page</a>
+      `;
       popup.setContent(content);
       popup.setLatLng(marker.getLatLng());
       map.openPopup(popup);
