@@ -13,7 +13,7 @@ import SeriesHighlightActions from '../../actions/SeriesHighlightActions';
 export default React.createClass({
   propTypes: {
     chartData: React.PropTypes.object,
-    chartOptions: React.PropTypes.object,
+    chartOptions: React.PropTypes.object
   },
 
   mixins: [PureRenderMixin],
@@ -119,15 +119,22 @@ export default React.createClass({
       }
     };
 
-    const chartOptions = R.merge(defaultOptions, this.props.chartOptions);
+    const responsiveOptions = [
+      ['screen and (max-width: 550px)', {
+        seriesBarDistance: 7
+      }]
+    ];
+
+    const chartOptions = R.merge(defaultOptions,
+      this.props.chartOptions || {});
+
 
     if (this.chart) {
-      this.chart.update(this.props.chartData, chartOptions);
+      this.chart.update(this.props.chartData, chartOptions, responsiveOptions);
     }
     else {
       this.chart = new Chartist.Bar(ReactDOM.findDOMNode(this.refs.chart),
-        this.props.chartData, chartOptions
-      );
+        this.props.chartData, chartOptions, responsiveOptions);
     }
   },
 

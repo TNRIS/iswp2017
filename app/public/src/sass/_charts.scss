@@ -105,6 +105,12 @@
   }
 }
 
+.ct-bar {
+  @media (max-width: $media-s) {
+    stroke-width: 7px;
+  }
+}
+
 .ct-series {
   @include series-color(#000);
 }
