@@ -57,7 +57,7 @@
     "node-config": "0.0.2",
     "node-sass": "^3.3.3",
     "ramda": "^0.18.0",
-    "react": "^0.14.3",
+    "react": "^0.14.5",
     "react-addons-linked-state-mixin": "^0.14.3",
     "react-addons-pure-render-mixin": "^0.14.0",
     "react-dom": "^0.14.1",
