@@ -157,7 +157,7 @@ export default React.createClass({
       <div className="bar-chart-container">
         {
           isAllZero(this.props.chartData) && 
-          (<div className="zero-message"><span>All values are zero</span></div>)
+          (<div className="zero-message">All values are zero</div>)
         }
         <div ref="chart" className="ct-chart"
           onMouseOver={this.onMouseOver}

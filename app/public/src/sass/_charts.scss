@@ -80,16 +80,10 @@
 
   .zero-message {
     position: absolute;
-    height: 100%;
     width: 100%;
-    vertical-align: middle;
-    > span {
-      position: relative;
-      text-align: center;
-      display: block;
-      padding-top: 15%;
-      padding-left: 15%;
-    }
+    text-align: center;
+    margin-left: 3rem;
+    bottom: 12rem;
   }
 }
 
