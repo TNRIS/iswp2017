@@ -10,6 +10,7 @@ import StatewideSummary from './StatewideSummary';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
+import Treemap from './charts/Treemap';
 import ViewChoiceStore from '../stores/ViewChoiceStore';
 import ViewChoiceWrap from './ViewChoiceWrap';
 import RegionalSummaryTable from './RegionalSummaryTable';
@@ -112,14 +113,13 @@ export default React.createClass({
                         </div>
                       </div>
 
-                      {
-                        //TODO: TreeMaps of Regional Summary data
-                        /*<div className="row panel-row">
-                          <div className="twelve columns">
-
-                          </div>
-                        </div>*/
-                      }
+                     <div className="row panel-row">
+                        <div className="twelve columns">
+                          <Treemap viewData={data}
+                            decade={this.state.viewChoice.selectedDecade}
+                            theme={this.state.viewChoice.selectedTheme} />
+                        </div>
+                      </div>
                     </div>
                   </ViewChoiceWrap>
                 </div>
