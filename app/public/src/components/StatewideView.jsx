@@ -3,7 +3,6 @@ import R from 'ramda';
 import React from 'react';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
-import classnames from 'classnames';
 
 import StatewideDataStore from '../stores/StatewideDataStore';
 import StatewideViewMap from './maps/StatewideViewMap';
@@ -11,15 +10,13 @@ import StatewideSummary from './StatewideSummary';
 import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from './charts/DataByTypeCharts';
-import ViewChoiceSelectors from './ViewChoiceSelectors';
 import ViewChoiceStore from '../stores/ViewChoiceStore';
+import ViewChoiceWrap from './ViewChoiceWrap';
 import RegionalSummaryTable from './RegionalSummaryTable';
 
 export default React.createClass({
-
   getInitialState() {
     return {
-      isStuck: false,
       data: StatewideDataStore.getState().data,
       viewChoice: ViewChoiceStore.getState()
     };
@@ -28,8 +25,6 @@ export default React.createClass({
   componentDidMount() {
     StatewideDataStore.listen(this.onChange);
     ViewChoiceStore.listen(this.onViewChoiceChange);
-
-    window.addEventListener('scroll', this.handleScroll);
     this.fetchData();
   },
 
@@ -40,8 +35,6 @@ export default React.createClass({
   componentWillUnmount() {
     StatewideDataStore.unlisten(this.onChange);
     ViewChoiceStore.unlisten(this.onViewChoiceChange);
-
-    window.removeEventListener('scroll', this.handleScroll);
   },
 
   onChange(state) {
@@ -57,26 +50,8 @@ export default React.createClass({
     StatewideDataStore.fetch();
   },
 
-  handleScroll() {
-    const y = document.documentElement.scrollTop || document.body.scrollTop || 0;
-    if (!this.refs.viewChoiceSection) {
-      return;
-    }
-    const stickyTop = this.refs.viewChoiceSection.offsetTop;
-    if (y >= stickyTop) {
-      this.setState({isStuck: true});
-    }
-    else {
-      this.setState({isStuck: false});
-    }
-  },
-
   render() {
     const data = this.state.data;
-    const wrapStyle = {};
-    if (this.state.isStuck) {
-      wrapStyle.paddingTop = this.refs.stickyEl.offsetHeight * 1.20;
-    }
 
     return (
       <div className="statewide-view">
@@ -125,14 +100,8 @@ export default React.createClass({
                     </div>
                   </div>
 
-                  <div className="view-choice-wrap" ref="viewChoiceSection" style={wrapStyle}>
-                    <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
-                      ref="stickyEl">
-                      <h4>Data by Planning Decade and Theme</h4>
-                      <ViewChoiceSelectors
-                        decade={this.state.viewChoice.selectedDecade}
-                        theme={this.state.viewChoice.selectedTheme} />
-                    </div>
+                  <ViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
+                    theme={this.state.viewChoice.selectedTheme}>
 
                     <div className="container">
                       <div className="row panel-row">
@@ -152,7 +121,7 @@ export default React.createClass({
                         </div>*/
                       }
                     </div>
-                  </div>
+                  </ViewChoiceWrap>
                 </div>
               );
             })()
