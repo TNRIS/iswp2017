@@ -10,6 +10,18 @@ import classList from 'dom-classlist';
 
 import SeriesHighlightActions from '../../actions/SeriesHighlightActions';
 
+function isAllZero(chartData) {
+  for (let i = 0; i < chartData.series.length; i++) {
+    const s = chartData.series[i];
+    for (let j = 0; j < s.data.length; j++) {
+      if (s.data[j] !== 0) {
+        return false;
+      }
+    };
+  };
+  return true;
+}
+
 export default React.createClass({
   propTypes: {
     chartData: React.PropTypes.object,
@@ -142,7 +154,11 @@ export default React.createClass({
     const tooltipStyle = this.state.tooltip.style;
 
     return (
-      <div>
+      <div className="bar-chart-container">
+        {
+          isAllZero(this.props.chartData) && 
+          (<div className="zero-message"><span>All values are zero</span></div>)
+        }
         <div ref="chart" className="ct-chart"
           onMouseOver={this.onMouseOver}
           onMouseOut={this.onMouseOut}>

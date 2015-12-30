@@ -75,6 +75,24 @@
   }
 }
 
+.bar-chart-container {
+  position: relative;
+
+  .zero-message {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+    > span {
+      position: relative;
+      text-align: center;
+      display: block;
+      padding-top: 15%;
+      padding-left: 15%;
+    }
+  }
+}
+
 .ct-chart {
   .ct-label {
     font-size: 1rem;
