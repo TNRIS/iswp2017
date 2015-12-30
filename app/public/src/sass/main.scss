@@ -278,11 +278,13 @@ $top-height: 34rem;
 }
 
 .sticky {
-  z-index: 1001;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
+  @media (min-width: $media-m) {
+    z-index: 1001;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
 }
 
