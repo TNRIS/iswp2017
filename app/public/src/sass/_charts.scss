@@ -232,3 +232,20 @@
     border-top: 2px solid grey;
   }
 }
+
+.treemap .cell {
+  cursor: pointer;
+
+  text {
+    font-size: 12px;
+  }
+
+  @each $region in $regions {
+    $letter: nth($region, 1);
+    $color: nth($region, 2);
+
+    &.region-#{$letter} rect {
+      fill: $color;
+    }
+  }
+}
