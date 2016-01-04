@@ -36,6 +36,7 @@ export default React.createClass({
       .sticky(true)
       .padding(1)
       .size([width, height])
+      .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
       .value((d) => d.value);
 
     this.svg = d3.select(this.refs.treemapContainer)
