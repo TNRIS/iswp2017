@@ -233,19 +233,22 @@
   }
 }
 
-.treemap .cell {
-  cursor: pointer;
-
-  text {
-    font-size: 12px;
+.treemap-chart {
+  font-size: 12px;
+  .grandparent rect {
+    fill: #ccc;
   }
 
-  @each $region in $regions {
-    $letter: nth($region, 1);
-    $color: nth($region, 2);
+  .cell {
+    cursor: pointer;
 
-    &.region-#{$letter} rect {
-      fill: $color;
+    @each $region in $regions {
+      $letter: nth($region, 1);
+      $color: nth($region, 2);
+
+      &.region-#{$letter} rect {
+        fill: $color;
+      }
     }
   }
 }

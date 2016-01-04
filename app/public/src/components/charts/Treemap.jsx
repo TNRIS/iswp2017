@@ -14,6 +14,7 @@ const posOrZero = (v) => v > 0 ? v : 0;
 export default React.createClass({
   propTypes: {
     height: React.PropTypes.number,
+    marginTop: React.PropTypes.number,
     viewData: PropTypes.ViewData,
     decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
     theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
@@ -23,13 +24,15 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      height: 500
+      height: 500,
+      marginTop: 20
     };
   },
 
   componentDidMount() {
+    const marginTop = this.props.marginTop;
     const width = this.refs.treemapContainer.offsetWidth;
-    const height = this.props.height;
+    const height = this.props.height - marginTop;
 
     this.treemap = d3.layout.treemap()
       .round(true)
@@ -41,15 +44,12 @@ export default React.createClass({
       .value((d) => d.value);
 
     this.svg = d3.select(this.refs.treemapContainer)
-      .attr('class', 'chart')
-      .style('width', `${width}px`)
-      .style('height', `${height}px`)
-      .append('svg:svg')
+      .append('svg')
         .attr('width', width)
-        .attr('height', height)
-      .append('svg:g')
-        .attr('class', 'treemap')
-        .attr('transform', 'translate(0.5, 0.5)');
+        .attr('height', height + marginTop)
+      .append('g')
+        .attr('transform', `translate(0,${marginTop})`)
+        .style('shape-rendering', 'crispEdges');
 
     this.updateTreemap(this.props);
   },
@@ -59,6 +59,8 @@ export default React.createClass({
   },
 
   updateTreemap(props) {
+    const marginTop = this.props.marginTop;
+    const width = this.refs.treemapContainer.offsetWidth;
     const selectedDecade = props.decade;
     const selectedTheme = props.theme;
     const selectedData = props.viewData[selectedTheme].regionalSummary[selectedDecade];
@@ -70,6 +72,7 @@ export default React.createClass({
       children: selectedData.map((entry) => {
         return {
           name: `Region ${entry.REGION}`,
+          region: entry.REGION,
           children: constants.USAGE_TYPES.map((type) => {
             return {
               name: `${titleize(type)} - Region ${entry.REGION}`,
@@ -88,16 +91,16 @@ export default React.createClass({
 
     const cell = this.svg.selectAll('g')
         .data(nodes)
-      .enter().append('svg:g')
+      .enter().append('g')
         .attr('class', (d) => `cell region-${d.region.toLowerCase()}`)
-        .attr('transform', (d) => `translate(${d.x},${d.y})`)
+        .attr('transform', (d) => `translate(${d.x}, ${d.y})`)
         .on('click', (d) => this.zoom(this.node === d.parent ? this.root : d.parent));
 
-    cell.append('svg:rect')
+    cell.append('rect')
       .attr('width', (d) => posOrZero(d.dx - 1))
       .attr('height', (d) => posOrZero(d.dy - 1));
 
-    cell.append('svg:text')
+    cell.append('text')
       .attr('x', (d) => d.dx / 2)
       .attr('y', (d) => d.dy / 2)
       .attr('dy', '0.35em')
@@ -108,16 +111,33 @@ export default React.createClass({
         return d.dx > d.w ? 1 : 0;
       });
 
-    cell.append('svg:title')
+    cell.append('title')
       .text((d) => d.name);
+
+    this.grandparent = this.svg.append('g')
+      .attr('class', 'grandparent');
+
+    this.grandparent.append('rect')
+      .attr('y', -marginTop)
+      .attr('x', 2)
+      .attr('width', width - 4)
+      .attr('height', marginTop);
+
+    this.grandparent.append('text')
+      .attr('x', 6)
+      .attr('y', 6 - marginTop)
+      .attr('dy', '0.75em')
+      .text('Texas');
   },
 
   zoom(dd) {
+    const marginTop = this.props.marginTop;
+    const height = this.props.height - marginTop;
     const width = this.refs.treemapContainer.offsetWidth;
     const kx = width / dd.dx;
-    const ky = this.props.height / dd.dy;
-    const x = d3.scale.linear().range([0, this.refs.treemapContainer.offsetWidth]);
-    const y = d3.scale.linear().range([0, 500]);
+    const ky = height / dd.dy;
+    const x = d3.scale.linear().range([0, width]);
+    const y = d3.scale.linear().range([0, height]);
 
     x.domain([dd.x, dd.x + dd.dx]);
     y.domain([dd.y, dd.y + dd.dy]);
@@ -134,6 +154,9 @@ export default React.createClass({
       .attr('x', (d) => kx * d.dx / 2)
       .attr('y', (d) => ky * d.dy / 2)
       .style('opacity', (d) => kx * d.dx > d.w ? 1 : 0);
+
+    this.grandparent.select('text')
+      .text(dd.region ? `Region ${dd.region}` : 'Texas');
 
     this.node = dd;
     d3.event.stopPropagation();
@@ -155,7 +178,7 @@ export default React.createClass({
           Treemap of Usage Type - {selectedDecade} - {themeTitle}
           <span className="units">({units})</span>
         </h4>
-        <div ref="treemapContainer"></div>
+        <div ref="treemapContainer" className="treemap-chart"></div>
       </div>
     );
   }
