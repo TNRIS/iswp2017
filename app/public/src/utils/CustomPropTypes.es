@@ -31,9 +31,17 @@ const EntityData = React.PropTypes.shape({
   data: ViewData
 });
 
+const TreemapData = React.PropTypes.shape({
+  name: React.PropTypes.string.isRequired,
+  value: React.PropTypes.number,
+  className: React.PropTypes.string,
+  children: React.PropTypes.array //should be arrayOf(TreemapData) but that doesn't work
+});
+
 export default {
   Feature,
   ViewData,
   PlaceData,
-  EntityData
+  EntityData,
+  TreemapData
 };

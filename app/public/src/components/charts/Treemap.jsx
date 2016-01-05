@@ -4,11 +4,12 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import d3 from 'd3';
 import format from 'format-number';
 
-// Based on example http://bost.ocks.org/mike/treemap/
+import PropTypes from '../../utils/CustomPropTypes';
 
+// Treemap based on example from http://bost.ocks.org/mike/treemap/
 export default React.createClass({
   propTypes: {
-    treemapData: React.PropTypes.object.isRequired, //TODO: test shape
+    treemapData: PropTypes.TreemapData.isRequired,
     height: React.PropTypes.number,
     marginTop: React.PropTypes.number,
     titlePad: React.PropTypes.number
@@ -25,39 +26,6 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    const marginTop = this.props.marginTop;
-    const height = this.props.height - marginTop;
-    const width = this.refs.treemapContainer.offsetWidth;
-
-    this.treemap = d3.layout.treemap()
-      .round(false)
-      .sort((a, b) => a.value - b.value)
-      .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
-      .value((d) => d.value)
-      .children((d, depth) => depth ? null : d._children);
-
-    this.svg = d3.select(this.refs.treemapContainer)
-      .append('svg')
-        .attr('width', width)
-        .attr('height', height + marginTop)
-      .append('g')
-        .attr('transform', `translate(0,${marginTop})`)
-        .style('shape-rendering', 'crispEdges');
-
-    this.grandparent = this.svg.append('g')
-      .attr('class', 'grandparent');
-
-    this.grandparent.append('rect')
-      .attr('y', -marginTop)
-      .attr('width', width)
-      .attr('height', marginTop);
-
-    this.grandparent.append('text')
-      .attr('x', this.props.titlePad)
-      .attr('y', this.props.titlePad - marginTop)
-      .attr('dy', '0.75em');
-
-
     this.updateTreemap(this.props);
   },
 
@@ -80,7 +48,41 @@ export default React.createClass({
       .domain([0, height])
       .range([0, height]);
 
-    const svg = this.svg;
+    this.treemap = d3.layout.treemap()
+      .round(false)
+      .sort((a, b) => a.value - b.value)
+      .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
+      .value((d) => d.value)
+      .children((d, depth) => depth ? null : d._children);
+
+    if (this.svg) {
+      this.svg.remove();
+    }
+
+    this.svg = d3.select(this.refs.treemapContainer)
+      .append('svg')
+        .attr('width', width)
+        .attr('height', height + marginTop);
+
+    this.chartGroup = this.svg
+      .append('g')
+        .attr('transform', `translate(0,${marginTop})`)
+        .style('shape-rendering', 'crispEdges');
+
+    this.grandparent = this.chartGroup.append('g')
+      .attr('class', 'grandparent');
+
+    this.grandparent.append('rect')
+      .attr('y', -marginTop)
+      .attr('width', width)
+      .attr('height', marginTop);
+
+    this.grandparent.append('text')
+      .attr('x', props.titlePad)
+      .attr('y', props.titlePad - marginTop)
+      .attr('dy', '0.75em');
+
+    const chartGroup = this.chartGroup;
     const grandparent = this.grandparent;
 
     this.root = props.treemapData;
@@ -128,7 +130,7 @@ export default React.createClass({
 
 
     const display = (d) => {
-      const g1 = svg.insert('g', '.grandparent')
+      const g1 = chartGroup.insert('g', '.grandparent')
         .datum(d)
         .attr('class', 'depth');
 
@@ -146,9 +148,9 @@ export default React.createClass({
         xScale.domain([dd.x, dd.x + dd.dx]);
         yScale.domain([dd.y, dd.y + dd.dy]);
 
-        svg.style('shape-rendering', null);
+        chartGroup.style('shape-rendering', null);
 
-        svg.selectAll('.depth').sort((a, b) => a.depth - b.depth);
+        chartGroup.selectAll('.depth').sort((a, b) => a.depth - b.depth);
 
         g2.selectAll('text').style('fill-opacity', 0);
 
@@ -158,7 +160,7 @@ export default React.createClass({
         t2.selectAll('rect').call(rect);
 
         t1.remove().each('end', () => {
-          svg.style('shape-rendering', 'crispEdges');
+          chartGroup.style('shape-rendering', 'crispEdges');
           isTransitioning = false;
         });
       };
@@ -187,7 +189,9 @@ export default React.createClass({
         .enter()
           .append('rect')
           .attr('class', (dd) => `child ${dd.className}`)
-          .call(rect);
+          .call(rect)
+          .append('title')
+            .text((dd) => format()(dd.value));
 
       g.append('rect')
         .attr('class', 'parent')
@@ -206,7 +210,6 @@ export default React.createClass({
 
     initialize(this.root);
     accumulate(this.root);
-    console.log(this.root);
     layout(this.root);
     display(this.root);
   },

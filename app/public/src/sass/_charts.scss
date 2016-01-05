@@ -241,8 +241,13 @@
     cursor: pointer;
 
     &.parent {
-      fill: none;
+      fill: #000; //must specify fill for svg title hover to work
+      fill-opacity: 0; //so set the opacity to 0
       stroke-width: 2px;
+
+      &:hover {
+        fill-opacity: 0.1;
+      }
     }
 
     &.child {

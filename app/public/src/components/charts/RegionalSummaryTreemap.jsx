@@ -28,23 +28,34 @@ export default React.createClass({
     const selectedDecade = this.props.decade;
     const selectedTheme = this.props.theme;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
-    const units = selectedTheme === 'population' ? "people" : "acre-feet/year";
+    const isPopulation = selectedTheme === 'population';
+    const units = isPopulation ? "people" : "acre-feet/year";
     const selectedData = this.props.viewData[selectedTheme].regionalSummary[selectedDecade];
 
     const treemapData = {
       name: 'Statewide',
       children: selectedData.map((entry) => {
-        return {
+        const child = {
           name: `Region ${entry.REGION}`,
           className: `region-${entry.REGION.toLowerCase()}`,
-          children: constants.USAGE_TYPES.map((type) => {
+        };
+
+        //just a one-level treemap with the MUNICIPAL value
+        if (isPopulation) {
+          child.value = entry.MUNICIPAL || 0;
+        }
+        else {
+          //else go down another level for each region, showing the
+          //usage types in that region
+          child.children = constants.USAGE_TYPES.map((type) => {
             return {
               name: titleize(type),
               value: entry[type] || 0,
               className: `region-${entry.REGION.toLowerCase()} type-${utils.slugify(type).toLowerCase()}`
             };
-          })
-        };
+          });
+        }
+        return child;
       })
     };
 
