@@ -6,7 +6,7 @@ import {NEEDS_LEGEND_CLASSES} from '../constants';
 
 function getColorForValue(npdValue) {
   const legendClass = R.find(
-    (c) => { return c.limit > npdValue; },
+    (c) => { return c.limit >= npdValue; },
     NEEDS_LEGEND_CLASSES
   );
   return legendClass.color;
