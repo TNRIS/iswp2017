@@ -2,6 +2,7 @@
 import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import classnames from 'classnames';
 import titleize from 'titleize';
 
 import constants from '../../constants';
@@ -20,6 +21,76 @@ export default React.createClass({
 
   mixins: [PureRenderMixin],
 
+  getInitialState() {
+    return {
+      selectedTreemap: 'region'
+    };
+  },
+
+  selectTreemap(type) {
+    this.setState({selectedTreemap: type});
+  },
+
+  formatData() {
+    const selectedDecade = this.props.decade;
+    const selectedTheme = this.props.theme;
+    const isPopulation = selectedTheme === 'population';
+    const selectedData = this.props.viewData[selectedTheme].regionalSummary[selectedDecade];
+
+    const selectedTreemap = this.state.selectedTreemap;
+
+    if (selectedTreemap === 'region') {
+      return {
+        name: 'Statewide',
+        children: selectedData.map((entry) => {
+          const child = {
+            name: `Region ${entry.REGION}`,
+            className: `region-${entry.REGION.toLowerCase()}`,
+          };
+
+          //just a one-level treemap with the MUNICIPAL value
+          if (isPopulation) {
+            child.value = entry.MUNICIPAL || 0;
+          }
+          else {
+            //else go down another level for each region, showing the
+            //usage types in that region
+            child.children = constants.USAGE_TYPES.map((type) => {
+              return {
+                name: titleize(type),
+                value: entry[type] || 0,
+                className: `region-${entry.REGION.toLowerCase()}`
+              };
+            });
+          }
+          return child;
+        })
+      };
+    }
+
+    //else 'usagetype'
+    const dataByRegion = R.groupBy(R.prop('REGION'), selectedData);
+    console.log(dataByRegion);
+
+    return {
+      name: 'Statewide',
+      children: constants.USAGE_TYPES.map((type) => {
+        return {
+          name: titleize(type),
+          className: `type-${utils.slugify(type).toLowerCase()}`,
+          children: constants.REGIONS.map((region) => {
+            const entry = R.nth(0, dataByRegion[region]);
+            return {
+              name: `Region ${region.toUpperCase()}`,
+              className: `type-${utils.slugify(type).toLowerCase()}`,
+              value: entry[type]
+            };
+          })
+        };
+      })
+    };
+  },
+
   render() {
     if (!this.props.viewData) {
       return (<div />);
@@ -30,41 +101,28 @@ export default React.createClass({
     const themeTitle = constants.THEME_TITLES[selectedTheme];
     const isPopulation = selectedTheme === 'population';
     const units = isPopulation ? "people" : "acre-feet/year";
-    const selectedData = this.props.viewData[selectedTheme].regionalSummary[selectedDecade];
+    const selectedTreemap = this.state.selectedTreemap;
 
-    const treemapData = {
-      name: 'Statewide',
-      children: selectedData.map((entry) => {
-        const child = {
-          name: `Region ${entry.REGION}`,
-          className: `region-${entry.REGION.toLowerCase()}`,
-        };
-
-        //just a one-level treemap with the MUNICIPAL value
-        if (isPopulation) {
-          child.value = entry.MUNICIPAL || 0;
-        }
-        else {
-          //else go down another level for each region, showing the
-          //usage types in that region
-          child.children = constants.USAGE_TYPES.map((type) => {
-            return {
-              name: titleize(type),
-              value: entry[type] || 0,
-              className: `region-${entry.REGION.toLowerCase()} type-${utils.slugify(type).toLowerCase()}`
-            };
-          });
-        }
-        return child;
-      })
-    };
+    const treemapData = this.formatData();
 
     return (
       <div>
         <h4>
-          Treemap of Regional Summary - {selectedDecade} - {themeTitle}
+          Regional Summary Treemap - {selectedDecade} - {themeTitle}
           <span className="units">({units})</span>
         </h4>
+        <div className="selector treemap-selector">
+          <button
+            onClick={this.selectTreemap.bind(this, 'region')}
+            className={classnames("button", {"active": selectedTreemap === 'region'})}>
+            By Region
+          </button>
+          <button
+            onClick={this.selectTreemap.bind(this, 'usagetype')}
+            className={classnames("button", {"active": selectedTreemap === 'usagetype'})}>
+            By Usage Type
+          </button>
+        </div>
         <Treemap treemapData={treemapData} />
       </div>
     );

@@ -48,7 +48,7 @@ export default React.createClass({
     return (
       <div>
         <h4>
-          Regional Summary by Usage Type - {selectedDecade} - {themeTitle}
+          Regional Summary Data - {selectedDecade} - {themeTitle}
           <span className="units">({units})</span>
         </h4>
         <div className="twelve columns">

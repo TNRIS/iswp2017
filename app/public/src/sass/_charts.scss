@@ -252,10 +252,19 @@
 
     &.child {
       @each $region in $regions {
-      $letter: nth($region, 1);
-      $color: nth($region, 2);
+        $letter: nth($region, 1);
+        $color: nth($region, 2);
 
         &.region-#{$letter} {
+          fill: $color;
+        }
+      }
+
+      @each $type in $usageTypes {
+        $name: nth($type, 1);
+        $color: nth($type, 2);
+
+        &.type-#{$name} {
           fill: $color;
         }
       }

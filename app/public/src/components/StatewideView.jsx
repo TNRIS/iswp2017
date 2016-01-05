@@ -107,15 +107,15 @@ export default React.createClass({
                     <div className="container">
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <RegionalSummaryTable viewData={data}
+                          <RegionalSummaryTreemap viewData={data}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
                         </div>
                       </div>
 
-                     <div className="row panel-row">
+                      <div className="row panel-row">
                         <div className="twelve columns">
-                          <RegionalSummaryTreemap viewData={data}
+                          <RegionalSummaryTable viewData={data}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
                         </div>
