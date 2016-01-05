@@ -6,6 +6,7 @@ import d3 from 'd3';
 import titleize from 'titleize';
 import format from 'format-number';
 
+import utils from '../../utils';
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 
@@ -93,19 +94,20 @@ export default React.createClass({
     const selectedTheme = props.theme;
     const selectedData = props.viewData[selectedTheme].regionalSummary[selectedDecade];
 
-    //ref: view-source:http://mbostock.github.io/d3/talk/20111018/treemap.html
+    const svg = this.svg;
+    const grandparent = this.grandparent;
 
     const treemapData = {
       name: 'Statewide',
       children: selectedData.map((entry) => {
         return {
           name: `Region ${entry.REGION}`,
-          region: entry.REGION,
+          className: `region-${entry.REGION.toLowerCase()}`,
           children: constants.USAGE_TYPES.map((type) => {
             return {
-              name: `${titleize(type)} - Region ${entry.REGION}`,
+              name: titleize(type),
               value: entry[type] || 0,
-              region: entry.REGION
+              className: `region-${entry.REGION.toLowerCase()} type-${utils.slugify(type).toLowerCase()}`
             };
           })
         };
@@ -155,8 +157,7 @@ export default React.createClass({
         .attr("height", (d) => yScale(d.y + d.dy) - yScale(d.y));
     };
 
-    const svg = this.svg;
-    const grandparent = this.grandparent;
+
     const display = (d) => {
       const g1 = svg.insert('g', '.grandparent')
         .datum(d)
@@ -212,7 +213,7 @@ export default React.createClass({
         .data((dd) => dd._children || [dd])
         .enter()
           .append('rect')
-          .attr('class', (dd) => `child region-${dd.region.toLowerCase()}`)
+          .attr('class', (dd) => `child ${dd.className}`)
           .call(rect);
 
       g.append('rect')
@@ -250,7 +251,7 @@ export default React.createClass({
     return (
       <div>
         <h4>
-          Treemap of Usage Type - {selectedDecade} - {themeTitle}
+          Treemap of Regional Summary - {selectedDecade} - {themeTitle}
           <span className="units">({units})</span>
         </h4>
         <div ref="treemapContainer" className="treemap-chart"></div>
