@@ -235,20 +235,29 @@
 
 .treemap-chart {
   font-size: 12px;
-  .grandparent rect {
-    fill: #ccc;
-  }
+  background: red;
 
-  .cell {
+  rect {
+    stroke: #fff;
     cursor: pointer;
 
-    @each $region in $regions {
+    &.parent {
+      fill: none;
+    }
+
+    &.child {
+      @each $region in $regions {
       $letter: nth($region, 1);
       $color: nth($region, 2);
 
-      &.region-#{$letter} rect {
-        fill: $color;
+        &.region-#{$letter} {
+          fill: $color;
+        }
       }
     }
+  }
+
+  .grandparent rect {
+    fill: #ccc;
   }
 }

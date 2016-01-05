@@ -4,17 +4,20 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import d3 from 'd3';
 import titleize from 'titleize';
+import format from 'format-number';
 
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
-const posOrZero = (v) => v > 0 ? v : 0;
+
+// Based on example http://bost.ocks.org/mike/treemap/
 
 export default React.createClass({
   propTypes: {
     height: React.PropTypes.number,
     marginTop: React.PropTypes.number,
+    titlePad: React.PropTypes.number,
     viewData: PropTypes.ViewData,
     decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
     theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
@@ -25,23 +28,22 @@ export default React.createClass({
   getDefaultProps() {
     return {
       height: 500,
-      marginTop: 20
+      marginTop: 20,
+      titlePad: 6
     };
   },
 
   componentDidMount() {
     const marginTop = this.props.marginTop;
-    const width = this.refs.treemapContainer.offsetWidth;
     const height = this.props.height - marginTop;
+    const width = this.refs.treemapContainer.offsetWidth;
 
     this.treemap = d3.layout.treemap()
-      .round(true)
-      .sticky(true)
-      .padding(1)
-      .size([width, height])
+      .round(false)
       .sort((a, b) => a.value - b.value)
       .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
-      .value((d) => d.value);
+      .value((d) => d.value)
+      .children((d, depth) => depth ? null : d._children);
 
     this.svg = d3.select(this.refs.treemapContainer)
       .append('svg')
@@ -51,6 +53,20 @@ export default React.createClass({
         .attr('transform', `translate(0,${marginTop})`)
         .style('shape-rendering', 'crispEdges');
 
+    this.grandparent = this.svg.append('g')
+      .attr('class', 'grandparent');
+
+    this.grandparent.append('rect')
+      .attr('y', -marginTop)
+      .attr('width', width)
+      .attr('height', marginTop);
+
+    this.grandparent.append('text')
+      .attr('x', this.props.titlePad)
+      .attr('y', this.props.titlePad - marginTop)
+      .attr('dy', '0.75em');
+
+
     this.updateTreemap(this.props);
   },
 
@@ -59,8 +75,20 @@ export default React.createClass({
   },
 
   updateTreemap(props) {
-    const marginTop = this.props.marginTop;
+    const marginTop = props.marginTop;
+    const height = props.height - marginTop;
     const width = this.refs.treemapContainer.offsetWidth;
+    const titlePad = props.titlePad;
+    let isTransitioning = false;
+
+    const xScale = d3.scale.linear()
+      .domain([0, width])
+      .range([0, width]);
+
+    const yScale = d3.scale.linear()
+      .domain([0, height])
+      .range([0, height]);
+
     const selectedDecade = props.decade;
     const selectedTheme = props.theme;
     const selectedData = props.viewData[selectedTheme].regionalSummary[selectedDecade];
@@ -84,82 +112,129 @@ export default React.createClass({
       })
     };
 
-    this.root = this.node = treemapData;
+    this.root = treemapData;
 
-    const nodes = this.treemap.nodes(this.root)
-      .filter((d) => !d.children);
+    const initialize = (root) => {
+      root.x = root.y = 0;
+      root.dx = width;
+      root.dy = height;
+      root.depth = 0;
+    };
 
-    const cell = this.svg.selectAll('g')
-        .data(nodes)
-      .enter().append('g')
-        .attr('class', (d) => `cell region-${d.region.toLowerCase()}`)
-        .attr('transform', (d) => `translate(${d.x}, ${d.y})`)
-        .on('click', (d) => this.zoom(this.node === d.parent ? this.root : d.parent));
+    const accumulate = (d) => {
+      d._children = d.children; //save reference
+      if (d._children) {
+        d.value = d.children.reduce((p, v) => p + accumulate(v), 0);
+      }
+      return d.value;
+    };
 
-    cell.append('rect')
-      .attr('width', (d) => posOrZero(d.dx - 1))
-      .attr('height', (d) => posOrZero(d.dy - 1));
+    const layout = (d) => {
+      if (d._children) {
+        this.treemap.nodes({_children: d._children});
+        d._children.forEach((c) => {
+          c.x = d.x + c.x * d.dx;
+          c.y = d.y + c.y * d.dy;
+          c.dx *= d.dx;
+          c.dy *= d.dy;
+          c.parent = d;
+          layout(c);
+        });
+      }
+    };
 
-    cell.append('text')
-      .attr('x', (d) => d.dx / 2)
-      .attr('y', (d) => d.dy / 2)
-      .attr('dy', '0.35em')
-      .attr('text-anchor', 'middle')
-      .text((d) => d.name)
-      .style('opacity', function getOpacity(d) {
-        d.w = this.getComputedTextLength();
-        return d.dx > d.w ? 1 : 0;
-      });
+    const text = (t) => {
+      t.attr('x', (d) => xScale(d.x) + titlePad)
+       .attr('y', (d) => yScale(d.y) + titlePad);
+    };
 
-    cell.append('title')
-      .text((d) => d.name);
+    const rect = (r) => {
+      r.attr("x", (d) => xScale(d.x))
+        .attr("y", (d) => yScale(d.y))
+        .attr("width", (d) => xScale(d.x + d.dx) - xScale(d.x))
+        .attr("height", (d) => yScale(d.y + d.dy) - yScale(d.y));
+    };
 
-    this.grandparent = this.svg.append('g')
-      .attr('class', 'grandparent');
+    const svg = this.svg;
+    const grandparent = this.grandparent;
+    const display = (d) => {
+      const g1 = svg.insert('g', '.grandparent')
+        .datum(d)
+        .attr('class', 'depth');
 
-    this.grandparent.append('rect')
-      .attr('y', -marginTop)
-      .attr('x', 2)
-      .attr('width', width - 4)
-      .attr('height', marginTop);
+      const transition = (dd) => {
+        if (!dd || isTransitioning) {
+          return;
+        }
 
-    this.grandparent.append('text')
-      .attr('x', 6)
-      .attr('y', 6 - marginTop)
-      .attr('dy', '0.75em')
-      .text('Texas');
-  },
+        isTransitioning = true;
 
-  zoom(dd) {
-    const marginTop = this.props.marginTop;
-    const height = this.props.height - marginTop;
-    const width = this.refs.treemapContainer.offsetWidth;
-    const kx = width / dd.dx;
-    const ky = height / dd.dy;
-    const x = d3.scale.linear().range([0, width]);
-    const y = d3.scale.linear().range([0, height]);
+        const g2 = display(dd);
+        const t1 = g1.transition().duration(750);
+        const t2 = g2.transition().duration(750);
 
-    x.domain([dd.x, dd.x + dd.dx]);
-    y.domain([dd.y, dd.y + dd.dy]);
+        xScale.domain([dd.x, dd.x + dd.dx]);
+        yScale.domain([dd.y, dd.y + dd.dy]);
 
-    const t = this.svg.selectAll('g.cell').transition()
-      .duration(750)
-      .attr('transform', (d) => `translate(${x(d.x)},${y(d.y)})`);
+        svg.style('shape-rendering', null);
 
-    t.select('rect')
-      .attr('width', (d) => posOrZero(kx * d.dx - 1))
-      .attr('height', (d) => posOrZero(ky * d.dy - 1));
+        svg.selectAll('.depth').sort((a, b) => a.depth - b.depth);
 
-    t.select('text')
-      .attr('x', (d) => kx * d.dx / 2)
-      .attr('y', (d) => ky * d.dy / 2)
-      .style('opacity', (d) => kx * d.dx > d.w ? 1 : 0);
+        g2.selectAll('text').style('fill-opacity', 0);
 
-    this.grandparent.select('text')
-      .text(dd.region ? `Region ${dd.region}` : 'Texas');
+        t1.selectAll('text').call(text).style('fill-opacity', 0);
+        t2.selectAll('text').call(text).style('fill-opacity', 1);
+        t1.selectAll('rect').call(rect);
+        t2.selectAll('rect').call(rect);
 
-    this.node = dd;
-    d3.event.stopPropagation();
+        t1.remove().each('end', () => {
+          svg.style('shape-rendering', 'crispEdges');
+          isTransitioning = false;
+        });
+      };
+
+      grandparent
+        .datum(d.parent)
+        .on('click', transition)
+        .select('text')
+          .text(d.name);
+
+      const g = g1.selectAll('g')
+        .data(d._children)
+        .enter()
+          .append('g');
+
+      g.filter((dd) => dd._children)
+        .classed('children', true)
+        .on('click', transition);
+
+      g.selectAll('.child')
+        .data((dd) => dd._children || [dd])
+        .enter()
+          .append('rect')
+          .attr('class', (dd) => `child region-${dd.region.toLowerCase()}`)
+          .call(rect);
+
+      g.append('rect')
+        .attr('class', 'parent')
+        .call(rect)
+        .append('title')
+          .text((dd) => format()(dd.value));
+
+      g.append('text')
+        .attr('dy', '0.75em')
+        .text((dd) => dd.name)
+        .call(text);
+
+      return g;
+    };
+
+
+    initialize(this.root);
+    accumulate(this.root);
+    console.log(this.root);
+    layout(this.root);
+    display(this.root);
   },
 
   render() {
