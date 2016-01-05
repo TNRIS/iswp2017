@@ -235,7 +235,6 @@
 
 .treemap-chart {
   font-size: 12px;
-  background: red;
 
   rect {
     stroke: #fff;
@@ -243,6 +242,7 @@
 
     &.parent {
       fill: none;
+      stroke-width: 2px;
     }
 
     &.child {
@@ -257,7 +257,13 @@
     }
   }
 
-  .grandparent rect {
-    fill: #ccc;
+  .grandparent {
+    rect {
+      fill: #ccc;
+      stroke-width: 2px;
+    }
+    text {
+      font-weight: bold;
+    }
   }
 }
