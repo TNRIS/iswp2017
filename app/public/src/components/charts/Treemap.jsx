@@ -1,27 +1,17 @@
 
-import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import d3 from 'd3';
-import titleize from 'titleize';
 import format from 'format-number';
-
-import utils from '../../utils';
-import constants from '../../constants';
-import PropTypes from '../../utils/CustomPropTypes';
-
-const themesAndPopulation = R.append('population', constants.THEMES);
 
 // Based on example http://bost.ocks.org/mike/treemap/
 
 export default React.createClass({
   propTypes: {
+    treemapData: React.PropTypes.object.isRequired, //TODO: test shape
     height: React.PropTypes.number,
     marginTop: React.PropTypes.number,
-    titlePad: React.PropTypes.number,
-    viewData: PropTypes.ViewData,
-    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
+    titlePad: React.PropTypes.number
   },
 
   mixins: [PureRenderMixin],
@@ -90,31 +80,10 @@ export default React.createClass({
       .domain([0, height])
       .range([0, height]);
 
-    const selectedDecade = props.decade;
-    const selectedTheme = props.theme;
-    const selectedData = props.viewData[selectedTheme].regionalSummary[selectedDecade];
-
     const svg = this.svg;
     const grandparent = this.grandparent;
 
-    const treemapData = {
-      name: 'Statewide',
-      children: selectedData.map((entry) => {
-        return {
-          name: `Region ${entry.REGION}`,
-          className: `region-${entry.REGION.toLowerCase()}`,
-          children: constants.USAGE_TYPES.map((type) => {
-            return {
-              name: titleize(type),
-              value: entry[type] || 0,
-              className: `region-${entry.REGION.toLowerCase()} type-${utils.slugify(type).toLowerCase()}`
-            };
-          })
-        };
-      })
-    };
-
-    this.root = treemapData;
+    this.root = props.treemapData;
 
     const initialize = (root) => {
       root.x = root.y = 0;
@@ -147,7 +116,7 @@ export default React.createClass({
 
     const text = (t) => {
       t.attr('x', (d) => xScale(d.x) + titlePad)
-       .attr('y', (d) => yScale(d.y) + titlePad);
+        .attr('y', (d) => yScale(d.y) + titlePad);
     };
 
     const rect = (r) => {
@@ -164,7 +133,7 @@ export default React.createClass({
         .attr('class', 'depth');
 
       const transition = (dd) => {
-        if (!dd || isTransitioning) {
+        if (isTransitioning || !dd) {
           return;
         }
 
@@ -209,6 +178,10 @@ export default React.createClass({
         .classed('children', true)
         .on('click', transition);
 
+      g.filter((dd) => !dd._children)
+        .classed('no-children', true)
+        .on('click', (dd) => transition(dd.parent.parent));
+
       g.selectAll('.child')
         .data((dd) => dd._children || [dd])
         .enter()
@@ -239,21 +212,12 @@ export default React.createClass({
   },
 
   render() {
-    if (!this.props.viewData) {
+    if (!this.props.treemapData) {
       return (<div />);
     }
 
-    const selectedDecade = this.props.decade;
-    const selectedTheme = this.props.theme;
-    const themeTitle = constants.THEME_TITLES[selectedTheme];
-    const units = selectedTheme === 'population' ? "people" : "acre-feet/year";
-
     return (
-      <div>
-        <h4>
-          Treemap of Regional Summary - {selectedDecade} - {themeTitle}
-          <span className="units">({units})</span>
-        </h4>
+      <div className="treemap-container">
         <div ref="treemapContainer" className="treemap-chart"></div>
       </div>
     );
