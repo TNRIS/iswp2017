@@ -213,7 +213,7 @@ function getIntersectingRegions(countyName) {
   // To do this, a small (0.1 degrees = ~1km) negative buffer is used on
   // the region geometry to prevent getting intersections that happen at the county borders
   const query = `SELECT ${regionTable}.letter FROM ${regionTable}, ${countyTable}
-    WHERE ${countyTable}.name ~* '${countyName}'
+    WHERE LOWER(${countyTable}.name) = LOWER('${countyName}')
     AND ST_Intersects(${regionTable}.the_geom, ST_Buffer(${countyTable}.the_geom, -0.1))`;
   return axios.get(`https://tnris.cartodb.com/api/v2/sql?q=${query}`)
     .then(({data}) => R.pluck('letter', data.rows));

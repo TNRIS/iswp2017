@@ -49,9 +49,9 @@ export default React.createClass({
 
         {/* REMOVED, ref #122 and #56
           TODO: Fix once #56 is done
-          <div className="subhead">
-            <PlaceSummarySubhead type={props.type} typeId={props.typeId} />
-          </div>
+        <div className="subhead">
+          <PlaceSummarySubhead type={props.type} typeId={props.typeId} />
+        </div>
         */}
 
         <PopulationChart viewData={props.viewData} />
