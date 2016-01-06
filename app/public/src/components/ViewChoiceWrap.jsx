@@ -26,10 +26,12 @@ export default React.createClass({
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleScroll);
   },
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleScroll);
   },
 
   handleScroll() {
