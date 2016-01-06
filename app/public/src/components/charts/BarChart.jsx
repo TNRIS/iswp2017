@@ -17,8 +17,8 @@ function isAllZero(chartData) {
       if (s.data[j] !== 0) {
         return false;
       }
-    };
-  };
+    }
+  }
   return true;
 }
 
@@ -43,6 +43,7 @@ export default React.createClass({
   componentDidMount() {
     this.updateChart();
     window.addEventListener('scroll', this.clearInteraction);
+    window.addEventListener('mousemove', this.clearInteraction);
   },
 
   componentDidUpdate() {
@@ -59,6 +60,7 @@ export default React.createClass({
       }
     }
     window.removeEventListener('scroll', this.clearInteraction);
+    window.removeEventListener('mousemove', this.clearInteraction);
   },
 
   onMouseOut() {
@@ -156,7 +158,7 @@ export default React.createClass({
     return (
       <div className="bar-chart-container">
         {
-          isAllZero(this.props.chartData) && 
+          isAllZero(this.props.chartData) &&
           (<div className="zero-message">All values are zero</div>)
         }
         <div ref="chart" className="ct-chart"
