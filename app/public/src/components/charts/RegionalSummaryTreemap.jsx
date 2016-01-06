@@ -70,7 +70,6 @@ export default React.createClass({
 
     //else 'usagetype'
     const dataByRegion = R.groupBy(R.prop('REGION'), selectedData);
-    console.log(dataByRegion);
 
     return {
       label: 'Statewide',
