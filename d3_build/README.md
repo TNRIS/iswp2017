@@ -5,10 +5,10 @@ This folder contains the necessary files to make a custom build of D3 using [`sm
 
 ## Building
 
-1) Install node dependencies: `npm install`
-2) Run make: `make` This will also copy the output file to `app/public/src/vendor/js/d3.custom.js`
+  1. Install node dependencies: `npm install`
+  2. Run make: `make` This will also copy the output file to `app/public/src/vendor/js/d3.custom.js`
 
 ## Adding Additional D3 Components
 
 Follow the guide at https://github.com/mbostock/smash/wiki to add additional pieces of D3.
-This should just involve modifying the `LIBRARY_FILES` inside of the `Makefile`.
+This should just involve modifying `LIBRARY_FILES` inside of the `Makefile`.
