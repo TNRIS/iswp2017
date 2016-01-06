@@ -1,0 +1,9 @@
+{
+  "name": "d3_build",
+  "version": "1.0.0",
+  "dependencies": {
+    "d3": "^3.5.12",
+    "smash": "0.0.15",
+    "uglify-js": "^2.6.1"
+  }
+}

@@ -1,8 +1,7 @@
-
+/* global d3*/
 import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import d3 from 'd3';
 import debounce from 'debounce';
 import format from 'format-number';
 

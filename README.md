@@ -20,6 +20,9 @@ Download a copy of the licensed web font we are using from S3 at tnris-misc/iswp
 
 This command should do it for you (requires aws cli and credentials): `aws s3 cp s3://tnris-misc/iswp/2017/gill-sans.zip gill-sans.zip; unzip gill-sans.zip -d app/public/static/webfonts/; rm gill-sans.zip`
 
+#### Custom D3 Build
+
+We are using a custom [D3](http://d3js.org/) build to cut down on code size. To make a new custom build, see instructions in `d3_build/README.md`.
 
 ### Running Development Server
 
