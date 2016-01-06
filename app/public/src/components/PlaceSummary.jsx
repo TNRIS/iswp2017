@@ -47,9 +47,12 @@ export default React.createClass({
       <div className="view-summary">
         <h2 className={classnames({'long-name': isLong})}>{typeAndId}</h2>
 
-        <div className="subhead">
-          <PlaceSummarySubhead type={props.type} typeId={props.typeId} />
-        </div>
+        {/* REMOVED, ref #122 and #56
+          TODO: Fix once #56 is done
+          <div className="subhead">
+            <PlaceSummarySubhead type={props.type} typeId={props.typeId} />
+          </div>
+        */}
 
         <PopulationChart viewData={props.viewData} />
 
