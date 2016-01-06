@@ -32,7 +32,7 @@ const EntityData = React.PropTypes.shape({
 });
 
 const TreemapData = React.PropTypes.shape({
-  name: React.PropTypes.string.isRequired,
+  label: React.PropTypes.string.isRequired,
   value: React.PropTypes.number,
   className: React.PropTypes.string,
   children: React.PropTypes.array //should be arrayOf(TreemapData) but that doesn't work

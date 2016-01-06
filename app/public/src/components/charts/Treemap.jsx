@@ -12,7 +12,8 @@ export default React.createClass({
     treemapData: PropTypes.TreemapData.isRequired,
     height: React.PropTypes.number,
     marginTop: React.PropTypes.number,
-    titlePad: React.PropTypes.number
+    titlePad: React.PropTypes.number,
+    showPercent: React.PropTypes.bool
   },
 
   mixins: [PureRenderMixin],
@@ -21,7 +22,8 @@ export default React.createClass({
     return {
       height: 500,
       marginTop: 20,
-      titlePad: 6
+      titlePad: 6,
+      showPercent: false
     };
   },
 
@@ -85,8 +87,6 @@ export default React.createClass({
     const chartGroup = this.chartGroup;
     const grandparent = this.grandparent;
 
-    this.root = props.treemapData;
-
     const initialize = (root) => {
       root.x = root.y = 0;
       root.dx = width;
@@ -128,6 +128,20 @@ export default React.createClass({
         .attr("height", (d) => yScale(d.y + d.dy) - yScale(d.y));
     };
 
+    const label = (d) => {
+      if (this.props.showPercent && d.area) {
+        let pct = (d.area * 100).toFixed();
+        if (pct < 1) {
+          pct = '<1';
+        }
+        return `${d.label} (${pct}%)`;
+      }
+      return d.label;
+    };
+
+    const title = (d) => {
+      return label(d) + ': ' + format()(d.value);
+    };
 
     const display = (d) => {
       const g1 = chartGroup.insert('g', '.grandparent')
@@ -169,7 +183,7 @@ export default React.createClass({
         .datum(d.parent)
         .on('click', transition)
         .select('text')
-          .text(d.name);
+          .text(label(d));
 
       const g = g1.selectAll('g')
         .data(d._children)
@@ -191,23 +205,23 @@ export default React.createClass({
           .attr('class', (dd) => `child ${dd.className}`)
           .call(rect)
           .append('title')
-            .text((dd) => format()(dd.value));
+            .text(title);
 
       g.append('rect')
         .attr('class', 'parent')
         .call(rect)
         .append('title')
-          .text((dd) => format()(dd.value));
+          .text(title);
 
       g.append('text')
         .attr('dy', '0.75em')
-        .text((dd) => dd.name)
+        .text(label)
         .call(text);
 
       return g;
     };
 
-
+    this.root = props.treemapData;
     initialize(this.root);
     accumulate(this.root);
     layout(this.root);

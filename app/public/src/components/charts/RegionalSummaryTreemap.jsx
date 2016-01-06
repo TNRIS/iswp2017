@@ -41,10 +41,10 @@ export default React.createClass({
 
     if (selectedTreemap === 'region') {
       return {
-        name: 'Statewide',
+        label: 'Statewide',
         children: selectedData.map((entry) => {
           const child = {
-            name: `Region ${entry.REGION}`,
+            label: `Region ${entry.REGION}`,
             className: `region-${entry.REGION.toLowerCase()}`,
           };
 
@@ -57,7 +57,7 @@ export default React.createClass({
             //usage types in that region
             child.children = constants.USAGE_TYPES.map((type) => {
               return {
-                name: titleize(type),
+                label: titleize(type),
                 value: entry[type] || 0,
                 className: `region-${entry.REGION.toLowerCase()}`
               };
@@ -73,15 +73,15 @@ export default React.createClass({
     console.log(dataByRegion);
 
     return {
-      name: 'Statewide',
+      label: 'Statewide',
       children: constants.USAGE_TYPES.map((type) => {
         return {
-          name: titleize(type),
+          label: titleize(type),
           className: `type-${utils.slugify(type).toLowerCase()}`,
           children: constants.REGIONS.map((region) => {
             const entry = R.nth(0, dataByRegion[region]);
             return {
-              name: `Region ${region.toUpperCase()}`,
+              label: `Region ${region.toUpperCase()}`,
               className: `type-${utils.slugify(type).toLowerCase()}`,
               value: entry[type]
             };
@@ -123,7 +123,7 @@ export default React.createClass({
             By Usage Type
           </button>
         </div>
-        <Treemap treemapData={treemapData} />
+        <Treemap treemapData={treemapData} showPercent />
       </div>
     );
   }
