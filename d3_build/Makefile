@@ -3,6 +3,7 @@ LIBRARY_FILES = \
 	node_modules/d3/src/scale/linear.js \
 	node_modules/d3/src/layout/treemap.js \
 	node_modules/d3/src/selection/index.js \
+	node_modules/d3/src/transition/index.js \
 	node_modules/d3/src/end.js
 
 .PHONY: clean
