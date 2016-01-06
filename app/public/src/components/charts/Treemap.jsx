@@ -2,6 +2,7 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import d3 from 'd3';
+import debounce from 'debounce';
 import format from 'format-number';
 
 import PropTypes from '../../utils/CustomPropTypes';
@@ -29,10 +30,16 @@ export default React.createClass({
 
   componentDidMount() {
     this.updateTreemap(this.props);
+    this.debouncedUpdateTreemap = debounce(() => this.updateTreemap(this.props), 200);
+    window.addEventListener('resize', this.debouncedUpdateTreemap.bind(this));
   },
 
   componentWillReceiveProps(nextProps) {
     this.updateTreemap(nextProps);
+  },
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.debouncedUpdateTreemap);
   },
 
   updateTreemap(props) {

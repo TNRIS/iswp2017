@@ -39,6 +39,7 @@
     "condense-whitespace": "^1.0.0",
     "css-loader": "^0.16.0",
     "d3": "^3.5.12",
+    "debounce": "^1.0.0",
     "dom-classlist": "^1.0.1",
     "extend": "^3.0.0",
     "extract-text-webpack-plugin": "^0.8.2",

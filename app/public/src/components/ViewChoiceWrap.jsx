@@ -2,6 +2,7 @@
 import R from 'ramda';
 import React from 'react';
 import classnames from 'classnames';
+import debounce from 'debounce';
 
 import constants from '../constants';
 import ViewChoiceSelectors from './ViewChoiceSelectors';
@@ -26,12 +27,15 @@ export default React.createClass({
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    window.addEventListener('resize', this.handleScroll);
+
+    //use debounced version for window resize
+    this.debouncedHandleScroll = debounce(this.handleScroll, 200);
+    window.addEventListener('resize', this.debouncedHandleScroll);
   },
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
-    window.addEventListener('resize', this.handleScroll);
+    window.removeEventListener('resize', this.debouncedHandleScroll);
   },
 
   handleScroll() {
@@ -44,6 +48,7 @@ export default React.createClass({
     if (!this.refs.viewChoiceSection) {
       return;
     }
+
     const stickyTop = this.refs.viewChoiceSection.offsetTop;
     if (y >= stickyTop) {
       this.setState({isStuck: true});
