@@ -3,7 +3,6 @@
 
 import R from 'ramda';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import scale from 'scale-number-range';
 import format from 'format-number';
@@ -36,7 +35,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    const map = this.map = L.map(ReactDOM.findDOMNode(this.refs.map), {
+    const map = this.map = L.map(this.refs.map, {
       scrollWheelZoom: false,
       zoomControl: false
     });

@@ -1,7 +1,6 @@
 
 import R from 'ramda';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Chartist from 'chartist';
 import format from 'format-number';
@@ -80,7 +79,7 @@ export default React.createClass({
       +me.getAttribute('x1'), +me.getAttribute('y2')
     );
     const parent = me.parentNode;
-    const tooltip = ReactDOM.findDOMNode(this.refs.tooltip);
+    const tooltip = this.refs.tooltip;
     // use constant height adjustment because the offsetHeight cannot
     // be reliably obtained when the tooltip is hidden
     const heightAdjust = 42;
@@ -147,7 +146,7 @@ export default React.createClass({
       this.chart.update(this.props.chartData, chartOptions, responsiveOptions);
     }
     else {
-      this.chart = new Chartist.Bar(ReactDOM.findDOMNode(this.refs.chart),
+      this.chart = new Chartist.Bar(this.refs.chart,
         this.props.chartData, chartOptions, responsiveOptions);
     }
   },

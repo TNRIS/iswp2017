@@ -1,7 +1,6 @@
 /*global L*/
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import utils from '../../utils';
@@ -13,7 +12,7 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   componentDidMount() {
-    this.map = L.map(ReactDOM.findDOMNode(this.refs.map),
+    this.map = L.map(this.refs.map,
       constants.VIEW_MAP_OPTIONS
     );
 
