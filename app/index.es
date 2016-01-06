@@ -70,6 +70,14 @@ server.register([
   addRoutes(server, apiRoutes, '/api/v1');
   addRoutes(server, homeRoutes);
 
+  server.route({
+    method: '*',
+    path: '/{p*}',
+    handler: (request, reply) => {
+      reply.view('404').code(404);
+    }
+  });
+
   if (require.main === module) {
     server.start(() => {
       console.log(`Server running at ${server.info.uri}`);

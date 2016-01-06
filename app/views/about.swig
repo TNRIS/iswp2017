@@ -21,7 +21,7 @@
       </div>
     </div>
   </header>
-  <section class="about-content">
+  <section class="content">
     <div class="container">
       <div class="row panel-row">
         <div class="twelve columns">

@@ -48,7 +48,7 @@ $regions: ('a', rgb(255,249,174)), ('b', rgb(170,215,212)), ('c', rgb(222,231,14
 @import "tables";
 @import "visibility";
 
-.about-content {
+section.content {
   @media (min-width: $media-m) {
     margin-top: 2rem;
   }
