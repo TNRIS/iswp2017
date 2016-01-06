@@ -42,7 +42,6 @@ export default React.createClass({
   componentDidMount() {
     this.updateChart();
     window.addEventListener('scroll', this.clearInteraction);
-    window.addEventListener('mousemove', this.clearInteraction);
   },
 
   componentDidUpdate() {
@@ -59,7 +58,6 @@ export default React.createClass({
       }
     }
     window.removeEventListener('scroll', this.clearInteraction);
-    window.removeEventListener('mousemove', this.clearInteraction);
   },
 
   onMouseOut() {
