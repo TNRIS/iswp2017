@@ -1,4 +1,5 @@
 
+import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import d3 from 'd3';
@@ -228,7 +229,7 @@ export default React.createClass({
       return g;
     };
 
-    this.root = props.treemapData;
+    this.root = R.clone(props.treemapData);
     initialize(this.root);
     accumulate(this.root);
     layout(this.root);
