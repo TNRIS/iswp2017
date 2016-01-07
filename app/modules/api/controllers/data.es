@@ -50,6 +50,7 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
   return (theme) => {
     const dataPromises = [];
     const table = dataTables[theme];
+    const isNeeds = theme === 'needs';
 
     //TODO: What to do with negative values (as in some strategies)?
     const typeSumFields = makeTypeSumFields(theme);
@@ -80,7 +81,7 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
 
       let dataSelectFields = R.concat(renameValueFields(theme), commonFields);
 
-      if (theme === 'needs') {
+      if (isNeeds) {
         const npdCols = R.map((year) => `NPD${year}`, constants.YEARS);
         dataSelectFields = R.concat(npdCols, dataSelectFields);
       }
@@ -88,7 +89,7 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
       let selectData = db.select(dataSelectFields).from(table)
           .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`);
 
-      if (theme === 'needs') {
+      if (isNeeds) {
         selectData = selectData.join(needsPctDemandsTable, `${table}.EntityId`, `${needsPctDemandsTable}.EntityId`);
       }
 

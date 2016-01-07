@@ -1,9 +1,16 @@
+
+import Hapi from 'hapi';
 import Code from 'code';
 import Lab from 'lab';
 
-import server from 'index.es';
+import ApiModule from 'modules/api';
 
 const lab = Lab.script();
+const server = new Hapi.Server();
+server.connection({
+  port: 3333, // TODO: Put in config
+  router: {stripTrailingSlash: true}
+});
 
 function testEntityShape(entity) {
   Code.expect(entity).to.include([
@@ -11,69 +18,76 @@ function testEntityShape(entity) {
   ]);
 }
 
-lab.test('entities - all', (done) => {
-  server.inject('/api/v1/entities', (res) => {
-    Code.expect(res.statusCode).to.equal(200);
-    Code.expect(res.result).to.be.an.array();
-    Code.expect(res.result.length).to.be.greaterThan(0);
-    const first = res.result[0];
-    testEntityShape(first);
-    done();
+lab.experiment('entities api', () => {
+  lab.before((done) => {
+    //Load the ApiModule plugin before tests
+    server.register([ApiModule], done);
   });
-});
 
-lab.test('entities - one', (done) => {
-  server.inject('/api/v1/entities/7', (res) => {
-    Code.expect(res.statusCode).to.equal(200);
-    Code.expect(res.result).to.be.an.array();
-    Code.expect(res.result.length).to.be.greaterThan(0);
-    const first = res.result[0];
-    testEntityShape(first);
-    done();
+  lab.test('entities - all', (done) => {
+    server.inject('/api/v1/entities', (res) => {
+      Code.expect(res.statusCode).to.equal(200);
+      Code.expect(res.result).to.be.an.array();
+      Code.expect(res.result.length).to.be.greaterThan(0);
+      const first = res.result[0];
+      testEntityShape(first);
+      done();
+    });
   });
-});
 
-//TODO: summary table does not exist yet, ref #50
-// lab.test('entities - summary for one', (done) => {
-//   server.inject('/api/v1/entities/7/summary', (res) => {
-//     Code.expect(res.statusCode).to.equal(200);
-//     Code.expect(res.result).to.be.an.array();
-//     Code.expect(res.result.length).to.be.greaterThan(0);
-//     //TODO: test shape
-//     done();
-//   });
-// });
-
-lab.test('entities - search by name', (done) => {
-  server.inject('/api/v1/entities/search?name=Aus', (res) => {
-    Code.expect(res.statusCode).to.equal(200);
-    Code.expect(res.result).to.be.an.array();
-    Code.expect(res.result.length).to.be.greaterThan(0);
-    const first = res.result[0];
-    testEntityShape(first);
-    done();
+  lab.test('entities - one', (done) => {
+    server.inject('/api/v1/entities/7', (res) => {
+      Code.expect(res.statusCode).to.equal(200);
+      Code.expect(res.result).to.be.an.array();
+      Code.expect(res.result.length).to.be.greaterThan(0);
+      const first = res.result[0];
+      testEntityShape(first);
+      done();
+    });
   });
-});
 
-lab.test('entities - get in region', (done) => {
-  server.inject('/api/v1/entities/region/K', (res) => {
-    Code.expect(res.statusCode).to.equal(200);
-    Code.expect(res.result).to.be.an.array();
-    Code.expect(res.result.length).to.be.greaterThan(0);
-    const first = res.result[0];
-    testEntityShape(first);
-    done();
+  //TODO: summary table does not exist yet, ref #50
+  // lab.test('entities - summary for one', (done) => {
+  //   server.inject('/api/v1/entities/7/summary', (res) => {
+  //     Code.expect(res.statusCode).to.equal(200);
+  //     Code.expect(res.result).to.be.an.array();
+  //     Code.expect(res.result.length).to.be.greaterThan(0);
+  //     //TODO: test shape
+  //     done();
+  //   });
+  // });
+
+  lab.test('entities - search by name', (done) => {
+    server.inject('/api/v1/entities/search?name=Aus', (res) => {
+      Code.expect(res.statusCode).to.equal(200);
+      Code.expect(res.result).to.be.an.array();
+      Code.expect(res.result.length).to.be.greaterThan(0);
+      const first = res.result[0];
+      testEntityShape(first);
+      done();
+    });
   });
-});
 
-lab.test('entities - get in county', (done) => {
-  server.inject('/api/v1/entities/county/Nueces', (res) => {
-    Code.expect(res.statusCode).to.equal(200);
-    Code.expect(res.result).to.be.an.array();
-    Code.expect(res.result.length).to.be.greaterThan(0);
-    const first = res.result[0];
-    testEntityShape(first);
-    done();
+  lab.test('entities - get in region', (done) => {
+    server.inject('/api/v1/entities/region/K', (res) => {
+      Code.expect(res.statusCode).to.equal(200);
+      Code.expect(res.result).to.be.an.array();
+      Code.expect(res.result.length).to.be.greaterThan(0);
+      const first = res.result[0];
+      testEntityShape(first);
+      done();
+    });
+  });
+
+  lab.test('entities - get in county', (done) => {
+    server.inject('/api/v1/entities/county/Nueces', (res) => {
+      Code.expect(res.statusCode).to.equal(200);
+      Code.expect(res.result).to.be.an.array();
+      Code.expect(res.result.length).to.be.greaterThan(0);
+      const first = res.result[0];
+      testEntityShape(first);
+      done();
+    });
   });
 });
 

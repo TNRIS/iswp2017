@@ -14,7 +14,24 @@ function handleApiError(reply) {
   };
 }
 
+function addRoutes(server, routes, base = '') {
+  if (!Array.isArray(routes)) {
+    throw new Error('routes must be an array');
+  }
+
+  let basePath = base;
+  if (basePath.lastIndexOf('/') === basePath.length - 1) {
+    basePath = basePath.slice(0, basePath.length - 1);
+  }
+
+  routes.forEach((route) => {
+    route.path = basePath + route.path;
+    server.route(route);
+  });
+}
+
 export default {
   isEmptyObj,
-  handleApiError
+  handleApiError,
+  addRoutes
 };
