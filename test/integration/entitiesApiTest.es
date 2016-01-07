@@ -16,6 +16,8 @@ function testEntityShape(entity) {
 lab.experiment('entities api', () => {
   lab.before((done) => {
     //wait until plugins are registered
+    //  it would be better if the server notified when plugins were registered, but
+    //  that functionality doesn't seem to exist
     setTimeout(done, 500);
   });
 
