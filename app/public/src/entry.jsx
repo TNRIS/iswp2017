@@ -11,7 +11,6 @@ import {Router, Route, Redirect} from 'react-router';
 
 import App from './App';
 import history from './history';
-import NotFound from './components/NotFound';
 import PlaceView from './components/PlaceView';
 import EntityView from './components/EntityView';
 import StatewideView from './components/StatewideView';
@@ -35,7 +34,6 @@ ReactDOM.render((
       <Route name="entityview" path="entity/:entityId" component={EntityView}/>
       <Route name="placeview" path=":type/:typeId" component={PlaceView}/>
       <Redirect from="/" to="/statewide" />
-      <Route path="*" component={NotFound} />
     </Route>
   </Router>
 ), document.getElementById('reactApp'));
