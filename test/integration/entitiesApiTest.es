@@ -15,10 +15,8 @@ function testEntityShape(entity) {
 
 lab.experiment('entities api', () => {
   lab.before((done) => {
-    server.on('start', () => {
-      console.log('started');
-      done();
-    });
+    //wait until plugins are registered
+    setTimeout(done, 500);
   });
 
   lab.test('entities - all', (done) => {

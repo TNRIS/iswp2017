@@ -27,10 +27,8 @@ function testDataShape(data, omitRows = false) {
 
 lab.experiment('data api', () => {
   lab.before((done) => {
-    server.on('start', () => {
-      console.log('started2');
-      done();
-    });
+    //wait until plugins are registered
+    setTimeout(done, 500);
   });
 
   lab.test('data - all', (done) => {
