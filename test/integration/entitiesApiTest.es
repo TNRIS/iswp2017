@@ -1,16 +1,11 @@
 
-import Hapi from 'hapi';
+
 import Code from 'code';
 import Lab from 'lab';
 
-import ApiModule from 'modules/api';
+import server from 'index.es';
 
 const lab = Lab.script();
-const server = new Hapi.Server();
-server.connection({
-  port: 3333, // TODO: Put in config
-  router: {stripTrailingSlash: true}
-});
 
 function testEntityShape(entity) {
   Code.expect(entity).to.include([
@@ -20,8 +15,10 @@ function testEntityShape(entity) {
 
 lab.experiment('entities api', () => {
   lab.before((done) => {
-    //Load the ApiModule plugin before tests
-    server.register([ApiModule], done);
+    server.on('start', () => {
+      console.log('started');
+      done();
+    });
   });
 
   lab.test('entities - all', (done) => {

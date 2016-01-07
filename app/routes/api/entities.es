@@ -2,7 +2,7 @@
 import Joi from 'joi';
 
 import constants from 'lib/constants';
-import EntitiesController from '../controllers/entities';
+import EntitiesController from 'controllers/entities';
 
 const entitiesController = new EntitiesController();
 const bind = (method) => entitiesController[method].bind(entitiesController);

@@ -2,7 +2,7 @@
 import Joi from 'joi';
 
 import constants from 'lib/constants';
-import DataController from '../controllers/data';
+import DataController from 'controllers/data';
 
 const dataController = new DataController();
 const bind = (method) => dataController[method].bind(dataController);

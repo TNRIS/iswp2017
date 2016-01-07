@@ -1,16 +1,11 @@
 
-import Hapi from 'hapi';
+
 import Code from 'code';
 import Lab from 'lab';
 
-import ApiModule from 'modules/api';
+import server from 'index.es';
 
 const lab = Lab.script();
-const server = new Hapi.Server();
-server.connection({
-  port: 3333, // TODO: Put in config
-  router: {stripTrailingSlash: true}
-});
 
 const themes = ['demands', 'supplies', 'needs', /*'strategies',*/ 'population'];
 const decades = ['2020', '2030', '2040', '2050', '2060', '2070'];
@@ -32,8 +27,10 @@ function testDataShape(data, omitRows = false) {
 
 lab.experiment('data api', () => {
   lab.before((done) => {
-    //Load the ApiModule plugin before tests
-    server.register([ApiModule], done);
+    server.on('start', () => {
+      console.log('started2');
+      done();
+    });
   });
 
   lab.test('data - all', (done) => {
@@ -106,4 +103,5 @@ lab.experiment('data api', () => {
     });
   });
 });
+
 export default {lab};

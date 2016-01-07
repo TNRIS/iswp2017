@@ -6,11 +6,11 @@ import Good from 'good';
 import GoodConsole from 'good-console';
 import swig from 'swig';
 
-import utils from 'lib/utils';
-import ApiModule from 'modules/api';
+import ValidParameters from 'plugins/validParameters';
+
 import homeRoutes from 'routes/home';
 import publicRoutes from 'routes/public';
-
+import apiRoutes from 'routes/api';
 
 const server = new Hapi.Server({
   debug: {request: ['*']}, // TODO: Put in config
@@ -38,7 +38,7 @@ server.register([
   Vision,
   Etags,
   {register: Good, options: loggingOptions},
-  ApiModule
+  ValidParameters
 ], (err) => {
   if (err) {
     console.error(err);
@@ -53,8 +53,9 @@ server.register([
     path: './views'
   });
 
-  utils.addRoutes(server, publicRoutes, '/public');
-  utils.addRoutes(server, homeRoutes);
+  publicRoutes.add(server, '/public');
+  apiRoutes.add(server, '/api/v1');
+  homeRoutes.add(server);
 
   server.route({
     method: '*',
@@ -64,11 +65,9 @@ server.register([
     }
   });
 
-  if (require.main === module) {
-    server.start(() => {
-      console.log(`Server running at ${server.info.uri}`);
-    });
-  }
+  server.start(() => {
+    console.log(`Server running at ${server.info.uri}`);
+  });
 });
 
 export default server;
