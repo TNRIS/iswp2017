@@ -1,7 +1,9 @@
 
 import path from 'path';
 
-export default [
+import utils from 'lib/utils';
+
+const routes = [
   {
     method: 'GET',
     path: '/static/{param*}',
@@ -20,4 +22,17 @@ export default [
       }
     }
   }
-];
+]
+
+function add(server, basePath = '/') {
+  const validParams = server.plugins.validParameters;
+  if (!validParams) {
+    throw new Error('validParameters must be loaded before adding api routes');
+  }
+
+  utils.addRoutes(server, routes, basePath);
+}
+
+export default {
+  add
+};

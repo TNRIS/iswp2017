@@ -6,7 +6,7 @@ import Spinner from 'react-spinkit';
 import classnames from 'classnames';
 
 import constants from '../constants';
-import PlaceSummarySubhead from './PlaceSummarySubhead';
+// import PlaceSummarySubhead from './PlaceSummarySubhead';
 import PropTypes from '../utils/CustomPropTypes';
 import PopulationChart from './charts/PopulationChart';
 
@@ -36,8 +36,6 @@ export default React.createClass({
     if (!props.viewData || R.isEmpty(R.keys(props.viewData))) {
       return (
         <div className="view-summary">
-          <h2 className={classnames({'long-name': isLong})}>{typeAndId}</h2>
-
           <Spinner spinnerName="double-bounce" noFadeIn />
         </div>
       );
