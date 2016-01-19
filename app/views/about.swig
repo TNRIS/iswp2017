@@ -336,5 +336,7 @@
 {% endblock content %}
 
 {% block bodyscripts %}
-
+  <script>
+    ga('send', 'pageview');
+  </script>
 {% endblock bodyscripts %}
