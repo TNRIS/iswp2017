@@ -26,84 +26,94 @@ const summaryTables = {
   // strategies: 'vw2017MapWugWms' TODO: Strategy view not yet in DB, ref #51
 };
 
-const renameValueFields = (theme) => {
+function renameValueFields(theme) {
   return constants.YEARS.map((year) => {
     return `${constants.VALUE_PREFIXES[theme]}${year} as Value_${year}`;
   });
-};
+}
 
-const makeTypeSumFields = (theme) => {
+function makeTypeSumFields(theme) {
   return constants.YEARS.map((year) => {
     return `${constants.VALUE_PREFIXES[theme]}${year} as Total_${year}`;
   });
-};
+}
 
-const makeDecadeSumFields = (theme) => {
+function makeDecadeSumFields(theme) {
   return constants.YEARS.map((year) => {
     return `${constants.VALUE_PREFIXES[theme]}${year} as ${year}`;
   });
-};
+}
+
+function selectTypeSums(theme, whereKey, whereVal) {
+  const table = dataTables[theme];
+  const typeSumFields = makeTypeSumFields(theme);
+
+  let typeSumChain = db.select('WugType');
+  typeSumFields.forEach((f) => { typeSumChain = typeSumChain.sum(f); });
+  let query = typeSumChain.from(table);
+  if (whereKey && whereVal) {
+    query = query.where(whereKey, whereVal);
+  }
+  query = query.groupBy('WugType');
+  return query;
+}
+
+function selectDecadeSums(theme, whereKey, whereVal) {
+  const table = dataTables[theme];
+  const decadeSumFields = makeDecadeSumFields(theme);
+  let decadeSumChain = db;
+  decadeSumFields.forEach((f) => { decadeSumChain = decadeSumChain.sum(f); });
+  let query = decadeSumChain.from(table);
+  if (whereKey && whereVal) {
+    query = query.where(whereKey, whereVal);
+  }
+  return query;
+}
+
+function selectDataRows(theme, whereKey, whereVal) {
+  const table = dataTables[theme];
+  const isNeeds = theme === 'needs';
+
+  const commonFields = [`${table}.EntityId`, `${table}.EntityName`,
+    `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
+    `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
+    `${entityTable}.EntityIsSplit`
+  ];
+
+  let dataSelectFields = R.concat(renameValueFields(theme), commonFields);
+
+  if (isNeeds) {
+    const npdCols = R.map((year) => `NPD${year}`, constants.YEARS);
+    dataSelectFields = R.concat(npdCols, dataSelectFields);
+  }
+
+  let query = db.select(dataSelectFields).from(table)
+      .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`);
+
+  if (isNeeds) {
+    query = query.join(needsPctDemandsTable, `${table}.EntityId`, `${needsPctDemandsTable}.EntityId`);
+  }
+
+  if (whereKey && whereVal) {
+    query = query.where(`${table}.${whereKey}`, whereVal);
+  }
+
+  return query;
+}
 
 //TODO: Refactor. Split out various promises into separate functions then have the main methods
 // call the ones they need.
 function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
   return (theme) => {
     const dataPromises = [];
-    const table = dataTables[theme];
-    const isNeeds = theme === 'needs';
 
     //TODO: What to do with negative values (as in some strategies)?
-    const typeSumFields = makeTypeSumFields(theme);
-    let typeSumChain = db.select('WugType');
-    typeSumFields.forEach((f) => { typeSumChain = typeSumChain.sum(f); });
-    let selectTypeSums = typeSumChain.from(table);
-    if (whereKey && whereVal) {
-      selectTypeSums = selectTypeSums.where(whereKey, whereVal);
-    }
-    selectTypeSums = selectTypeSums.groupBy('WugType');
-    dataPromises.push(selectTypeSums);
 
-    const decadeSumFields = makeDecadeSumFields(theme);
-    let decadeSumChain = db;
-    decadeSumFields.forEach((f) => { decadeSumChain = decadeSumChain.sum(f); });
-    let selectDecadeSums = decadeSumChain.from(table);
-    if (whereKey && whereVal) {
-      selectDecadeSums = selectDecadeSums.where(whereKey, whereVal);
-    }
-    dataPromises.push(selectDecadeSums);
+    dataPromises.push(selectTypeSums(theme, whereKey, whereVal));
+    dataPromises.push(selectDecadeSums(theme, whereKey, whereVal));
 
     if (!omitRows) {
-      const commonFields = [`${table}.EntityId`, `${table}.EntityName`,
-        `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
-        `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
-        `${entityTable}.EntityIsSplit`
-      ];
-
-      let dataSelectFields = R.concat(renameValueFields(theme), commonFields);
-
-      if (isNeeds) {
-        const npdCols = R.map((year) => `NPD${year}`, constants.YEARS);
-        dataSelectFields = R.concat(npdCols, dataSelectFields);
-      }
-
-      let selectData = db.select(dataSelectFields).from(table)
-          .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`);
-
-      if (isNeeds) {
-        selectData = selectData.join(needsPctDemandsTable, `${table}.EntityId`, `${needsPctDemandsTable}.EntityId`);
-      }
-
-      if (whereKey && whereVal) {
-        if (whereKey === 'EntityId') {
-          //TODO: this is a hack. Fix by splitting out this giant method into smaller pieces.
-          selectData = selectData.where(`${table}.EntityId`, whereVal);
-        }
-        else {
-          selectData = selectData.where(whereKey, whereVal);
-        }
-      }
-
-      dataPromises.push(selectData);
+      dataPromises.push(selectDataRows(theme, whereKey, whereVal));
     }
 
     return Promise.all(dataPromises)
