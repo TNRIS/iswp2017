@@ -43,6 +43,11 @@
       ga('create', '{{ gaTrackingCode }}', 'auto');
     </script>
 
-    {% block bodyscripts %}{% endblock bodyscripts %}
+    {% block bodyscripts %}
+      {# Default to sending a pageview. Child templates can have a blank block to avoid the page track. #}
+      <script>
+        ga('send', 'pageview');
+      </script>
+    {% endblock bodyscripts %}
   </body>
 </html>

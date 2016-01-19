@@ -34,3 +34,7 @@
     </div>
   </section>
 {% endblock content %}
+
+{% block bodyscripts %}
+  {# empty block to avoid sending GA pageview #}
+{% endblock bodyscripts %}
