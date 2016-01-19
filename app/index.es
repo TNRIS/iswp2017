@@ -53,9 +53,9 @@ server.register([
     path: './views'
   });
 
-  publicRoutes.add(server, '/public');
-  apiRoutes.add(server, '/api/v1');
-  homeRoutes.add(server);
+  publicRoutes.addTo(server, '/public');
+  apiRoutes.addTo(server, '/api/v1');
+  homeRoutes.addTo(server);
 
   server.route({
     method: '*',

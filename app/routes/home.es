@@ -8,7 +8,7 @@ function to404(request, reply) {
   return reply.view('404').code(404);
 }
 
-function add(server, basePath = '/') {
+function addTo(server, basePath = '/') {
   const validParams = server.plugins.validParameters;
   if (!validParams) {
     throw new Error('validParameters must be loaded before adding api routes');
@@ -84,5 +84,5 @@ function add(server, basePath = '/') {
 }
 
 export default {
-  add
+  addTo
 };
