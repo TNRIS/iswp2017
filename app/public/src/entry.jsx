@@ -27,6 +27,12 @@ import './vendor/js/leaflet.defaultextent.js';
 
 import './sass/main.scss';
 
+history.listen((loc) => {
+  if (window && window.ga) {
+    window.ga('send', 'pageview', loc);
+  }
+});
+
 ReactDOM.render((
   <Router history={history}>
     <Route component={App}>

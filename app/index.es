@@ -11,9 +11,10 @@ import ValidParameters from 'plugins/validParameters';
 import homeRoutes from 'routes/home';
 import publicRoutes from 'routes/public';
 import apiRoutes from 'routes/api';
+import config from 'config';
 
 const server = new Hapi.Server({
-  debug: {request: ['*']}, // TODO: Put in config
+  debug: {request: ['*']},
 });
 
 const loggingOptions = {
@@ -29,7 +30,7 @@ server.on('request-error', (request, err) => {
 });
 
 server.connection({
-  port: 3333, // TODO: Put in config
+  port: config.port,
   router: {stripTrailingSlash: true}
 });
 
@@ -50,7 +51,10 @@ server.register([
       swig: swig
     },
     relativeTo: __dirname,
-    path: './views'
+    path: './views',
+    context: {
+      gaTrackingCode: config.gaTrackingCode
+    }
   });
 
   publicRoutes.addTo(server, '/public');
