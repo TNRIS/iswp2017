@@ -44,6 +44,17 @@ function makeDecadeSumFields(theme) {
   });
 }
 
+function makeDataSelectionFields(theme) {
+  const table = dataTables[theme];
+  const commonFields = [`${table}.EntityId`, `${table}.EntityName`,
+    `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
+    `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
+    `${entityTable}.EntityIsSplit`
+  ];
+
+  return R.concat(renameValueFields(theme), commonFields);
+}
+
 function selectTypeSums(theme, whereKey, whereVal) {
   const table = dataTables[theme];
   const typeSumFields = makeTypeSumFields(theme);
@@ -74,13 +85,7 @@ function selectDataRows(theme, whereKey, whereVal) {
   const table = dataTables[theme];
   const isNeeds = theme === 'needs';
 
-  const commonFields = [`${table}.EntityId`, `${table}.EntityName`,
-    `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
-    `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
-    `${entityTable}.EntityIsSplit`
-  ];
-
-  let dataSelectFields = R.concat(renameValueFields(theme), commonFields);
+  let dataSelectFields = makeDataSelectionFields(theme);
 
   if (isNeeds) {
     const npdCols = R.map((year) => `NPD${year}`, constants.YEARS);
