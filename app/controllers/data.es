@@ -106,14 +106,12 @@ function selectDataRows(theme, whereKey, whereVal) {
   return query;
 }
 
-//TODO: Refactor. Split out various promises into separate functions then have the main methods
-// call the ones they need.
+
 function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
   return (theme) => {
     const dataPromises = [];
 
     //TODO: What to do with negative values (as in some strategies)?
-
     dataPromises.push(selectTypeSums(theme, whereKey, whereVal));
     dataPromises.push(selectDecadeSums(theme, whereKey, whereVal));
 

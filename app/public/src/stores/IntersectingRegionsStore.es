@@ -1,13 +1,16 @@
 
+import axios from 'axios';
+
+import constants from '../constants';
 import alt from '../alt';
-import CdbUtil from '../utils/CdbUtil';
 import IntersectingRegionsActions from '../actions/IntersectingRegionsActions';
 
 export const IntersectingRegionsSource = {
   // "fetch" will become a method on IntersectingRegionsStore --> IntersectingRegionsStore.fetch({type, typeId})
   fetch: {
     remote(state, countyName) {
-      return CdbUtil.getIntersectingRegions(countyName);
+      return axios.get(`${constants.API_BASE}/places/county/${countyName}/regions`)
+        .then(({data}) => data);
     },
 
     local() {

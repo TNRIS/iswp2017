@@ -6,7 +6,7 @@ import Spinner from 'react-spinkit';
 import classnames from 'classnames';
 
 import constants from '../constants';
-// import PlaceSummarySubhead from './PlaceSummarySubhead';
+import PlaceSummarySubhead from './PlaceSummarySubhead';
 import PropTypes from '../utils/CustomPropTypes';
 import PopulationChart from './charts/PopulationChart';
 
@@ -45,12 +45,9 @@ export default React.createClass({
       <div className="view-summary">
         <h2 className={classnames({'long-name': isLong})}>{typeAndId}</h2>
 
-        {/* REMOVED, ref #122 and #56
-          TODO: Fix once #56 is done
         <div className="subhead">
           <PlaceSummarySubhead type={props.type} typeId={props.typeId} />
         </div>
-        */}
 
         <PopulationChart viewData={props.viewData} />
 
