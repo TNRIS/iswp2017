@@ -83,10 +83,6 @@
     .heading-#{$name} {
       border-bottom: 1px solid $color;
     }
-
-    .icon-#{$name} {
-      fill: $color;
-    }
   }
 
   .usage-type-icon {
