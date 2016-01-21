@@ -25,6 +25,7 @@ $media-xs: 400px;
 $border-color: #e0e0e0;
 $twdb-blue: #3F556D;
 $link-hover-color: #0FA0CE;
+$panel-background-color: #fbfbfb;
 
 $themes: ('demands', rgb(172, 40, 133)), ('supplies', rgb(0, 151, 214)),
   ('needs', rgb(237, 27, 47)), ('strategies',  rgb(10, 162, 69)),
@@ -270,7 +271,7 @@ $top-height: 34rem;
   margin: 0 0 2rem 0;
   border-radius: 0;
   padding: 1rem 1.4rem;
-  background-color: #fbfbfb;
+  background-color: $panel-background-color;
   border-bottom: 1px solid #a9a9a9;
 
   @media (min-width: $media-m) {

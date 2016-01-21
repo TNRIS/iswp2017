@@ -15,7 +15,6 @@ export default React.createClass({
 
   mixins: [PureRenderMixin],
 
-
   render() {
     if (!this.props.entries || R.isEmpty(this.props.entries)) {
       return (<div></div>);
@@ -28,7 +27,7 @@ export default React.createClass({
             return (
               <li key={i} className="legend-entry">
                 <svg className="legend-marker">
-                  <circle cx="7" cy="7" r="6" className={entry.className}></circle>
+                  <circle cx="8" cy="8" r="6" className={entry.className}></circle>
                 </svg>
                 {entry.display}
               </li>

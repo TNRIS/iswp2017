@@ -1,9 +1,9 @@
 
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import classnames from 'classnames';
 
 import constants from '../constants';
-// import {slugify} from '../utils'; //todo: wrap in class
 
 import Irrigation from '../../static/img/icon-irrigation.svg';
 import Municipal from '../../static/img/icon-municipal.svg';
@@ -12,24 +12,33 @@ import SteamElectricPower from '../../static/img/icon-steam-electric-power.svg';
 import Livestock from '../../static/img/icon-livestock.svg';
 import Mining from '../../static/img/icon-mining.svg';
 
-const typeIcons = {
-  'IRRIGATION': <Irrigation className="usage-type-icon icon-irrigation" />,
-  'MUNICIPAL': <Municipal className="usage-type-icon icon-municipal" />,
-  'MANUFACTURING': <Manufacturing className="usage-type-icon icon-manufacturing" />,
-  'STEAM ELECTRIC POWER': <SteamElectricPower className="usage-type-icon icon-steam-electric-power" />,
-  'LIVESTOCK': <Livestock className="usage-type-icon icon-livestock" />,
-  'MINING': <Mining className="usage-type-icon icon-mining" />
-};
-
 
 export default React.createClass({
   propTypes: {
-    type: React.PropTypes.oneOf(constants.USAGE_TYPES).isRequired
+    type: React.PropTypes.oneOf(constants.USAGE_TYPES).isRequired,
+    className: React.PropTypes.string
   },
 
   mixins: [PureRenderMixin],
 
   render() {
-    return typeIcons[this.props.type];
+    const props = this.props;
+
+    switch (props.type) {
+    case 'IRRIGATION':
+      return <Irrigation className={classnames("usage-type-icon icon-irrigation", props.className)} />;
+    case 'MUNICIPAL':
+      return <Municipal className={classnames("usage-type-icon icon-municipal", props.className)} />;
+    case 'MANUFACTURING':
+      return <Manufacturing className={classnames("usage-type-icon icon-manufacturing", props.className)} />;
+    case 'STEAM ELECTRIC POWER':
+      return <SteamElectricPower className={classnames("usage-type-icon icon-steam-electric-power", props.className)} />;
+    case 'LIVESTOCK':
+      return <Livestock className={classnames("usage-type-icon icon-livestock", props.className)} />;
+    case 'MINING':
+      return <Mining className={classnames("usage-type-icon icon-mining", props.className)} />;
+    default:
+      return <div />;
+    }
   }
 });

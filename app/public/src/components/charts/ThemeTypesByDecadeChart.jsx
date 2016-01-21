@@ -5,7 +5,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import titleize from 'titleize';
 
 import ChartDataTable from '../ChartDataTable';
-import ChartLegend from '../ChartLegend';
+import UsageTypeChartLegend from '../UsageTypeChartLegend';
 import constants from '../../constants';
 import LineChart from './LineChart';
 import PropTypes from '../../utils/CustomPropTypes';
@@ -68,18 +68,11 @@ export default React.createClass({
       })
     };
 
-    const legendEntries = constants.USAGE_TYPES.map((type) => {
-      return {
-        className: `series-${utils.slugify(type.toLowerCase())}`,
-        display: titleize(type)
-      };
-    });
-
     return (
       <div>
         <div className="chart-header">
           <h4>{constants.THEME_TITLES[this.state.selectedTheme]} by Usage Type <span className="units">(acre-feet/year)</span></h4>
-          <ChartLegend entries={legendEntries} className="u-pull-right legend-types-by-decade" />
+          <UsageTypeChartLegend className="u-pull-right legend-types-by-decade" />
         </div>
         <div className="u-cf u-full-width">
           <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} />
