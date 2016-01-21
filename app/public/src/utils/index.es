@@ -33,8 +33,23 @@ function getChartLeftPadding(chartData) {
   return 10;
 }
 
+function getViewName(type, typeId) {
+  let typeAndId = typeId;
+
+  if (type === 'region') {
+    typeAndId = `Region ${typeId}`;
+  }
+  else if (type === 'county') {
+    typeAndId += ' County';
+  }
+
+  typeAndId = typeAndId.toUpperCase();
+  return typeAndId;
+}
+
 export default {
   slugify,
   getMapPadding,
-  getChartLeftPadding
+  getChartLeftPadding,
+  getViewName
 };
