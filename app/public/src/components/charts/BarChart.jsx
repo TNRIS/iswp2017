@@ -123,7 +123,7 @@ export default React.createClass({
       width: '100%',
       seriesBarDistance: 10,
       chartPadding: {
-        left: 20
+        left: 40
       },
       axisY: {
         labelInterpolationFnc: format()

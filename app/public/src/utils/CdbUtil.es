@@ -130,7 +130,7 @@ function createRegionsLayer() {
           text-allow-overlap: true;
           text-label-position-tolerance: 10;
           [zoom < 6] {
-            text-size: 9;
+            text-size: 11;
             text-halo-radius: 1;
           }
         }

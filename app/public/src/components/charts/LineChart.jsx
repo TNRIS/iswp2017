@@ -113,7 +113,7 @@ export default React.createClass({
       lineSmooth: false,
       width: '100%',
       chartPadding: {
-        left: 20,
+        left: 30,
         right: 30
       },
       axisY: {
