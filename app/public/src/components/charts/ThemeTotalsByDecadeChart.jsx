@@ -67,7 +67,7 @@ export default React.createClass({
       <div>
         <div className="chart-header">
           <h4>Totals by Decade <span className="units">(acre-feet/year)</span></h4>
-          <ChartLegend entries={legendEntries} className="u-pull-right" />
+          <ChartLegend entries={legendEntries} rectangle className="u-pull-right" />
         </div>
         <BarChart chartData={chartData} chartOptions={chartOptions} />
         <ChartDataTable className="u-full-width" chartData={chartData} alwaysVisible />

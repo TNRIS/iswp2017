@@ -63,7 +63,7 @@
       $name: nth($theme, 1);
       $color: nth($theme, 2);
 
-      circle.series-#{$name} {
+      .series-#{$name} {
         @include legend-color($color);
       }
     }

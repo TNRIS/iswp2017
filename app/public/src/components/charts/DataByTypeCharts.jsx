@@ -71,7 +71,7 @@ export default React.createClass({
       <div>
         <div className="chart-header">
           <h4>Data by Usage Type <span className="units">(acre-feet/year)</span></h4>
-          <ChartLegend className="u-pull-right" entries={legendEntries} />
+          <ChartLegend rectangle className="u-pull-right" entries={legendEntries} />
         </div>
         {everyTwoTypes.map(([groupOne, groupTwo], i) => {
           const groupOneData = {labels: constants.DECADES, series: seriesByType[groupOne]};
