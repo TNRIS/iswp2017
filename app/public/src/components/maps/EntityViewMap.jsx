@@ -21,6 +21,8 @@ export default React.createClass({
       constants.VIEW_MAP_OPTIONS
     );
 
+    this.map.attributionControl.setPrefix('');
+
     L.control.zoom({position: 'topright'}).addTo(this.map);
     L.control.defaultExtent({
       position: 'topright',

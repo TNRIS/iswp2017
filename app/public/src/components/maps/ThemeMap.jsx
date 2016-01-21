@@ -40,6 +40,8 @@ export default React.createClass({
       zoomControl: false
     });
 
+    this.map.attributionControl.setPrefix('');
+
     this.spiderfier = new OverlappingMarkerSpiderfier(map, {
       keepSpiderfied: true,
       nearbyDistance: 5
