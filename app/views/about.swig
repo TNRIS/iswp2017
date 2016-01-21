@@ -35,6 +35,7 @@
               <li><a href="#DownloadingData">Downloading Data</a></li>
               <li><a href="#AboutUs">About Us</a></li>
               <li><a href="#SitePolicies">Site Policies</a></li>
+              <li><a href="#Credits">Credits</a></li>
             </ol>
           </section>
           <section id="WhatIsThis">
@@ -326,8 +327,22 @@
               <li><a href="http://info.sos.texas.gov/pls/pub/readtac$ext.ViewTAC?tac_view=4&amp;ti=1&amp;pt=10&amp;ch=206" title="State Rules: 1 TAC Section 206">State Rules: 1 TAC Section 206</a></li>
               <li><a href="http://www2.dir.texas.gov/SitePolicies/Pages/accessibilitypolicy.aspx" title="Web Accessibility in Texas">Web Accessibility in Texas</a></li>
             </ul>
+          </section>
 
+          <section id="Credits">
+            <h3>Credits</h3>
             <a href="#Top"><small>Back to Top</small></a>
+            <ul>
+              <li>
+                <a href="https://thenounproject.com/search/?q=factory&i=11499" title="Factory icon">Factory icon</a> by <a href="https://thenounproject.com/jeremy.j.bristol/" title="Jeremy J Bristol">Jeremy J Bristol</a> (<a href="http://creativecommons.org/licenses/by/3.0/us/" title="CC BY">CC BY</a>) from the <a href="https://thenounproject.com/" title="Noun Project">Noun Project</a>.
+              </li>
+              <li>
+                All other icons are public domain and can be found at the <a href="https://thenounproject.com/" title="Noun Project">Noun Project</a>.
+              </li>
+              <li>
+                <a href="http://subtlepatterns.com/seamless-paper-texture/" title="Seamless Paper Texture">Seamless Paper Texture</a> by Merry (<a href="http://creativecommons.org/licenses/by-sa/3.0/" title="CC BY-SA">CC BY-SA</a>).
+              </li>
+            </ul>
           </section>
         </div>
       </div>

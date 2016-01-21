@@ -1,12 +1,13 @@
 
 $font: GillSansMT, sans-serif;
+$bodyColor: #3e3e3e;
 
 html {
   height: 100%;
 }
 
 body {
-  color: #3e3e3e;
+  color: $bodyColor;
    /* Seamless Paper Texture by Merry
     From: http://subtlepatterns.com/seamless-paper-texture/
     CC-BY-SA: http://creativecommons.org/licenses/by-sa/3.0/
@@ -51,8 +52,8 @@ h5 {
   font-size: 2.2rem;
   font-family: $font;
   font-style: italic;
+  color: $bodyColor;
   font-weight: normal;
-  color: $twdb-blue;
   margin-bottom: 0.5rem;
 }
 

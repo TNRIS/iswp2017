@@ -7,9 +7,11 @@ import titleize from 'titleize';
 import BarChart from './BarChart';
 import ChartLegend from '../ChartLegend';
 import ChartDataTable from '../ChartDataTable';
+import UsageTypeIcon from '../UsageTypeIcon';
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import TitlePlugin from '../../utils/ChartistAxisTitlePlugin';
+import {slugify} from '../../utils';
 
 const chartOptions = {
   height: '200px',
@@ -76,15 +78,21 @@ export default React.createClass({
           const groupTwoData = {labels: constants.DECADES, series: seriesByType[groupTwo]};
           return (
             <div className="row" key={i}>
-              <div className="six columns wide">
-                <h5>{titleize(groupOne)}</h5>
+              <div className="six columns wide type-chart-container">
+                <UsageTypeIcon type={groupOne} />
+                <h5 className={`heading-${slugify(groupOne.toLowerCase())}`}>
+                  {titleize(groupOne)}
+                </h5>
                 <BarChart
                   chartData={groupOneData}
                   chartOptions={chartOptions} />
                 <ChartDataTable className="u-full-width" chartData={groupOneData} />
               </div>
-              <div className="six columns wide">
-                <h5>{titleize(groupTwo)}</h5>
+              <div className="six columns wide type-chart-container">
+                <UsageTypeIcon type={groupTwo} />
+                <h5 className={`heading-${slugify(groupTwo.toLowerCase())}`}>
+                  {titleize(groupTwo)}
+                </h5>
                 <BarChart
                   chartData={groupTwoData}
                   chartOptions={chartOptions} />

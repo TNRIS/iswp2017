@@ -75,6 +75,28 @@
   }
 }
 
+.type-chart-container {
+  @each $type in $usageTypes {
+    $name: nth($type, 1);
+    $color: nth($type, 2);
+
+    .heading-#{$name} {
+      border-bottom: 1px solid $color;
+    }
+
+    .icon-#{$name} {
+      fill: $color;
+    }
+  }
+
+  .usage-type-icon {
+    width: 40px;
+    float: right;
+    background: #fff;
+    padding-left: 10px;
+  }
+}
+
 .bar-chart-container {
   position: relative;
 
