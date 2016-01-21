@@ -114,6 +114,10 @@
   .ct-label {
     font-size: small;
     color: #3e3e3e;
+
+    &.ct-horizontal {
+      font-size: 0.9em;
+    }
   }
 
   .ct-axis-title {
@@ -202,6 +206,8 @@
 }
 
 .chart-table-container {
+  margin-bottom: 1rem;
+
   .toggle-container {
     width: 100%;
     text-align: right;
@@ -214,6 +220,7 @@
   table {
     font-size: smaller;
     line-height: 1.4rem;
+    margin-bottom: 0;
 
     th, td {
       text-align: right;
