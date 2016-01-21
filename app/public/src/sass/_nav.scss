@@ -14,14 +14,15 @@ $nav-color: lighten($twdb-blue, 10%);
   button, .button {
     color: white;
     margin: 0 0 -1px -1px;
-    border-bottom: none;
     border-radius: 0;
+    border-color: white;
     display: inline-block;
 
+    &.active {
+      background-color: $nav-color;
+    }
+
     &:focus, &:hover {
-      border-left-color: white;
-      border-right-color: white;
-      border-top-color: white;
       border-bottom: 1px solid white;
       background-color: $nav-color;
       text-decoration: none;
@@ -45,24 +46,9 @@ $nav-color: lighten($twdb-blue, 10%);
   }
 }
 
-button.nav-toggle {
-  &.on {
-    border-left-color: white;
-    border-right-color: white;
-    border-top-color: white;
-    background-color: $nav-color;
-    border-bottom: 1px solid $nav-color;
-  }
-
-  &:focus, &:focus.on, &:hover, &:hover.on {
-    border-bottom: 1px solid $nav-color;
-  }
-}
-
 .header-nav {
   transition: all 0.3s ease-in-out;
   background-color: $nav-color;
-  text-align: right;
   padding: 1rem 0;
   border-top: 1px solid white;
 

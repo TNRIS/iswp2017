@@ -1,22 +1,10 @@
 
 import React from 'react';
-import ToggleDisplay from 'react-toggle-display';
-import classnames from 'classnames';
 
 import HomeIcon from '../../static/img/home.svg';
 import HeaderNav from './HeaderNav';
 
 export default React.createClass({
-  getInitialState() {
-    return {
-      isNavOpen: true
-    };
-  },
-
-  toggleNav() {
-    this.setState({isNavOpen: !this.state.isNavOpen});
-  },
-
   render() {
     return (
       <header className="header">
@@ -31,16 +19,10 @@ export default React.createClass({
 
           <div className="nav-container">
             <a className="button button-home" title="Home" href="/"><HomeIcon/></a>
-            <button onClick={this.toggleNav} title="Navigate"
-              className={classnames('nav-toggle', {'on': this.state.isNavOpen})}>
-              Navigate
-            </button>
             <a className="button" href="/about" title="About">About</a>
           </div>
         </div>
-        <ToggleDisplay show={this.state.isNavOpen}>
-          <HeaderNav />
-        </ToggleDisplay>
+        <HeaderNav />
       </header>
     );
   }

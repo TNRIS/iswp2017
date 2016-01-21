@@ -108,7 +108,7 @@ export default React.createClass({
             value={this.state.navCategory}
             className="nav-category-select"
             id="nav-category-select">
-            <option value="statewide">Statewide</option>
+            <option value="statewide">All of Texas</option>
             <option value="region">Region</option>
             <option value="county">County</option>
             <option value="entity">Water User Group</option>
