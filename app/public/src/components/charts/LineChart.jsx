@@ -33,8 +33,10 @@ export default React.createClass({
     window.addEventListener('scroll', this.clearInteraction);
   },
 
-  componentDidUpdate() {
-    this.updateChart();
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      this.updateChart();
+    }
   },
 
   componentWillUnmount() {

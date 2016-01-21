@@ -44,8 +44,10 @@ export default React.createClass({
     window.addEventListener('scroll', this.clearInteraction);
   },
 
-  componentDidUpdate() {
-    this.updateChart();
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      this.updateChart();
+    }
   },
 
   componentWillUnmount() {
@@ -123,7 +125,7 @@ export default React.createClass({
       width: '100%',
       seriesBarDistance: 10,
       chartPadding: {
-        left: 40
+        left: 30
       },
       axisY: {
         labelInterpolationFnc: format()
