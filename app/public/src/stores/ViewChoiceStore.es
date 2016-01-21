@@ -6,7 +6,7 @@ import constants from '../constants';
 class ViewChoiceStore {
   constructor() {
     this.selectedDecade = constants.DECADES[0];
-    this.selectedTheme = constants.THEMES[0];
+    this.selectedTheme = 'needs'; //default to Needs view
 
     this.bindListeners({
       handleUpdateDecadeChoice: ViewChoiceActions.UPDATE_DECADE_CHOICE,
