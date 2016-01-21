@@ -16,7 +16,10 @@
     {# This will get replaced once the react app loads #}
     <header class="header">
       <div class="header-title wrapper">
-        <h1><a href="/" title="Home">DRAFT 2017 Texas State Water Plan</a></h1>
+        <h1>
+          <a href="/" title="Home"><span class="first-line">DRAFT 2017</span><br/>Texas State Water Plan</a>
+        </h1>
+        <span class="by-the show-medium">by the</span>
         <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">
           <img src="/public/static/img/twdb-logo-dark-bkgd-w200px-3c.png" class="logo" />
         </a>

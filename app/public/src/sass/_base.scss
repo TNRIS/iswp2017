@@ -124,19 +124,37 @@ select {
   h1 {
     display: inline-block;
     font-size: 2rem;
-    margin-right: 2rem;
-    margin-bottom: 1rem;
+    line-height: 2rem;
+    margin-right: 1rem;
+    margin-bottom: 0.8rem;
     color: #fff;
+
+    .first-line {
+      color: #BAD4E6;
+      font-size: 1.8rem;
+      font-weight: normal;
+    }
+
+    @media (min-width: $media-m) {
+      font-size: 3rem;
+      line-height: 2.5rem;
+      margin-bottom: 1rem;
+
+      .first-line {
+        font-size: 2.3rem;
+      }
+    }
 
     a, a:hover, a:visited {
       text-decoration: none;
       color: inherit;
     }
+  }
 
-    @media (min-width: $media-m) {
-      font-size: 2.5rem;
-      margin-right: 4rem;
-    }
+  .by-the {
+    margin-right: 1rem;
+    font-style: italic;
+    color: #fff;
   }
 
   a:hover {
