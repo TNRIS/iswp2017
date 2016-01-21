@@ -6,6 +6,7 @@
     <link rel="icon" type="image/x-icon" href="/public/static/img/favicon.ico" />
     <!--[IF lte IE 9]>
       <script src="/public/static/js/matchMedia.js"></script>
+      <script src="/public/static/js/matchMedia.addListener.js"></script>
     <![endif]-->
     {% block styles %}
       <link rel="stylesheet" type="text/css" href="/public/static/webfonts/gill-sans.css">
@@ -17,6 +18,12 @@
   <body>
     <div id="page-wrapper">
       <div id="content">
+        <!--[if lte IE 8]>
+          <div class="browsehappy">
+            <p>You are using an <strong>unsupported</strong> browser: <a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support">https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support</a></p>
+            <p>Please <a href="http://browsehappy.com/" title="browsehappy">upgrade your browser</a> to improve your experience.</p>
+          </div>
+        <![endif]-->
         {% block content %}{% endblock content %}
       </div>
       <footer id="footer">
