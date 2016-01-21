@@ -7,6 +7,7 @@ import format from 'format-number';
 import classnames from 'classnames';
 import classList from 'dom-classlist';
 
+import utils from '../../utils';
 import SeriesHighlightActions from '../../actions/SeriesHighlightActions';
 
 function isAllZero(chartData) {
@@ -125,7 +126,7 @@ export default React.createClass({
       width: '100%',
       seriesBarDistance: 10,
       chartPadding: {
-        left: 30
+        left: utils.getChartLeftPadding(this.props.chartData)
       },
       axisY: {
         labelInterpolationFnc: format()

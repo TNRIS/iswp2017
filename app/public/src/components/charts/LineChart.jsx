@@ -115,7 +115,7 @@ export default React.createClass({
       lineSmooth: false,
       width: '100%',
       chartPadding: {
-        left: 30,
+        left: utils.getChartLeftPadding(this.props.chartData),
         right: 30
       },
       axisY: {
