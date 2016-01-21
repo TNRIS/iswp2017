@@ -9,7 +9,7 @@ import HeaderNav from './HeaderNav';
 export default React.createClass({
   getInitialState() {
     return {
-      isNavOpen: false
+      isNavOpen: true
     };
   },
 
