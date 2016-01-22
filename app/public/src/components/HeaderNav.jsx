@@ -108,7 +108,7 @@ export default React.createClass({
     }
 
     const usageTypeSelectOptions = constants.USAGE_TYPES.map((type) => {
-      return {value: type, label: titleize(type)};
+      return {value: type.toLowerCase(), label: titleize(type)};
     });
 
     return (

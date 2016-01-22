@@ -3,8 +3,6 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 
-import constants from '../constants';
-
 import Irrigation from '../../static/img/icon-irrigation.svg';
 import Municipal from '../../static/img/icon-municipal.svg';
 import Manufacturing from '../../static/img/icon-manufacturing.svg';
@@ -12,10 +10,9 @@ import SteamElectricPower from '../../static/img/icon-steam-electric-power.svg';
 import Livestock from '../../static/img/icon-livestock.svg';
 import Mining from '../../static/img/icon-mining.svg';
 
-
 export default React.createClass({
   propTypes: {
-    type: React.PropTypes.oneOf(constants.USAGE_TYPES).isRequired,
+    type: React.PropTypes.string.isRequired,
     className: React.PropTypes.string
   },
 
@@ -24,7 +21,7 @@ export default React.createClass({
   render() {
     const props = this.props;
 
-    switch (props.type) {
+    switch (props.type.toUpperCase()) {
     case 'IRRIGATION':
       return <Irrigation className={classnames("usage-type-icon icon-irrigation", props.className)} />;
     case 'MUNICIPAL':

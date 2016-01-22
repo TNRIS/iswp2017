@@ -3,7 +3,6 @@ import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
-import titleize from 'titleize';
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
