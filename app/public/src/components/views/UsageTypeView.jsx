@@ -61,7 +61,8 @@ export default React.createClass({
     const viewData = this.state.viewData;
     const usageType = this.props.params.typeId;
 
-    const title = titleize(this.props.params.typeId) + ' Usage';
+    const title = titleize(usageType) + ' Usage';
+    const viewName = usageType.toUpperCase();
 
     return (
       <div className="usage-type-view">
@@ -93,6 +94,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
+                        <span className="view-name">{viewName}</span>
                         <ThemeTotalsByDecadeChart viewData={viewData} />
                       </div>
                     </div>
@@ -104,6 +106,7 @@ export default React.createClass({
                     <div className="container">
                       <div className="row panel-row">
                         <div className="twelve columns">
+                          <span className="view-name">{viewName}</span>
                           <ThemeMaps placeData={{data: viewData}}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
@@ -112,6 +115,7 @@ export default React.createClass({
 
                       <div className="row panel-row">
                         <div className="twelve columns">
+                          <span className="view-name">{viewName}</span>
                           <PlacePivotTable viewData={viewData}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />

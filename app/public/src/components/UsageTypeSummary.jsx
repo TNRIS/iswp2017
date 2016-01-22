@@ -32,7 +32,7 @@ export default React.createClass({
       <div className="view-summary usage-type-summary">
         <h2>
           <UsageTypeIcon type={props.usageType} />
-          {titleize(props.usageType)}
+          {props.usageType.toUpperCase()}
         </h2>
         <p>{constants.USAGE_TYPE_DESCRIPTIONS[props.usageType.toUpperCase()]}</p>
       </div>
