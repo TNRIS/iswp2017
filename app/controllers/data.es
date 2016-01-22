@@ -225,6 +225,21 @@ class DataController {
       .then(R.compose(reply, R.mergeAll))
       .catch(handleApiError(reply));
   }
+
+  getForUsageType(request, reply) {
+    Hoek.assert(request.params.usageType, 'request.params.usageType is required');
+
+    const themes = R.keys(dataTables);
+    const dataPromises = themes.map(dataSelectionsByTheme({
+      whereKey: 'WugType',
+      whereVal: request.params.usageType.toUpperCase(),
+      omitRows: !!request.query.omitRows
+    }));
+
+    Promise.all(dataPromises)
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
+  }
 }
 
 export default DataController;

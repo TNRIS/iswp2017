@@ -3,71 +3,80 @@ import R from 'ramda';
 import React from 'react';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
+import titleize from 'titleize';
 
-import StatewideDataStore from '../stores/StatewideDataStore';
-import StatewideViewMap from './maps/StatewideViewMap';
-import StatewideSummary from './StatewideSummary';
-import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
-import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
-import DataByTypeCharts from './charts/DataByTypeCharts';
-import RegionalSummaryTreemap from './charts/RegionalSummaryTreemap';
-import ViewChoiceStore from '../stores/ViewChoiceStore';
-import ViewChoiceWrap from './ViewChoiceWrap';
-import RegionalSummaryTable from './RegionalSummaryTable';
+import UsageTypeDataStore from '../../stores/UsageTypeDataStore';
+import ViewChoiceStore from '../../stores/ViewChoiceStore';
+import UsageTypeSummary from '../UsageTypeSummary';
+import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
+import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
+import DataByTypeCharts from '../charts/DataByTypeCharts';
+import ThemeMaps from '../maps/ThemeMaps';
+import PlacePivotTable from '../PlacePivotTable';
+import ViewChoiceWrap from '../ViewChoiceWrap';
 
 export default React.createClass({
+  propTypes: {
+    params: React.PropTypes.shape({
+      typeId: React.PropTypes.string
+    }).isRequired
+  },
+
   getInitialState() {
     return {
-      data: StatewideDataStore.getState().data,
+      viewData: UsageTypeDataStore.getState().data,
       viewChoice: ViewChoiceStore.getState()
     };
   },
 
   componentDidMount() {
-    StatewideDataStore.listen(this.onChange);
+    UsageTypeDataStore.listen(this.onViewDataChange);
     ViewChoiceStore.listen(this.onViewChoiceChange);
-    this.fetchData();
+
+    this.fetchViewData(this.props.params);
   },
 
-  componentWillReceiveProps() {
-    this.fetchData();
+  componentWillReceiveProps(nextProps) {
+    this.fetchViewData(nextProps.params);
   },
 
   componentWillUnmount() {
-    StatewideDataStore.unlisten(this.onChange);
+    UsageTypeDataStore.unlisten(this.onViewDataChange);
     ViewChoiceStore.unlisten(this.onViewChoiceChange);
   },
 
-  onChange(state) {
-    this.setState(state);
+  onViewDataChange(state) {
+    this.setState({viewData: state.data});
   },
 
   onViewChoiceChange(state) {
     this.setState({viewChoice: state});
   },
 
-  fetchData() {
-    // Fetch statewide data
-    StatewideDataStore.fetch();
+  fetchViewData(params) {
+    UsageTypeDataStore.fetch({typeId: params.typeId});
   },
 
   render() {
-    const data = this.state.data;
+    const viewData = this.state.viewData;
+    const usageType = this.props.params.typeId;
+
+    const title = titleize(this.props.params.typeId) + ' Usage';
 
     return (
-      <div className="statewide-view">
-        <Helmet title="Statewide Summary" />
+      <div className="usage-type-view">
+        <Helmet title={title} />
         <section className="main-content">
-          <div className="view-top statewide-view-top">
+          <div className="view-top usage-type-view-top">
             <div className="summary-wrapper wrapper">
-              <StatewideSummary viewData={data} />
+              <UsageTypeSummary viewData={viewData} usageType={usageType} />
             </div>
-            <StatewideViewMap />
+            {/* <UsageTypeViewMap viewData={viewData} /> */}
           </div>
 
           {
             (() => {
-              if (!data || R.isEmpty(R.keys(data))) {
+              if (!viewData || R.isEmpty(R.keys(viewData))) {
                 return (
                   <div className="container">
                     <div className="row panel-row">
@@ -84,19 +93,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <ThemeTotalsByDecadeChart viewData={data} />
-                      </div>
-                    </div>
-
-                    <div className="row panel-row">
-                      <div className="twelve columns">
-                        <ThemeTypesByDecadeChart viewData={data} />
-                      </div>
-                    </div>
-
-                    <div className="row panel-row">
-                      <div className="twelve columns">
-                        <DataByTypeCharts viewData={data} />
+                        <ThemeTotalsByDecadeChart viewData={viewData} />
                       </div>
                     </div>
                   </div>
@@ -107,7 +104,7 @@ export default React.createClass({
                     <div className="container">
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <RegionalSummaryTreemap viewData={data}
+                          <ThemeMaps placeData={{data: viewData}}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
                         </div>
@@ -115,7 +112,7 @@ export default React.createClass({
 
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <RegionalSummaryTable viewData={data}
+                          <PlacePivotTable viewData={viewData}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
                         </div>
@@ -126,7 +123,6 @@ export default React.createClass({
               );
             })()
           }
-
         </section>
       </div>
     );

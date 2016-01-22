@@ -22,7 +22,7 @@ const routes = [
       }
     }
   }
-]
+];
 
 function addTo(server, basePath = '/') {
   const validParams = server.plugins.validParameters;

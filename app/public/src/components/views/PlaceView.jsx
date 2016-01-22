@@ -4,16 +4,16 @@ import Helmet from 'react-helmet';
 import titleize from 'titleize';
 import Spinner from 'react-spinkit';
 
-import PlaceDataStore from '../stores/PlaceDataStore';
-import PlaceViewMap from './maps/PlaceViewMap';
-import PlaceSummary from './PlaceSummary';
-import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
-import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
-import DataByTypeCharts from './charts/DataByTypeCharts';
-import ThemeMaps from './maps/ThemeMaps';
-import PlacePivotTable from './PlacePivotTable';
-import ViewChoiceWrap from './ViewChoiceWrap';
-import ViewChoiceStore from '../stores/ViewChoiceStore';
+import PlaceDataStore from '../../stores/PlaceDataStore';
+import PlaceViewMap from '../maps/PlaceViewMap';
+import PlaceSummary from '../PlaceSummary';
+import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
+import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
+import DataByTypeCharts from '../charts/DataByTypeCharts';
+import ThemeMaps from '../maps/ThemeMaps';
+import PlacePivotTable from '../PlacePivotTable';
+import ViewChoiceWrap from '../ViewChoiceWrap';
+import ViewChoiceStore from '../../stores/ViewChoiceStore';
 
 export default React.createClass({
   propTypes: {

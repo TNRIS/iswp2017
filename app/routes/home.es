@@ -66,6 +66,20 @@ function addTo(server, basePath = '/') {
     },
     {
       method: 'GET',
+      path: '/usagetype/{usageType}',
+      config: {
+        validate: {
+          params: {
+            //TODO: validate usageType .only(validParams.usageTypes)
+            usageType: Joi.string().required()
+          },
+          failAction: to404
+        }
+      },
+      handler: (request, reply) => reply.view('index')
+    },
+    {
+      method: 'GET',
       path: '/about',
       handler: (request, reply) => reply.view('about')
     },

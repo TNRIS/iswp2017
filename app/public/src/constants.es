@@ -18,8 +18,9 @@ export default {
     'LIVESTOCK',
     'MINING'
   ],
-  COUNTY_AGGREGATE_DESCS: {
+  USAGE_TYPE_DESCRIPTIONS: {
     IRRIGATION: "Irrigation water demand includes water used in irrigated field crops, vineyards, orchards, and self-supplied golf courses.",
+    MUNICIPAL: "Municipal water demand consists of water to be used for residential (single family and multi-family), commercial (including some manufacturing firms that do not use water in their production process), and institutional purposes (establishments dedicated to public service).",
     MANUFACTURING: "Manufacturing water demand consists of the future water necessary for large facilities including those that process chemicals, oil and gas, food, paper, and other materials.",
     'STEAM ELECTRIC POWER': "Steam-electric water demand consists of water used for the purpose of generating power.",
     LIVESTOCK: "Livestock water demand includes water used in the production of various types of livestock including cattle (beef and dairy), hogs, poultry, horses, sheep, and goats.",

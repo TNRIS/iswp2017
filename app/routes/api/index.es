@@ -13,11 +13,11 @@ function addTo(server, basePath = '/') {
     throw new Error('validParameters must be loaded before adding api routes');
   }
 
-  const dataRoutes = genDataRoutes(validParams.counties,
-    validParams.regions, validParams.entityIds);
-  const entityRoutes = genEntityRoutes(validParams.counties,
-    validParams.regions, validParams.entityIds);
-  const placesRoutes = genPlacesRoutes(validParams.counties);
+  const dataRoutes = genDataRoutes(validParams);
+
+  const entityRoutes = genEntityRoutes(validParams);
+
+  const placesRoutes = genPlacesRoutes(validParams);
 
   utils.addRoutes(server, dataRoutes, basePath);
   utils.addRoutes(server, entityRoutes, basePath);
