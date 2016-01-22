@@ -11,9 +11,10 @@ import {Router, Route, Redirect} from 'react-router';
 
 import App from './App';
 import history from './history';
-import PlaceView from './components/PlaceView';
-import EntityView from './components/EntityView';
-import StatewideView from './components/StatewideView';
+import PlaceView from './components/views/PlaceView';
+import UsageTypeView from './components/views/UsageTypeView';
+import EntityView from './components/views/EntityView';
+import StatewideView from './components/views/StatewideView';
 
 import './vendor/css/normalize.css';
 import './vendor/css/skeleton.css';
@@ -38,6 +39,7 @@ ReactDOM.render((
     <Route component={App}>
       <Route name="stateview" path="statewide" component={StatewideView}/>
       <Route name="entityview" path="entity/:entityId" component={EntityView}/>
+      <Route name="usagetypeview" path="usagetype/:typeId" component={UsageTypeView}/>
       <Route name="placeview" path=":type/:typeId" component={PlaceView}/>
       <Redirect from="/" to="/statewide" />
     </Route>

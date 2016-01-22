@@ -4,11 +4,11 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
-import EntityDataStore from '../stores/EntityDataStore';
+import EntityDataStore from '../../stores/EntityDataStore';
 
-import EntityViewMap from './maps/EntityViewMap';
-import EntitySummary from './EntitySummary';
-import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
+import EntityViewMap from '../maps/EntityViewMap';
+import EntitySummary from '../EntitySummary';
+import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 
 export default React.createClass({
   propTypes: {
@@ -40,7 +40,6 @@ export default React.createClass({
   },
 
   fetchData(params) {
-    // Fetch statewide data
     EntityDataStore.fetch({entityId: params.entityId});
   },
 

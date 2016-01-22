@@ -4,16 +4,16 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
-import StatewideDataStore from '../stores/StatewideDataStore';
-import StatewideViewMap from './maps/StatewideViewMap';
-import StatewideSummary from './StatewideSummary';
-import ThemeTotalsByDecadeChart from './charts/ThemeTotalsByDecadeChart';
-import ThemeTypesByDecadeChart from './charts/ThemeTypesByDecadeChart';
-import DataByTypeCharts from './charts/DataByTypeCharts';
-import RegionalSummaryTreemap from './charts/RegionalSummaryTreemap';
-import ViewChoiceStore from '../stores/ViewChoiceStore';
-import ViewChoiceWrap from './ViewChoiceWrap';
-import RegionalSummaryTable from './RegionalSummaryTable';
+import StatewideDataStore from '../../stores/StatewideDataStore';
+import StatewideViewMap from '../maps/StatewideViewMap';
+import StatewideSummary from '../StatewideSummary';
+import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
+import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
+import DataByTypeCharts from '../charts/DataByTypeCharts';
+import RegionalSummaryTreemap from '../charts/RegionalSummaryTreemap';
+import ViewChoiceStore from '../../stores/ViewChoiceStore';
+import ViewChoiceWrap from '../ViewChoiceWrap';
+import RegionalSummaryTable from '../RegionalSummaryTable';
 
 export default React.createClass({
   getInitialState() {
