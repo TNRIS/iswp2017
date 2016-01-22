@@ -10,14 +10,12 @@ import PropTypes from '../utils/CustomPropTypes';
 import PopulationChart from './charts/PopulationChart';
 
 function aggregateDescription(entityName) {
-  const categories = R.keys(constants.COUNTY_AGGREGATE_DESCS);
-  for (let i = 0; i < categories.length; i++) {
-    const category = categories[i];
-    if (entityName.indexOf(category) === 0) {
-      return constants.COUNTY_AGGREGATE_DESCS[category];
-    }
+  if (entityName.indexOf(',') === -1) {
+    return null;
   }
-  return null;
+
+  const usageType = entityName.split(',')[0];
+  return constants.USAGE_TYPE_DESCRIPTIONS[usageType.toUpperCase()];
 }
 
 export default React.createClass({
