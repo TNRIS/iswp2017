@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import titleize from 'titleize';
 import Spinner from 'react-spinkit';
 
+import utils from '../../utils';
 import PlaceDataStore from '../../stores/PlaceDataStore';
 import PlaceViewMap from '../maps/PlaceViewMap';
 import PlaceSummary from '../PlaceSummary';
@@ -78,6 +79,8 @@ export default React.createClass({
       title = '';
     }
 
+    const viewName = utils.getViewName(params.type, params.typeId);
+
     return (
       <div className="place-view">
         <Helmet title={title} />
@@ -113,18 +116,21 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
+                        <span className="view-name">{viewName}</span>
                         <ThemeTotalsByDecadeChart viewData={placeData.data} />
                       </div>
                     </div>
 
                     <div className="row panel-row">
                       <div className="twelve columns">
+                        <span className="view-name">{viewName}</span>
                         <ThemeTypesByDecadeChart viewData={placeData.data} />
                       </div>
                     </div>
 
                     <div className="row panel-row">
                       <div className="twelve columns">
+                        <span className="view-name">{viewName}</span>
                         <DataByTypeCharts viewData={placeData.data} />
                       </div>
                     </div>
@@ -136,6 +142,7 @@ export default React.createClass({
                     <div className="container">
                       <div className="row panel-row">
                         <div className="twelve columns">
+                          <span className="view-name">{viewName}</span>
                           <ThemeMaps placeData={placeData}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
@@ -144,6 +151,7 @@ export default React.createClass({
 
                       <div className="row panel-row">
                         <div className="twelve columns">
+                          <span className="view-name">{viewName}</span>
                           <PlacePivotTable viewData={placeData.data}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />

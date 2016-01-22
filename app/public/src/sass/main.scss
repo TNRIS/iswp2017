@@ -298,6 +298,13 @@ $top-height: 34rem;
   }
 }
 
+.view-name {
+  display: block;
+  color: lighten($twdb-blue, 10%);
+  font-size: 1.5rem;
+  line-height: 1rem;
+}
+
 .sticky {
   z-index: 1001;
   position: fixed;

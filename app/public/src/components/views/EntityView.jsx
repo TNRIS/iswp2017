@@ -78,6 +78,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
+                        <span className="view-name">{title}</span>
                         <ThemeTotalsByDecadeChart viewData={entityData.data} />
                       </div>
                     </div>
