@@ -102,6 +102,15 @@ lab.experiment('data api', () => {
       done();
     });
   });
+
+  lab.test('data - usagetype', (done) => {
+    server.inject('/api/v1/data/usagetype/mining', (res) => {
+      Code.expect(res.statusCode).to.equal(200);
+      Code.expect(res.result).to.be.an.object();
+      testDataShape(res.result);
+      done();
+    });
+  });
 });
 
 export default {lab};

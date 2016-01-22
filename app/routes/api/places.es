@@ -6,7 +6,8 @@ import PlacesController from 'controllers/places';
 const placesController = new PlacesController();
 const bind = (method) => placesController[method].bind(placesController);
 
-export default function generateRoutes(validCounties) {
+export default function generateRoutes(validParams) {
+  const validCounties = validParams.counties;
   return [{
     method: 'GET',
     path: '/places/county/{county}/regions',

@@ -7,7 +7,11 @@ import DataController from 'controllers/data';
 const dataController = new DataController();
 const bind = (method) => dataController[method].bind(dataController);
 
-export default function generateRoutes(validCounties, validRegions, validEntityIds) {
+export default function generateRoutes(validParams) {
+  const validCounties = validParams.counties;
+  const validRegions = validParams.regions;
+  const validEntityIds = validParams.entityIds;
+  const validUsageTypes = validParams.usageTypes;
   return [
     {
       method: 'GET',
@@ -102,6 +106,24 @@ export default function generateRoutes(validCounties, validRegions, validEntityI
         }
       },
       handler: bind('getForEntity')
+    },
+    {
+      method: 'GET',
+      path: '/data/usagetype/{usageType}',
+      config: {
+        validate: {
+          params: {
+            usageType: Joi.string().only(validUsageTypes).insensitive().required()
+          },
+          query: {
+            omitRows: Joi.boolean()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        }
+      },
+      handler: bind('getForUsageType')
     }
   ];
 }

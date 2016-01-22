@@ -7,7 +7,10 @@ import EntitiesController from 'controllers/entities';
 const entitiesController = new EntitiesController();
 const bind = (method) => entitiesController[method].bind(entitiesController);
 
-export default function generateRoutes(validCounties, validRegions, validEntityIds) {
+export default function generateRoutes(validParams) {
+  const validCounties = validParams.counties;
+  const validRegions = validParams.regions;
+  const validEntityIds = validParams.entityIds;
   return [
     {
       method: 'GET',
@@ -34,22 +37,6 @@ export default function generateRoutes(validCounties, validRegions, validEntityI
       },
       handler: bind('getOne')
     },
-    //TODO: Summary table does not exist yet
-    // {
-    //   method: 'GET',
-    //   path: '/entities/{entityId}/summary',
-    //   config: {
-    //     validate: {
-    //       params: {
-    //         entityId: Joi.number().integer().required()
-    //       }
-    //     },
-    //     cache: {
-    //       expiresIn: constants.API_CACHE_EXPIRES_IN
-    //     }
-    //   },
-    //   handler: bind('getEntitySummary')
-    // },
     {
       method: 'GET',
       path: '/entities/search',
