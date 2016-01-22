@@ -43,6 +43,9 @@ export default React.createClass({
     else if (contains(loc.pathname, '/region')) {
       navCategory = 'region';
     }
+    else if (contains(loc.pathname, '/usagetype')) {
+      navCategory = 'usagetype';
+    }
     this.setState({navCategory});
   },
 
@@ -60,6 +63,10 @@ export default React.createClass({
 
   onEntitySelect(entityId) {
     history.push({pathname: `/entity/${entityId}`});
+  },
+
+  onUsageTypeSelect(usageType) {
+    history.push({pathname: `/usagetype/${usageType}`});
   },
 
   entitySearch(input, callback) {
@@ -100,6 +107,10 @@ export default React.createClass({
       });
     }
 
+    const usageTypeSelectOptions = constants.USAGE_TYPES.map((type) => {
+      return {value: type, label: titleize(type)};
+    });
+
     return (
       <div className="header-nav">
         <div className="wrapper">
@@ -112,6 +123,7 @@ export default React.createClass({
             <option value="region">Planning Region</option>
             <option value="county">County</option>
             <option value="entity">Water User Group</option>
+            <option value="usagetype">Usage Type</option>
           </select>
           <ToggleDisplay show={this.state.navCategory === 'region'}>
             <div className="select-auto">
@@ -140,6 +152,15 @@ export default React.createClass({
                 asyncOptions={this.entitySearch}
                 options={countySelectOptions}
                 onChange={this.onEntitySelect} />
+            </div>
+          </ToggleDisplay>
+          <ToggleDisplay show={this.state.navCategory === 'usagetype'}>
+            <div className="select-auto">
+              <Select
+                placeholder="Select Usage Type"
+                ignoreCase
+                options={usageTypeSelectOptions}
+                onChange={this.onUsageTypeSelect} />
             </div>
           </ToggleDisplay>
         </div>
