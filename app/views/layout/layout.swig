@@ -15,7 +15,7 @@
   <body>
     <div id="page-wrapper">
       <div id="content">
-        <!--[if lte IE 8]>
+        <!--[if lte IE 9]>
           <div class="browsehappy">
             <p>You are using an <strong>unsupported</strong> browser: <a href="https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support">https://www.microsoft.com/en-us/WindowsForBusiness/End-of-IE-support</a></p>
             <p>Please <a href="http://browsehappy.com/" title="browsehappy">upgrade your browser</a> to improve your experience.</p>
