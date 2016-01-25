@@ -69,7 +69,7 @@ export default React.createClass({
         <Helmet title={title} />
         <section className="main-content">
           <div className="view-top usage-type-view-top">
-            <div className="summary-wrapper wrapper">
+            <div className="summary-wrapper container">
               <UsageTypeSummary viewData={viewData} usageType={usageType} />
             </div>
             {/* <UsageTypeViewMap viewData={viewData} /> */}

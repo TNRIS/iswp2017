@@ -189,7 +189,12 @@ $top-height: 34rem;
   @media (min-width: $media-m) {
     height: $top-height;
     &.usage-type-view-top {
-      height: 16rem;
+      height: auto;
+
+      .view-summary {
+        float: none;
+        margin-left: 0;
+      }
     }
   }
 
