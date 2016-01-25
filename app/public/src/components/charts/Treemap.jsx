@@ -30,8 +30,8 @@ export default React.createClass({
 
   componentDidMount() {
     this.updateTreemap(this.props);
-    this.debouncedUpdateTreemap = debounce(() => this.updateTreemap(this.props), 200);
-    window.addEventListener('resize', this.debouncedUpdateTreemap.bind(this));
+    this.debouncedUpdateTreemap = debounce(() => this.updateTreemap(this.props), 200).bind(this);
+    window.addEventListener('resize', this.debouncedUpdateTreemap);
   },
 
   componentWillReceiveProps(nextProps) {
