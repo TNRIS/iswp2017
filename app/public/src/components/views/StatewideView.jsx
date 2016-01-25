@@ -59,7 +59,7 @@ export default React.createClass({
         <Helmet title="Statewide Summary" />
         <section className="main-content">
           <div className="view-top statewide-view-top">
-            <div className="summary-wrapper wrapper">
+            <div className="summary-wrapper container">
               <StatewideSummary viewData={data} />
             </div>
             <StatewideViewMap />

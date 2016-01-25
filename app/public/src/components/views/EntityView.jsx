@@ -53,7 +53,7 @@ export default React.createClass({
         <Helmet title={title} />
         <section className="main-content">
           <div className="view-top entity-view-top">
-            <div className="summary-wrapper wrapper">
+            <div className="summary-wrapper container">
               <EntitySummary entityData={entityData} />
             </div>
             <EntityViewMap entityData={entityData} />

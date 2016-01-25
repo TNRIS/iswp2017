@@ -86,7 +86,7 @@ export default React.createClass({
         <Helmet title={title} />
         <section className="main-content">
           <div className="view-top place-view-top">
-            <div className="summary-wrapper wrapper">
+            <div className="summary-wrapper container">
               <PlaceSummary
                 type={params.type}
                 typeId={params.typeId}
