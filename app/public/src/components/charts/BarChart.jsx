@@ -10,6 +10,9 @@ import classList from 'dom-classlist';
 import utils from '../../utils';
 import SeriesHighlightActions from '../../actions/SeriesHighlightActions';
 
+const tooltipClass = 'ct-tooltip';
+const heightAdjust = 9;
+
 function isAllZero(chartData) {
   for (let i = 0; i < chartData.series.length; i++) {
     const s = chartData.series[i];
@@ -30,25 +33,9 @@ export default React.createClass({
 
   mixins: [PureRenderMixin],
 
-  getInitialState() {
-    return {
-      tooltip: {
-        style: {
-          visibility: 'hidden'
-        }
-      }
-    };
-  },
-
   componentDidMount() {
     this.updateChart();
     window.addEventListener('scroll', this.clearInteraction);
-  },
-
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-      this.updateChart();
-    }
   },
 
   componentWillUnmount() {
@@ -81,9 +68,6 @@ export default React.createClass({
     );
     const parent = me.parentNode;
     const tooltip = this.refs.tooltip;
-    // use constant height adjustment because the offsetHeight cannot
-    // be reliably obtained when the tooltip is hidden
-    const heightAdjust = 42;
 
     const seriesName = parent.attributes['ct:meta'] ?
       parent.attributes['ct:meta'].value : 'default';
@@ -94,28 +78,28 @@ export default React.createClass({
     // ref: https://github.com/gionkunz/chartist-js/issues/464
     const val = event.target.attributes['ct:value'].value || 0;
 
-    this.setState({
-      tooltip: {
-        className: `tooltip-${seriesName.toLowerCase()}`,
-        value: format()(val),
-        style: {
-          top: matrix.f - heightAdjust,
-          left: matrix.e - tooltip.offsetWidth / 2,
-          visibility: 'visible'
-        }
-      }
-    });
+    //first set the innerHTML to the formatted value
+    // and place the tooltip offscreen so that its
+    // height and width can be calculated
+    tooltip.innerHTML = format()(val);
+    tooltip.className = classnames(tooltipClass, 'offscreen');
+    const width = tooltip.offsetWidth;
+    const height = tooltip.offsetHeight;
+
+    //use those heights and widths to calculate the placement in relation
+    // to the hovered chart element
+    tooltip.style.top = `${matrix.f - height - heightAdjust}px`;
+    tooltip.style.left = `${matrix.e - width / 2}px`;
+    tooltip.className = classnames(tooltipClass, `tooltip-${seriesName.toLowerCase()}`);
   },
 
   clearInteraction() {
     SeriesHighlightActions.clearSeries();
-    this.setState({
-      tooltip: {
-        style: {
-          visibility: 'hidden'
-        }
-      }
-    });
+    this.hideTooltip();
+  },
+
+  hideTooltip() {
+    this.refs.tooltip.className = classnames(tooltipClass, 'hide');
   },
 
   updateChart() {
@@ -153,8 +137,6 @@ export default React.createClass({
   },
 
   render() {
-    const tooltipStyle = this.state.tooltip.style;
-
     return (
       <div className="bar-chart-container">
         {
@@ -166,10 +148,7 @@ export default React.createClass({
           onMouseOut={this.onMouseOut}>
         </div>
 
-        <div ref="tooltip" className={classnames('ct-tooltip', this.state.tooltip.className)}
-          style={tooltipStyle}>
-          {this.state.tooltip.value}
-        </div>
+        <div ref="tooltip" className={classnames(tooltipClass, 'hide')}></div>
       </div>
     );
   }

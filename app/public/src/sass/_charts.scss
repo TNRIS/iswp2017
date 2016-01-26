@@ -157,8 +157,7 @@
   line-height: 24px;
   position: fixed;
   background-color: #2e2e2e;
-  display: inline-block;
-  min-width: 5rem;
+  display: block;
   padding: 0.5rem 0.75rem;
   height: 22px;
   pointer-events: none;
@@ -175,6 +174,17 @@
     position: absolute;
     top: 100%;
     width: 0;
+  }
+
+  &.hide {
+    display: none;
+  }
+
+  &.offscreen {
+    display: block;
+    position: absolute;
+    left: -1000px;
+    top: -1000px;
   }
 
   @each $theme in $themes {
@@ -194,6 +204,7 @@
       @include tooltip-color($color);
     }
   }
+
 }
 
 .table-scroll-container {
