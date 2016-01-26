@@ -184,7 +184,7 @@
     display: block;
     position: absolute;
     left: -1000px;
-    top: -1000px;
+    top: -10000px;
   }
 
   @each $theme in $themes {
