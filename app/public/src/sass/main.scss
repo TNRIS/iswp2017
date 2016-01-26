@@ -38,7 +38,7 @@ $usageTypes: ('irrigation' rgb(126, 191, 133)), ('livestock', rgb(106, 138, 34))
 $regions: ('a', rgb(255,249,174)), ('b', rgb(170,215,212)), ('c', rgb(222,231,145)),
   ('d', rgb(254,195,78)), ('e', rgb(255,228,175)), ('f', rgb(193,225,193)),
   ('g', rgb(168,155,195)), ('h', rgb(199,223,244)), ('i', rgb(126,191,133)),
-  ('j', rgb(249,181,171)), ('k', rgb(120,182,228)), ('l', rgb(255,230,0)),
+  ('j', rgb(249,181,171)), ('k', rgb(120,182,228)), ('l', rgb(255,2303e,0)),
   ('m', rgb(87,187,182)), ('n', rgb(182,189,224)), ('o', rgb(194,203,32)),
   ('p', rgb(214,170,203));
 
@@ -126,7 +126,7 @@ section.content {
 h4 > .units {
   font-weight: normal;
   font-size: 14px;
-  color: #3e3e3e;
+  color: $bodyColor;
   margin-left: 0.5rem;
 }
 

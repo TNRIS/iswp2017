@@ -73,6 +73,27 @@ export default React.createClass({
       title: 'Zoom to Texas'
     }).addTo(this.map);
 
+    const toggleLockButton = L.easyButton({
+      position: 'topright',
+      states: [{
+        stateName: 'unlocked',
+        title: 'Lock',
+        icon: 'icon-unlocked',
+        onClick: (btn /*, map*/) => {
+          btn.state('locked');
+        }
+      }, {
+        stateName: 'locked',
+        title: 'Unlock',
+        icon: 'icon-locked',
+        onClick: (btn /*, map*/) => {
+          btn.state('unlocked');
+        }
+      }]
+    });
+
+    toggleLockButton.addTo(this.map);
+
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
       constants.BASE_MAP_LAYER.options
     );
