@@ -4,7 +4,6 @@ import ThemeMapStateActions from '../actions/ThemeMapStateActions';
 
 class ThemeMapStateStore {
   constructor() {
-    this.mapState = {};
     this.isLocked = false;
 
     this.bindListeners({
