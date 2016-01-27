@@ -100,6 +100,10 @@ button.easy-button-button {
     background-size: 18px;
   }
 
+  .locked-active {
+    background-color: #000;
+  }
+
   .icon-locked {
     background: url('/public/static/img/icon_lock.png') center no-repeat;
     background-size: 18px;

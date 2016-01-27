@@ -5,14 +5,20 @@ import ThemeMapStateActions from '../actions/ThemeMapStateActions';
 class ThemeMapStateStore {
   constructor() {
     this.mapState = {};
+    this.isLocked = false;
 
     this.bindListeners({
-      handleUpdateMapState: ThemeMapStateActions.UPDATE_MAP_STATE,
+      handleLockMap: ThemeMapStateActions.LOCK_MAP,
+      handleUnlockMap: ThemeMapStateActions.UNLOCK_MAP
     });
   }
 
-  handleUpdateMapState({center, zoom}) {
-    this.mapState = {center, zoom};
+  handleLockMap() {
+    this.isLocked = true;
+  }
+
+  handleUnlockMap() {
+    this.isLocked = false;
   }
 }
 

@@ -81,6 +81,7 @@ export default React.createClass({
         icon: 'icon-unlocked',
         onClick: (btn /*, map*/) => {
           btn.state('locked');
+          ThemeMapStateActions.lockMap();
         }
       }, {
         stateName: 'locked',
@@ -88,6 +89,7 @@ export default React.createClass({
         icon: 'icon-locked',
         onClick: (btn /*, map*/) => {
           btn.state('unlocked');
+          ThemeMapStateActions.unlockMap();
         }
       }]
     });
@@ -106,7 +108,6 @@ export default React.createClass({
 
     this.updateMap(this.props);
 
-    this.enableMapListeners();
     ThemeMapStateStore.listen(this.onMapStateChange);
   },
 
@@ -114,53 +115,16 @@ export default React.createClass({
     this.updateMap(nextProps);
   },
 
-  componentWillUpdate(nextProps, nextState) {
-    //turn off the map listeners right before state changes
-    this.disableMapListeners();
-
-    if (!nextState.mapState.center || !nextState.mapState.zoom) {
-      return;
-    }
-
-    if (this.map.getZoom() !== nextState.mapState.zoom) {
-      //don't animate when zoom changes because the animation is a bit janky
-      this.map.setView(nextState.mapState.center, nextState.mapState.zoom, {animate: false});
-    }
-    else {
-      this.map.setView(nextState.mapState.center);
-    }
-  },
-
-  componentDidUpdate() {
-    //enable the map listeners after a change
-    this.enableMapListeners();
-  },
-
   componentWillUnmount() {
-    this.disableMapListeners();
     ThemeMapStateStore.unlisten(this.onMapStateChange);
     this.spiderfier.clearListeners('click');
     this.spiderfier.clearListeners('spiderfy');
-  },
-
-  onMapViewChange() {
-    const center = this.map.getCenter();
-    const zoom = this.map.getZoom();
-    ThemeMapStateActions.updateMapState({center, zoom});
+    //unlock map state so that the lock button for the next ThemeMap is not in a weird state
+    ThemeMapStateActions.unlockMap();
   },
 
   onMapStateChange(state) {
     this.setState(state);
-  },
-
-  disableMapListeners() {
-    this.map.off('zoomend', this.onMapViewChange);
-    this.map.off('moveend', this.onMapViewChange);
-  },
-
-  enableMapListeners() {
-    this.map.on('zoomend', this.onMapViewChange);
-    this.map.on('moveend', this.onMapViewChange);
   },
 
   updateMap(props) {
@@ -270,10 +234,10 @@ export default React.createClass({
     }
 
     this.map.addLayer(this.entitiesLayer);
-    //TODO: Probably need to modify the fitBounds so that it works across all maps
-    // currently all the maps have their bounds dictacted by the last map to render
-    // which results in slightly incorrect bounds if the entities differ among the maps
-    this.map.fitBounds(bounds);
+
+    if (!this.state.isLocked) {
+      this.map.fitBounds(bounds);
+    }
   },
 
   render() {
