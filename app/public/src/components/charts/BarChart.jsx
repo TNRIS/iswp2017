@@ -34,8 +34,14 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   componentDidMount() {
-    this.updateChart();
+    this.updateChart(this.props);
     window.addEventListener('scroll', this.clearInteraction);
+  },
+
+  componentWillUpdate(nextProps) {
+    if (nextProps !== this.props) {
+      this.updateChart(nextProps);
+    }
   },
 
   componentWillUnmount() {
@@ -102,15 +108,15 @@ export default React.createClass({
     this.refs.tooltip.className = classnames(tooltipClass, 'hide');
   },
 
-  updateChart() {
-    if (!this.props.chartData) { return; }
+  updateChart(props) {
+    if (!props.chartData) { return; }
 
     const defaultOptions = {
       fullWidth: true,
       width: '100%',
       seriesBarDistance: 10,
       chartPadding: {
-        left: utils.getChartLeftPadding(this.props.chartData)
+        left: utils.getChartLeftPadding(props.chartData)
       },
       axisY: {
         labelInterpolationFnc: format()
@@ -124,15 +130,15 @@ export default React.createClass({
     ];
 
     const chartOptions = R.merge(defaultOptions,
-      this.props.chartOptions || {});
+      props.chartOptions || {});
 
 
     if (this.chart) {
-      this.chart.update(this.props.chartData, chartOptions, responsiveOptions);
+      this.chart.update(props.chartData, chartOptions, responsiveOptions);
     }
     else {
       this.chart = new Chartist.Bar(this.refs.chart,
-        this.props.chartData, chartOptions, responsiveOptions);
+        props.chartData, chartOptions, responsiveOptions);
     }
   },
 
