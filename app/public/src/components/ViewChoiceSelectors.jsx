@@ -4,6 +4,8 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import constants from '../constants';
+import history from '../history';
+import utils from '../utils';
 import DecadeSelector from './DecadeSelector';
 import ThemeSelector from './ThemeSelector';
 import ViewChoiceActions from '../actions/ViewChoiceActions';
@@ -17,6 +19,30 @@ export default React.createClass({
   },
 
   mixins: [PureRenderMixin],
+
+  getInitialState() {
+    return {includePopulation: true};
+  },
+
+  componentDidMount() {
+    this.historyUnlistener = history.listen(this.onHistoryChange);
+  },
+
+  componentWillUnmount() {
+    this.historyUnlistener();
+  },
+
+  onHistoryChange(loc) {
+    //we don't want to show population selection for any UsageType views
+    // except for Municipal
+    if (utils.stringContains(loc.pathname, '/usagetype') &&
+      !utils.stringContains(loc.pathname, '/municipal')) {
+      this.setState({includePopulation: false});
+    }
+    else {
+      this.setState({includePopulation: true});
+    }
+  },
 
   onDecadeSelect(decade) {
     ViewChoiceActions.updateDecadeChoice(decade);
@@ -40,7 +66,7 @@ export default React.createClass({
           <ThemeSelector
             value={this.props.theme}
             onSelect={this.onThemeSelect}
-            includePopulation />
+            includePopulation={this.state.includePopulation} />
         </div>
       </div>
     );

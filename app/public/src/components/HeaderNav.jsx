@@ -6,12 +6,9 @@ import titleize from 'titleize';
 
 import constants from '../constants';
 import history from '../history';
+import utils from '../utils';
 import CountyNamesStore from '../stores/CountyNamesStore';
 import EntityFetcher from '../utils/EntityFetcher';
-
-function contains(str, search) {
-  return str.toLowerCase().indexOf(search.toLowerCase()) > -1;
-}
 
 export default React.createClass({
   getInitialState() {
@@ -34,16 +31,16 @@ export default React.createClass({
 
   onHistoryChange(loc) {
     let navCategory = 'statewide';
-    if (contains(loc.pathname, '/entity')) {
+    if (utils.stringContains(loc.pathname, '/entity')) {
       navCategory = 'entity';
     }
-    else if (contains(loc.pathname, '/county')) {
+    else if (utils.stringContains(loc.pathname, '/county')) {
       navCategory = 'county';
     }
-    else if (contains(loc.pathname, '/region')) {
+    else if (utils.stringContains(loc.pathname, '/region')) {
       navCategory = 'region';
     }
-    else if (contains(loc.pathname, '/usagetype')) {
+    else if (utils.stringContains(loc.pathname, '/usagetype')) {
       navCategory = 'usagetype';
     }
     this.setState({navCategory});
