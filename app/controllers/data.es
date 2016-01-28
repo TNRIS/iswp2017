@@ -10,8 +10,9 @@ const dataTables = {
   demands: 'vw2017MapWugDemand',
   needs: 'vw2017MapWugNeeds',
   supplies: 'vw2017MapExistingWugSupply',
-  population: 'vw2017MapWugPopulation' //TODO: Remove "typeTotals" from the population response
-  // strategies: 'vw2017MapWugWms' TODO: Strategy view not yet in DB, ref #51
+  //TODO: Remove "typeTotals" from the population response
+  population: 'vw2017MapWugPopulation',
+  strategies: 'vw2017MapWMSWugSupply'
 };
 
 const needsPctDemandsTable = 'vw2017MapEntityNeedsAsPctOfDemand';
@@ -47,7 +48,7 @@ function makeDecadeSumFields(theme) {
 function makeDataSelectionFields(theme) {
   const table = dataTables[theme];
   const commonFields = [`${table}.EntityId`, `${table}.EntityName`,
-    `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
+    `${table}.WugType as ${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
     `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
     `${entityTable}.EntityIsSplit`
   ];
@@ -59,7 +60,7 @@ function selectTypeSums(theme, whereKey, whereVal) {
   const table = dataTables[theme];
   const typeSumFields = makeTypeSumFields(theme);
 
-  let typeSumChain = db.select('WugType');
+  let typeSumChain = db.select('WugType as WugType');
   typeSumFields.forEach((f) => { typeSumChain = typeSumChain.sum(f); });
   let query = typeSumChain.from(table);
   if (whereKey && whereVal) {
@@ -111,7 +112,6 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
   return (theme) => {
     const dataPromises = [];
 
-    //TODO: What to do with negative values (as in some strategies)?
     dataPromises.push(selectTypeSums(theme, whereKey, whereVal));
     dataPromises.push(selectDecadeSums(theme, whereKey, whereVal));
 
