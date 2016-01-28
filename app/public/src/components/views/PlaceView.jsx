@@ -13,8 +13,8 @@ import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from '../charts/DataByTypeCharts';
 import ThemeMaps from '../maps/ThemeMaps';
 import PlacePivotTable from '../PlacePivotTable';
-import ViewChoiceWrap from '../ViewChoiceWrap';
-import ViewChoiceStore from '../../stores/ViewChoiceStore';
+import DataViewChoiceWrap from '../DataViewChoiceWrap';
+import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 
 export default React.createClass({
   propTypes: {
@@ -27,13 +27,13 @@ export default React.createClass({
   getInitialState() {
     return {
       placeData: PlaceDataStore.getState().placeData,
-      viewChoice: ViewChoiceStore.getState()
+      viewChoice: DataViewChoiceStore.getState()
     };
   },
 
   componentDidMount() {
     PlaceDataStore.listen(this.onPlaceDataChange);
-    ViewChoiceStore.listen(this.onViewChoiceChange);
+    DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
     this.fetchPlaceData(this.props.params);
   },
@@ -46,14 +46,14 @@ export default React.createClass({
 
   componentWillUnmount() {
     PlaceDataStore.unlisten(this.onPlaceDataChange);
-    ViewChoiceStore.unlisten(this.onViewChoiceChange);
+    DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
   },
 
   onPlaceDataChange(state) {
     this.setState({placeData: state.placeData});
   },
 
-  onViewChoiceChange(state) {
+  onDataViewChoiceChange(state) {
     this.setState({viewChoice: state});
   },
 
@@ -136,7 +136,7 @@ export default React.createClass({
                     </div>
                   </div>
 
-                  <ViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
+                  <DataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
                     theme={this.state.viewChoice.selectedTheme}>
 
                     <div className="container">
@@ -158,7 +158,7 @@ export default React.createClass({
                         </div>
                       </div>
                     </div>
-                  </ViewChoiceWrap>
+                  </DataViewChoiceWrap>
                 </div>
               );
             })()

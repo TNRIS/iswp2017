@@ -11,21 +11,21 @@ import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from '../charts/DataByTypeCharts';
 import RegionalSummaryTreemap from '../charts/RegionalSummaryTreemap';
-import ViewChoiceStore from '../../stores/ViewChoiceStore';
-import ViewChoiceWrap from '../ViewChoiceWrap';
+import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
+import DataViewChoiceWrap from '../DataViewChoiceWrap';
 import RegionalSummaryTable from '../RegionalSummaryTable';
 
 export default React.createClass({
   getInitialState() {
     return {
       data: StatewideDataStore.getState().data,
-      viewChoice: ViewChoiceStore.getState()
+      viewChoice: DataViewChoiceStore.getState()
     };
   },
 
   componentDidMount() {
     StatewideDataStore.listen(this.onChange);
-    ViewChoiceStore.listen(this.onViewChoiceChange);
+    DataViewChoiceStore.listen(this.onDataViewChoiceChange);
     this.fetchData();
   },
 
@@ -35,14 +35,14 @@ export default React.createClass({
 
   componentWillUnmount() {
     StatewideDataStore.unlisten(this.onChange);
-    ViewChoiceStore.unlisten(this.onViewChoiceChange);
+    DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
   },
 
   onChange(state) {
     this.setState(state);
   },
 
-  onViewChoiceChange(state) {
+  onDataViewChoiceChange(state) {
     this.setState({viewChoice: state});
   },
 
@@ -101,7 +101,7 @@ export default React.createClass({
                     </div>
                   </div>
 
-                  <ViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
+                  <DataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
                     theme={this.state.viewChoice.selectedTheme}>
 
                     <div className="container">
@@ -121,7 +121,7 @@ export default React.createClass({
                         </div>
                       </div>
                     </div>
-                  </ViewChoiceWrap>
+                  </DataViewChoiceWrap>
                 </div>
               );
             })()

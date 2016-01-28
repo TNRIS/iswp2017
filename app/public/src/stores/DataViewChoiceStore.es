@@ -1,16 +1,16 @@
 
 import alt from '../alt';
-import ViewChoiceActions from '../actions/ViewChoiceActions';
+import DataViewChoiceActions from '../actions/DataViewChoiceActions';
 import constants from '../constants';
 
-class ViewChoiceStore {
+class DataViewChoiceStore {
   constructor() {
     this.selectedDecade = constants.DECADES[0];
     this.selectedTheme = 'needs'; //default to Needs view
 
     this.bindListeners({
-      handleUpdateDecadeChoice: ViewChoiceActions.UPDATE_DECADE_CHOICE,
-      handleUpdateThemeChoice: ViewChoiceActions.UPDATE_THEME_CHOICE
+      handleUpdateDecadeChoice: DataViewChoiceActions.UPDATE_DECADE_CHOICE,
+      handleUpdateThemeChoice: DataViewChoiceActions.UPDATE_THEME_CHOICE
     });
   }
 
@@ -23,4 +23,4 @@ class ViewChoiceStore {
   }
 }
 
-export default alt.createStore(ViewChoiceStore, 'ViewChoiceStore');
+export default alt.createStore(DataViewChoiceStore, 'DataViewChoiceStore');

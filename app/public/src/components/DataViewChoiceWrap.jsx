@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import debounce from 'debounce';
 
 import constants from '../constants';
-import ViewChoiceSelectors from './ViewChoiceSelectors';
+import DataViewChoiceSelectors from './DataViewChoiceSelectors';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
@@ -73,7 +73,7 @@ export default React.createClass({
         <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
           ref="stickyEl">
           <h4>Data by Planning Decade and Theme</h4>
-          <ViewChoiceSelectors
+          <DataViewChoiceSelectors
             decade={this.props.decade}
             theme={this.props.theme} />
         </div>

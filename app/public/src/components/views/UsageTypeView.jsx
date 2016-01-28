@@ -6,14 +6,14 @@ import Spinner from 'react-spinkit';
 import titleize from 'titleize';
 
 import UsageTypeDataStore from '../../stores/UsageTypeDataStore';
-import ViewChoiceStore from '../../stores/ViewChoiceStore';
+import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import UsageTypeSummary from '../UsageTypeSummary';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from '../charts/DataByTypeCharts';
 import ThemeMaps from '../maps/ThemeMaps';
 import PlacePivotTable from '../PlacePivotTable';
-import ViewChoiceWrap from '../ViewChoiceWrap';
+import DataViewChoiceWrap from '../DataViewChoiceWrap';
 
 export default React.createClass({
   propTypes: {
@@ -25,13 +25,13 @@ export default React.createClass({
   getInitialState() {
     return {
       viewData: UsageTypeDataStore.getState().data,
-      viewChoice: ViewChoiceStore.getState()
+      viewChoice: DataViewChoiceStore.getState()
     };
   },
 
   componentDidMount() {
     UsageTypeDataStore.listen(this.onViewDataChange);
-    ViewChoiceStore.listen(this.onViewChoiceChange);
+    DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
     this.fetchViewData(this.props.params);
   },
@@ -42,14 +42,14 @@ export default React.createClass({
 
   componentWillUnmount() {
     UsageTypeDataStore.unlisten(this.onViewDataChange);
-    ViewChoiceStore.unlisten(this.onViewChoiceChange);
+    DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
   },
 
   onViewDataChange(state) {
     this.setState({viewData: state.data});
   },
 
-  onViewChoiceChange(state) {
+  onDataViewChoiceChange(state) {
     this.setState({viewChoice: state});
   },
 
@@ -100,7 +100,7 @@ export default React.createClass({
                     </div>
                   </div>
 
-                  <ViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
+                  <DataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
                     theme={this.state.viewChoice.selectedTheme}>
 
                     <div className="container">
@@ -122,7 +122,7 @@ export default React.createClass({
                         </div>
                       </div>
                     </div>
-                  </ViewChoiceWrap>
+                  </DataViewChoiceWrap>
                 </div>
               );
             })()

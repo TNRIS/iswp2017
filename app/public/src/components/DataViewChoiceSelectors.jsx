@@ -6,7 +6,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import constants from '../constants';
 import DecadeSelector from './DecadeSelector';
 import ThemeSelector from './ThemeSelector';
-import ViewChoiceActions from '../actions/ViewChoiceActions';
+import DataViewChoiceActions from '../actions/DataViewChoiceActions';
 import ViewStateStore from '../stores/ViewStateStore';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
@@ -38,11 +38,11 @@ export default React.createClass({
   },
 
   onDecadeSelect(decade) {
-    ViewChoiceActions.updateDecadeChoice(decade);
+    DataViewChoiceActions.updateDecadeChoice(decade);
   },
 
   onThemeSelect(theme) {
-    ViewChoiceActions.updateThemeChoice(theme);
+    DataViewChoiceActions.updateThemeChoice(theme);
   },
 
   shouldIncludePopulation(viewState) {
