@@ -16,7 +16,7 @@ export default React.createClass({
       React.PropTypes.node
     ]).isRequired,
     decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
+    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired,
   },
 
   getInitialState() {

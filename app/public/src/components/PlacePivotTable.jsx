@@ -21,7 +21,6 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   render() {
-    //TODO: Show all decades for selected theme in the table?
     const viewData = this.props.viewData;
     if (!viewData) {
       return (

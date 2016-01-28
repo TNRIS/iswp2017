@@ -6,14 +6,15 @@ import titleize from 'titleize';
 
 import constants from '../constants';
 import history from '../history';
-import utils from '../utils';
 import CountyNamesStore from '../stores/CountyNamesStore';
+import ViewStateStore from '../stores/ViewStateStore';
 import EntityFetcher from '../utils/EntityFetcher';
 
 export default React.createClass({
   getInitialState() {
+    const viewState = ViewStateStore.getState().viewState;
     return {
-      navCategory: 'statewide',
+      navCategory: viewState.view,
       countyNames: CountyNamesStore.getState().countyNames
     };
   },
@@ -21,33 +22,20 @@ export default React.createClass({
   componentDidMount() {
     CountyNamesStore.listen(this.onLoadCountyNames);
     CountyNamesStore.fetch();
-    this.historyUnlistener = history.listen(this.onHistoryChange);
+    ViewStateStore.listen(this.onViewStateChange);
   },
 
   componentWillUnmount() {
     CountyNamesStore.unlisten(this.onLoadCountyNames);
-    this.historyUnlistener();
-  },
-
-  onHistoryChange(loc) {
-    let navCategory = 'statewide';
-    if (utils.stringContains(loc.pathname, '/entity')) {
-      navCategory = 'entity';
-    }
-    else if (utils.stringContains(loc.pathname, '/county')) {
-      navCategory = 'county';
-    }
-    else if (utils.stringContains(loc.pathname, '/region')) {
-      navCategory = 'region';
-    }
-    else if (utils.stringContains(loc.pathname, '/usagetype')) {
-      navCategory = 'usagetype';
-    }
-    this.setState({navCategory});
+    ViewStateStore.unlisten(this.onViewStateChange);
   },
 
   onLoadCountyNames(storeState) {
     this.setState({countyNames: storeState.countyNames});
+  },
+
+  onViewStateChange(storeState) {
+    this.setState({navCategory: storeState.viewState.view});
   },
 
   onCountySelect(countyName) {

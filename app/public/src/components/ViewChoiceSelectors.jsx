@@ -4,11 +4,10 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import constants from '../constants';
-import history from '../history';
-import utils from '../utils';
 import DecadeSelector from './DecadeSelector';
 import ThemeSelector from './ThemeSelector';
 import ViewChoiceActions from '../actions/ViewChoiceActions';
+import ViewStateStore from '../stores/ViewStateStore';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
@@ -21,27 +20,21 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   getInitialState() {
-    return {includePopulation: true};
+    return {
+      includePopulation: this.shouldIncludePopulation(ViewStateStore.getState().viewState)
+    };
   },
 
   componentDidMount() {
-    this.historyUnlistener = history.listen(this.onHistoryChange);
+    ViewStateStore.listen(this.onViewStateChange);
   },
 
   componentWillUnmount() {
-    this.historyUnlistener();
+    ViewStateStore.unlisten(this.onViewStateChange);
   },
 
-  onHistoryChange(loc) {
-    //we don't want to show population selection for any UsageType views
-    // except for Municipal
-    if (utils.stringContains(loc.pathname, '/usagetype') &&
-      !utils.stringContains(loc.pathname, '/municipal')) {
-      this.setState({includePopulation: false});
-    }
-    else {
-      this.setState({includePopulation: true});
-    }
+  onViewStateChange(storeState) {
+    this.setState({includePopulation: this.shouldIncludePopulation(storeState.viewState)});
   },
 
   onDecadeSelect(decade) {
@@ -50,6 +43,10 @@ export default React.createClass({
 
   onThemeSelect(theme) {
     ViewChoiceActions.updateThemeChoice(theme);
+  },
+
+  shouldIncludePopulation(viewState) {
+    return !(viewState.view === 'usagetype' && viewState.id !== 'municipal');
   },
 
   render() {

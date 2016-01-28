@@ -47,18 +47,9 @@ function getViewName(type, typeId) {
   return typeAndId;
 }
 
-function stringContains(str, search, insensitive = true) {
-  if (insensitive) {
-    return str.toLowerCase().indexOf(search.toLowerCase()) > -1;
-  }
-  //else
-  return str.indexOf(search) > -1;
-}
-
 export default {
   slugify,
   getMapPadding,
   getChartLeftPadding,
-  getViewName,
-  stringContains
+  getViewName
 };

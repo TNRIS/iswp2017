@@ -15,6 +15,7 @@ import PlaceView from './components/views/PlaceView';
 import UsageTypeView from './components/views/UsageTypeView';
 import EntityView from './components/views/EntityView';
 import StatewideView from './components/views/StatewideView';
+import ViewStateActions from './actions/ViewStateActions';
 
 import './vendor/css/normalize.css';
 import './vendor/css/skeleton.css';
@@ -29,10 +30,16 @@ import './vendor/js/leaflet.easybutton.js';
 
 import './sass/main.scss';
 
+//setup listener so Google Analytics can send pageviews on location change
 history.listen((loc) => {
   if (window && window.ga) {
     window.ga('send', 'pageview', loc);
   }
+});
+
+//setup listener to update the ViewState based on location
+history.listen((loc) => {
+  ViewStateActions.updateViewState(loc.pathname);
 });
 
 ReactDOM.render((
