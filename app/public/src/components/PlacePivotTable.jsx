@@ -8,8 +8,31 @@ import PivotTable from 'babel!react-pivot'; //must use babel loader directly
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
+import ViewStateStore from '../stores/ViewStateStore';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
+
+function toAnchor(href, text) {
+  return `<a href="${href}">${text}</a>`;
+}
+
+const dimensions = [
+  {
+    value: 'EntityName',
+    title: 'Entity',
+    template: (val, row) => toAnchor(`/entity/${row.entityId}`, val)
+  },
+  {
+    value: 'WugCounty',
+    title: 'County',
+    template: (val) => toAnchor(`/county/${val}`, val)
+  },
+  {
+    value: 'WugRegion',
+    title: 'Region',
+    template: (val) => toAnchor(`/region/${val}`, val)
+  }
+];
 
 export default React.createClass({
   propTypes: {
@@ -19,6 +42,36 @@ export default React.createClass({
   },
 
   mixins: [PureRenderMixin],
+
+  getInitialState() {
+    return ViewStateStore.getState();
+  },
+
+  componentDidMount() {
+    ViewStateStore.listen(this.onViewStateChange);
+  },
+
+  componentWillUnmount() {
+    ViewStateStore.unlisten(this.onViewStateChange);
+  },
+
+  onViewStateChange(state) {
+    this.setState(state);
+  },
+
+  getActiveDimensions() {
+    const view = this.state.viewState.view;
+    switch (view) {
+    case 'region':
+      return ['County', 'Entity'];
+    case 'county':
+      return ['Region', 'Entity'];
+    case 'usagetype':
+      return ['Entity'];
+    default:
+      return ['Region', 'County', 'Entity'];
+    }
+  },
 
   render() {
     const viewData = this.props.viewData;
@@ -33,27 +86,7 @@ export default React.createClass({
     const decade = this.props.decade;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
 
-    const toAnchor = (href, text) => {
-      return `<a href="${href}">${text}</a>`;
-    };
-
-    const dimensions = [
-      {
-        value: 'EntityName',
-        title: 'Entity',
-        template: (val, row) => toAnchor(`/entity/${row.entityId}`, val)
-      },
-      {
-        value: 'WugCounty',
-        title: 'County',
-        template: (val) => toAnchor(`/county/${val}`, val)
-      },
-      {
-        value: 'WugRegion',
-        title: 'Region',
-        template: (val) => toAnchor(`/region/${val}`, val)
-      }
-    ];
+    const activeDimensions = this.getActiveDimensions();
 
     const reduce = (row, memo) => {
       memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${decade}`];
@@ -87,7 +120,7 @@ export default React.createClass({
             reduce={reduce}
             calculations={calculations}
             sortBy={'Entity'}
-            activeDimensions={['Region', 'County', 'Entity']}
+            activeDimensions={activeDimensions}
             nPaginateRows={50}
           />
         </div>
