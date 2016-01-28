@@ -7,35 +7,17 @@ import constants from '../constants';
 import DecadeSelector from './DecadeSelector';
 import ThemeSelector from './ThemeSelector';
 import DataViewChoiceActions from '../actions/DataViewChoiceActions';
-import ViewStateStore from '../stores/ViewStateStore';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
 export default React.createClass({
   propTypes: {
     decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
+    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired,
+    hidePopulation: React.PropTypes.bool
   },
 
   mixins: [PureRenderMixin],
-
-  getInitialState() {
-    return {
-      includePopulation: this.shouldIncludePopulation(ViewStateStore.getState().viewState)
-    };
-  },
-
-  componentDidMount() {
-    ViewStateStore.listen(this.onViewStateChange);
-  },
-
-  componentWillUnmount() {
-    ViewStateStore.unlisten(this.onViewStateChange);
-  },
-
-  onViewStateChange(storeState) {
-    this.setState({includePopulation: this.shouldIncludePopulation(storeState.viewState)});
-  },
 
   onDecadeSelect(decade) {
     DataViewChoiceActions.updateDecadeChoice(decade);
@@ -43,10 +25,6 @@ export default React.createClass({
 
   onThemeSelect(theme) {
     DataViewChoiceActions.updateThemeChoice(theme);
-  },
-
-  shouldIncludePopulation(viewState) {
-    return !(viewState.view === 'usagetype' && viewState.id !== 'municipal');
   },
 
   render() {
@@ -63,7 +41,7 @@ export default React.createClass({
           <ThemeSelector
             value={this.props.theme}
             onSelect={this.onThemeSelect}
-            includePopulation={this.state.includePopulation} />
+            includePopulation={!this.props.hidePopulation} />
         </div>
       </div>
     );

@@ -5,15 +5,15 @@ import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 import titleize from 'titleize';
 
-import UsageTypeDataStore from '../../stores/UsageTypeDataStore';
+import DataViewChoiceActions from '../../actions/DataViewChoiceActions';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
-import UsageTypeSummary from '../UsageTypeSummary';
-import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
-import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
-import DataByTypeCharts from '../charts/DataByTypeCharts';
-import ThemeMaps from '../maps/ThemeMaps';
-import PlacePivotTable from '../PlacePivotTable';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
+import PlacePivotTable from '../PlacePivotTable';
+import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
+import ThemeMaps from '../maps/ThemeMaps';
+import UsageTypeSummary from '../UsageTypeSummary';
+import UsageTypeDataStore from '../../stores/UsageTypeDataStore';
+import ViewStateStore from '../../stores/ViewStateStore';
 
 export default React.createClass({
   propTypes: {
@@ -25,14 +25,15 @@ export default React.createClass({
   getInitialState() {
     return {
       viewData: UsageTypeDataStore.getState().data,
-      viewChoice: DataViewChoiceStore.getState()
+      viewChoice: DataViewChoiceStore.getState(),
+      hidePopulation: this.shouldHidePopulation(ViewStateStore.getState().viewState)
     };
   },
 
   componentDidMount() {
     UsageTypeDataStore.listen(this.onViewDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
-
+    ViewStateStore.listen(this.onViewStateChange);
     this.fetchViewData(this.props.params);
   },
 
@@ -40,13 +41,26 @@ export default React.createClass({
     this.fetchViewData(nextProps.params);
   },
 
+  componentDidUpdate() {
+    //if population theme selection is hidden but it is the currently selected theme,
+    // then update the theme choice to 'needs'
+    if (this.state.hidePopulation && this.state.viewChoice.selectedTheme === 'population') {
+      DataViewChoiceActions.updateThemeChoice('needs');
+    }
+  },
+
   componentWillUnmount() {
     UsageTypeDataStore.unlisten(this.onViewDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
+    ViewStateStore.unlisten(this.onViewStateChange);
   },
 
   onViewDataChange(state) {
     this.setState({viewData: state.data});
+  },
+
+  onViewStateChange(storeState) {
+    this.setState({hidePopulation: this.shouldHidePopulation(storeState.viewState)});
   },
 
   onDataViewChoiceChange(state) {
@@ -55,6 +69,10 @@ export default React.createClass({
 
   fetchViewData(params) {
     UsageTypeDataStore.fetch({typeId: params.typeId});
+  },
+
+  shouldHidePopulation(viewState) {
+    return viewState && viewState.id !== 'municipal';
   },
 
   render() {
@@ -72,7 +90,6 @@ export default React.createClass({
             <div className="summary-wrapper container">
               <UsageTypeSummary viewData={viewData} usageType={usageType} />
             </div>
-            {/* <UsageTypeViewMap viewData={viewData} /> */}
           </div>
 
           {
@@ -101,7 +118,8 @@ export default React.createClass({
                   </div>
 
                   <DataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
-                    theme={this.state.viewChoice.selectedTheme}>
+                    theme={this.state.viewChoice.selectedTheme}
+                    hidePopulation={this.state.hidePopulation}>
 
                     <div className="container">
                       <div className="row panel-row">

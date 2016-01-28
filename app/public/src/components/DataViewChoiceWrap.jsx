@@ -17,6 +17,7 @@ export default React.createClass({
     ]).isRequired,
     decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
     theme: React.PropTypes.oneOf(themesAndPopulation).isRequired,
+    hidePopulation: React.PropTypes.bool
   },
 
   getInitialState() {
@@ -75,7 +76,8 @@ export default React.createClass({
           <h4>Data by Planning Decade and Theme</h4>
           <DataViewChoiceSelectors
             decade={this.props.decade}
-            theme={this.props.theme} />
+            theme={this.props.theme}
+            hidePopulation={this.props.hidePopulation} />
         </div>
 
         {this.props.children}
