@@ -18,12 +18,12 @@ function addTo(server, basePath = '/') {
     {
       method: 'GET',
       path: '/',
-      handler: (request, reply) => reply.view('index')
+      handler: {view: 'index'}
     },
     {
       method: 'GET',
       path: '/statewide',
-      handler: (request, reply) => reply.view('index')
+      handler: {view: 'index'}
     },
     {
       method: 'GET',
@@ -36,7 +36,7 @@ function addTo(server, basePath = '/') {
           failAction: to404
         }
       },
-      handler: (request, reply) => reply.view('index')
+      handler: {view: 'index'}
     },
     {
       method: 'GET',
@@ -49,7 +49,7 @@ function addTo(server, basePath = '/') {
           failAction: to404
         }
       },
-      handler: (request, reply) => reply.view('index')
+      handler: {view: 'index'}
     },
     {
       method: 'GET',
@@ -62,7 +62,7 @@ function addTo(server, basePath = '/') {
           failAction: to404
         }
       },
-      handler: (request, reply) => reply.view('index')
+      handler: {view: 'index'}
     },
     {
       method: 'GET',
@@ -76,12 +76,12 @@ function addTo(server, basePath = '/') {
           failAction: to404
         }
       },
-      handler: (request, reply) => reply.view('index')
+      handler: {view: 'index'}
     },
     {
       method: 'GET',
       path: '/about',
-      handler: (request, reply) => reply.view('about')
+      handler: {view: 'about'}
     },
     {
       method: 'GET',

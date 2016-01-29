@@ -1,10 +1,5 @@
 {% extends 'layout/layout.swig' %}
 
-{% block styles %}
-  {% parent %}
-  <link rel="stylesheet" type="text/css" href="/public/styles.css">
-{% endblock styles %}
-
 {% block title %}
   <title>About | DRAFT 2017 Texas State Water Plan</title>
 {% endblock title %}

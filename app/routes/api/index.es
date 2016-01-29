@@ -22,6 +22,12 @@ function addTo(server, basePath = '/') {
   utils.addRoutes(server, dataRoutes, basePath);
   utils.addRoutes(server, entityRoutes, basePath);
   utils.addRoutes(server, placesRoutes, basePath);
+
+  server.route({
+    method: 'GET',
+    path: basePath,
+    handler: {view: 'api'}
+  });
 }
 
 export default {
