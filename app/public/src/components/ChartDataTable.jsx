@@ -35,7 +35,9 @@ export default React.createClass({
   },
 
   onSeriesHighlightChange(storeState) {
-    this.setState({highlightSeries: storeState.selectedSeries});
+    if (this.state.highlightSeries !== storeState.selectedSeries) {
+      this.setState({highlightSeries: storeState.selectedSeries});
+    }
   },
 
   makeTotalsTds() {
@@ -59,11 +61,6 @@ export default React.createClass({
       return (<div/>);
     }
 
-    const toTh = (text, i) => (<th key={i}>{text}</th>);
-    const toTd = (num, i) => (<td key={i}>{format()(num)}</td>);
-
-    const toggleText = this.state.showTable ? "Hide data" : "Show data";
-
     return (
       <div className={classnames("chart-table-container", this.props.className)}>
         {() => {
@@ -71,7 +68,7 @@ export default React.createClass({
             return (
               <div className="toggle-container">
                 <button className="button-small" onClick={this.toggleTableClick}>
-                  <small>{toggleText}</small>
+                  <small>{this.state.showTable ? "Hide data" : "Show data"}</small>
                 </button>
               </div>
             );
@@ -83,21 +80,21 @@ export default React.createClass({
               <thead>
                 <tr>
                   {!this.props.omitLabels && <th></th>}
-                  {chartData.labels.map(toTh)}
+                  {chartData.labels.map((text, i) => (<th key={i}>{text}</th>))}
                 </tr>
               </thead>
               <tbody>
-                {chartData.series.map((series, i) => {
+                {chartData.series.map((series) => {
                   const isHighlighted = series.meta === this.state.highlightSeries;
                   return (
-                    <tr className={classnames(series.className, {'highlight': isHighlighted})} key={i}>
+                    <tr className={classnames(series.className, {'highlight': isHighlighted})} key={series.name}>
                       {
                         !this.props.omitLabels &&
                         <td className="row-label">
                           <span>{series.name}</span>
                         </td>
                       }
-                      {series.data.map(toTd)}
+                      {series.data.map((num, i) => (<td key={i}>{format()(num)}</td>))}
                     </tr>
                   );
                 })}
