@@ -85,6 +85,15 @@ function addTo(server, basePath = '/') {
     },
     {
       method: 'GET',
+      path: '/humans.txt',
+      handler: {
+        file: {
+          path: path.normalize(__dirname + '../../public/static/humans.txt')
+        }
+      }
+    },
+    {
+      method: 'GET',
       path: '/robots.txt',
       handler: {
         file: {
