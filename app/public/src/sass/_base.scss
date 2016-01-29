@@ -109,6 +109,10 @@ select {
   padding: 8px 0 0 0;
   background: $twdb-blue;
 
+  .header-title-container {
+    border-bottom: 1px solid white;
+  }
+
   .logo {
     display: inline-block;
     width: 120px;
