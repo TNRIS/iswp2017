@@ -7,7 +7,7 @@ import server from 'index.es';
 
 const lab = Lab.script();
 
-const themes = ['demands', 'supplies', 'needs', /*'strategies',*/ 'population'];
+const themes = ['demands', 'supplies', 'needs', 'strategies', 'population'];
 const decades = ['2020', '2030', '2040', '2050', '2060', '2070'];
 
 function testDataShape(data, omitRows = false) {
