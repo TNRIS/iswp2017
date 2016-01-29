@@ -115,6 +115,12 @@ export default React.createClass({
 
     const chartOptions = R.merge(defaultOptions, props.chartOptions);
 
+    //if the chart has no plugins, then it doesn't have an axis title
+    // so reduce the left padding
+    if (!chartOptions.plugins) {
+      chartOptions.chartPadding.left -= 10;
+    }
+
     if (this.chart) {
       this.chart.update(props.chartData, chartOptions);
     }
