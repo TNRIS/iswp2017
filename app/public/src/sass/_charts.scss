@@ -32,14 +32,13 @@
 .chart-legend {
   display: inline-block;
   text-align: right;
+  max-width: 380px;
 
-  @media (min-width: $media-xl) {
-    &.legend-types-by-decade {
-      max-width: 360px;
+  &.legend-types-by-decade {
+    max-width: 360px;
 
-      .legend-marker {
-        margin-right: 0;
-      }
+    .legend-marker {
+      margin-right: 0;
     }
   }
 
