@@ -5,6 +5,7 @@
 {% endblock title %}
 
 {% block content %}
+  <a class="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
   <header class="header" id="Top">
     <div class="header-title wrapper">
       <h1>
@@ -18,14 +19,14 @@
         <a class="button button-home" href="/" title="Home">
           <svg version="1" viewBox="0 0 24 24" data-reactid=".0.1.0.3.0.0"><path d="M20 20v-8h2L12 3 2 12h2v8c0 .6.4 1 1 1h5v-7h4v7h5c.6 0 1-.4 1-1z" data-reactid=".0.1.0.3.0.0.0"></path></svg>
         </a>{#
-        #}<a class="button active" href="/about" title="About">About</a>
+        #}<a class="button" href="/about" title="About">About</a>
       </div>
     </div>
   </header>
   <section class="content">
     <div class="container">
       <div class="row panel-row">
-        <div class="twelve columns">
+        <div class="twelve columns" id="main-content">
           <h2>API Documentation</h2>
           <p>
             This page contains documentation for the application programming interface (API) that powers the interactive state water plan application. All methods are available via standard HTML requests and are <a title="W3C definition of CORS" href="http://www.w3.org/wiki/CORS_Enabled">CORS-enabled</a> so that cross-browser requests can be made. All water volums are given in units of <code>acre-feet/year</code>. Unless otherwise specified, all methods return JSON responses.

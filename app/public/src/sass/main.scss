@@ -321,3 +321,22 @@ $top-height: 34rem;
   text-align: center;
   padding: 20px;
 }
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 1px;
+  clip: rect(1px, 1px, 1px, 1px);
+  margin: 0;
+  z-index: 1;
+
+  &:focus {
+    height: auto;
+    width: auto;
+    clip: auto;
+    padding: 0 1rem;
+    color: white;
+  }
+}

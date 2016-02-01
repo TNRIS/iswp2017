@@ -5,6 +5,7 @@
 {% endblock title %}
 
 {% block content %}
+  <a class="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
   <header class="header" id="Top">
     <div class="header-title wrapper">
       <h1>
@@ -25,7 +26,7 @@
   <section class="content">
     <div class="container">
       <div class="row panel-row">
-        <div class="twelve columns">
+        <div class="twelve columns" id="main-content">
           <h2>About</h2>
           <section id="Contents">
             <ol>

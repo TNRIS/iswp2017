@@ -71,6 +71,12 @@ export default React.createClass({
     UsageTypeDataStore.fetch({typeId: params.typeId});
   },
 
+  scrollToMainContent(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.refs['main-content'].scrollIntoView();
+  },
+
   shouldHidePopulation(viewState) {
     return viewState && viewState.id !== 'municipal';
   },
@@ -85,7 +91,8 @@ export default React.createClass({
     return (
       <div className="usage-type-view">
         <Helmet title={title} />
-        <section className="main-content">
+        <a onClick={this.scrollToMainContent} className="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
+        <section id="main-content" ref="main-content">
           <div className="view-top usage-type-view-top">
             <div className="summary-wrapper container">
               <UsageTypeSummary viewData={viewData} usageType={usageType} />

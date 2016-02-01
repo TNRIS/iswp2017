@@ -51,13 +51,20 @@ export default React.createClass({
     StatewideDataStore.fetch();
   },
 
+  scrollToMainContent(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.refs['main-content'].scrollIntoView();
+  },
+
   render() {
     const data = this.state.data;
 
     return (
       <div className="statewide-view">
         <Helmet title="Statewide Summary" />
-        <section className="main-content">
+        <a onClick={this.scrollToMainContent} className="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
+        <section id="main-content" ref="main-content">
           <div className="view-top statewide-view-top">
             <div className="summary-wrapper container">
               <StatewideSummary viewData={data} />
