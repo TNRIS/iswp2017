@@ -193,7 +193,7 @@
 
             <h4 id="API">API</h4>
             <p>
-              Data may be programmatically accessed using the Interactive 2017 State Water Plan API. See the <a href="/api/v1" title="API Description">API Description page</a> for a description of API methods.
+              Data may be programmatically accessed using the Interactive 2017 State Water Plan API. See the <a href="/api/v1" title="API documentation">API documentation page</a> for a description of API methods.
             </p>
           </section>
 
