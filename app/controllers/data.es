@@ -186,12 +186,12 @@ class DataController {
   }
 
   getForCounty(request, reply) {
-    Hoek.assert(request.params.county, 'request.params.county is required');
+    Hoek.assert(request.params.countyName, 'request.params.countyName is required');
 
     const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme({
       whereKey: 'WugCounty',
-      whereVal: request.params.county.toUpperCase(),
+      whereVal: request.params.countyName.toUpperCase(),
       omitRows: !!request.query.omitRows
     }));
 

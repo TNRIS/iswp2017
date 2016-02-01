@@ -38,7 +38,8 @@ export default function generateRoutes(validParams) {
       config: {
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
+        },
+        description: 'Get regional summary data by water usage type.'
       },
       handler: bind('getRegionalSummaries')
     },
@@ -52,29 +53,33 @@ export default function generateRoutes(validParams) {
           },
           query: {
             omitRows: Joi.boolean()
-          }
+          },
         },
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
+        },
+        description: 'Get water planning data and summaries for the region identified by {regionLetter}.',
+        notes: omitRowsNote
       },
       handler: bind('getForRegion')
     },
     {
       method: 'GET',
-      path: '/data/county/{county}',
+      path: '/data/county/{countyName}',
       config: {
         validate: {
           params: {
-            county: Joi.string().only(validCounties).insensitive().required()
+            countyName: Joi.string().only(validCounties).insensitive().required()
           },
           query: {
             omitRows: Joi.boolean()
-          }
+          },
         },
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
+        },
+        description: 'Get water planning data and summaries for the county identified by {countyName}.',
+        notes: omitRowsNote
       },
       handler: bind('getForCounty')
     },
@@ -92,7 +97,9 @@ export default function generateRoutes(validParams) {
         },
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
+        },
+        description: 'Get water planning data and summaries for the entity identified by {entityId}.',
+        notes: omitRowsNote
       },
       handler: bind('getForEntity')
     },
@@ -110,7 +117,9 @@ export default function generateRoutes(validParams) {
         },
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
+        },
+        description: 'Get water planning data and summaries for all entities of the usage type identified by {usageType}.',
+        notes: omitRowsNote
       },
       handler: bind('getForUsageType')
     }

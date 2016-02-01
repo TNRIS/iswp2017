@@ -33,15 +33,6 @@ lab.experiment('data api', () => {
     setTimeout(done, 500);
   });
 
-  lab.test('data - all', (done) => {
-    server.inject('/api/v1/data', (res) => {
-      Code.expect(res.statusCode).to.equal(200);
-      Code.expect(res.result).to.be.an.object();
-      testDataShape(res.result);
-      done();
-    });
-  });
-
   lab.test('data - state', (done) => {
     server.inject('/api/v1/data/statewide', (res) => {
       Code.expect(res.statusCode).to.equal(200);

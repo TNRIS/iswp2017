@@ -10,16 +10,17 @@ export default function generateRoutes(validParams) {
   const validCounties = validParams.counties;
   return [{
     method: 'GET',
-    path: '/places/county/{county}/regions',
+    path: '/places/county/{countyName}/regions',
     config: {
       validate: {
         params: {
-          county: Joi.string().only(validCounties).insensitive().required()
+          countyName: Joi.string().only(validCounties).insensitive().required()
         }
       },
       cache: {
         expiresIn: constants.API_CACHE_EXPIRES_IN
-      }
+      },
+      description: 'Get the list of regions that contain the county identified by {countyName}'
     },
     handler: bind('getRegionsForCounty')
   }];
