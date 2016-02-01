@@ -15,6 +15,12 @@ import config from 'config';
 
 const server = new Hapi.Server({
   debug: {request: ['*']},
+  connections: {
+    routes: {
+      //enable cors on all routes
+      cors: true
+    }
+  }
 });
 
 const loggingOptions = {
