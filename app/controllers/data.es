@@ -142,17 +142,6 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
 }
 
 class DataController {
-  getAll(request, reply) {
-    const themes = R.keys(dataTables);
-    const dataPromises = themes.map(dataSelectionsByTheme(
-      {omitRows: !!request.query.omitRows}
-    ));
-
-    Promise.all(dataPromises)
-      .then(R.compose(reply, R.mergeAll))
-      .catch(handleApiError(reply));
-  }
-
   getForState(request, reply) {
     const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme(

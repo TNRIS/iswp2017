@@ -17,7 +17,7 @@ export default function generateRoutes(validParams) {
   return [
     {
       method: 'GET',
-      path: '/data',
+      path: '/data/statewide',
       config: {
         validate: {
           query: {
@@ -29,21 +29,6 @@ export default function generateRoutes(validParams) {
         },
         description: 'Get all water planning data and summaries.',
         notes: omitRowsNote
-      },
-      handler: bind('getAll')
-    },
-    {
-      method: 'GET',
-      path: '/data/statewide',
-      config: {
-        validate: {
-          query: {
-            omitRows: Joi.boolean()
-          }
-        },
-        cache: {
-          expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
       },
       handler: bind('getForState')
     },
