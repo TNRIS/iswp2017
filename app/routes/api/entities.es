@@ -18,7 +18,8 @@ export default function generateRoutes(validParams) {
       config: {
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
+        },
+        description: 'Get all water user group entities.',
       },
       handler: bind('getAll')
     },
@@ -33,7 +34,8 @@ export default function generateRoutes(validParams) {
         },
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
+        },
+        description: 'Get the water user group entity identified by {entityId}.'
       },
       handler: bind('getOne')
     },
@@ -45,8 +47,10 @@ export default function generateRoutes(validParams) {
           query: {
             name: Joi.string().min(3).required()
           }
-        }
+        },
         //no cache for search
+        description: 'Find a water user group entity by name or partial name.',
+        notes: 'Use the <code>name={nameOrPartial}</code> query parameter to provide a name or partial name.'
       },
       handler: bind('getByNamePartial')
     },
@@ -61,22 +65,24 @@ export default function generateRoutes(validParams) {
         },
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
+        },
+        description: 'Get all water user group entities in the region identified by {regionLetter}.'
       },
       handler: bind('getInRegion')
     },
     {
       method: 'GET',
-      path: '/entities/county/{county}',
+      path: '/entities/county/{countyName}',
       config: {
         validate: {
           params: {
-            county: Joi.string().only(validCounties).insensitive().required()
+            countyName: Joi.string().only(validCounties).insensitive().required()
           }
         },
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
+        },
+        description: 'Get all water user group entities in the county identified by {countyName}.'
       },
       handler: bind('getInCounty')
     }

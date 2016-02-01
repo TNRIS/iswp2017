@@ -70,7 +70,7 @@ class EntitiesController {
   }
 
   getInCounty(request, reply) {
-    Hoek.assert(request.params.county, 'request.params.county is required');
+    Hoek.assert(request.params.countyName, 'request.params.countyName is required');
 
     const entityFields = [`${entityTable}.EntityId`, `${entityTable}.EntityName`,
       `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
@@ -78,7 +78,7 @@ class EntitiesController {
 
     db.select(entityFields).from(entitiesInCountyTable)
       .join(entityTable, `${entityTable}.EntityId`, `${entitiesInCountyTable}.EntityId`)
-      .where('WugCounty', request.params.county.toUpperCase())
+      .where('WugCounty', request.params.countyName.toUpperCase())
       .then(reply)
       .catch(handleApiError(reply));
   }

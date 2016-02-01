@@ -7,10 +7,10 @@
 
     {% block styles %}
       <link rel="stylesheet" type="text/css" href="/public/static/webfonts/gill-sans.css">
+      <link rel="stylesheet" type="text/css" href="/public/styles.css">
     {% endblock styles %}
 
     {% block title %}{% endblock title %}
-
   </head>
   <body>
     <div id="page-wrapper">

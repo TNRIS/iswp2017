@@ -7,9 +7,9 @@ import {handleApiError} from 'lib/utils';
 
 class PlacesController {
   getRegionsForCounty(request, reply) {
-    Hoek.assert(request.params.county, 'request.params.county is required');
+    Hoek.assert(request.params.countyName, 'request.params.countyName is required');
 
-    const countyName = request.params.county.toUpperCase();
+    const countyName = request.params.countyName.toUpperCase();
 
     db.select('RegionLetter').from('vw2017MapSelectRegionsInCounty')
       .where('CountyName', countyName)

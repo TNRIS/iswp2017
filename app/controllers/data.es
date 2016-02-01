@@ -142,17 +142,6 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
 }
 
 class DataController {
-  getAll(request, reply) {
-    const themes = R.keys(dataTables);
-    const dataPromises = themes.map(dataSelectionsByTheme(
-      {omitRows: !!request.query.omitRows}
-    ));
-
-    Promise.all(dataPromises)
-      .then(R.compose(reply, R.mergeAll))
-      .catch(handleApiError(reply));
-  }
-
   getForState(request, reply) {
     const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme(
@@ -197,12 +186,12 @@ class DataController {
   }
 
   getForCounty(request, reply) {
-    Hoek.assert(request.params.county, 'request.params.county is required');
+    Hoek.assert(request.params.countyName, 'request.params.countyName is required');
 
     const themes = R.keys(dataTables);
     const dataPromises = themes.map(dataSelectionsByTheme({
       whereKey: 'WugCounty',
-      whereVal: request.params.county.toUpperCase(),
+      whereVal: request.params.countyName.toUpperCase(),
       omitRows: !!request.query.omitRows
     }));
 

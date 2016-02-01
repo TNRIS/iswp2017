@@ -14,14 +14,41 @@ function addTo(server, basePath = '/') {
   }
 
   const dataRoutes = genDataRoutes(validParams);
-
   const entityRoutes = genEntityRoutes(validParams);
-
   const placesRoutes = genPlacesRoutes(validParams);
 
   utils.addRoutes(server, dataRoutes, basePath);
   utils.addRoutes(server, entityRoutes, basePath);
   utils.addRoutes(server, placesRoutes, basePath);
+
+  server.route({
+    method: 'GET',
+    path: basePath,
+    handler: {
+      view: {
+        template: 'api',
+        context: {
+          routeGroups: [
+            {
+              name: 'Data',
+              description: 'Methods to retrieve raw and summary water planning data.',
+              routes: dataRoutes
+            },
+            {
+              name: 'Entities',
+              description: 'Methods to retrieve entity (water user group) information.',
+              routes: entityRoutes
+            },
+            {
+              name: 'Places',
+              description: 'Methods to retrieve places (regional water planning areas, counties, etc.) information.',
+              routes: placesRoutes
+            }
+          ]
+        }
+      }
+    }
+  });
 }
 
 export default {
