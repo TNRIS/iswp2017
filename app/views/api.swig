@@ -27,9 +27,32 @@
       <div class="row panel-row">
         <div class="twelve columns">
           <h2>API Description</h2>
-          <section>
-
-          </section>
+          {% for routeGroup in routeGroups %}
+            <section class="route-section">
+              <h3>{{ routeGroup.name }} Methods</h3>
+              <p> {{ routeGroup.description }}
+              <ul class="route-list">
+              {% for route in routeGroup.routes %}
+                <li>
+                  <div class="route-method-path">
+                    <code>
+                      <span class="route-method">{{ route.method }}</span>
+                      <span class="route-path"><a href={{route.path}}>{{ route.path }}</a></span>
+                    </code>
+                  </div>
+                  <div class="route-info">
+                    {% if route.config.description %}
+                      <p class="route-description">{{ route.config.description | safe }}</p>
+                    {% endif %}
+                    {% if route.config.notes %}
+                      <p class="route-notes"><strong>Notes:</strong> {{ route.config.notes | safe}}</p>
+                    {% endif %}
+                  </div>
+                </li>
+              {% endfor %}
+              </ul>
+            </section>
+          {% endfor %}
         </div>
       </div>
     </div>

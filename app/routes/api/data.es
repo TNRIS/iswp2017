@@ -7,6 +7,8 @@ import DataController from 'controllers/data';
 const dataController = new DataController();
 const bind = (method) => dataController[method].bind(dataController);
 
+const omitRowsNote = 'Setting the query string to <code>omitRows=true</code> will omit raw data rows.';
+
 export default function generateRoutes(validParams) {
   const validCounties = validParams.counties;
   const validRegions = validParams.regions;
@@ -24,7 +26,9 @@ export default function generateRoutes(validParams) {
         },
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
-        }
+        },
+        description: 'Get all water planning data and summaries.',
+        notes: omitRowsNote
       },
       handler: bind('getAll')
     },
