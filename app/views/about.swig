@@ -185,9 +185,6 @@
             <a href="#Top"><small>Back to Top</small></a>
             <p>All water volumes are in units of acre-feet/year.</p>
             <p>
-              Below each table is a "Download table" link to download a Comma-Separated Values (CSV) representation of the data in that table. CSV files can be opened with many software applications, including Microsoft Excel.
-            </p>
-            <p>
               For any questions regarding the data or how to apply it, please contact: <a href="mailto:WRPdatarequests@twdb.texas.gov" title="">WRPdatarequests@twdb.texas.gov</a>
             </p>
             <p>
