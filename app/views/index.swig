@@ -13,6 +13,7 @@
 {% block content %}
   <div id="reactApp">
     {# This will get replaced once the react app loads #}
+    <a class="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
     <header class="header">
       <div class="header-title-container">
         <div class="header-title wrapper">
@@ -29,7 +30,7 @@
     <noscript>
       <div class="container">
         <div class="row panel-row">
-          <div class="twelve columns">
+          <div class="twelve columns" id="main-content">
             <h4>Error: Javascript is Required!</h4>
             Javascript is required to use the Interactive State Water Plan Application. <br />
             Please enable Javascript in your browser, or visit <a title="2016 Regional Water Plans" href="http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/index.asp">http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/index.asp</a>

@@ -43,6 +43,12 @@ export default React.createClass({
     EntityDataStore.fetch({entityId: params.entityId});
   },
 
+  scrollToMainContent(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.refs['main-content'].scrollIntoView();
+  },
+
   render() {
     const entityData = this.state.entityData;
     const title = entityData.entity ? entityData.entity.EntityName
@@ -51,7 +57,8 @@ export default React.createClass({
     return (
       <div className="entity-view">
         <Helmet title={title} />
-        <section className="main-content">
+        <a onClick={this.scrollToMainContent} className="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
+        <section id="main-content" ref="main-content">
           <div className="view-top entity-view-top">
             <div className="summary-wrapper container">
               <EntitySummary entityData={entityData} />

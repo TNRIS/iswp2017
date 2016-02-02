@@ -63,6 +63,12 @@ export default React.createClass({
     });
   },
 
+  scrollToMainContent(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.refs['main-content'].scrollIntoView();
+  },
+
   render() {
     const params = this.props.params;
     const placeData = this.state.placeData;
@@ -84,7 +90,8 @@ export default React.createClass({
     return (
       <div className="place-view">
         <Helmet title={title} />
-        <section className="main-content">
+        <a onClick={this.scrollToMainContent} className="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
+        <section id="main-content" ref="main-content">
           <div className="view-top place-view-top">
             <div className="summary-wrapper container">
               <PlaceSummary

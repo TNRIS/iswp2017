@@ -5,6 +5,7 @@
 {% endblock title %}
 
 {% block content %}
+  <a class="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
   <header class="header" id="Top">
     <div class="header-title wrapper">
       <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">
@@ -20,7 +21,7 @@
   <section class="content">
     <div class="container">
       <div class="row panel-row">
-        <div class="twelve columns">
+        <div class="twelve columns" id="main-content">
           <h2>Page Not Found</h2>
           <p>We're sorry, the page you requested cannot be found.</p>
           <p>Return to the <a title="Home" href="/">home page</a> to try again.</p>
