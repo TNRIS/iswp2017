@@ -85,7 +85,7 @@ export default React.createClass({
     // to the hovered chart element
     tooltip.style.top = `${matrix.f - height - heightAdjust}px`;
     tooltip.style.left = `${matrix.e - width / 2}px`;
-    tooltip.className = classnames(tooltipClass, `tooltip-${seriesName.toLowerCase()}`);
+    tooltip.className = classnames(tooltipClass, `tooltip-${utils.slugify(seriesName.toLowerCase())}`);
   },
 
   clearInteraction() {
