@@ -11,7 +11,6 @@ const themes = ['demands', 'supplies', 'needs', 'strategies', 'population'];
 const decades = ['2020', '2030', '2040', '2050', '2060', '2070'];
 
 function testDataShape(data, omitRows = false) {
-  //TODO: also include strategies once DB view is done, ref #51
   Code.expect(data).to.include(themes);
   themes.forEach((theme) => {
     Code.expect(data[theme]).to.include(['rows', 'typeTotals', 'decadeTotals']);
@@ -21,6 +20,13 @@ function testDataShape(data, omitRows = false) {
     }
     else {
       Code.expect(data[theme].rows.length).to.be.greaterThan(0);
+      const datum = data[theme].rows[0];
+      Code.expect(datum).to.include([
+        "Value_2020", "Value_2030", "Value_2040", "Value_2050",
+        "Value_2060", "Value_2070", "EntityId", "EntityName",
+        "WugType", "WugRegion", "WugCounty", "Latitude", "Longitude",
+        "EntityTypeName", "EntityIsSplit"
+      ]);
     }
   });
 }

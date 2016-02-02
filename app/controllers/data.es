@@ -41,7 +41,7 @@ function makeDecadeSumFields(theme) {
 function makeDataSelectionFields(theme) {
   const table = constants.DATA_TABLES[theme];
   const commonFields = [`${table}.EntityId`, `${table}.EntityName`,
-    `${table}.WugType as WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
+    `${table}.WugType as WugType`, `${table}.WugRegion as WugRegion`, `${table}.WugCounty as WugCounty`,
     `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
     `${entityTable}.EntityIsSplit`
   ];
