@@ -11,6 +11,7 @@ import ValidParameters from 'plugins/validParameters';
 import homeRoutes from 'routes/home';
 import publicRoutes from 'routes/public';
 import apiRoutes from 'routes/api';
+import downloadRoutes from 'routes/download';
 import config from 'config';
 
 const server = new Hapi.Server({
@@ -65,6 +66,7 @@ server.register([
 
   publicRoutes.addTo(server, '/public');
   apiRoutes.addTo(server, '/api/v1');
+  downloadRoutes.addTo(server, '/download');
   homeRoutes.addTo(server);
 
   server.route({

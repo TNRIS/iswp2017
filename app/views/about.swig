@@ -44,7 +44,7 @@
           </section>
           <section id="WhatIsThis">
             <h3>What is this site and what does it do?</h3>
-            <a href="#Top"><small>Back to Top</small></a>
+            <p><a href="#Top"><small>Back to Top</small></a></p>
 
             <p>
               This website lets water users statewide take an up-close look at data in the DRAFT 2017 State Water Plan and how water needs change over time. The user-friendly website, which is also easily viewed on most mobile devices, now shows:
@@ -64,7 +64,7 @@
 
           <section id="HowDoIFindData">
             <h3>How do I find the information I'm looking for?</h3>
-            <a href="#Top"><small>Back to Top</small></a>
+            <p><a href="#Top"><small>Back to Top</small></a></p>
 
             <ol>
               <li>
@@ -92,7 +92,7 @@
 
           <section id="StateWaterPlanData">
             <h3>State Water Plan Data</h3>
-            <a href="#Top"><small>Back to Top</small></a>
+            <p><a href="#Top"><small>Back to Top</small></a></p>
 
             <p>
               Development of the state water plan is central to the mission of the TWDB.  Based on 16 regional water plans, the plan addresses the needs of all water user groups in the state &ndash; municipal, irrigation, manufacturing, livestock, mining, and steam-electric power &ndash; during a repeat of the drought of record that the state suffered in the 1950s. The regional and state water plans consider a 50-year planning horizon: 2020 through 2070.
@@ -122,7 +122,7 @@
 
           <section id="Glossary" class="glossary">
             <h3>Glossary</h3>
-            <a href="#Top"><small>Back to Top</small></a>
+            <p><a href="#Top"><small>Back to Top</small></a></p>
 
             <p>
               For these and other terms, see also the DRAFT 2017 State Water Plan
@@ -182,7 +182,18 @@
 
           <section id="DownloadingData">
             <h3>Downloading Data</h3>
-            <a href="#Top"><small>Back to Top</small></a>
+            <p><a href="#Top"><small>Back to Top</small></a></p>
+
+            <p>Data are available for download as Comma-Separated Value (CSV) files, which can be opened by most common spreadsheet software programs:</p>
+            <ul>
+              <li><a href="/download/population.csv" title="Download Population Data">Population Data</a></li>
+              <li><a href="/download/demands.csv" title="Download Demands Data">Demands Data</a></li>
+              <li><a href="/download/supplies.csv" title="Download Existing Supplies Data">Existing Supplies Data</a></li>
+              <li><a href="/download/needs.csv" title="Download Needs (Potential Shortages) Data">Needs (Potential Shortages) Data</a></li>
+              <li><a href="/download/strategies.csv" title="Download Strategy Supplies Data">Strategy Supplies Data</a></li>
+              <li><a href="/download/entities.csv" title="Download Water User Group Entities">Water User Group Entities</a></li>
+            </ul>
+
             <p>All water volumes are in units of acre-feet/year.</p>
             <p>
               For any questions regarding the data or how to apply it, please contact: <a href="mailto:WRPdatarequests@twdb.texas.gov" title="">WRPdatarequests@twdb.texas.gov</a>
@@ -199,7 +210,7 @@
 
           <section id="AboutUs">
             <h3>About Us</h3>
-            <a href="#Top"><small>Back to Top</small></a>
+            <p><a href="#Top"><small>Back to Top</small></a></p>
             <p>
               This website is a product of the Texas Water Development Board (TWDB). This project is part of our ongoing efforts to communicate information from the DRAFT 2017 State Water Plan to planners, scientists, policy makers, and the public.
             </p>
@@ -232,7 +243,7 @@
 
           <section id="SitePolicies">
             <h3>Site Policies</h3>
-            <a href="#Top"><small>Back to Top</small></a>
+            <p><a href="#Top"><small>Back to Top</small></a></p>
             <p>
               This website is an official TWDB ancillary website operated for authorized use only and provided as a public service. This policy describes the TWDB's privacy and security practices regarding information collected from visitors to the website, including what information is collected and how that information is used. Regardless of the information being transmitted to the TWDB, we will protect all such information consistent with applicable law. The privacy of our customers and the security of this website are of utmost importance to the TWDB.
             </p>
@@ -332,7 +343,7 @@
 
           <section id="Credits">
             <h3>Credits</h3>
-            <a href="#Top"><small>Back to Top</small></a>
+            <p><a href="#Top"><small>Back to Top</small></a></p>
             <ul>
               <li>
                 <a href="https://thenounproject.com/search/?q=factory&i=11499" title="Factory icon">Factory icon</a> by <a href="https://thenounproject.com/jeremy.j.bristol/" title="Jeremy J Bristol">Jeremy J Bristol</a> (<a href="http://creativecommons.org/licenses/by/3.0/us/" title="CC BY">CC BY</a>) from the <a href="https://thenounproject.com/" title="Noun Project">Noun Project</a>.

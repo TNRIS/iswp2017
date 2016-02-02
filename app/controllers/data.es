@@ -4,16 +4,9 @@ import Hoek from 'hoek';
 
 import db from 'db';
 import constants from 'lib/constants';
-import {handleApiError} from 'lib/utils';
 
-const dataTables = {
-  demands: 'vw2017MapWugDemand',
-  needs: 'vw2017MapWugNeeds',
-  supplies: 'vw2017MapExistingWugSupply',
-  //TODO: Remove "typeTotals" from the population response
-  population: 'vw2017MapWugPopulation',
-  strategies: 'vw2017MapWMSWugSupply'
-};
+import {handleApiError} from 'lib/utils';
+//TODO: Remove "typeTotals" from the population response
 
 const needsPctDemandsTable = 'vw2017MapEntityNeedsAsPctOfDemand';
 
@@ -46,7 +39,7 @@ function makeDecadeSumFields(theme) {
 }
 
 function makeDataSelectionFields(theme) {
-  const table = dataTables[theme];
+  const table = constants.DATA_TABLES[theme];
   const commonFields = [`${table}.EntityId`, `${table}.EntityName`,
     `${table}.WugType as WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
     `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
@@ -57,7 +50,7 @@ function makeDataSelectionFields(theme) {
 }
 
 function selectTypeSums(theme, whereKey, whereVal) {
-  const table = dataTables[theme];
+  const table = constants.DATA_TABLES[theme];
   const typeSumFields = makeTypeSumFields(theme);
 
   let typeSumChain = db.select('WugType as WugType');
@@ -71,7 +64,7 @@ function selectTypeSums(theme, whereKey, whereVal) {
 }
 
 function selectDecadeSums(theme, whereKey, whereVal) {
-  const table = dataTables[theme];
+  const table = constants.DATA_TABLES[theme];
   const decadeSumFields = makeDecadeSumFields(theme);
   let decadeSumChain = db;
   decadeSumFields.forEach((f) => { decadeSumChain = decadeSumChain.sum(f); });
@@ -83,7 +76,7 @@ function selectDecadeSums(theme, whereKey, whereVal) {
 }
 
 function selectDataRows(theme, whereKey, whereVal) {
-  const table = dataTables[theme];
+  const table = constants.DATA_TABLES[theme];
   const isNeeds = theme === 'needs';
 
   let dataSelectFields = makeDataSelectionFields(theme);
@@ -143,7 +136,7 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
 
 class DataController {
   getForState(request, reply) {
-    const themes = R.keys(dataTables);
+    const themes = R.keys(constants.DATA_TABLES);
     const dataPromises = themes.map(dataSelectionsByTheme(
       {omitRows: !!request.query.omitRows}
     ));
@@ -173,7 +166,7 @@ class DataController {
   getForRegion(request, reply) {
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
-    const themes = R.keys(dataTables);
+    const themes = R.keys(constants.DATA_TABLES);
     const dataPromises = themes.map(dataSelectionsByTheme({
       whereKey: 'WugRegion',
       whereVal: request.params.regionLetter.toUpperCase(),
@@ -188,7 +181,7 @@ class DataController {
   getForCounty(request, reply) {
     Hoek.assert(request.params.countyName, 'request.params.countyName is required');
 
-    const themes = R.keys(dataTables);
+    const themes = R.keys(constants.DATA_TABLES);
     const dataPromises = themes.map(dataSelectionsByTheme({
       whereKey: 'WugCounty',
       whereVal: request.params.countyName.toUpperCase(),
@@ -203,7 +196,7 @@ class DataController {
   getForEntity(request, reply) {
     Hoek.assert(request.params.entityId, 'request.params.entityId is required');
 
-    const themes = R.keys(dataTables);
+    const themes = R.keys(constants.DATA_TABLES);
     const dataPromises = themes.map(dataSelectionsByTheme({
       whereKey: 'EntityId',
       whereVal: request.params.entityId,
@@ -218,7 +211,7 @@ class DataController {
   getForUsageType(request, reply) {
     Hoek.assert(request.params.usageType, 'request.params.usageType is required');
 
-    const themes = R.keys(dataTables);
+    const themes = R.keys(constants.DATA_TABLES);
     const dataPromises = themes.map(dataSelectionsByTheme({
       whereKey: 'WugType',
       whereVal: request.params.usageType.toUpperCase(),
