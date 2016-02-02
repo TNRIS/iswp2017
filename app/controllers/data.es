@@ -23,8 +23,8 @@ const summaryTables = {
   demands: 'vw2017MapWugDemandsA1',
   needs: 'vw2017MapWugNeedsA1',
   supplies: 'vw2017MapExistingWugSupplyA1',
-  population: 'vw2017MapWugPopulationA1'
-  // strategies: 'vw2017MapWugWms' TODO: Strategy view not yet in DB, ref #51
+  population: 'vw2017MapWugPopulationA1',
+  strategies: 'vw2017MapWMSWugSupplyA1'
 };
 
 function renameValueFields(theme) {
