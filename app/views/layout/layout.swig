@@ -7,7 +7,7 @@
 
     {% block styles %}
       <link rel="stylesheet" type="text/css" href="/public/static/webfonts/gill-sans.css">
-      <link rel="stylesheet" type="text/css" href="/public/styles.css">
+      <link rel="stylesheet" type="text/css" href="/public/{{cssBundleName}}">
     {% endblock styles %}
 
     {% block title %}{% endblock title %}

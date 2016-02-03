@@ -7,12 +7,12 @@ import GoodConsole from 'good-console';
 import swig from 'swig';
 
 import ValidParameters from 'plugins/validParameters';
-
 import homeRoutes from 'routes/home';
 import publicRoutes from 'routes/public';
 import apiRoutes from 'routes/api';
 import downloadRoutes from 'routes/download';
 import config from 'config';
+import webpackAssets from 'webpack-assets.json';
 
 const server = new Hapi.Server({
   debug: {request: ['*']},
@@ -60,7 +60,9 @@ server.register([
     relativeTo: __dirname,
     path: './views',
     context: {
-      gaTrackingCode: config.gaTrackingCode
+      gaTrackingCode: config.gaTrackingCode,
+      jsBundleName: webpackAssets.main.js,
+      cssBundleName: webpackAssets.main.css
     }
   });
 

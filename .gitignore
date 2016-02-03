@@ -1,4 +1,5 @@
 /demo*.zip
+webpack-assets.json
 cache.db
 app/public/dist/*
 !app/public/dist/.gitkeep

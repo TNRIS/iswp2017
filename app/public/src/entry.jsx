@@ -26,6 +26,7 @@ import './vendor/js/d3.custom.js';
 import './vendor/js/leaflet.oms.js';
 import './vendor/js/leaflet.utfgrid.js';
 import './vendor/js/leaflet.defaultextent.js';
+import './vendor/js/leaflet.label.js';
 import './vendor/js/leaflet.easybutton.js';
 
 import './sass/main.scss';

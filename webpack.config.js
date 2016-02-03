@@ -1,11 +1,18 @@
 var path = require('path');
+var AssetsPlugin = require('assets-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var extractTextPlugin = new ExtractTextPlugin('styles.[hash].css');
+var assetsPlugin = new AssetsPlugin({
+  prettyPrint: true,
+  path: path.join(__dirname, 'app')
+});
+
 module.exports = {
-  entry: './app/public/src/entry.jsx',
+  entry: path.join(__dirname, 'app/public/src/entry.jsx'),
   output: {
-    path: './app/public/dist/',
-    filename: 'bundle.js'
+    path: path.join(__dirname, 'app/public/dist/'),
+    filename: 'bundle.[hash].js'
   },
   module: {
     loaders: [
@@ -38,6 +45,7 @@ module.exports = {
     extensions: ['', '.es', '.js', '.jsx']
   },
   plugins: [
-    new ExtractTextPlugin('styles.css')
+    extractTextPlugin,
+    assetsPlugin
   ]
 };
