@@ -8,11 +8,12 @@
     "start": "NODE_PATH=./app babel-node app/index.es",
     "webpack": "./node_modules/webpack/bin/webpack.js -p --config webpack.config.js",
     "dev-server": "NODE_PATH=./app nodemon --exec babel-node -- app/index.es",
-    "dev-webpack": "./node_modules/webpack/bin/webpack.js -d --progress --colors --watch --config webpack.config.js",
+    "dev-webpack": "npm run clean-dist && ./node_modules/webpack/bin/webpack.js -d --progress --colors --watch --config webpack.config.js",
     "test": "npm run unit-test && npm run integration-test",
     "unit-test": "NODE_PATH=./app tape test/unit/**.*",
     "integration-test": "NODE_PATH=./app lab -T test/integration/transform.js -S test/integration/",
     "dev-test": "nodemon --exec npm run unit-test",
+    "clean-dist": "rm -rf app/public/dist/*.js app/public/dist/*.map app/public/dist/*.css",
     "eb-demo-zip": "rm -rf demo-* && zip -r demo-$(date +'%s').zip app package.json webpack.config.js Dockerfile Dockerrun.aws.json"
   },
   "engines": {
