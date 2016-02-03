@@ -3,7 +3,6 @@
 {% block styles %}
   {% parent %}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css" />
-  <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/plugins/leaflet-label/v0.2.1/leaflet.label.css" />
 {% endblock styles %}
 
 {% block title %}
