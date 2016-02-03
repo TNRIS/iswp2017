@@ -51,7 +51,7 @@ export default {
     maxBounds: [[15, -150], [45, -50]]
   },
   NEEDS_LEGEND_CLASSES: [
-    {limit: 10, color: '#1A9641'}, //green
+    {limit: 10, color: '#84D68C'}, //green
     {limit: 25, color: '#FFFFBF'},
     {limit: 50, color: '#FDAE61'},
     {limit: 100, color: 'rgb(237, 27, 47)'} //red
