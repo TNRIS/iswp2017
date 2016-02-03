@@ -2,17 +2,23 @@ var path = require('path');
 var AssetsPlugin = require('assets-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var extractTextPlugin = new ExtractTextPlugin('styles.[hash].css');
+var isProd = process.env.NODE_ENV === 'production';
+
+var extractTextPlugin = new ExtractTextPlugin(
+  isProd ? 'styles.[hash].css' : 'styles.css'
+);
+
 var assetsPlugin = new AssetsPlugin({
   prettyPrint: true,
   path: path.join(__dirname, 'app')
 });
 
+
 module.exports = {
   entry: path.join(__dirname, 'app/public/src/entry.jsx'),
   output: {
     path: path.join(__dirname, 'app/public/dist/'),
-    filename: 'bundle.[hash].js'
+    filename: isProd ? 'scripts.[hash].js' : 'scripts.js'
   },
   module: {
     loaders: [
