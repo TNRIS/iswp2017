@@ -1,7 +1,8 @@
 {
   "name": "iswp2017",
   "version": "0.0.1",
-  "description": "",
+  "description": "Web application for the Texas 2017 State Water Plan",
+  "private": true,
   "main": "app/index.es",
   "scripts": {
     "start": "NODE_PATH=./app babel-node app/index.es",
@@ -23,6 +24,10 @@
     "url": "https://github.com/tnris/iswp2017.git"
   },
   "author": "TNRIS",
+  "contributors": [
+    "James Seppi",
+    "Andy Wilson"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/tnris/iswp2017/issues"
