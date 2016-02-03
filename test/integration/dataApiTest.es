@@ -27,6 +27,18 @@ function testDataShape(data, omitRows = false) {
         "WugType", "WugRegion", "WugCounty", "Latitude", "Longitude",
         "EntityTypeName", "EntityIsSplit"
       ]);
+
+      if (theme === 'needs') {
+        Code.expect(datum).to.include([
+          'NPD2020', 'NPD2030', 'NPD2040', 'NPD2050', 'NPD2060', 'NPD2070'
+        ]);
+      }
+
+      if (theme === 'strategies') {
+        Code.expect(datum).to.include([
+          'WMSName', 'SourceName', 'SourceType', 'MapSourceId'
+        ]);
+      }
     }
   });
 }

@@ -20,6 +20,10 @@ const summaryTables = {
   strategies: 'vw2017MapWMSWugSupplyA1'
 };
 
+const additionalStrategyFields = [
+  'WMSName', 'SourceName', 'SourceType', 'MapSourceId'
+];
+
 function renameValueFields(theme) {
   return constants.YEARS.map((year) => {
     return `${constants.VALUE_PREFIXES[theme]}${year} as Value_${year}`;
@@ -78,12 +82,17 @@ function selectDecadeSums(theme, whereKey, whereVal) {
 function selectDataRows(theme, whereKey, whereVal) {
   const table = constants.DATA_TABLES[theme];
   const isNeeds = theme === 'needs';
+  const isStrategies = theme === 'strategies';
 
   let dataSelectFields = makeDataSelectionFields(theme);
 
   if (isNeeds) {
     const npdCols = R.map((year) => `NPD${year}`, constants.YEARS);
     dataSelectFields = R.concat(npdCols, dataSelectFields);
+  }
+
+  if (isStrategies) {
+    dataSelectFields = R.concat(additionalStrategyFields, dataSelectFields);
   }
 
   let query = db.select(dataSelectFields).from(table)

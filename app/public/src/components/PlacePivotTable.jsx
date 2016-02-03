@@ -34,6 +34,11 @@ const dimensions = [
   }
 ];
 
+const wmsNameDimension = {
+  value: 'WMSName',
+  title: 'Strategy'
+};
+
 export default React.createClass({
   propTypes: {
     viewData: PropTypes.ViewData,
@@ -61,16 +66,28 @@ export default React.createClass({
 
   getActiveDimensions() {
     const view = this.state.viewState.view;
+    let activeDimensions = [];
     switch (view) {
     case 'region':
-      return ['County', 'Entity'];
+      activeDimensions = ['County', 'Entity'];
+      break;
     case 'county':
-      return ['Region', 'Entity'];
+      activeDimensions = ['Region', 'Entity'];
+      break;
     case 'usagetype':
-      return ['Entity'];
+      activeDimensions = ['Entity'];
+      break;
     default:
-      return ['Region', 'County', 'Entity'];
+      activeDimensions = ['Region', 'County', 'Entity'];
     }
+
+    //add 'WMSName' to the active dimensions list
+    const theme = this.props.theme;
+    if (theme === 'strategies') {
+      activeDimensions = R.append(wmsNameDimension.title, activeDimensions);
+    }
+
+    return activeDimensions;
   },
 
   render() {
@@ -85,6 +102,10 @@ export default React.createClass({
     const tableData = viewData[selectedTheme].rows;
     const decade = this.props.decade;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
+
+    const availableDimensions = selectedTheme === 'strategies'
+      ? R.append(wmsNameDimension, dimensions)
+      : R.clone(dimensions);
 
     const activeDimensions = this.getActiveDimensions();
 
@@ -116,11 +137,11 @@ export default React.createClass({
             // otherwise it will not react to prop changes
             key={hat()}
             rows={tableData}
-            dimensions={dimensions}
+            dimensions={availableDimensions}
+            activeDimensions={activeDimensions}
             reduce={reduce}
             calculations={calculations}
             sortBy={'Entity'}
-            activeDimensions={activeDimensions}
             nPaginateRows={50}
           />
         </div>
