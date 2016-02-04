@@ -7,6 +7,7 @@
   "scripts": {
     "start": "NODE_PATH=./app babel-node app/index.es",
     "webpack": "./node_modules/webpack/bin/webpack.js -p --config webpack.config.js",
+    "dev-start": "concurrent \"npm run dev-webpack\" \"npm run dev-server\" ",
     "dev-server": "NODE_PATH=./app nodemon --exec babel-node -- app/index.es",
     "dev-webpack": "npm run clean-dist && ./node_modules/webpack/bin/webpack.js -d --progress --colors --watch --config webpack.config.js",
     "test": "npm run unit-test && npm run integration-test",
@@ -92,6 +93,7 @@
   "devDependencies": {
     "babel-eslint": "^4.1.3",
     "code": "^1.5.0",
+    "concurrently": "^1.0.0",
     "eslint": "^1.6.0",
     "eslint-config-airbnb": "0.0.8",
     "eslint-plugin-react": "^3.5.1",
