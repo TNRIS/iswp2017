@@ -21,7 +21,7 @@ const summaryTables = {
 };
 
 const additionalStrategyFields = [
-  'WMSName', 'SourceName', 'SourceType', 'MapSourceId'
+  'WMSName', 'wmsType as WMSType', 'SourceName', 'SourceType', 'MapSourceId'
 ];
 
 function renameValueFields(theme) {

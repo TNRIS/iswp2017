@@ -1,5 +1,4 @@
 
-
 import Code from 'code';
 import Lab from 'lab';
 
@@ -36,7 +35,7 @@ function testDataShape(data, omitRows = false) {
 
       if (theme === 'strategies') {
         Code.expect(datum).to.include([
-          'WMSName', 'SourceName', 'SourceType', 'MapSourceId'
+          'WMSName', 'WMSType', 'SourceName', 'SourceType', 'MapSourceId'
         ]);
       }
     }
