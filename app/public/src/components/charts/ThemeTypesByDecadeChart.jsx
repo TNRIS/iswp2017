@@ -60,7 +60,7 @@ export default React.createClass({
           className: `series-${utils.slugify(type.toLowerCase())}`,
           data: constants.DECADES.map((year) => {
             if (R.path([this.state.selectedTheme, 'typeTotals', type], viewData)) {
-              return viewData[this.state.selectedTheme].typeTotals[type][`Total_${year}`];
+              return viewData[this.state.selectedTheme].typeTotals[type][year];
             }
             return 0;
           })

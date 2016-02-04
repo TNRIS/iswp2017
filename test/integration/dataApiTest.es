@@ -9,10 +9,26 @@ const lab = Lab.script();
 const themes = ['demands', 'supplies', 'needs', 'strategies', 'population'];
 const decades = ['2020', '2030', '2040', '2050', '2060', '2070'];
 
+function testTotalsByFieldShape(totals) {
+  Object.keys(totals).forEach((key) => {
+    Code.expect(totals[key]).to.include(decades);
+  });
+}
+
 function testDataShape(data, omitRows = false) {
   Code.expect(data).to.include(themes);
   themes.forEach((theme) => {
     Code.expect(data[theme]).to.include(['rows', 'typeTotals', 'decadeTotals']);
+
+    testTotalsByFieldShape(data[theme].typeTotals);
+    Code.expect(data[theme].decadeTotals).to.include(decades);
+
+    if (theme === 'strategies') {
+      Code.expect(data[theme]).to.include(['strategySourceTotals', 'strategyTypeTotals']);
+      testTotalsByFieldShape(data[theme].strategySourceTotals);
+      testTotalsByFieldShape(data[theme].strategyTypeTotals);
+    }
+
     Code.expect(data[theme].rows).to.be.an.array();
     if (omitRows) {
       Code.expect(data[theme].rows.length).to.equal(0);

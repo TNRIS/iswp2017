@@ -5,16 +5,17 @@ import titleize from 'titleize';
 import Spinner from 'react-spinkit';
 
 import utils from '../../utils';
+import DataByTypeCharts from '../charts/DataByTypeCharts';
+import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
+import DataViewChoiceWrap from '../DataViewChoiceWrap';
 import PlaceDataStore from '../../stores/PlaceDataStore';
-import PlaceViewMap from '../maps/PlaceViewMap';
+import PlacePivotTable from '../PlacePivotTable';
 import PlaceSummary from '../PlaceSummary';
+import PlaceViewMap from '../maps/PlaceViewMap';
+import StrategiesBreakdown from '../StrategiesBreakdown';
+import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
-import DataByTypeCharts from '../charts/DataByTypeCharts';
-import ThemeMaps from '../maps/ThemeMaps';
-import PlacePivotTable from '../PlacePivotTable';
-import DataViewChoiceWrap from '../DataViewChoiceWrap';
-import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 
 export default React.createClass({
   propTypes: {
@@ -155,6 +156,18 @@ export default React.createClass({
                             theme={this.state.viewChoice.selectedTheme} />
                         </div>
                       </div>
+
+                      {this.state.viewChoice.selectedTheme === 'strategies' &&
+                        (
+                          <div className="row panel-row">
+                            <div className="twelve columns">
+                              <span className="view-name">{viewName}</span>
+                              <StrategiesBreakdown viewData={placeData.data}
+                                decade={this.state.viewChoice.selectedDecade} />
+                            </div>
+                          </div>
+                        )
+                      }
 
                       <div className="row panel-row">
                         <div className="twelve columns">

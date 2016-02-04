@@ -20,9 +20,12 @@ const summaryTables = {
   strategies: 'vw2017MapWMSWugSupplyA1'
 };
 
-const additionalStrategyFields = [
-  'WMSName', 'wmsType as WMSType', 'SourceName', 'SourceType', 'MapSourceId'
-];
+const additionalFields = {
+  'needs': R.map((year) => `NPD${year}`, constants.YEARS),
+  'strategies': [
+    'WMSName', 'wmsType as WMSType', 'SourceName', 'SourceType', 'MapSourceId'
+  ]
+};
 
 function renameValueFields(theme) {
   return constants.YEARS.map((year) => {
@@ -50,21 +53,12 @@ function makeDataSelectionFields(theme) {
     `${entityTable}.EntityIsSplit`
   ];
 
-  return R.concat(renameValueFields(theme), commonFields);
-}
-
-function selectTypeSums(theme, whereKey, whereVal) {
-  const table = constants.DATA_TABLES[theme];
-  const typeSumFields = makeTypeSumFields(theme);
-
-  let typeSumChain = db.select('WugType as WugType');
-  typeSumFields.forEach((f) => { typeSumChain = typeSumChain.sum(f); });
-  let query = typeSumChain.from(table);
-  if (whereKey && whereVal) {
-    query = query.where(whereKey, whereVal);
+  let fields = R.concat(renameValueFields(theme), commonFields);
+  if (additionalFields[theme]) {
+    fields = R.concat(additionalFields[theme], fields);
   }
-  query = query.groupBy('WugType');
-  return query;
+
+  return fields;
 }
 
 function selectDecadeSums(theme, whereKey, whereVal) {
@@ -82,18 +76,7 @@ function selectDecadeSums(theme, whereKey, whereVal) {
 function selectDataRows(theme, whereKey, whereVal) {
   const table = constants.DATA_TABLES[theme];
   const isNeeds = theme === 'needs';
-  const isStrategies = theme === 'strategies';
-
-  let dataSelectFields = makeDataSelectionFields(theme);
-
-  if (isNeeds) {
-    const npdCols = R.map((year) => `NPD${year}`, constants.YEARS);
-    dataSelectFields = R.concat(npdCols, dataSelectFields);
-  }
-
-  if (isStrategies) {
-    dataSelectFields = R.concat(additionalStrategyFields, dataSelectFields);
-  }
+  const dataSelectFields = makeDataSelectionFields(theme);
 
   let query = db.select(dataSelectFields).from(table)
       .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`);
@@ -109,36 +92,63 @@ function selectDataRows(theme, whereKey, whereVal) {
   return query;
 }
 
+function selectDecadeSumsGroupedByField(theme, field, whereKey, whereVal) {
+  const table = constants.DATA_TABLES[theme];
+  const decadeSumFields = makeDecadeSumFields(theme);
+
+  let decadeSumChain = db;
+  decadeSumFields.forEach((f) => { decadeSumChain = decadeSumChain.sum(f); });
+  let query = decadeSumChain
+    .select(`${field} as ${field}`)
+    .from(table)
+    .groupBy(field)
+    .whereNotNull(field);
+
+  if (whereKey && whereVal) {
+    query = query.where(whereKey, whereVal);
+  }
+
+  return query;
+}
+
+function zipByField(field, sumGroups) {
+  return R.zipObj(R.pluck(field, sumGroups), R.map(R.omit([field]), sumGroups));
+}
 
 function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
   return (theme) => {
-    const dataPromises = [];
+    const isStrategies = theme === 'strategies';
 
-    dataPromises.push(selectTypeSums(theme, whereKey, whereVal));
-    dataPromises.push(selectDecadeSums(theme, whereKey, whereVal));
-
-    if (!omitRows) {
-      dataPromises.push(selectDataRows(theme, whereKey, whereVal));
-    }
+    //Make an array of all the data selection promises.
+    //Note that the order here is important
+    // as the following Promise.all fulfillment
+    // expects the same order for argument destructuring.
+    const dataPromises = [
+      selectDecadeSumsGroupedByField(theme, 'WugType', whereKey, whereVal),
+      selectDecadeSums(theme, whereKey, whereVal),
+      omitRows ? null : selectDataRows(theme, whereKey, whereVal),
+      isStrategies ? selectDecadeSumsGroupedByField(
+        'strategies', 'SourceType', whereKey, whereVal) : null,
+      isStrategies ? selectDecadeSumsGroupedByField(
+        'strategies', 'WMSType', whereKey, whereVal) : null
+    ];
 
     return Promise.all(dataPromises)
-      .then(([typeSums, decadeSums, data]) => {
-        const typeTotals = R.zipObj(R.pluck('WugType', typeSums), R.map(R.omit(['WugType']), typeSums));
+      .then(([typeSums, decadeSums, data, stratSourceSums, stratTypeSums]) => {
         const decadeTotals = R.nth(0, decadeSums);
 
-        let rows;
-        if (!data || R.isEmpty(data)) {
-          rows = [];
-        }
-        else {
-          rows = data;
-        }
-
-        return R.assoc(theme, {
-          rows,
-          typeTotals,
+        const results = R.assoc(theme, {
+          rows : (!data || R.isEmpty(data)) ? [] : data,
+          typeTotals: zipByField('WugType', typeSums),
           decadeTotals
         }, {});
+
+        if (isStrategies) {
+          results.strategies.strategySourceTotals = zipByField('SourceType', stratSourceSums);
+          results.strategies.strategyTypeTotals = zipByField('WMSType', stratTypeSums);
+        }
+
+        return results;
       });
   };
 }

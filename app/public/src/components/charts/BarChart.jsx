@@ -132,7 +132,6 @@ export default React.createClass({
     const chartOptions = R.merge(defaultOptions,
       props.chartOptions || {});
 
-
     if (this.chart) {
       this.chart.update(props.chartData, chartOptions, responsiveOptions);
     }
