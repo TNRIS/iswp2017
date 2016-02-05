@@ -5,9 +5,16 @@ import HomeIcon from '../../static/img/home.svg';
 import HeaderNav from './HeaderNav';
 
 export default React.createClass({
+  scrollToMainContent(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    this.refs['main-content'].scrollIntoView();
+  },
+
   render() {
     return (
       <header className="header">
+        <a onClick={this.scrollToMainContent} className="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
         <div className="header-title-container">
           <div className="header-title wrapper">
             <h1>
@@ -24,7 +31,9 @@ export default React.createClass({
             </div>
           </div>
         </div>
-        <HeaderNav />
+        <div ref="main-content" id="main-content">
+          <HeaderNav />
+        </div>
       </header>
     );
   }
