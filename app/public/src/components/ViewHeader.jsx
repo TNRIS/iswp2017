@@ -26,7 +26,7 @@ export default React.createClass({
             </a>
 
             <div className="nav-container">
-              <a className="button button-home" title="Home" href="/"><HomeIcon/></a>
+              <a className="button button-home" title="Home" aria-label="Home" href="/"><HomeIcon/></a>
               <a className="button" href="/about" title="About">About</a>
             </div>
           </div>

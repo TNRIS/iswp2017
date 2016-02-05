@@ -134,6 +134,7 @@ export default React.createClass({
                 placeholder="Find Water User Group"
                 ignoreCase
                 autoload={false}
+                searchPromptText="Enter at least 3 characters to search"
                 asyncOptions={this.entitySearch}
                 options={countySelectOptions}
                 onChange={this.onEntitySelect} />
