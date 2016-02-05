@@ -80,7 +80,7 @@ export default React.createClass({
               <thead>
                 <tr>
                   {!this.props.omitLabels && <th></th>}
-                  {chartData.labels.map((text, i) => (<th key={i}>{text}</th>))}
+                  {chartData.labels.map((text, i) => (<th scope="row" key={i}>{text}</th>))}
                 </tr>
               </thead>
               <tbody>
