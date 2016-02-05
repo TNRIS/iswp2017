@@ -4,16 +4,17 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
-import StatewideDataStore from '../../stores/StatewideDataStore';
-import StatewideViewMap from '../maps/StatewideViewMap';
-import StatewideSummary from '../StatewideSummary';
-import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
-import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 import DataByTypeCharts from '../charts/DataByTypeCharts';
-import RegionalSummaryTreemap from '../charts/RegionalSummaryTreemap';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
 import RegionalSummaryTable from '../RegionalSummaryTable';
+import RegionalSummaryTreemap from '../charts/RegionalSummaryTreemap';
+import StatewideDataStore from '../../stores/StatewideDataStore';
+import StatewideSummary from '../StatewideSummary';
+import StatewideViewMap from '../maps/StatewideViewMap';
+import StrategiesBreakdown from '../StrategiesBreakdown';
+import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
+import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 
 export default React.createClass({
   getInitialState() {
@@ -119,6 +120,17 @@ export default React.createClass({
                             theme={this.state.viewChoice.selectedTheme} />
                         </div>
                       </div>
+
+                      {this.state.viewChoice.selectedTheme === 'strategies' &&
+                        (
+                          <div className="row panel-row">
+                            <div className="twelve columns">
+                              <StrategiesBreakdown viewData={data}
+                                decade={this.state.viewChoice.selectedDecade} />
+                            </div>
+                          </div>
+                        )
+                      }
 
                       <div className="row panel-row">
                         <div className="twelve columns">

@@ -42,6 +42,9 @@ $regions: ('a', rgb(255,249,174)), ('b', rgb(170,215,212)), ('c', rgb(222,231,14
   ('m', rgb(87,187,182)), ('n', rgb(182,189,224)), ('o', rgb(194,203,32)),
   ('p', rgb(214,170,203));
 
+$demand-management-color: rgb(233, 149, 163);
+$water-color: rgb(0, 151, 214);
+
 @import "base";
 @import "charts";
 @import "maps";
@@ -330,6 +333,12 @@ $top-height: 34rem;
   color: lighten($twdb-blue, 10%);
   font-size: 1.5rem;
   line-height: 1rem;
+}
+
+.strategies-breakdown-container {
+  h5 {
+    text-align: center;
+  }
 }
 
 .sticky {

@@ -53,7 +53,8 @@ export default React.createClass({
         </h4>
         <div className="twelve columns">
           <div className="regional-summary-table-container">
-            <Table className={classnames({'u-full-width': !isPopulation}, "regional-summary-table")}
+            <Table
+              className={classnames({'u-full-width': !isPopulation}, "table-condensed regional-summary-table")}
               defaultSort={{column: 'Region', direction: 'asc'}}
               sortable>
               {selectedData.map((row, i) => {

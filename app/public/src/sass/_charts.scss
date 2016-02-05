@@ -110,6 +110,7 @@
   .ct-label {
     font-size: small;
     color: $bodyColor;
+    fill: $bodyColor;
 
     &.ct-horizontal {
       font-size: 0.9em;
@@ -137,6 +138,26 @@
     .series-#{$name} {
       @include series-color($color);
     }
+  }
+}
+
+.strategies-breakdown-container {
+  .ct-slice-pie {
+    stroke: white;
+    stroke-width: 2px;
+    fill: $water-color;
+  }
+
+  .single-slice .ct-slice-pie {
+    stroke-width: 0;
+  }
+
+  .series-demand-reduction .ct-slice-pie,
+  .series-other-conservation .ct-slice-pie,
+  .series-municipal-conservation .ct-slice-pie,
+  .series-irrigation-conservation .ct-slice-pie
+  {
+    fill: $demand-management-color;
   }
 }
 

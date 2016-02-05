@@ -49,7 +49,7 @@
   overflow-x: auto;
 }
 
-.regional-summary-table {
+.table-condensed {
   font-size: smaller;
 
   tr.totals-row {
@@ -63,7 +63,6 @@
   th, td {
     text-align: right;
     padding: 2px 20px 0 0;
-    max-width: 100px;
 
     &.row-label {
       font-weight: bold;
@@ -84,6 +83,10 @@
       border-left: 2px solid gray;
     }
   }
+}
+
+.regional-summary-table th, td {
+  max-width: 100px;
 }
 
 .reactable-header-sortable {
@@ -110,4 +113,9 @@
     border-right: 5px solid transparent;
     border-top: 10px solid #000;
   }
+}
+
+.strategies-by-type-table-container {
+  max-height: 260px;
+  overflow-y: auto;
 }
