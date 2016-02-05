@@ -111,7 +111,7 @@ export default React.createClass({
             <option value="usagetype">Usage Type</option>
           </select>
           <ToggleDisplay show={this.state.navCategory === 'region'}>
-            <div className="select-auto">
+            <div className="select-auto" aria-live="polite">
               <Select matchPos="start"
                 placeholder="Select Region"
                 ignoreCase
@@ -120,7 +120,7 @@ export default React.createClass({
             </div>
           </ToggleDisplay>
           <ToggleDisplay show={this.state.navCategory === 'county'}>
-            <div className="select-auto">
+            <div className="select-auto" aria-live="polite">
               <Select matchPos="start"
                 placeholder="Select County"
                 ignoreCase
@@ -129,7 +129,7 @@ export default React.createClass({
             </div>
           </ToggleDisplay>
           <ToggleDisplay show={this.state.navCategory === 'entity'}>
-            <div className="select-auto entity-select">
+            <div className="select-auto entity-select" aria-live="polite">
               <Select
                 placeholder="Find Water User Group"
                 ignoreCase
@@ -141,7 +141,7 @@ export default React.createClass({
             </div>
           </ToggleDisplay>
           <ToggleDisplay show={this.state.navCategory === 'usagetype'}>
-            <div className="select-auto">
+            <div className="select-auto" aria-live="polite">
               <Select
                 placeholder="Select Usage Type"
                 ignoreCase

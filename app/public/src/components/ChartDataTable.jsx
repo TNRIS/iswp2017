@@ -75,7 +75,7 @@ export default React.createClass({
           }
         }()}
         <ToggleDisplay show={this.state.showTable}>
-          <div className="table-scroll-container">
+          <div aria-live="polite" className="table-scroll-container">
             <table className="u-full-width" >
               <thead>
                 <tr>
