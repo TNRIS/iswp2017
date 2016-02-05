@@ -73,7 +73,7 @@
     "react-addons-pure-render-mixin": "^0.14.0",
     "react-dom": "^0.14.1",
     "react-helmet": "^2.1.0",
-    "react-pivot": "^1.13.0",
+    "react-pivot": "1.13.1",
     "react-router": "1.0.2",
     "react-select": "^0.9.1",
     "react-spinkit": "^1.1.4",
