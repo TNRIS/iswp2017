@@ -68,7 +68,7 @@ export default React.createClass({
             return (
               <div className="toggle-container">
                 <button className="button-small" onClick={this.toggleTableClick}>
-                  <small>{this.state.showTable ? "Hide data" : "Show data"}</small>
+                  <small>{this.state.showTable ? "Hide Data Table" : "Show Data Table"}</small>
                 </button>
               </div>
             );
