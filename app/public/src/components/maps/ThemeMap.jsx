@@ -244,6 +244,7 @@ export default React.createClass({
     return (
       <div>
         <div className="theme-map" ref="map"></div>
+        <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
       </div>
     );
   }
