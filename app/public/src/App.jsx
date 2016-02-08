@@ -2,7 +2,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import ViewHeader from './components/ViewHeader';
+import HeaderNav from './components/HeaderNav';
 
 export default React.createClass({
   propTypes: {
@@ -13,7 +13,7 @@ export default React.createClass({
     return (
       <div>
         <Helmet titleTemplate="%s | DRAFT 2017 Texas State Water Plan"/>
-        <ViewHeader />
+        <HeaderNav />
         {this.props.children}
       </div>
     );

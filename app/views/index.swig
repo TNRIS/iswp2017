@@ -11,25 +11,10 @@
 
 {% block content %}
   <div id="reactApp">
-    {# This will get replaced once the react app loads #}
-    <a class="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
-    <header class="header">
-      <div class="header-title-container">
-        <div class="header-title wrapper">
-          <h1>
-            <a href="/" title="Home"><span class="first-line">DRAFT 2017</span><br/>Texas State Water Plan</a>
-          </h1>
-          <span class="by-the show-medium">by the</span>
-          <a href="http://www.twdb.texas.gov" title="Texas Water Development Board">
-            <img src="/public/static/img/twdb-logo-dark-bkgd-w200px-3c.png" class="logo" />
-          </a>
-        </div>
-      </div>
-    </header>
     <noscript>
       <div class="container">
         <div class="row panel-row">
-          <div class="twelve columns" id="main-content">
+          <div class="twelve columns">
             <h4>Error: Javascript is Required!</h4>
             Javascript is required to use the Interactive State Water Plan Application. <br />
             Please enable Javascript in your browser, or visit <a title="2016 Regional Water Plans" href="http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/index.asp">http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/index.asp</a>
