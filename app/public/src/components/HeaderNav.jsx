@@ -1,4 +1,5 @@
 
+import R from 'ramda';
 import React from 'react';
 import Select from 'react-select';
 import ToggleDisplay from 'react-toggle-display';
@@ -14,8 +15,10 @@ export default React.createClass({
   getInitialState() {
     const viewState = ViewStateStore.getState().viewState;
     return {
+      countyNames: CountyNamesStore.getState().countyNames,
+      navButtonEnabled: viewState.view === 'statewide',
       navCategory: viewState.view,
-      countyNames: CountyNamesStore.getState().countyNames
+      subNavValue: ''
     };
   },
 
@@ -35,23 +38,27 @@ export default React.createClass({
   },
 
   onViewStateChange(storeState) {
-    this.setState({navCategory: storeState.viewState.view});
+    this.setState({
+      navCategory: storeState.viewState.view,
+      subNavValue: ''
+    });
   },
 
-  onCountySelect(countyName) {
-    history.push({pathname: `/county/${countyName}`});
+  onChangeNavCategory(e) {
+    const val = e.target.value;
+    this.setState({
+      navCategory: val,
+      subNavValue: ''
+    });
   },
 
-  onRegionSelect(region) {
-    history.push({pathname: `/region/${region}`});
-  },
-
-  onEntitySelect(entityId) {
-    history.push({pathname: `/entity/${entityId}`});
-  },
-
-  onUsageTypeSelect(usageType) {
-    history.push({pathname: `/usagetype/${usageType}`});
+  onSubNavChange(val, matches) {
+    if (!R.isEmpty(val)) {
+      this.setState({subNavValue: R.nth(0, matches)});
+    }
+    else {
+      this.setState({subNavValue: ''});
+    }
   },
 
   entitySearch(input, callback) {
@@ -71,13 +78,33 @@ export default React.createClass({
       });
   },
 
-  changeNavCategory(e) {
-    const val = e.target.value;
-    this.setState({navCategory: val});
+  isNavButtonEnabled() {
+    return (this.state.navCategory === 'statewide')
+      || !R.isEmpty(this.state.subNavValue);
+  },
 
-    if (val === 'statewide') {
+  navigate() {
+    switch (this.state.navCategory) {
+    case 'statewide':
       history.push({pathname: '/statewide'});
+      break;
+    case 'county':
+      history.push({pathname: `/county/${this.state.subNavValue.value}`});
+      break;
+    case 'region':
+      history.push({pathname: `/region/${this.state.subNavValue.value}`});
+      break;
+    case 'entity':
+      history.push({pathname: `/entity/${this.state.subNavValue.value}`});
+      break;
+    case 'usagetype':
+      history.push({pathname: `/usagetype/${this.state.subNavValue.value}`});
+      break;
+    default:
+      return;
     }
+
+    this.setState({subNavValue: ''});
   },
 
   render() {
@@ -100,7 +127,7 @@ export default React.createClass({
       <div className="header-nav">
         <div className="wrapper">
           <label htmlFor="nav-category-select">View data for</label>
-          <select onChange={this.changeNavCategory}
+          <select onChange={this.onChangeNavCategory}
             value={this.state.navCategory}
             className="nav-category-select"
             id="nav-category-select">
@@ -115,8 +142,9 @@ export default React.createClass({
               <Select matchPos="start"
                 placeholder="Select Region"
                 ignoreCase
-                options={regionSelectOptions}
-                onChange={this.onRegionSelect} />
+                onChange={this.onSubNavChange}
+                value={this.state.subNavValue}
+                options={regionSelectOptions} />
             </div>
           </ToggleDisplay>
           <ToggleDisplay show={this.state.navCategory === 'county'}>
@@ -124,8 +152,9 @@ export default React.createClass({
               <Select matchPos="start"
                 placeholder="Select County"
                 ignoreCase
-                options={countySelectOptions}
-                onChange={this.onCountySelect} />
+                onChange={this.onSubNavChange}
+                value={this.state.subNavValue}
+                options={countySelectOptions} />
             </div>
           </ToggleDisplay>
           <ToggleDisplay show={this.state.navCategory === 'entity'}>
@@ -136,8 +165,8 @@ export default React.createClass({
                 autoload={false}
                 searchPromptText="Enter at least 3 characters to search"
                 asyncOptions={this.entitySearch}
-                options={countySelectOptions}
-                onChange={this.onEntitySelect} />
+                onChange={this.onSubNavChange}
+                value={this.state.subNavValue} />
             </div>
           </ToggleDisplay>
           <ToggleDisplay show={this.state.navCategory === 'usagetype'}>
@@ -145,10 +174,18 @@ export default React.createClass({
               <Select
                 placeholder="Select Usage Type"
                 ignoreCase
-                options={usageTypeSelectOptions}
-                onChange={this.onUsageTypeSelect} />
+                onChange={this.onSubNavChange}
+                value={this.state.subNavValue}
+                options={usageTypeSelectOptions} />
             </div>
           </ToggleDisplay>
+
+          <button className="button button-nav-submit"
+            disabled={!this.isNavButtonEnabled()}
+            onClick={this.navigate}>
+            Go
+          </button>
+
         </div>
       </div>
     );

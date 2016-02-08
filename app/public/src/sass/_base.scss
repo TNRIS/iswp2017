@@ -8,7 +8,8 @@ html {
 
 body {
   color: $bodyColor;
-   /* Seamless Paper Texture by Merry
+  /*
+    Seamless Paper Texture by Merry
     From: http://subtlepatterns.com/seamless-paper-texture/
     CC-BY-SA: http://creativecommons.org/licenses/by-sa/3.0/
   */
@@ -27,6 +28,17 @@ p {
 
 ul, ol {
   margin-bottom: 1rem;
+}
+
+button[disabled] {
+  background: #efefef;
+  border-color: #efefef;
+  color: #999;
+
+  &:hover, &:focus {
+    border-color: #efefef;
+    color: #999;
+  }
 }
 
 #page-wrapper {
