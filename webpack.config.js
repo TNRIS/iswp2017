@@ -1,14 +1,15 @@
 var path = require('path');
 var AssetsPlugin = require('assets-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpack = require('webpack');
 
 var isProd = process.env.NODE_ENV === 'production';
 
-var extractTextPlugin = new ExtractTextPlugin(
+var extractText = new ExtractTextPlugin(
   isProd ? 'styles.[hash].css' : 'styles.css'
 );
 
-var assetsPlugin = new AssetsPlugin({
+var assets = new AssetsPlugin({
   prettyPrint: true,
   path: path.join(__dirname, 'app')
 });
@@ -51,7 +52,8 @@ module.exports = {
     extensions: ['', '.es', '.js', '.jsx']
   },
   plugins: [
-    extractTextPlugin,
-    assetsPlugin
+    extractText,
+    assets,
+    new webpack.optimize.UglifyJsPlugin()
   ]
 };
