@@ -29,7 +29,9 @@ function toPieSeries(totals, decade) {
       ),
       value: totals[key][decade]
     };
-  }, keys).sort((a, b) => b.value - a.value);
+  }, keys)
+  .filter((x) => x.value !== 0)
+  .sort((a, b) => b.value - a.value);
 }
 
 export default React.createClass({
