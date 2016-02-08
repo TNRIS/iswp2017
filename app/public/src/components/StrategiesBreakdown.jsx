@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import titleize from 'titleize';
 import format from 'format-number';
 import {Table, Tr, Td} from 'reactable';
+import round from 'round-precision';
 
 import constants from '../constants';
 import PieChart from './charts/PieChart';
@@ -59,8 +60,6 @@ export default React.createClass({
       );
     }
 
-    //TODO: tooltips
-
     const sourceTypeChartData = {
       series: toPieSeries(sourceTotals, decade)
     };
@@ -69,7 +68,10 @@ export default React.createClass({
 
     return (
       <div className="strategies-breakdown-container">
-        <h4>Strategy Supplies Breakdown - {decade}</h4>
+        <h4>
+          Strategy Supplies Breakdown - {decade}
+          <span className="units">(acre-feet/year)</span>
+        </h4>
         <div className="row">
           <div className="six columns strategies-by-source-type-container">
             <h5>Share by Water Resource</h5>
@@ -84,7 +86,7 @@ export default React.createClass({
                 {
                   R.keys(stratTypeTotals).map((type) => {
                     const val = stratTypeTotals[type][decade];
-                    const pct = Math.round(val / stratTotal * 100);
+                    const pct = round(val / stratTotal * 100, 1);
                     return (
                       <Tr key={`{type}{decade}`}>
                         <Td column="Strategy Type" value={type}>

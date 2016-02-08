@@ -6,6 +6,7 @@ import Chartist from 'chartist';
 import format from 'format-number';
 import classnames from 'classnames';
 import classList from 'dom-classlist';
+import round from 'round-precision';
 
 import utils from '../../utils';
 
@@ -55,8 +56,6 @@ export default React.createClass({
       return;
     }
     //else
-    const me = event.target;
-    const parent = me.parentNode;
     const tooltip = this.refs.tooltip;
 
     // bug in chartist results in 0s not being attached via ct:value
@@ -95,7 +94,7 @@ export default React.createClass({
       width: '100%',
       startAngle: 270,
       labelInterpolationFnc: (value, index) => {
-        const pct = Math.round(value / total * 100);
+        const pct = round(value / total * 100, 1);
         return `${props.chartData.series[index].name} (${pct}%)`;
       }
     };
