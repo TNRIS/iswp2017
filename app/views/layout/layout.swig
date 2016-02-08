@@ -21,8 +21,13 @@
             <p>Please <a href="http://browsehappy.com/" title="browsehappy">upgrade your browser</a> to improve your experience.</p>
           </div>
         <![endif]-->
-        <a class="skip-link" id="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
+        <div class="draft-note">
+          <div class="wrapper">
+            Please visit the Draft 2017 State Water Plan homepage to view the published draft plan and public notice of intent to adopt, public hearing, and request for public comment at: <a title="TWDB State Water Planning home" href="http://www.twdb.texas.gov/waterplanning/swp/index.asp" title="">http://www.twdb.texas.gov/waterplanning/swp/index.asp</a>.
+          </div>
+        </div>
         <header class="header" id="Top">
+          <a class="skip-link" id="skip-link" href="#main-content" tabIndex="1" title="Skip to main content">Skip to Main Content</a>
           <div class="header-title-container">
             <div class="header-title wrapper">
               <h1>
