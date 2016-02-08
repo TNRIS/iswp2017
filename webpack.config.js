@@ -14,6 +14,12 @@ var assets = new AssetsPlugin({
   path: path.join(__dirname, 'app')
 });
 
+var uglify = new webpack.optimize.UglifyJsPlugin();
+
+var plugins = [extractText, assets];
+if (isProd) {
+  plugins.push(uglify);
+}
 
 module.exports = {
   entry: path.join(__dirname, 'app/public/src/entry.jsx'),
@@ -51,9 +57,5 @@ module.exports = {
     // allows extension-less require/import statements for files with these extensions
     extensions: ['', '.es', '.js', '.jsx']
   },
-  plugins: [
-    extractText,
-    assets,
-    new webpack.optimize.UglifyJsPlugin()
-  ]
+  plugins: plugins
 };
