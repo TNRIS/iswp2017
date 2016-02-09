@@ -4,6 +4,7 @@ import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import titleize from 'titleize';
 
+
 import BarChart from './BarChart';
 import ChartLegend from '../ChartLegend';
 import ChartDataTable from '../ChartDataTable';
@@ -73,34 +74,38 @@ export default React.createClass({
           <h4>Data by Usage Type <span className="units">(acre-feet/year)</span></h4>
           <ChartLegend rectangle className="u-pull-right" entries={legendEntries} />
         </div>
-        {everyTwoTypes.map(([groupOne, groupTwo], i) => {
-          const groupOneData = {labels: constants.DECADES, series: seriesByType[groupOne]};
-          const groupTwoData = {labels: constants.DECADES, series: seriesByType[groupTwo]};
-          return (
-            <div className="row" key={i}>
-              <div className="six columns wide type-chart-container">
-                <UsageTypeIcon type={groupOne} />
-                <h5 className={`heading-${slugify(groupOne.toLowerCase())}`}>
-                  {titleize(groupOne)}
-                </h5>
-                <BarChart
-                  chartData={groupOneData}
-                  chartOptions={chartOptions} />
-                <ChartDataTable className="u-full-width" chartData={groupOneData} />
-              </div>
-              <div className="six columns wide type-chart-container">
-                <UsageTypeIcon type={groupTwo} />
-                <h5 className={`heading-${slugify(groupTwo.toLowerCase())}`}>
-                  {titleize(groupTwo)}
-                </h5>
-                <BarChart
-                  chartData={groupTwoData}
-                  chartOptions={chartOptions} />
-                <ChartDataTable className="u-full-width" chartData={groupTwoData} />
-              </div>
-            </div>
-          );
-        })}
+        <div className="u-cf u-full-width">
+          {
+            everyTwoTypes.map(([groupOne, groupTwo], i) => {
+              const groupOneData = {labels: constants.DECADES, series: seriesByType[groupOne]};
+              const groupTwoData = {labels: constants.DECADES, series: seriesByType[groupTwo]};
+              return (
+                <div className="row" key={i}>
+                  <div className="six columns wide type-chart-container">
+                    <UsageTypeIcon type={groupOne} />
+                    <h5 className={`heading-${slugify(groupOne.toLowerCase())}`}>
+                      {titleize(groupOne)}
+                    </h5>
+                    <BarChart
+                      chartData={groupOneData}
+                      chartOptions={chartOptions} />
+                    <ChartDataTable className="u-full-width" chartData={groupOneData} />
+                  </div>
+                  <div className="six columns wide type-chart-container">
+                    <UsageTypeIcon type={groupTwo} />
+                    <h5 className={`heading-${slugify(groupTwo.toLowerCase())}`}>
+                      {titleize(groupTwo)}
+                    </h5>
+                    <BarChart
+                      chartData={groupTwoData}
+                      chartOptions={chartOptions} />
+                    <ChartDataTable className="u-full-width" chartData={groupTwoData} />
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
       </div>
     );
   }

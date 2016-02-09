@@ -3,9 +3,10 @@ import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Chartist from 'chartist';
-import format from 'format-number';
 import classnames from 'classnames';
 import classList from 'dom-classlist';
+import isFirefox from 'is-firefox';
+import format from 'format-number';
 
 import SeriesHighlightActions from '../../actions/SeriesHighlightActions';
 import utils from '../../utils';
@@ -106,7 +107,10 @@ export default React.createClass({
       width: '100%',
       chartPadding: {
         left: utils.getChartLeftPadding(props.chartData),
-        right: 30
+        right: 40,
+        //chartist calculates internal padding strangely in firefox
+        // so accomodate for that here, ref #161
+        bottom: isFirefox ? 24 : 10
       },
       axisY: {
         labelInterpolationFnc: format()
