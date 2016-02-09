@@ -12,6 +12,7 @@ import PlaceDataStore from '../../stores/PlaceDataStore';
 import PlacePivotTable from '../PlacePivotTable';
 import PlaceSummary from '../PlaceSummary';
 import PlaceViewMap from '../maps/PlaceViewMap';
+import RegionDescription from '../RegionDescription';
 import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
@@ -115,6 +116,15 @@ export default React.createClass({
               return (
                 <div>
                   <div className="container">
+                    {
+                      params.type.toLowerCase() === 'region' &&
+                      <div className="row panel-row">
+                        <div className="twelve columns">
+                          <RegionDescription region={params.typeId.toUpperCase()} />
+                        </div>
+                      </div>
+                    }
+
                     <div className="row panel-row">
                       <div className="twelve columns">
                         <span className="view-name">{viewName}</span>
