@@ -37,6 +37,7 @@ export default React.createClass({
   componentDidMount() {
     this.updateChart(this.props);
     window.addEventListener('scroll', this.clearInteraction);
+    this.chart.on('draw', this.centerHorizontalLabels);
   },
 
   componentWillUpdate(nextProps) {
@@ -48,6 +49,7 @@ export default React.createClass({
   componentWillUnmount() {
     if (this.chart) {
       try {
+        this.chart.off('draw', this.centerHorizontalLabels);
         this.chart.detach();
       }
       catch (err) {
@@ -98,6 +100,20 @@ export default React.createClass({
     tooltip.style.top = `${matrix.f - height - heightAdjust}px`;
     tooltip.style.left = `${matrix.e - width / 2}px`;
     tooltip.className = classnames(tooltipClass, `tooltip-${utils.slugify(seriesName.toLowerCase())}`);
+  },
+
+  centerHorizontalLabels(event) {
+    // If the draw event is for labels on the x-axis
+    if (event.type === 'label' && event.axis.units.pos === 'x') {
+      //and if foreign objects are not supported
+      // (otherwise we have css to handle the centering of the labels)
+      if (!this.chart.supportsForeignObject) {
+        event.element.attr({
+          x: event.x + event.width / 2,
+          'text-anchor': 'middle'
+        });
+      }
+    }
   },
 
   clearInteraction() {
