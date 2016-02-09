@@ -7,6 +7,7 @@ import format from 'format-number';
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
+import {objFromKeys} from '../utils';
 
 export default React.createClass({
   propTypes: {
@@ -47,10 +48,9 @@ export default React.createClass({
               // as above
               wmsNames.map((wmsName) => {
                 const rows = groupedByName[wmsName];
-                const sums = {};
-                decades.forEach((decade) => {
-                  sums[decade] = R.sum(R.pluck(`Value_${decade}`, rows));
-                });
+                const sums = objFromKeys((decade) => {
+                  return R.sum(R.pluck(`Value_${decade}`, rows));
+                }, decades);
 
                 return (
                   <Tr key={wmsName}>

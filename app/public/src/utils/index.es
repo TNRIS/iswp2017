@@ -47,9 +47,16 @@ function getViewName(type, typeId) {
   return typeAndId;
 }
 
+//Make an object out of keys, with values derived from them
+// from https://github.com/ramda/ramda/wiki/Cookbook#make-an-object-out-of-keys-with-values-derived-from-them
+const objFromKeys = R.curry((fn, keys) => {
+  return R.zipObj(keys, R.map(fn, keys));
+});
+
 export default {
   slugify,
   getMapPadding,
   getChartLeftPadding,
-  getViewName
+  getViewName,
+  objFromKeys
 };
