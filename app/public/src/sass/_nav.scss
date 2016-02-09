@@ -59,6 +59,11 @@ $nav-color: lighten($twdb-blue, 10%);
     margin-left: 1rem;
   }
 
+  button {
+    margin-left: 1rem;
+    margin-bottom: 0;
+  }
+
   .select-auto {
     display: inline-block;
     margin-left: 1rem;
@@ -85,7 +90,6 @@ $nav-color: lighten($twdb-blue, 10%);
 
 .button-nav-submit {
   background: #fff;
-  margin-left: 1rem;
 
   &:focus {
     border: 1px solid #33C3F0;
