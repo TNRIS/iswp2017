@@ -50,6 +50,10 @@ $nav-color: lighten($twdb-blue, 10%);
   background-color: $nav-color;
   padding: 1rem 0;
 
+  form {
+    margin: 0;
+  }
+
   label {
     display: inline-block;
     color: white;

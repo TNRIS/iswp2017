@@ -126,66 +126,67 @@ export default React.createClass({
     return (
       <div className="header-nav">
         <div className="wrapper">
-          <label htmlFor="nav-category-select">View data for</label>
-          <select onChange={this.onChangeNavCategory}
-            value={this.state.navCategory}
-            className="nav-category-select"
-            id="nav-category-select">
-            <option value="statewide">All of Texas</option>
-            <option value="region">Planning Region</option>
-            <option value="county">County</option>
-            <option value="entity">Water User Group</option>
-            <option value="usagetype">Usage Type</option>
-          </select>
-          <ToggleDisplay show={this.state.navCategory === 'region'}>
-            <div className="select-auto" aria-live="polite">
-              <Select matchPos="start"
-                placeholder="Select Region"
-                ignoreCase
-                onChange={this.onSubNavChange}
-                value={this.state.subNavValue}
-                options={regionSelectOptions} />
-            </div>
-          </ToggleDisplay>
-          <ToggleDisplay show={this.state.navCategory === 'county'}>
-            <div className="select-auto" aria-live="polite">
-              <Select matchPos="start"
-                placeholder="Select County"
-                ignoreCase
-                onChange={this.onSubNavChange}
-                value={this.state.subNavValue}
-                options={countySelectOptions} />
-            </div>
-          </ToggleDisplay>
-          <ToggleDisplay show={this.state.navCategory === 'entity'}>
-            <div className="select-auto entity-select" aria-live="polite">
-              <Select
-                placeholder="Find Water User Group"
-                ignoreCase
-                autoload={false}
-                searchPromptText="Enter at least 3 characters to search"
-                asyncOptions={this.entitySearch}
-                onChange={this.onSubNavChange}
-                value={this.state.subNavValue} />
-            </div>
-          </ToggleDisplay>
-          <ToggleDisplay show={this.state.navCategory === 'usagetype'}>
-            <div className="select-auto" aria-live="polite">
-              <Select
-                placeholder="Select Usage Type"
-                ignoreCase
-                onChange={this.onSubNavChange}
-                value={this.state.subNavValue}
-                options={usageTypeSelectOptions} />
-            </div>
-          </ToggleDisplay>
+          <form>
+            <label htmlFor="nav-category-select">View data for</label>
+            <select onChange={this.onChangeNavCategory}
+              value={this.state.navCategory}
+              className="nav-category-select"
+              id="nav-category-select">
+              <option value="statewide">All of Texas</option>
+              <option value="region">Planning Region</option>
+              <option value="county">County</option>
+              <option value="entity">Water User Group</option>
+              <option value="usagetype">Usage Type</option>
+            </select>
+            <ToggleDisplay show={this.state.navCategory === 'region'}>
+              <div className="select-auto" aria-live="polite">
+                <Select matchPos="start"
+                  placeholder="Select Region"
+                  ignoreCase
+                  onChange={this.onSubNavChange}
+                  value={this.state.subNavValue}
+                  options={regionSelectOptions} />
+              </div>
+            </ToggleDisplay>
+            <ToggleDisplay show={this.state.navCategory === 'county'}>
+              <div className="select-auto" aria-live="polite">
+                <Select matchPos="start"
+                  placeholder="Select County"
+                  ignoreCase
+                  onChange={this.onSubNavChange}
+                  value={this.state.subNavValue}
+                  options={countySelectOptions} />
+              </div>
+            </ToggleDisplay>
+            <ToggleDisplay show={this.state.navCategory === 'entity'}>
+              <div className="select-auto entity-select" aria-live="polite">
+                <Select
+                  placeholder="Find Water User Group"
+                  ignoreCase
+                  autoload={false}
+                  searchPromptText="Enter at least 3 characters to search"
+                  asyncOptions={this.entitySearch}
+                  onChange={this.onSubNavChange}
+                  value={this.state.subNavValue} />
+              </div>
+            </ToggleDisplay>
+            <ToggleDisplay show={this.state.navCategory === 'usagetype'}>
+              <div className="select-auto" aria-live="polite">
+                <Select
+                  placeholder="Select Usage Type"
+                  ignoreCase
+                  onChange={this.onSubNavChange}
+                  value={this.state.subNavValue}
+                  options={usageTypeSelectOptions} />
+              </div>
+            </ToggleDisplay>
 
-          <button className="button button-nav-submit"
-            disabled={!this.isNavButtonEnabled()}
-            onClick={this.navigate}>
-            Go
-          </button>
-
+            <button type="submit" className="button button-nav-submit"
+              disabled={!this.isNavButtonEnabled()}
+              onClick={this.navigate}>
+              Go
+            </button>
+          </form>
         </div>
       </div>
     );
