@@ -5,9 +5,9 @@ import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
 import EntityDataStore from '../../stores/EntityDataStore';
-
 import EntityViewMap from '../maps/EntityViewMap';
 import EntitySummary from '../EntitySummary';
+import EntityStrategiesTable from '../EntityStrategiesTable';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 
 export default React.createClass({
@@ -80,6 +80,13 @@ export default React.createClass({
                       <div className="twelve columns">
                         <span className="view-name">{title}</span>
                         <ThemeTotalsByDecadeChart viewData={entityData.data} />
+                      </div>
+                    </div>
+
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <span className="view-name">{title}</span>
+                        <EntityStrategiesTable viewData={entityData.data} />
                       </div>
                     </div>
                   </div>
