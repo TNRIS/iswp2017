@@ -93,6 +93,7 @@
   cursor: pointer;
 }
 
+.reactPivot-results th.asc,
 .reactable-header-sort-asc {
   &:after {
     content: '';
@@ -101,9 +102,11 @@
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-bottom: 10px solid #000;
+    opacity: 0.5;
   }
 }
 
+.reactPivot-results th.desc,
 .reactable-header-sort-desc {
   &:after {
     content: '';
@@ -112,6 +115,7 @@
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 10px solid #000;
+    opacity: 0.5;
   }
 }
 
