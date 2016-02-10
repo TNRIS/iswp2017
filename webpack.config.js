@@ -47,6 +47,13 @@ module.exports = {
         loader: 'babel-loader'
       },
       {
+        //include react-pivot specifically as requiring babel-loader
+        // due to the way it is packaged
+        test: /\.(jsx)$/,
+        include: /node_modules\/react-pivot/,
+        loader: 'babel-loader'
+      },
+      {
         test: /\.svg$/,
         exclude: /node_modules/,
         loader: 'babel!svg-react-loader'

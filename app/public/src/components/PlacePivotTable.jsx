@@ -3,8 +3,9 @@ import R from 'ramda';
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import format from 'format-number';
+import Emitter from 'wildemitter';
+import PivotTable from 'react-pivot';
 import hat from 'hat';
-import PivotTable from 'babel!react-pivot'; //must use babel loader directly
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
@@ -49,10 +50,35 @@ export default React.createClass({
   mixins: [PureRenderMixin],
 
   getInitialState() {
-    return ViewStateStore.getState();
+    const viewState = ViewStateStore.getState().viewState;
+    return {
+      viewState: viewState,
+      activeDimensions: this.getViewDefaultActiveDimensions(viewState),
+      sortBy: 'Entity', //TODO: get default based on viewState?
+      sortDir: 'asc'
+    };
+  },
+
+  componentWillMount() {
+    this.eventBus = new Emitter;
   },
 
   componentDidMount() {
+    this.eventBus.on('activeDimensions', (dims) => {
+      //if the current SortBy dimension is not in the new activeDimensions,
+      // then sortBy the first item in the new activeDimensions
+      const currSortBy = this.state.sortBy;
+      if (dims.indexOf(currSortBy) < 0) {
+        this.setState({
+          sortBy: dims[0] || null,
+          sortDir: 'asc'
+        });
+      }
+    });
+    this.eventBus.on('activeDimensions', (val) => this.setState({activeDimensions: val}));
+    this.eventBus.on('sortBy', (val) => this.setState({sortBy: val}));
+    this.eventBus.on('sortDir', (val) => this.setState({sortDir: val}));
+
     ViewStateStore.listen(this.onViewStateChange);
   },
 
@@ -60,12 +86,12 @@ export default React.createClass({
     ViewStateStore.unlisten(this.onViewStateChange);
   },
 
-  onViewStateChange(state) {
-    this.setState(state);
+  onViewStateChange(storeState) {
+    this.setState({viewState: storeState.viewState});
   },
 
-  getActiveDimensions() {
-    const view = this.state.viewState.view;
+  getViewDefaultActiveDimensions(viewState) {
+    const view = viewState.view;
     let activeDimensions = [];
     switch (view) {
     case 'region':
@@ -103,11 +129,18 @@ export default React.createClass({
     const decade = this.props.decade;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
 
-    const availableDimensions = selectedTheme === 'strategies'
-      ? R.append(wmsNameDimension, dimensions)
-      : R.clone(dimensions);
+    const availableDimensions = R.clone(dimensions);
 
-    const activeDimensions = this.getActiveDimensions();
+    const activeDimensions = this.state.activeDimensions;
+    const sortBy = this.state.sortBy;
+    const sortDir = this.state.sortDir;
+
+    if (selectedTheme === 'strategies') {
+      availableDimensions.push(wmsNameDimension);
+      if (activeDimensions.indexOf(wmsNameDimension.title) < 0) {
+        activeDimensions.push(wmsNameDimension.title);
+      }
+    }
 
     const reduce = (row, memo) => {
       memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${decade}`];
@@ -134,14 +167,17 @@ export default React.createClass({
         <div className="data-table-container">
           <PivotTable
             //assign a unique key to force rerender of table
+            // when decade or theme are changed
             // otherwise it will not react to prop changes
             key={hat()}
+            eventBus={this.eventBus}
             rows={tableData}
             dimensions={availableDimensions}
             activeDimensions={activeDimensions}
             reduce={reduce}
             calculations={calculations}
-            sortBy={'Entity'}
+            sortBy={sortBy}
+            sortDir={sortDir}
             nPaginateRows={50}
           />
         </div>
