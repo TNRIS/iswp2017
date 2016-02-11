@@ -49,7 +49,7 @@
 
             <ol>
               <li>
-                Choose the geographic are of interest, either a regional water planning area (A-O), county, or specific water user group (e.g., city) from the navigation menu or click on a region or county on the top map.
+                Choose the geographic area of interest, either a regional water planning area (A-O), county, or specific water user group (e.g., city) from the navigation menu or click on a region or county on the top map.
               </li>
               <li>
                 Depending on the graphic that displays, you may be given the option to view a single data category
