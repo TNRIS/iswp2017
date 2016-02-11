@@ -75,7 +75,7 @@ export default React.createClass({
       title = `Region ${params.typeId.toUpperCase()}`;
       break;
     case 'county':
-      title = `${titleize(params.typeId)} County`;
+      title = `${params.typeId} County`;
       break;
     default:
       title = '';
