@@ -115,7 +115,7 @@ export default React.createClass({
     let countySelectOptions = [];
     if (this.state.countyNames) {
       countySelectOptions = this.state.countyNames.map((name) => {
-        return {value: titleize(name), label: titleize(name)};
+        return {value: name, label: name};
       });
     }
 
