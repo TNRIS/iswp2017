@@ -26,9 +26,7 @@ We are using a custom [D3](http://d3js.org/) build to cut down on code size. To 
 
 ### Running Development Server
 
-`npm run dev-webpack` in one terminal to continuously build client-side scripts and css
-
-`npm run dev-server` in another terminal to run the development web server
+`npm run dev-start` in a terminal to continuously build client-side scripts and css and serve the application
 
 `npm test` to run the test scripts
 
