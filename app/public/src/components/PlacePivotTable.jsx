@@ -82,6 +82,24 @@ export default React.createClass({
     ViewStateStore.listen(this.onViewStateChange);
   },
 
+  componentWillReceiveProps(newProps) {
+    const activeDimensions = this.state.activeDimensions;
+    const hasWmsName = activeDimensions.indexOf(wmsNameDimension.title) > -1;
+
+    //if we are changing to 'strategies' view, then add WMSName to activeDimensions if not already there
+    if (newProps.theme === 'strategies' && this.props.theme !== 'strategies' && !hasWmsName) {
+      this.setState({
+        activeDimensions: R.append(wmsNameDimension.title, activeDimensions)
+      });
+    }
+    //else remove WMSName if it is in activeDimensions
+    else if (newProps.theme !== 'strategies' && hasWmsName) {
+      this.setState({
+        activeDimensions: R.without([wmsNameDimension.title], activeDimensions)
+      });
+    }
+  },
+
   componentWillUnmount() {
     ViewStateStore.unlisten(this.onViewStateChange);
   },
@@ -137,9 +155,6 @@ export default React.createClass({
 
     if (selectedTheme === 'strategies') {
       availableDimensions.push(wmsNameDimension);
-      if (activeDimensions.indexOf(wmsNameDimension.title) < 0) {
-        activeDimensions.push(wmsNameDimension.title);
-      }
     }
 
     const reduce = (row, memo) => {
