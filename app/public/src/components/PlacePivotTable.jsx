@@ -35,10 +35,16 @@ const dimensions = [
   }
 ];
 
-const wmsNameDimension = {
-  value: 'WMSName',
-  title: 'Strategy'
-};
+const addlStrategyDimensions = [
+  {
+    value: 'WMSName',
+    title: 'Strategy'
+  },
+  {
+    value: 'SourceName',
+    title: 'Source'
+  }
+];
 
 export default React.createClass({
   propTypes: {
@@ -84,18 +90,18 @@ export default React.createClass({
 
   componentWillReceiveProps(newProps) {
     const activeDimensions = this.state.activeDimensions;
-    const hasWmsName = activeDimensions.indexOf(wmsNameDimension.title) > -1;
 
-    //if we are changing to 'strategies' view, then add WMSName to activeDimensions if not already there
-    if (newProps.theme === 'strategies' && this.props.theme !== 'strategies' && !hasWmsName) {
+    //if we are changing to 'strategies' view, then add additional strategy dimensions
+    // to activeDimensions
+    if (newProps.theme === 'strategies' && this.props.theme !== 'strategies') {
       this.setState({
-        activeDimensions: R.append(wmsNameDimension.title, activeDimensions)
+        activeDimensions: R.concat(activeDimensions, R.pluck('title', addlStrategyDimensions))
       });
     }
-    //else remove WMSName if it is in activeDimensions
-    else if (newProps.theme !== 'strategies' && hasWmsName) {
+    //else remove additional strategy dimensions from activeDimensions
+    else if (newProps.theme !== 'strategies') {
       this.setState({
-        activeDimensions: R.without([wmsNameDimension.title], activeDimensions)
+        activeDimensions: R.without(R.pluck('title', addlStrategyDimensions), activeDimensions)
       });
     }
   },
@@ -125,10 +131,10 @@ export default React.createClass({
       activeDimensions = ['Region', 'County', 'Entity'];
     }
 
-    //add 'WMSName' to the active dimensions list
+    //add additional strategy dimensions to the active dimensions list
     const theme = this.props.theme;
     if (theme === 'strategies') {
-      activeDimensions = R.append(wmsNameDimension.title, activeDimensions);
+      activeDimensions = R.concat(R.pluck('title', addlStrategyDimensions), activeDimensions);
     }
 
     return activeDimensions;
@@ -154,7 +160,7 @@ export default React.createClass({
     const sortDir = this.state.sortDir;
 
     if (selectedTheme === 'strategies') {
-      availableDimensions.push(wmsNameDimension);
+      addlStrategyDimensions.forEach((d) => availableDimensions.push(d));
     }
 
     const reduce = (row, memo) => {
