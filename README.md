@@ -24,11 +24,13 @@ This command should do it for you (requires aws cli and credentials): `aws s3 cp
 
 We are using a custom [D3](http://d3js.org/) build to cut down on code size. To make a new custom build, see instructions in `d3_build/README.md`.
 
-### Running Development Server
+### Developing
 
 `npm run dev-start` in a terminal to continuously build client-side scripts and css and serve the application
 
 `npm test` to run the test scripts
+
+Note that this application uses a `npm-shrinkwrap.json` file to freeze npm dependencies. If you'd like to update packages, you will have to do so manually and then re-run `npm shrinkwrap`.
 
 ## Technologies Used
 
