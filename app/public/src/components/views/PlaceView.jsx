@@ -1,7 +1,6 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
-import titleize from 'titleize';
 import Spinner from 'react-spinkit';
 
 import utils from '../../utils';

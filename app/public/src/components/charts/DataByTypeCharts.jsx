@@ -12,6 +12,7 @@ import UsageTypeIcon from '../UsageTypeIcon';
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import TitlePlugin from '../../utils/ChartistAxisTitlePlugin';
+import Units from '../Units';
 import {slugify} from '../../utils';
 
 const chartOptions = {
@@ -71,7 +72,10 @@ export default React.createClass({
     return (
       <div>
         <div className="chart-header">
-          <h4>Data by Usage Type <span className="units">(acre-feet/year)</span></h4>
+          <h4>
+            Data by Usage Type
+            <Units />
+          </h4>
           <ChartLegend rectangle className="u-pull-right" entries={legendEntries} />
         </div>
         <div className="u-cf u-full-width">

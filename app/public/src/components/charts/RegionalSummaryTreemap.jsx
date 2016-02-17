@@ -8,6 +8,7 @@ import titleize from 'titleize';
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import Treemap from './Treemap';
+import Units from '../Units';
 import utils from '../../utils';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
@@ -98,8 +99,6 @@ export default React.createClass({
     const selectedDecade = this.props.decade;
     const selectedTheme = this.props.theme;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
-    const isPopulation = selectedTheme === 'population';
-    const units = isPopulation ? "people" : "acre-feet/year";
     const selectedTreemap = this.state.selectedTreemap;
 
     const treemapData = this.formatData();
@@ -108,7 +107,7 @@ export default React.createClass({
       <div>
         <h4>
           Regional Summary Treemap - {selectedDecade} - {themeTitle}
-          <span className="units">({units})</span>
+          <Units theme={selectedTheme} />
         </h4>
         <div className="selector treemap-selector">
           <button

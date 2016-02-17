@@ -11,6 +11,7 @@ import LineChart from './LineChart';
 import PropTypes from '../../utils/CustomPropTypes';
 import ThemeSelector from '../ThemeSelector';
 import TitlePlugin from '../../utils/ChartistAxisTitlePlugin';
+import Units from '../Units';
 import utils from '../../utils';
 
 const chartOptions = {
@@ -71,7 +72,10 @@ export default React.createClass({
     return (
       <div>
         <div className="chart-header">
-          <h4>{constants.THEME_TITLES[this.state.selectedTheme]} by Usage Type <span className="units">(acre-feet/year)</span></h4>
+          <h4>
+            {constants.THEME_TITLES[this.state.selectedTheme]} by Usage Type
+            <Units />
+          </h4>
           <UsageTypeChartLegend className="u-pull-right legend-types-by-decade" />
         </div>
         <div className="u-cf u-full-width">

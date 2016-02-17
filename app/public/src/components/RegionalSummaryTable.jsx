@@ -10,6 +10,7 @@ import titleize from 'titleize';
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
+import Units from './Units';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
@@ -30,9 +31,6 @@ export default React.createClass({
     const selectedDecade = this.props.decade;
     const selectedTheme = this.props.theme;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
-
-    const units = selectedTheme === 'population' ? "people" : "acre-feet/year";
-
     const selectedData = this.props.viewData[selectedTheme].regionalSummary[selectedDecade];
 
     // - styling (more condensed, asc/desc column markers, align numbers right, totals row and col)
@@ -49,7 +47,7 @@ export default React.createClass({
       <div>
         <h4>
           Regional Summary Data - {selectedDecade} - {themeTitle}
-          <span className="units">({units})</span>
+          <Units theme={selectedTheme} />
         </h4>
         <div className="twelve columns">
           <div className="regional-summary-table-container">

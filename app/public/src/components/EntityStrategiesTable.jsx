@@ -7,6 +7,7 @@ import format from 'format-number';
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
+import Units from './Units';
 import {objFromKeys} from '../utils';
 
 export default React.createClass({
@@ -35,7 +36,7 @@ export default React.createClass({
       <div className="entity-strategies-container">
         <h4>
           Water Management Strategies
-          <span className="units">(acre-feet/year)</span>
+          <Units />
         </h4>
         <div className="entity-strategies-table-container">
           <Table className="table-condensed u-full-width entity-strategies-table"

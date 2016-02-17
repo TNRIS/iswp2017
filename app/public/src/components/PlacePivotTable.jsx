@@ -9,6 +9,7 @@ import hat from 'hat';
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
+import Units from './Units';
 import ViewStateStore from '../stores/ViewStateStore';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
@@ -200,13 +201,11 @@ export default React.createClass({
       }
     ];
 
-    const units = selectedTheme === 'population' ? "people" : "acre-feet/year";
-
     return (
       <div>
         <h4>
           Raw Data - {decade} - {themeTitle}
-          <span className="units">({units})</span>
+          <Units theme={selectedTheme} />
         </h4>
         <div className="data-table-container">
           <PivotTable

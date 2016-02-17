@@ -11,6 +11,7 @@ import round from 'round-precision';
 import constants from '../constants';
 import PieChart from './charts/PieChart';
 import PropTypes from '../utils/CustomPropTypes';
+import Units from './Units';
 import {slugify} from '../utils';
 
 const chartOptions = {
@@ -72,7 +73,7 @@ export default React.createClass({
       <div className="strategies-breakdown-container">
         <h4>
           Strategy Supplies Breakdown - {decade}
-          <span className="units">(acre-feet/year)</span>
+          <Units />
         </h4>
         <div className="row">
           <div className="six columns strategies-by-source-type-container">
