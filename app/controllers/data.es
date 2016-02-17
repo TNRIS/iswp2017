@@ -6,7 +6,7 @@ import db from 'db';
 import constants from 'lib/constants';
 
 import {handleApiError} from 'lib/utils';
-//TODO: Remove "typeTotals" from the population response
+//TODO: Remove "typeTotals" from the population response?
 
 const needsPctDemandsTable = 'vw2017MapEntityNeedsAsPctOfDemand';
 
@@ -21,6 +21,9 @@ const summaryTables = {
 };
 
 const additionalFields = {
+  'supplies': [
+    'SourceName', 'MapSourceId'
+  ],
   'needs': R.map((year) => `NPD${year}`, constants.YEARS),
   'strategies': [
     'WMSName', 'wmsType as WMSType', 'SourceName', 'SourceType', 'MapSourceId'
@@ -30,12 +33,6 @@ const additionalFields = {
 function renameValueFields(theme) {
   return constants.YEARS.map((year) => {
     return `${constants.VALUE_PREFIXES[theme]}${year} as Value_${year}`;
-  });
-}
-
-function makeTypeSumFields(theme) {
-  return constants.YEARS.map((year) => {
-    return `${constants.VALUE_PREFIXES[theme]}${year} as Total_${year}`;
   });
 }
 
@@ -138,7 +135,7 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
         const decadeTotals = R.nth(0, decadeSums);
 
         const results = R.assoc(theme, {
-          rows : (!data || R.isEmpty(data)) ? [] : data,
+          rows: (!data || R.isEmpty(data)) ? [] : data,
           typeTotals: zipByField('WugType', typeSums),
           decadeTotals
         }, {});
