@@ -17,7 +17,7 @@ function toAnchor(href, text) {
   return `<a href="${href}">${text}</a>`;
 }
 
-const dimensions = [
+const commonDimensions = [
   {
     value: 'EntityName',
     title: 'Entity',
@@ -35,16 +35,24 @@ const dimensions = [
   }
 ];
 
-const addlStrategyDimensions = [
-  {
-    value: 'WMSName',
-    title: 'Strategy'
-  },
-  {
-    value: 'SourceName',
-    title: 'Source'
-  }
-];
+const additionalDimensions = {
+  supplies: [
+    {
+      value: 'SourceName',
+      title: 'Source'
+    }
+  ],
+  strategies: [
+    {
+      value: 'WMSName',
+      title: 'Strategy'
+    },
+    {
+      value: 'SourceName',
+      title: 'Source'
+    }
+  ]
+};
 
 export default React.createClass({
   propTypes: {
@@ -89,21 +97,36 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
-    const activeDimensions = this.state.activeDimensions;
+    let newActive = R.clone(this.state.activeDimensions);
 
-    //if we are changing to 'strategies' view, then add additional strategy dimensions
-    // to activeDimensions
-    if (newProps.theme === 'strategies' && this.props.theme !== 'strategies') {
-      this.setState({
-        activeDimensions: R.concat(activeDimensions, R.pluck('title', addlStrategyDimensions))
-      });
+    const isSameTheme = newProps.theme === this.props.theme;
+    const hasNewAdditional = !!additionalDimensions[newProps.theme];
+    const hasOldAdditional = !!additionalDimensions[this.props.theme];
+
+    if (isSameTheme) {
+      //do nothing
+      return;
     }
-    //else remove additional strategy dimensions from activeDimensions
-    else if (newProps.theme !== 'strategies') {
-      this.setState({
-        activeDimensions: R.without(R.pluck('title', addlStrategyDimensions), activeDimensions)
-      });
+
+    //else if the theme has changed...
+
+    // and there are previous additional dimensions, then remove them
+    if (hasOldAdditional) {
+      const oldTheme = this.props.theme;
+      newActive = R.without(
+        R.pluck('title', additionalDimensions[oldTheme]), newActive
+      );
     }
+
+    // and after removal, if there are new additional dimensions, then add them
+    if (hasNewAdditional) {
+      newActive = R.concat(newActive,
+        R.pluck('title', additionalDimensions[newProps.theme])
+      );
+    }
+
+    // finally save the newActive dimensions into state
+    this.setState({activeDimensions: newActive});
   },
 
   componentWillUnmount() {
@@ -131,10 +154,10 @@ export default React.createClass({
       activeDimensions = ['Region', 'County', 'Entity'];
     }
 
-    //add additional strategy dimensions to the active dimensions list
+    //add additional dimensions to the active dimensions list
     const theme = this.props.theme;
-    if (theme === 'strategies') {
-      activeDimensions = R.concat(R.pluck('title', addlStrategyDimensions), activeDimensions);
+    if (additionalDimensions[theme]) {
+      activeDimensions = R.concat(R.pluck('title', additionalDimensions[theme]), activeDimensions);
     }
 
     return activeDimensions;
@@ -153,14 +176,14 @@ export default React.createClass({
     const decade = this.props.decade;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
 
-    const availableDimensions = R.clone(dimensions);
+    const availableDimensions = R.clone(commonDimensions);
 
     const activeDimensions = this.state.activeDimensions;
     const sortBy = this.state.sortBy;
     const sortDir = this.state.sortDir;
 
-    if (selectedTheme === 'strategies') {
-      addlStrategyDimensions.forEach((d) => availableDimensions.push(d));
+    if (additionalDimensions[selectedTheme]) {
+      additionalDimensions[selectedTheme].forEach((d) => availableDimensions.push(d));
     }
 
     const reduce = (row, memo) => {
