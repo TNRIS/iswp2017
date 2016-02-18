@@ -353,6 +353,7 @@ $top-height: 34rem;
 
 .view-name {
   display: block;
+  text-transform: uppercase;
   color: lighten($twdb-blue, 10%);
   font-size: 1.5rem;
   margin-bottom: -1rem;

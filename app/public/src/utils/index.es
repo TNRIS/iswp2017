@@ -43,7 +43,6 @@ function getViewName(type, typeId) {
     typeAndId += ' County';
   }
 
-  typeAndId = typeAndId.toUpperCase();
   return typeAndId;
 }
 
