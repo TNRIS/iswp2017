@@ -7,6 +7,7 @@ import utils from '../../utils';
 import DataByTypeCharts from '../charts/DataByTypeCharts';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
+import DownloadDataLink from '../DownloadDataLink';
 import PlaceDataStore from '../../stores/PlaceDataStore';
 import PlacePivotTable from '../PlacePivotTable';
 import PlaceSummary from '../PlaceSummary';
@@ -177,6 +178,11 @@ export default React.createClass({
                           <PlacePivotTable viewData={placeData.data}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
+                          <DownloadDataLink
+                            type={this.props.params.type}
+                            typeId={this.props.params.typeId}
+                            theme={this.state.viewChoice.selectedTheme}
+                            viewName={viewName} />
                         </div>
                       </div>
                     </div>

@@ -8,6 +8,7 @@ import titleize from 'titleize';
 import DataViewChoiceActions from '../../actions/DataViewChoiceActions';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
+import DownloadDataLink from '../DownloadDataLink';
 import PlacePivotTable from '../PlacePivotTable';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeMaps from '../maps/ThemeMaps';
@@ -80,7 +81,7 @@ export default React.createClass({
     const usageType = this.props.params.typeId;
 
     const title = titleize(usageType) + ' Usage';
-    const viewName = usageType.toUpperCase();
+    const viewName = titleize(usageType);
 
     return (
       <div className="usage-type-view">
@@ -137,6 +138,11 @@ export default React.createClass({
                           <PlacePivotTable viewData={viewData}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
+                          <DownloadDataLink
+                            type="usagetype"
+                            typeId={usageType}
+                            theme={this.state.viewChoice.selectedTheme}
+                            viewName={viewName} />
                         </div>
                       </div>
                     </div>

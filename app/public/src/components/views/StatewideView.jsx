@@ -7,6 +7,7 @@ import Spinner from 'react-spinkit';
 import DataByTypeCharts from '../charts/DataByTypeCharts';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
+import DownloadDataLink from '../DownloadDataLink';
 import RegionalSummaryTable from '../RegionalSummaryTable';
 import RegionalSummaryTreemap from '../charts/RegionalSummaryTreemap';
 import StatewideDataStore from '../../stores/StatewideDataStore';
@@ -143,6 +144,10 @@ export default React.createClass({
                           <RegionalSummaryTable viewData={data}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
+                          <DownloadDataLink
+                            type="statewide"
+                            theme={this.state.viewChoice.selectedTheme}
+                            viewName="Statewide" />
                         </div>
                       </div>
                     </div>

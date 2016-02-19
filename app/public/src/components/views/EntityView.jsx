@@ -4,6 +4,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
+import constants from '../../constants';
+import DownloadDataLink from '../DownloadDataLink';
 import EntityDataStore from '../../stores/EntityDataStore';
 import EntityViewMap from '../maps/EntityViewMap';
 import EntitySummary from '../EntitySummary';
@@ -44,6 +46,7 @@ export default React.createClass({
   },
 
   render() {
+    const entityId = this.props.params.entityId;
     const entityData = this.state.entityData;
     const title = entityData.entity ? entityData.entity.EntityName
       : '';
@@ -87,6 +90,25 @@ export default React.createClass({
                       <div className="twelve columns">
                         <span className="view-name">{title}</span>
                         <EntityStrategiesTable viewData={entityData.data} />
+                      </div>
+                    </div>
+
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <span className="view-name">{title}</span>
+                        <h4>Download Data</h4>
+                        <ul>
+                          {R.append('population', constants.THEMES).map((theme) => {
+                            return (
+                              <li key={`download-${theme}`}>
+                                <DownloadDataLink
+                                  type="entity"
+                                  typeId={entityId}
+                                  theme={theme} />
+                              </li>
+                            );
+                          })}
+                        </ul>
                       </div>
                     </div>
                   </div>
