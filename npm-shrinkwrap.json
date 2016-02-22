@@ -1630,11 +1630,6 @@
       "from": "inquirer@>=0.11.0 <0.12.0",
       "resolved": "https://registry.npmjs.org/inquirer/-/inquirer-0.11.4.tgz"
     },
-    "interpret": {
-      "version": "0.5.2",
-      "from": "interpret@>=0.5.2 <0.6.0",
-      "resolved": "https://registry.npmjs.org/interpret/-/interpret-0.5.2.tgz"
-    },
     "intersperse": {
       "version": "1.0.0",
       "from": "intersperse@>=1.0.0 <2.0.0",
@@ -1975,10 +1970,15 @@
       "resolved": "https://registry.npmjs.org/kind-of/-/kind-of-3.0.2.tgz"
     },
     "knex": {
-      "version": "0.8.6",
-      "from": "knex@>=0.8.6 <0.9.0",
-      "resolved": "https://registry.npmjs.org/knex/-/knex-0.8.6.tgz",
+      "version": "0.10.0",
+      "from": "knex@0.10.0",
+      "resolved": "https://registry.npmjs.org/knex/-/knex-0.10.0.tgz",
       "dependencies": {
+        "interpret": {
+          "version": "0.6.6",
+          "from": "interpret@>=0.6.5 <0.7.0",
+          "resolved": "https://registry.npmjs.org/interpret/-/interpret-0.6.6.tgz"
+        },
         "minimist": {
           "version": "1.1.3",
           "from": "minimist@>=1.1.0 <1.2.0",
@@ -2710,6 +2710,11 @@
       "version": "2.0.1",
       "from": "pbkdf2-compat@2.0.1",
       "resolved": "https://registry.npmjs.org/pbkdf2-compat/-/pbkdf2-compat-2.0.1.tgz"
+    },
+    "pg-connection-string": {
+      "version": "0.1.3",
+      "from": "pg-connection-string@>=0.1.3 <0.2.0",
+      "resolved": "https://registry.npmjs.org/pg-connection-string/-/pg-connection-string-0.1.3.tgz"
     },
     "pify": {
       "version": "2.3.0",
