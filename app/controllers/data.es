@@ -61,12 +61,19 @@ function makeDataSelectionFields(theme) {
 function selectDecadeSums(theme, whereKey, whereVal) {
   const table = constants.DATA_TABLES[theme];
   const decadeSumFields = makeDecadeSumFields(theme);
-  let decadeSumChain = db;
-  decadeSumFields.forEach((f) => { decadeSumChain = decadeSumChain.sum(f); });
-  let query = decadeSumChain.from(table);
+  const query = db.from(table);
+  decadeSumFields.forEach((f) => {
+    query.modify((queryBuilder) => {
+      queryBuilder.sum(f);
+    });
+  });
+
   if (whereKey && whereVal) {
-    query = query.where(whereKey, whereVal);
+    query.modify((queryBuilder) => {
+      queryBuilder.where(whereKey, whereVal);
+    });
   }
+
   return query;
 }
 
@@ -75,15 +82,19 @@ function selectDataRows(theme, whereKey, whereVal) {
   const isNeeds = theme === 'needs';
   const dataSelectFields = makeDataSelectionFields(theme);
 
-  let query = db.select(dataSelectFields).from(table)
+  const query = db.select(dataSelectFields).from(table)
       .join(entityTable, `${entityTable}.EntityId`, `${table}.EntityId`);
 
   if (isNeeds) {
-    query = query.join(needsPctDemandsTable, `${table}.EntityId`, `${needsPctDemandsTable}.EntityId`);
+    query.modify((queryBuilder) => {
+      queryBuilder.join(needsPctDemandsTable, `${table}.EntityId`, `${needsPctDemandsTable}.EntityId`);
+    });
   }
 
   if (whereKey && whereVal) {
-    query = query.where(`${table}.${whereKey}`, whereVal);
+    query.modify((queryBuilder) => {
+      queryBuilder.where(`${table}.${whereKey}`, whereVal);
+    });
   }
 
   return query;
@@ -93,16 +104,22 @@ function selectDecadeSumsGroupedByField(theme, field, whereKey, whereVal) {
   const table = constants.DATA_TABLES[theme];
   const decadeSumFields = makeDecadeSumFields(theme);
 
-  let decadeSumChain = db;
-  decadeSumFields.forEach((f) => { decadeSumChain = decadeSumChain.sum(f); });
-  let query = decadeSumChain
+  const query = db
     .select(`${field} as ${field}`)
     .from(table)
     .groupBy(field)
     .whereNotNull(field);
 
+  decadeSumFields.forEach((f) => {
+    query.modify((queryBuilder) => {
+      queryBuilder.sum(f);
+    });
+  });
+
   if (whereKey && whereVal) {
-    query = query.where(whereKey, whereVal);
+    query.modify((queryBuilder) => {
+      queryBuilder.where(whereKey, whereVal);
+    });
   }
 
   return query;
