@@ -167,12 +167,12 @@
 
             <p>Data are available for download as Comma-Separated Value (CSV) files, which can be opened by most common spreadsheet software programs:</p>
             <ul>
-              <li><a href="/download/statewide/population" title="Download Population Data">Population Data</a></li>
-              <li><a href="/download/statewide/demands" title="Download Demands Data">Demands Data</a></li>
-              <li><a href="/download/statewide/supplies" title="Download Existing Supplies Data">Existing Supplies Data</a></li>
-              <li><a href="/download/statewide/needs" title="Download Needs (Potential Shortages) Data">Needs (Potential Shortages) Data</a></li>
-              <li><a href="/download/statewide/strategies" title="Download Strategy Supplies Data">Strategy Supplies Data</a></li>
-              <li><a href="/download/entities" title="Download Water User Group Entities">Water User Group Entities</a></li>
+              <li><a download target="_blank" href="/download/statewide/population" title="Download Population Data">Population Data</a></li>
+              <li><a download target="_blank" href="/download/statewide/demands" title="Download Demands Data">Demands Data</a></li>
+              <li><a download target="_blank" href="/download/statewide/supplies" title="Download Existing Supplies Data">Existing Supplies Data</a></li>
+              <li><a download target="_blank" href="/download/statewide/needs" title="Download Needs (Potential Shortages) Data">Needs (Potential Shortages) Data</a></li>
+              <li><a download target="_blank" href="/download/statewide/strategies" title="Download Strategy Supplies Data">Strategy Supplies Data</a></li>
+              <li><a download target="_blank" href="/download/entities" title="Download Water User Group Entities">Water User Group Entities</a></li>
             </ul>
 
             <p>All water volumes are in units of acre-feet/year.</p>
