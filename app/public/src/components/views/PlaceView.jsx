@@ -69,23 +69,11 @@ export default React.createClass({
     const params = this.props.params;
     const placeData = this.state.placeData;
 
-    let title;
-    switch (params.type.toLowerCase()) {
-    case 'region':
-      title = `Region ${params.typeId.toUpperCase()}`;
-      break;
-    case 'county':
-      title = `${params.typeId} County`;
-      break;
-    default:
-      title = '';
-    }
-
     const viewName = utils.getViewName(params.type, params.typeId);
 
     return (
       <div className="place-view">
-        <Helmet title={title} />
+        <Helmet title={viewName} />
         <section>
           <div className="view-top place-view-top">
             <div className="summary-wrapper container">

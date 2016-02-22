@@ -1,6 +1,8 @@
 
 import R from 'ramda';
 
+import {formatCountyName} from './CountyNames';
+
 function slugify(s) {
   return s.replace(/\s+/g, '-');
 }
@@ -34,16 +36,14 @@ function getChartLeftPadding(chartData) {
 }
 
 function getViewName(type, typeId) {
-  let typeAndId = typeId;
-
-  if (type === 'region') {
-    typeAndId = `Region ${typeId}`;
+  switch (type.toLowerCase()) {
+  case 'region':
+    return `Region ${typeId.toUpperCase()}`;
+  case 'county':
+    return `${formatCountyName(typeId)} County`;
+  default:
+    return '';
   }
-  else if (type === 'county') {
-    typeAndId += ' County';
-  }
-
-  return typeAndId;
 }
 
 //Make an object out of keys, with values derived from them

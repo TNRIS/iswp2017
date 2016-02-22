@@ -8,6 +8,7 @@ import PivotTable from 'react-pivot';
 import hat from 'hat';
 
 import constants from '../constants';
+import {formatCountyName} from '../utils/CountyNames';
 import PropTypes from '../utils/CustomPropTypes';
 import Units from './Units';
 import ViewStateStore from '../stores/ViewStateStore';
@@ -27,7 +28,7 @@ const commonDimensions = [
   {
     value: 'WugCounty',
     title: 'County',
-    template: (val) => toAnchor(`/county/${val}`, val)
+    template: (val) => toAnchor(`/county/${formatCountyName(val)}`, val)
   },
   {
     value: 'WugRegion',

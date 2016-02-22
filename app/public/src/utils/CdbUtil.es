@@ -202,17 +202,10 @@ function getRegion(letter) {
     .then(({data}) => data);
 }
 
-function getCountyNames() {
-  const query = `SELECT distinct(name) as name FROM ${countyTable} ORDER BY name ASC`;
-  return axios.get(`https://tnris.cartodb.com/api/v2/sql?q=${query}`)
-    .then(({data}) => R.pluck('name', data.rows));
-}
-
 export default {
   createEntityLayer,
   createCountiesLayer,
   createRegionsLayer,
   getCounty,
-  getRegion,
-  getCountyNames
+  getRegion
 };

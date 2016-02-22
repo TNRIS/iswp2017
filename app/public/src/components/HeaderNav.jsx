@@ -6,8 +6,8 @@ import ToggleDisplay from 'react-toggle-display';
 import titleize from 'titleize';
 
 import constants from '../constants';
+import {countyNames} from '../utils/CountyNames';
 import history from '../history';
-import CountyNamesStore from '../stores/CountyNamesStore';
 import ViewStateStore from '../stores/ViewStateStore';
 import EntityFetcher from '../utils/EntityFetcher';
 
@@ -15,7 +15,6 @@ export default React.createClass({
   getInitialState() {
     const viewState = ViewStateStore.getState().viewState;
     return {
-      countyNames: CountyNamesStore.getState().countyNames,
       navButtonEnabled: viewState.view === 'statewide',
       navCategory: viewState.view,
       subNavValue: ''
@@ -23,18 +22,11 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    CountyNamesStore.listen(this.onLoadCountyNames);
-    CountyNamesStore.fetch();
     ViewStateStore.listen(this.onViewStateChange);
   },
 
   componentWillUnmount() {
-    CountyNamesStore.unlisten(this.onLoadCountyNames);
     ViewStateStore.unlisten(this.onViewStateChange);
-  },
-
-  onLoadCountyNames(storeState) {
-    this.setState({countyNames: storeState.countyNames});
   },
 
   onViewStateChange(storeState) {
@@ -112,12 +104,9 @@ export default React.createClass({
       return {value: region, label: `Region ${region}`};
     });
 
-    let countySelectOptions = [];
-    if (this.state.countyNames) {
-      countySelectOptions = this.state.countyNames.map((name) => {
-        return {value: name, label: name};
-      });
-    }
+    const countySelectOptions = countyNames.map((name) => {
+      return {value: name, label: name};
+    });
 
     const usageTypeSelectOptions = constants.USAGE_TYPES.map((type) => {
       return {value: type.toLowerCase(), label: titleize(type)};
