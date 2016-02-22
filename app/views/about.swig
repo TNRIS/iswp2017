@@ -179,9 +179,6 @@
             <p>
               For any questions regarding the data or how to apply it, please contact: <a href="mailto:WRPdatarequests@twdb.texas.gov" title="">WRPdatarequests@twdb.texas.gov</a>
             </p>
-            <p>
-              Related data may be viewed through the <a title="Regional Water Planning Data Web Interface" href="https://www.twdb.texas.gov/apps/db17/default.asp">Regional Water Planning Data Web Interface</a>.
-            </p>
 
             <h4 id="API">API</h4>
             <p>
