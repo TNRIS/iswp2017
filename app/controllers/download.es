@@ -1,4 +1,5 @@
 
+import R from 'ramda';
 import Hoek from 'hoek';
 import Papa from 'papaparse';
 
@@ -7,6 +8,12 @@ import constants from 'lib/constants';
 import {handleApiError} from 'lib/utils';
 
 const entityTable = 'vw2017MapEntityCoordinates';
+
+const columnsToOmit = ['DisplayZero'];
+const omitCols = (data) => new Promise((resolve) => {
+  console.log(data);
+  resolve(R.map(R.omit(columnsToOmit), data));
+});
 
 function toCsvReply(reply, filename = 'data.csv') {
   return (data) => {
@@ -19,13 +26,18 @@ function toCsvReply(reply, filename = 'data.csv') {
 
 function selectData(theme, whereKey, whereVal) {
   const table = constants.DATA_TABLES[theme];
-  let selection = db.select().from(table);
+  const selection = db.select().from(table);
 
   if (whereKey && whereVal) {
-    selection = selection.where(whereKey, whereVal);
+    selection.modify((queryBuilder) => {
+      queryBuilder.where(whereKey, whereVal);
+    });
   }
 
-  selection = selection.orderBy('EntityId');
+  selection.modify((queryBuilder) => {
+    queryBuilder.orderBy('EntityId');
+  });
+
   return selection;
 }
 
@@ -42,6 +54,7 @@ class DownloadController {
     const theme = request.params.theme.toLowerCase();
 
     selectData(theme)
+      .then(omitCols)
       .then(toCsvReply(reply, `statewide_${theme}.csv`))
       .catch(handleApiError(reply));
   }
@@ -54,6 +67,7 @@ class DownloadController {
     const county = request.params.countyName.toUpperCase();
 
     selectData(theme, 'WugCounty', county)
+      .then(omitCols)
       .then(toCsvReply(reply, `county_${county.toLowerCase()}_${theme}.csv`))
       .catch(handleApiError(reply));
   }
@@ -66,6 +80,7 @@ class DownloadController {
     const region = request.params.regionLetter.toUpperCase();
 
     selectData(theme, 'WugRegion', region)
+      .then(omitCols)
       .then(toCsvReply(reply, `region_${region.toLowerCase()}_${theme}.csv`))
       .catch(handleApiError(reply));
   }
@@ -78,6 +93,7 @@ class DownloadController {
     const entityId = request.params.entityId;
 
     selectData(theme, 'EntityId', entityId)
+      .then(omitCols)
       .then(toCsvReply(reply, `entity_${entityId}_${theme}.csv`))
       .catch(handleApiError(reply));
   }
@@ -90,6 +106,7 @@ class DownloadController {
     const usageType = request.params.usageType.toUpperCase();
 
     selectData(theme, 'WugType', usageType)
+      .then(omitCols)
       .then(toCsvReply(reply, `usagetype_${usageType.toLowerCase()}_${theme}.csv`))
       .catch(handleApiError(reply));
   }
