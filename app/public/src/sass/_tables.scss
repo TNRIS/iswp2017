@@ -5,8 +5,10 @@
 
 .reactPivot {
   margin-top: 0;
+  margin-bottom: 1rem;
   padding: 0;
   background: inherit;
+  box-shadow: none;
 
   select {
     height: auto;
@@ -39,13 +41,25 @@
     cursor: pointer;
   }
 
+  &:hover {
+    font-weight: normal;
+  }
+
   &.is-selected a {
     text-decoration: none;
+    &:hover {
+      color: inherit;
+    }
   }
+}
+
+.reactPivot-paginate {
+  text-align: center;
 }
 
 .reactPivot-csvExport {
   display: none;
+  visibility: hidden;
 }
 
 .regional-summary-table-container {

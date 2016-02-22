@@ -178,6 +178,7 @@ export default React.createClass({
                           <PlacePivotTable viewData={placeData.data}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
+                          <h5>Download Data</h5>
                           <DownloadDataLink
                             type={this.props.params.type}
                             typeId={this.props.params.typeId}

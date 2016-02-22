@@ -144,6 +144,7 @@ export default React.createClass({
                           <RegionalSummaryTable viewData={data}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
+                          <h5>Download Data</h5>
                           <DownloadDataLink
                             type="statewide"
                             theme={this.state.viewChoice.selectedTheme}
