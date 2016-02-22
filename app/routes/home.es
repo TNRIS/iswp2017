@@ -95,9 +95,14 @@ function addTo(server, basePath = '/') {
     {
       method: 'GET',
       path: '/robots.txt',
-      handler: {
-        file: {
-          path: path.normalize(__dirname + '../../public/static/robots.txt')
+      handler: (request, reply) => {
+        //serve blank (allow-all) robots.txt for production hostname
+        if (request.info.hostname.indexOf('texasstatewaterplan.org') !== -1) {
+          reply('');
+        }
+        //else disallow all
+        else {
+          reply.file(path.normalize(__dirname + '../../public/static/nobots.txt'));
         }
       }
     }
