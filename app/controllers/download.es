@@ -11,7 +11,6 @@ const entityTable = 'vw2017MapEntityCoordinates';
 
 const columnsToOmit = ['DisplayZero'];
 const omitCols = (data) => new Promise((resolve) => {
-  console.log(data);
   resolve(R.map(R.omit(columnsToOmit), data));
 });
 
