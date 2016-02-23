@@ -55,24 +55,40 @@ $nav-color: lighten($twdb-blue, 10%);
   }
 
   label {
-    display: inline-block;
+    display: block;
     color: white;
-  }
 
-  select {
-    margin-left: 1rem;
+    @media(min-width: $media-s) {
+      display: inline-block;
+    }
   }
 
   button {
-    margin-left: 1rem;
+    margin-left: 0;
     margin-bottom: 0;
+    margin-top: 0.5rem;
+
+    @media(min-width: $media-s) {
+      margin-left: 1rem;
+      margin-top: 0;
+    }
   }
 
-  .select-auto {
-    display: inline-block;
-    margin-left: 1rem;
-    width: 240px;
+  .select-container {
+    display: block;
+    width: 220px;
     vertical-align: middle;
+    margin-top: 0.5rem;
+
+    @media(min-width: $media-s) {
+      display: inline-block;
+      margin-left: 1rem;
+      margin-top: 0;
+    }
+
+    &.category-select {
+      width: 180px;
+    }
 
     &.entity-select {
       width: 320px;

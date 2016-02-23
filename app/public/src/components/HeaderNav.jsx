@@ -11,6 +11,26 @@ import history from '../history';
 import ViewStateStore from '../stores/ViewStateStore';
 import EntityFetcher from '../utils/EntityFetcher';
 
+const navCategoryOptions = [
+  {value: "statewide", label: "All of Texas"},
+  {value: "region", label: "Planning Region"},
+  {value: "county", label: "County"},
+  {value: "entity", label: "Water User Group"},
+  {value: "usagetype", label: "Usage Type"}
+]
+
+const regionSelectOptions = constants.REGIONS.map((region) => {
+  return {value: region, label: `Region ${region}`};
+});
+
+const countySelectOptions = countyNames.map((name) => {
+  return {value: name, label: name};
+});
+
+const usageTypeSelectOptions = constants.USAGE_TYPES.map((type) => {
+  return {value: type.toLowerCase(), label: titleize(type)};
+});
+
 export default React.createClass({
   getInitialState() {
     const viewState = ViewStateStore.getState().viewState;
@@ -36,8 +56,7 @@ export default React.createClass({
     });
   },
 
-  onChangeNavCategory(e) {
-    const val = e.target.value;
+  onChangeNavCategory(val) {
     this.setState({
       navCategory: val,
       subNavValue: ''
@@ -100,45 +119,33 @@ export default React.createClass({
   },
 
   render() {
-    const regionSelectOptions = constants.REGIONS.map((region) => {
-      return {value: region, label: `Region ${region}`};
-    });
-
-    const countySelectOptions = countyNames.map((name) => {
-      return {value: name, label: name};
-    });
-
-    const usageTypeSelectOptions = constants.USAGE_TYPES.map((type) => {
-      return {value: type.toLowerCase(), label: titleize(type)};
-    });
-
     return (
       <div className="header-nav">
         <div className="wrapper">
           <form>
             <label htmlFor="nav-category-select">View data for</label>
-            <select onChange={this.onChangeNavCategory}
-              value={this.state.navCategory}
-              className="nav-category-select"
-              id="nav-category-select">
-              <option value="statewide">All of Texas</option>
-              <option value="region">Planning Region</option>
-              <option value="county">County</option>
-              <option value="entity">Water User Group</option>
-              <option value="usagetype">Usage Type</option>
-            </select>
+            <div className="select-container category-select" aria-live="polte">
+              <Select className="nav-category-select"
+                id="nav-category-select"
+                ignoreCase
+                clearable={false}
+                onChange={this.onChangeNavCategory}
+                value={this.state.navCategory}
+                options={navCategoryOptions} />
+            </div>
             <ToggleDisplay show={this.state.navCategory === 'region'}>
-              <div className="select-auto" aria-live="polite">
+              <div className="select-container" aria-live="polite">
                 <Select matchPos="start"
                   placeholder="Select Region"
                   ignoreCase
+                  clearable={false}
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
                   options={regionSelectOptions} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'county'}>
-              <div className="select-auto" aria-live="polite">
+              <div className="select-container" aria-live="polite">
                 <Select matchPos="start"
                   placeholder="Select County"
                   ignoreCase
@@ -148,7 +155,7 @@ export default React.createClass({
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'entity'}>
-              <div className="select-auto entity-select" aria-live="polite">
+              <div className="select-container entity-select" aria-live="polite">
                 <Select
                   placeholder="Find Water User Group"
                   ignoreCase
@@ -160,7 +167,7 @@ export default React.createClass({
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'usagetype'}>
-              <div className="select-auto" aria-live="polite">
+              <div className="select-container" aria-live="polite">
                 <Select
                   placeholder="Select Usage Type"
                   ignoreCase
