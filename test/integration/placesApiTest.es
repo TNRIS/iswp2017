@@ -25,6 +25,28 @@ lab.experiment('places api', () => {
       done();
     });
   });
+
+  lab.test('counties for entity', (done) => {
+    server.inject('/api/v1/places/entity/123/counties', (res) => {
+      Code.expect(res.statusCode).to.equal(200);
+      Code.expect(res.result).to.be.an.array();
+      Code.expect(res.result.length).to.equal(2);
+      Code.expect(res.result[0]).to.equal('TRAVIS');
+      Code.expect(res.result[1]).to.equal('WILLIAMSON');
+      done();
+    });
+  });
+
+  lab.test('regions for county', (done) => {
+    server.inject('/api/v1/places/entity/123/regions', (res) => {
+      Code.expect(res.statusCode).to.equal(200);
+      Code.expect(res.result).to.be.an.array();
+      Code.expect(res.result.length).to.equal(2);
+      Code.expect(res.result[0]).to.equal('G');
+      Code.expect(res.result[1]).to.equal('K');
+      done();
+    });
+  });
 });
 
 export default {lab};
