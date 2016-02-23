@@ -42,19 +42,6 @@ class EntitiesController {
       .catch(handleApiError(reply));
   }
 
-  //TODO: Summary table does not exist yet
-  // getEntitySummary(request, reply) {
-  //   //TODO: maybe also require year
-  //   //TODO: maybe rename fields to Demands, Needs, Supply, StrategySupply
-  //   Hoek.assert(request.params.entityId, 'request.params.entityId is required');
-
-  //   db.select().from(entitySummaryTable)
-  //     .where('EntityId', request.params.entityId)
-  //     .limit(1)
-  //     .then(reply)
-  //     .catch(handleApiError(reply));
-  // }
-
   getInRegion(request, reply) {
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
