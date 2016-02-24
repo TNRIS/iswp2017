@@ -7,6 +7,7 @@ import classnames from 'classnames';
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
+import EntitySummarySubhead from './EntitySummarySubhead';
 import PopulationChart from './charts/PopulationChart';
 
 function aggregateDescription(entityName) {
@@ -25,7 +26,6 @@ export default React.createClass({
 
   mixins: [PureRenderMixin],
 
-  //TODO: Include "Entity in County/Region" - Will need API to support
   render() {
     const props = this.props;
 
@@ -45,6 +45,9 @@ export default React.createClass({
         <h2 className={classnames({'long-name': isLong})}>
           {entityName}
         </h2>
+        <div className="subhead">
+          <EntitySummarySubhead entityId={props.entityData.entity.EntityId} />
+        </div>
         {(() => {
           const desc = aggregateDescription(entityName);
           if (desc) {

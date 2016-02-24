@@ -4,12 +4,15 @@ import {Link} from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import intersperse from 'intersperse';
 
+import {formatCountyName} from '../utils/CountyNames';
 import ParentPlaceStore from '../stores/ParentPlaceStore';
 
 export default React.createClass({
   propTypes: {
-    type: React.PropTypes.string,
-    typeId: React.PropTypes.string
+    entityId: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.number
+    ])
   },
 
   mixins: [PureRenderMixin],
@@ -22,11 +25,9 @@ export default React.createClass({
     ParentPlaceStore.listen(this.onGetParentPlace);
 
     //The setTimeout is a hack to deal with the "dispatch in dispatch" error
-    if (this.props.type === 'county') {
-      setTimeout(() => {
-        ParentPlaceStore.fetch('county', this.props.typeId);
-      });
-    }
+    setTimeout(() => {
+      ParentPlaceStore.fetch('entity', this.props.entityId);
+    });
   },
 
   componentWillUnmount() {
@@ -38,23 +39,16 @@ export default React.createClass({
   },
 
   render() {
-    if (this.props.type === 'region') {
-      return (
-        <p>
-          Regional Water Planning Area in <Link to="/statewide" title="View Texas">Texas</Link>
-        </p>
-      );
-    }
-
-    if (ParentPlaceStore.isLoading()) {
+    if (ParentPlaceStore.isLoading() || !this.props.entityId) {
       return (<p/>);
     }
 
-    if (this.props.type === 'county' && this.state.parentPlaces) {
-      const links = this.state.parentPlaces.map((region, i) => {
+    if (this.state.parentPlaces) {
+      const links = this.state.parentPlaces.map((county, i) => {
+        const countyName = formatCountyName(county);
         return (
-          <Link key={i} to={`/region/${region}`} title={`View Region ${region.toUpperCase()}`}>
-            Region {region.toUpperCase()}
+          <Link key={i} to={`/county/${countyName}`} title={`View ${countyName} County`}>
+            {countyName}
           </Link>
         );
       });
@@ -64,15 +58,15 @@ export default React.createClass({
       }
 
       if (links.length === 1) {
-        return (<p>County in {links[0]}</p>);
+        return (<p>Water User Group in {links[0]}</p>);
       }
       else if (links.length === 2) {
-        return (<p>County in {intersperse(links, " and ")}</p>);
+        return (<p>Water User Group in {intersperse(links, " and ")}</p>);
       }
       //else
       const interspersed = intersperse(links, ", ");
       interspersed[interspersed.length - 2] = ", and ";
-      return (<p>County in {interspersed}</p>);
+      return (<p>Water User Group in {interspersed}</p>);
     }
 
     return (<div/>);

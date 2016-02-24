@@ -8,9 +8,17 @@ import ParentPlaceActions from '../actions/ParentPlaceActions';
 export const ParentPlaceSource = {
   // "fetch" will become a method on ParentPlaceStore --> ParentPlaceStore.fetch({type, typeId})
   fetch: {
-    remote(state, countyName) {
-      return axios.get(`${constants.API_BASE}/places/county/${countyName}/regions`)
-        .then(({data}) => data);
+    remote(state, type, typeId) {
+      if (type === 'county') {
+        return axios.get(`${constants.API_BASE}/places/county/${typeId}/regions`)
+          .then(({data}) => data);
+      }
+      else if (type === 'entity') {
+        return axios.get(`${constants.API_BASE}/places/entity/${typeId}/counties`)
+          .then(({data}) => data);
+      }
+
+      throw new Error('Only county and entity are allowable in ParentPlaceSource.fetch');
     },
 
     local() {
