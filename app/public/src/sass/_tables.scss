@@ -111,6 +111,21 @@
   cursor: pointer;
 }
 
+.reactable-pagination {
+  td {
+    text-align: center;
+  }
+
+  a {
+    padding: 2px 4px;
+
+    &.reactable-current-page {
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
+}
+
 .reactPivot-results th.asc,
 .reactable-header-sort-asc {
   &:after {

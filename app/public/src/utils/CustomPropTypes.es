@@ -1,6 +1,8 @@
 
 import React from 'react';
 
+import constants from '../constants';
+
 const ViewData = React.PropTypes.shape({
   demands: React.PropTypes.object,
   supplies: React.PropTypes.object,
@@ -38,10 +40,20 @@ const TreemapData = React.PropTypes.shape({
   children: React.PropTypes.array //should be arrayOf(TreemapData) but that doesn't work
 });
 
+const ProjectData = React.PropTypes.arrayOf(React.PropTypes.shape({
+  CapitalCost: React.PropTypes.number.isRequired,
+  OnlineDecade: React.PropTypes.oneOf(constants.DECADES).isRequired,
+  ProjectName: React.PropTypes.string.isRequired,
+  ProjectSponsors: React.PropTypes.string.isRequired,
+  WMSProjectId: React.PropTypes.number.isRequired,
+  WMSProjectSponsorRegion: React.PropTypes.oneOf(constants.REGIONS).isRequired
+}));
+
 export default {
   Feature,
   ViewData,
   PlaceData,
   EntityData,
-  TreemapData
+  TreemapData,
+  ProjectData
 };
