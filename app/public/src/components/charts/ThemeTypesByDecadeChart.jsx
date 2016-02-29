@@ -78,7 +78,7 @@ export default React.createClass({
           </h4>
           <UsageTypeChartLegend className="u-pull-right legend-types-by-decade" />
         </div>
-        <div className="u-cf u-full-width">
+        <div className="u-full-width clear-float">
           <ThemeSelector onSelect={this.selectTheme} value={this.state.selectedTheme} />
         </div>
         <LineChart chartData={chartData} chartOptions={chartOptions} />
