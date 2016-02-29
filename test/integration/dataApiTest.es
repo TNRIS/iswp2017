@@ -104,7 +104,14 @@ lab.experiment('data api', () => {
     server.inject('/api/v1/data/region/K', (res) => {
       Code.expect(res.statusCode).to.equal(200);
       Code.expect(res.result).to.be.an.object();
+      const data = res.result;
       testDataShape(res.result);
+      Code.expect(data).to.include('projects');
+      Code.expect(data.projects).to.be.an.array();
+      Code.expect(data.projects[0]).to.include([
+        "CapitalCost", "OnlineDecade", "ProjectName", "ProjectSponsors",
+        "WMSProjectId", "WMSProjectSponsorRegion"
+      ]);
       done();
     });
   });

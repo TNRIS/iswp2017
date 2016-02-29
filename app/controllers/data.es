@@ -8,8 +8,8 @@ import constants from 'lib/constants';
 import {handleApiError} from 'lib/utils';
 //TODO: Remove "typeTotals" from the population response?
 
+const projectsTable = 'vw2017MapWMSProjects';
 const needsPctDemandsTable = 'vw2017MapEntityNeedsAsPctOfDemand';
-
 const entityTable = 'vw2017MapEntityCoordinates';
 
 const summaryTables = {
@@ -199,12 +199,23 @@ class DataController {
   getForRegion(request, reply) {
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
+    const region = request.params.regionLetter.toUpperCase();
+
     const themes = R.keys(constants.DATA_TABLES);
     const dataPromises = themes.map(dataSelectionsByTheme({
       whereKey: 'WugRegion',
-      whereVal: request.params.regionLetter.toUpperCase(),
+      whereVal: region,
       omitRows: !!request.query.omitRows
     }));
+
+    const selectProjectsProm = db.select()
+      .from(projectsTable)
+      .where('WMSProjectSponsorRegion', region)
+      .then((results) => {
+        return {projects: results};
+      });
+
+    dataPromises.push(selectProjectsProm);
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
