@@ -44,6 +44,7 @@ button[disabled] {
 #page-wrapper {
   min-height: 100%;
   position: relative;
+  overflow-x: hidden;
 }
 
 #content {
@@ -109,6 +110,7 @@ select {
     width: 90%;
   }
 }
+
 .wrapper {
   @media (min-width: $media-l) {
     width: 1000px;
@@ -118,6 +120,10 @@ select {
   width: auto;
   margin: 0 1.5rem;
   position: relative;
+}
+
+.clear-float {
+  clear: both;
 }
 
 .header {

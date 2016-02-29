@@ -78,7 +78,7 @@ export default React.createClass({
           </h4>
           <ChartLegend rectangle className="u-pull-right" entries={legendEntries} />
         </div>
-        <div className="u-cf u-full-width">
+        <div className="clear-float u-full-width">
           {
             everyTwoTypes.map(([groupOne, groupTwo], i) => {
               const groupOneData = {labels: constants.DECADES, series: seriesByType[groupOne]};
