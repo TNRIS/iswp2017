@@ -278,6 +278,9 @@
 
             <h4>Accessibility Policy</h4>
             <p>
+              Due to the fact that much of the content on this site is based on geographic information and is graphical in nature, it may not be fully accessible for users of certain assistive technologies.
+            </p>
+            <p>
               In accordance with Texas Government Code, Chapter 2054, Subchapter M, the TWDB is committed to making its websites and other electronic and information resources accessible to individuals with disabilities, including members of the public and agency employees, according to the standards set forth by Title 1 Texas Administrative Code Chapter 205 and Chapter 213.
             </p>
             <p>
