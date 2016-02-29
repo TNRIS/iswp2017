@@ -28,7 +28,7 @@ export default React.createClass({
 
     //Strategies are not unique by name, so group by name and then
     // show the decadal sums in the table
-    const groupedByName = R.groupBy(R.prop('WMSName'), viewData.strategies.rows);
+    const groupedByName = R.groupBy(R.prop('WmsName'), viewData.strategies.rows);
     const wmsNames = R.keys(groupedByName);
     const decades = constants.DECADES;
 

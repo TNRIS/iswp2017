@@ -46,7 +46,7 @@ const additionalDimensions = {
   ],
   strategies: [
     {
-      value: 'WMSName',
+      value: 'WmsName',
       title: 'Strategy'
     },
     {

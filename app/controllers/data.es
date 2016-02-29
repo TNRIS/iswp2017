@@ -26,7 +26,7 @@ const additionalFields = {
   ],
   'needs': R.map((year) => `NPD${year}`, constants.YEARS),
   'strategies': [
-    'WMSName', 'wmsType as WMSType', 'SourceName', 'SourceType', 'MapSourceId'
+    'WmsName', 'WmsType', 'SourceName', 'SourceType', 'MapSourceId'
   ]
 };
 
@@ -45,7 +45,7 @@ function makeDecadeSumFields(theme) {
 function makeDataSelectionFields(theme) {
   const table = constants.DATA_TABLES[theme];
   const commonFields = [`${table}.EntityId`, `${table}.EntityName`,
-    `${table}.WugType as WugType`, `${table}.WugRegion as WugRegion`, `${table}.WugCounty as WugCounty`,
+    `${table}.WugType`, `${table}.WugRegion`, `${table}.WugCounty`,
     `${entityTable}.Latitude`, `${entityTable}.Longitude`, `${entityTable}.EntityTypeName`,
     `${entityTable}.EntityIsSplit`
   ];

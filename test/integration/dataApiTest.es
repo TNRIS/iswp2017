@@ -51,7 +51,7 @@ function testDataShape(data, omitRows = false) {
 
       if (theme === 'strategies') {
         Code.expect(datum).to.include([
-          'WMSName', 'WMSType', 'SourceName', 'SourceType', 'MapSourceId'
+          'WmsName', 'WmsType', 'SourceName', 'SourceType', 'MapSourceId'
         ]);
       }
     }
