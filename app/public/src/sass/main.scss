@@ -365,6 +365,13 @@ $top-height: 34rem;
   }
 }
 
+.recommended-projects-container {
+  input.table-filter {
+    width: 340px;
+    height: 30px;
+  }
+}
+
 .sticky {
   z-index: 1001;
   position: fixed;
