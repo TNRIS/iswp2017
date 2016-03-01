@@ -1,5 +1,4 @@
 
-import R from 'ramda';
 import extend from 'extend';
 import axios from 'axios';
 import condenseWhitespace from 'condense-whitespace';
