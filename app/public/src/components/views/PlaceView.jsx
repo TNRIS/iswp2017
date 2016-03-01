@@ -13,7 +13,7 @@ import PlacePivotTable from '../PlacePivotTable';
 import PlaceSummary from '../PlaceSummary';
 import PlaceViewMap from '../maps/PlaceViewMap';
 import RegionDescription from '../RegionDescription';
-import RegionProjectList from '../RegionProjectList';
+import RegionProjectTable from '../RegionProjectTable';
 import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
@@ -141,7 +141,7 @@ export default React.createClass({
                       <div className="row panel-row">
                         <div className="twelve columns">
                           <span className="view-name">{viewName}</span>
-                          <RegionProjectList projectData={placeData.data.projects} />
+                          <RegionProjectTable projectData={placeData.data.projects} />
                         </div>
                       </div>
                     }
