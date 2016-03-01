@@ -16,14 +16,14 @@ function getLayer(opts) {
     }]
   };
 
-  return axios.post('http://tnris.cartodb.com/api/v1/map/', mapConfig)
+  return axios.post('https://tnris.cartodb.com/api/v1/map/', mapConfig)
     .then(({data}) => {
       const layerid = data.layergroupid;
-      const tilesUrl = `http://tnris.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`;
+      const tilesUrl = `https://tnris.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`;
       if (opts.interactivity) {
         return {
           tilesUrl,
-          gridUrl: `http://tnris.cartodb.com/api/v1/map/${layerid}/0/{z}/{x}/{y}.grid.json`
+          gridUrl: `https://tnris.cartodb.com/api/v1/map/${layerid}/0/{z}/{x}/{y}.grid.json`
         };
       }
       return {tilesUrl};
