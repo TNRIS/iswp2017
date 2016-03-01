@@ -22,10 +22,6 @@
 .reactPivot-results {
   font-size: smaller;
 
-  table {
-    table-layout: fixed;
-  }
-
   td, th {
     padding: 2px;
 
@@ -105,6 +101,29 @@
 
 .regional-summary-table th, td {
   max-width: 100px;
+}
+
+.projects-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.projects-table {
+  .reactable-th-project {
+    width: 340px;
+  }
+
+  .reactable-th-decade-online {
+    width: 120px;
+  }
+
+  .reactable-th-sponsor {
+    min-width: 200px;
+  }
+
+  .reactable-th-capital-cost {
+    width: 140px;
+  }
 }
 
 .reactable-header-sortable {
