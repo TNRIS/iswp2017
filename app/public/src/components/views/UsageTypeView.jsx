@@ -10,6 +10,7 @@ import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
 import DownloadDataLink from '../DownloadDataLink';
 import PlacePivotTable from '../PlacePivotTable';
+import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeMaps from '../maps/ThemeMaps';
 import UsageTypeSummary from '../UsageTypeSummary';
@@ -131,6 +132,18 @@ export default React.createClass({
                             theme={this.state.viewChoice.selectedTheme} />
                         </div>
                       </div>
+
+                      {this.state.viewChoice.selectedTheme === 'strategies' &&
+                        (
+                          <div className="row panel-row">
+                            <div className="twelve columns">
+                              <span className="view-name">{viewName}</span>
+                              <StrategiesBreakdown viewData={viewData}
+                                decade={this.state.viewChoice.selectedDecade} />
+                            </div>
+                          </div>
+                        )
+                      }
 
                       <div className="row panel-row">
                         <div className="twelve columns">
