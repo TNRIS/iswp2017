@@ -23,7 +23,7 @@
         <![endif]-->
         <div class="draft-note">
           <div class="wrapper">
-            Please visit the Draft 2017 State Water Plan homepage to view the published draft plan and public notice of intent to adopt, public hearing, and request for public comment at: <a title="TWDB State Water Planning home" href="http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp" title="">http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp</a>.
+            Please visit the Draft 2017 State Water Plan homepage to view the published draft plan and public notice of intent to adopt, public hearing, and request for public comment at: <a title="TWDB State Water Planning home" href="http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp" target="_blank">http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp</a>.
           </div>
         </div>
         <header class="header" id="Top">
