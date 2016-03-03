@@ -18,6 +18,7 @@
               <li><a href="#StateWaterPlanData">State Water Plan Data</a></li>
               <li><a href="#Glossary">Glossary</a></li>
               <li><a href="#DownloadingData">Downloading Data</a></li>
+              <li><a href="#PreviousPlans">Previous Plans</a></li>
               <li><a href="#AboutUs">About Us</a></li>
               <li><a href="#SitePolicies">Site Policies</a></li>
               <li><a href="#Credits">Credits</a></li>
@@ -183,6 +184,16 @@
             <h4 id="API">API</h4>
             <p>
               Data may be programmatically accessed using the Interactive 2017 State Water Plan API. See the <a href="/api/v1" title="API documentation">API documentation page</a> for a description of API methods.
+            </p>
+          </section>
+
+          <section id="PreviousPlans">
+            <h3>Previous Plans</h3>
+            <p>
+              Looking for the 2012 Interactive State Water Plan website? View it at <a title="2012 Interactive State Water Plan" href="https://2012.texasstatewaterplan.org">https://2012.texasstatewaterplan.org</a>.
+            </p>
+            <p>
+              For past State Water Plans, please visit <a title="TWDB State Water Planning" href="http://www.twdb.texas.gov/waterplanning/index.asp">http://www.twdb.texas.gov/waterplanning/index.asp</a>.
             </p>
           </section>
 
