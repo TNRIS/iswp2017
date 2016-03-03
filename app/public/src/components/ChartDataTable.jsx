@@ -94,7 +94,12 @@ export default React.createClass({
                           <span>{series.name}</span>
                         </td>
                       }
-                      {series.data.map((num, i) => (<td key={i}>{format()(num)}</td>))}
+                      {
+                        series.data.map((num, i) => {
+                          const val = R.isNil(num) ? '(none)' : format()(num);
+                          return (<td key={i}>{val}</td>);
+                        })
+                      }
                     </tr>
                   );
                 })}

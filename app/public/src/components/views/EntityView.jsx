@@ -98,16 +98,25 @@ export default React.createClass({
                         <span className="view-name">{title}</span>
                         <h4>Download Data</h4>
                         <ul>
-                          {R.append('population', constants.THEMES).map((theme) => {
-                            return (
-                              <li key={`download-${theme}`}>
-                                <DownloadDataLink
-                                  type="entity"
-                                  typeId={entityId}
-                                  theme={theme} />
-                              </li>
-                            );
-                          })}
+                          {
+                            R.prepend('population', constants.THEMES).map((theme) => {
+                              if (R.isEmpty(entityData.data[theme].rows)) {
+                                return (
+                                  <li key={`download-${theme}`}>
+                                    No {constants.THEME_TITLES[theme]} data exist for this water user group
+                                  </li>
+                                );
+                              }
+                              return (
+                                <li key={`download-${theme}`}>
+                                  <DownloadDataLink
+                                    type="entity"
+                                    typeId={entityId}
+                                    theme={theme} />
+                                </li>
+                              );
+                            })
+                          }
                         </ul>
                       </div>
                     </div>
