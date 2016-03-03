@@ -32,7 +32,7 @@ export default React.createClass({
         </p>
         <input type="text" placeholder="Type to filter table" className="table-filter"
           valueLink={this.linkState('filter')} />
-        <div className="projects-table-container">
+        <div className="table-container">
           <Table className="table-condensed u-full-width projects-table"
             sortable
             itemsPerPage={10}

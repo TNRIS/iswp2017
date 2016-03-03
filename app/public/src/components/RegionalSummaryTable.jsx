@@ -50,7 +50,7 @@ export default React.createClass({
           <Units theme={selectedTheme} />
         </h4>
         <div className="twelve columns">
-          <div className="regional-summary-table-container">
+          <div className="table-container">
             <Table
               className={classnames({'u-full-width': !isPopulation}, "table-condensed regional-summary-table")}
               defaultSort={{column: 'Region', direction: 'asc'}}

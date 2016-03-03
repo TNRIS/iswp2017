@@ -38,7 +38,7 @@ export default React.createClass({
           Water Management Strategies
           <Units />
         </h4>
-        <div className="entity-strategies-table-container">
+        <div className="table-container">
           <Table className="table-condensed u-full-width entity-strategies-table"
             sortable
             columns={R.prepend('Strategy', decades)}

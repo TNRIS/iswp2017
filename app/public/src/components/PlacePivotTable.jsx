@@ -208,7 +208,7 @@ export default React.createClass({
           Raw Data - {decade} - {themeTitle}
           <Units theme={selectedTheme} />
         </h4>
-        <div className="data-table-container">
+        <div className="table-container">
           <PivotTable
             //assign a unique key to force rerender of table
             // when decade or theme are changed

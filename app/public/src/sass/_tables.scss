@@ -1,5 +1,5 @@
-.data-table-container {
-  max-width: 100%;
+.table-container {
+  width: 100%;
   overflow-x: auto;
 }
 
@@ -58,11 +58,6 @@
   visibility: hidden;
 }
 
-.regional-summary-table-container {
-  max-width: 100%;
-  overflow-x: auto;
-}
-
 .table-condensed {
   font-size: smaller;
 
@@ -103,26 +98,19 @@
   max-width: 100px;
 }
 
-.projects-table-container {
-  width: 100%;
-  overflow-x: auto;
-}
-
 .projects-table {
   .reactable-th-project {
-    width: 340px;
-  }
-
-  .reactable-th-decade-online {
-    width: 120px;
+    min-width: 340px;
   }
 
   .reactable-th-sponsor {
     min-width: 200px;
   }
+}
 
-  .reactable-th-capital-cost {
-    width: 140px;
+.entity-strategies-table {
+  .reactable-th-strategy {
+    min-width: 300px;
   }
 }
 
