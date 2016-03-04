@@ -13,7 +13,8 @@ const itemsPerPage = 10;
 
 export default React.createClass({
   propTypes: {
-    projectData: PropTypes.ProjectData.isRequired
+    projectData: PropTypes.ProjectData.isRequired,
+    type: React.PropTypes.oneOf(['region', 'county', 'entity']).isRequired
   },
 
   mixins: [LinkedStateMixin, PureRenderMixin],
@@ -27,9 +28,12 @@ export default React.createClass({
     const totalCost = R.sum(R.pluck('CapitalCost', projectData));
     const perPage = projectData.length <= itemsPerPage ? 0 : itemsPerPage;
 
+    const title = this.props.type.toLowerCase() === 'region' ?
+      'Recommended Projects' : 'Recommended Projects Serving Area of Interest';
+
     return (
       <div className="recommended-projects-container">
-        <h4>Recommended Projects</h4>
+        <h4>{title}</h4>
         <ToggleDisplay show={projectData.length === 0}>
           <p>There are no recommended projects.</p>
         </ToggleDisplay>

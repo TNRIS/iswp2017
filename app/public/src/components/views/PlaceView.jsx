@@ -139,7 +139,7 @@ export default React.createClass({
                     <div className="row panel-row">
                       <div className="twelve columns">
                         <span className="view-name">{viewName}</span>
-                        <ProjectTable projectData={placeData.data.projects} />
+                        <ProjectTable type={params.type} projectData={placeData.data.projects} />
                       </div>
                     </div>
                   </div>

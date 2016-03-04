@@ -97,7 +97,7 @@ export default React.createClass({
                     <div className="row panel-row">
                       <div className="twelve columns">
                         <span className="view-name">{title}</span>
-                        <ProjectTable projectData={entityData.data.projects} />
+                        <ProjectTable type="entity" projectData={entityData.data.projects} />
                       </div>
                     </div>
 
