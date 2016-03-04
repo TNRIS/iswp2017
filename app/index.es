@@ -4,6 +4,7 @@ import Vision from 'vision'; // for view rendering
 import Etags from 'hapi-etags';
 import Good from 'good';
 import GoodConsole from 'good-console';
+import RequireHttps from 'hapi-require-https';
 import swig from 'swig';
 
 import ValidParameters from 'plugins/validParameters';
@@ -42,6 +43,7 @@ server.connection({
 });
 
 server.register([
+  RequireHttps,
   Inert,
   Vision,
   Etags,

@@ -55,6 +55,7 @@
     "good-console": "^5.1.0",
     "hapi": "^9.3.1",
     "hapi-etags": "^0.1.0",
+    "hapi-require-https": "^2.0.5",
     "hat": "0.0.3",
     "history": "1.13.1",
     "hoek": "^2.16.3",
