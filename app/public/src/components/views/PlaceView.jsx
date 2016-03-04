@@ -13,7 +13,7 @@ import PlacePivotTable from '../PlacePivotTable';
 import PlaceSummary from '../PlaceSummary';
 import PlaceViewMap from '../maps/PlaceViewMap';
 import RegionDescription from '../RegionDescription';
-import RegionProjectTable from '../RegionProjectTable';
+import ProjectTable from '../ProjectTable';
 import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
@@ -136,15 +136,12 @@ export default React.createClass({
                       </div>
                     </div>
 
-                    {
-                      isRegion &&
-                      <div className="row panel-row">
-                        <div className="twelve columns">
-                          <span className="view-name">{viewName}</span>
-                          <RegionProjectTable projectData={placeData.data.projects} />
-                        </div>
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <span className="view-name">{viewName}</span>
+                        <ProjectTable projectData={placeData.data.projects} />
                       </div>
-                    }
+                    </div>
                   </div>
 
                   <DataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}

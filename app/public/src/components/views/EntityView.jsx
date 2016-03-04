@@ -10,6 +10,7 @@ import EntityDataStore from '../../stores/EntityDataStore';
 import EntityViewMap from '../maps/EntityViewMap';
 import EntitySummary from '../EntitySummary';
 import EntityStrategiesTable from '../EntityStrategiesTable';
+import ProjectTable from '../ProjectTable';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 
 export default React.createClass({
@@ -90,6 +91,13 @@ export default React.createClass({
                       <div className="twelve columns">
                         <span className="view-name">{title}</span>
                         <EntityStrategiesTable viewData={entityData.data} />
+                      </div>
+                    </div>
+
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <span className="view-name">{title}</span>
+                        <ProjectTable projectData={entityData.data.projects} />
                       </div>
                     </div>
 
