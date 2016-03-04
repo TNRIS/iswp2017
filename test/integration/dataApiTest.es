@@ -58,6 +58,15 @@ function testDataShape(data, omitRows = false) {
   });
 }
 
+function testProjects(data) {
+  Code.expect(data).to.include('projects');
+  Code.expect(data.projects).to.be.an.array();
+  Code.expect(data.projects[0]).to.include([
+    "CapitalCost", "OnlineDecade", "ProjectName", "ProjectSponsors",
+    "WMSProjectId", "WMSProjectSponsorRegion"
+  ]);
+}
+
 lab.experiment('data api', () => {
   lab.before((done) => {
     //wait until plugins are registered
@@ -104,23 +113,18 @@ lab.experiment('data api', () => {
     server.inject('/api/v1/data/region/K', (res) => {
       Code.expect(res.statusCode).to.equal(200);
       Code.expect(res.result).to.be.an.object();
-      const data = res.result;
       testDataShape(res.result);
-      Code.expect(data).to.include('projects');
-      Code.expect(data.projects).to.be.an.array();
-      Code.expect(data.projects[0]).to.include([
-        "CapitalCost", "OnlineDecade", "ProjectName", "ProjectSponsors",
-        "WMSProjectId", "WMSProjectSponsorRegion"
-      ]);
+      testProjects(res.result);
       done();
     });
   });
 
   lab.test('data - county', (done) => {
-    server.inject('/api/v1/data/county/Aransas', (res) => {
+    server.inject('/api/v1/data/county/Travis', (res) => {
       Code.expect(res.statusCode).to.equal(200);
       Code.expect(res.result).to.be.an.object();
       testDataShape(res.result);
+      testProjects(res.result);
       done();
     });
   });
@@ -130,6 +134,7 @@ lab.experiment('data api', () => {
       Code.expect(res.statusCode).to.equal(200);
       Code.expect(res.result).to.be.an.object();
       testDataShape(res.result);
+      testProjects(res.result);
       done();
     });
   });
@@ -139,6 +144,7 @@ lab.experiment('data api', () => {
       Code.expect(res.statusCode).to.equal(200);
       Code.expect(res.result).to.be.an.object();
       testDataShape(res.result);
+      // -- No projects for usagetype
       done();
     });
   });

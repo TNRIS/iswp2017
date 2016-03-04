@@ -8,9 +8,10 @@ import constants from 'lib/constants';
 import {handleApiError} from 'lib/utils';
 //TODO: Remove "typeTotals" from the population response?
 
-const projectsTable = 'vw2017MapWMSProjects';
 const needsPctDemandsTable = 'vw2017MapEntityNeedsAsPctOfDemand';
 const entityTable = 'vw2017MapEntityCoordinates';
+const projectsTable = 'vw2017MapWMSProjects';
+const projectEntityTable = 'vw2017MapWMSProjectEntityRelationships';
 
 const summaryTables = {
   demands: 'vw2017MapWugDemandsA1',
@@ -167,6 +168,26 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
   };
 }
 
+function selectProjects({whereKey, whereVal}) {
+  const selection = db
+    .select([
+      'b.WMSProjectId', 'b.ProjectName', 'b.ProjectSponsors', 'b.CapitalCost', 'b.OnlineDecade',
+      'b.WMSProjectSponsorRegion', 'a.EntityId', 'a.EntityName', 'a.WugType', 'a.WugRegion', 'a.WugCounty'
+    ])
+    .from(`${projectEntityTable} as a`)
+    .join(`${projectsTable} as b`, 'a.WMSProjectId', 'b.WMSProjectId');
+
+  if (whereKey && whereVal) {
+    selection.modify((queryBuilder) => {
+      queryBuilder.where(whereKey, whereVal);
+    });
+  }
+
+  return selection.then((results) => {
+    return {projects: results};
+  });
+}
+
 class DataController {
   getForState(request, reply) {
     const themes = R.keys(constants.DATA_TABLES);
@@ -208,6 +229,7 @@ class DataController {
       omitRows: !!request.query.omitRows
     }));
 
+    //For Region projects, we select based on WMSProjectSponsorRegion
     const selectProjectsProm = db.select()
       .from(projectsTable)
       .where('WMSProjectSponsorRegion', region)
@@ -226,11 +248,18 @@ class DataController {
     Hoek.assert(request.params.countyName, 'request.params.countyName is required');
 
     const themes = R.keys(constants.DATA_TABLES);
+    const county = request.params.countyName.toUpperCase();
     const dataPromises = themes.map(dataSelectionsByTheme({
       whereKey: 'WugCounty',
-      whereVal: request.params.countyName.toUpperCase(),
+      whereVal: county,
       omitRows: !!request.query.omitRows
     }));
+
+    const selectProjectsProm = selectProjects({
+      whereKey: 'WugCounty',
+      whereVal: county
+    });
+    dataPromises.push(selectProjectsProm);
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
@@ -247,6 +276,12 @@ class DataController {
       omitRows: !!request.query.omitRows
     }));
 
+    const selectProjectsProm = selectProjects({
+      whereKey: 'EntityId',
+      whereVal: request.params.entityId
+    });
+    dataPromises.push(selectProjectsProm);
+
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
       .catch(handleApiError(reply));
@@ -256,11 +291,20 @@ class DataController {
     Hoek.assert(request.params.usageType, 'request.params.usageType is required');
 
     const themes = R.keys(constants.DATA_TABLES);
+    const usageType = request.params.usageType.toUpperCase();
     const dataPromises = themes.map(dataSelectionsByTheme({
       whereKey: 'WugType',
-      whereVal: request.params.usageType.toUpperCase(),
+      whereVal: usageType,
       omitRows: !!request.query.omitRows
     }));
+
+    //Not including projects list for UsageType
+    // because there are way too many.
+    // const selectProjectsProm = selectProjects({
+    //   whereKey: 'WugType',
+    //   whereVal: usageType
+    // });
+    // dataPromises.push(selectProjectsProm);
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
