@@ -96,8 +96,8 @@ function addTo(server, basePath = '/') {
       method: 'GET',
       path: '/robots.txt',
       handler: (request, reply) => {
-        //serve blank (allow-all) robots.txt for production hostname
-        if (request.info.hostname.indexOf('texasstatewaterplan.org') !== -1) {
+        //serve blank (allow-all) robots.txt when in production
+        if (process.env.NODE_ENV === 'production') {
           reply('');
         }
         //else disallow all

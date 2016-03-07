@@ -3,10 +3,11 @@ var AssetsPlugin = require('assets-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
 
-var isProd = process.env.NODE_ENV === 'production';
+var isProdBuild = process.env.NODE_ENV === 'production' ||
+  process.env.NODE_ENV === 'staging';
 
 var extractText = new ExtractTextPlugin(
-  isProd ? 'styles.[hash].css' : 'styles.css'
+  isProdBuild ? 'styles.[hash].css' : 'styles.css'
 );
 
 var assets = new AssetsPlugin({
@@ -17,7 +18,7 @@ var assets = new AssetsPlugin({
 var uglify = new webpack.optimize.UglifyJsPlugin();
 
 var plugins = [extractText, assets];
-if (isProd) {
+if (isProdBuild) {
   plugins.push(uglify);
 }
 
@@ -25,7 +26,7 @@ module.exports = {
   entry: path.join(__dirname, 'app/public/src/entry.jsx'),
   output: {
     path: path.join(__dirname, 'app/public/dist/'),
-    filename: isProd ? 'scripts.[hash].js' : 'scripts.js'
+    filename: isProdBuild ? 'scripts.[hash].js' : 'scripts.js'
   },
   module: {
     loaders: [

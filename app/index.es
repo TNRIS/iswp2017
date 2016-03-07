@@ -25,14 +25,6 @@ const server = new Hapi.Server({
   }
 });
 
-const loggingOptions = {
-  opsInterval: 1000,
-  reporters: [{
-    reporter: GoodConsole,
-    events: { log: '*', error: '*', request: '*' }
-  }]
-};
-
 server.on('request-error', (request, err) => {
   console.error(err);
 });
@@ -42,14 +34,27 @@ server.connection({
   router: {stripTrailingSlash: true}
 });
 
-server.register([
-  RequireHttps,
+const loggingOptions = {
+  opsInterval: 1000,
+  reporters: [{
+    reporter: GoodConsole,
+    events: { log: '*', error: '*', request: '*' }
+  }]
+};
+
+const plugins = [
   Inert,
   Vision,
   Etags,
   {register: Good, options: loggingOptions},
   ValidParameters
-], (err) => {
+];
+
+if (process.env.NODE_ENV === 'production') {
+  plugins.push(RequireHttps);
+}
+
+server.register(plugins, (err) => {
   if (err) {
     console.error(err);
     return;
