@@ -284,14 +284,6 @@ class DataController {
       omitRows: !!request.query.omitRows
     }));
 
-    //Not including projects list for UsageType
-    // because there are way too many.
-    // const selectProjectsProm = selectProjects({
-    //   whereKey: 'WugType',
-    //   whereVal: usageType
-    // });
-    // dataPromises.push(selectProjectsProm);
-
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
       .catch(handleApiError(reply));

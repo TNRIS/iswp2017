@@ -136,15 +136,13 @@ export default React.createClass({
                       </div>
                     </div>
 
-                    {
-                      isRegion &&
-                      <div className="row panel-row">
-                        <div className="twelve columns">
-                          <span className="view-name">{viewName}</span>
-                          <ProjectTable type={params.type} projectData={placeData.data.projects} />
-                        </div>
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <span className="view-name">{viewName}</span>
+                        <ProjectTable type={params.type} projectData={placeData.data.projects} />
                       </div>
-                    }
+                    </div>
+
                   </div>
 
                   <DataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
