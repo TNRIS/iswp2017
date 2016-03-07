@@ -91,8 +91,9 @@ export default React.createClass({
                         <ul>
                           <li>projected water demands,</li>
                           <li>existing water supplies,</li>
-                          <li>the relative severity and projected water needs (potential shortages), and</li>
-                          <li>the water management strategies recommended to address potential shortages.</li>
+                          <li>the relative severity and projected water needs (potential shortages),</li>
+                          <li>the water management strategies recommended to address potential shortages, and</li>
+                          <li>recommended capital projects and their sponsors.</li>
                         </ul>
                       </div>
                     </div>

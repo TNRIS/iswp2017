@@ -29,14 +29,15 @@
             <p><a href="#Top"><small>Back to Top</small></a></p>
 
             <p>
-              This website lets water users statewide take an up-close look at data in the DRAFT 2017 State Water Plan and how water needs change over time. The user-friendly website, which is also easily viewed on most mobile devices, now shows:
+              This website is an integral part of the DRAFT 2017 State Water Plan that lets water users statewide take an up-close look at data in the DRAFT 2017 State Water Plan and how water needs change over time. The user-friendly website, which is also easily viewed on most mobile devices, now shows:
             </p>
 
             <ul>
               <li>projected water demands,</li>
               <li>existing water supplies,</li>
-              <li>the relative severity and projected water needs (potential shortages), and</li>
-              <li>the water management strategies recommended to address potential shortages</li>
+              <li>the relative severity and projected water needs (potential shortages),</li>
+              <li>the water management strategies recommended to address potential shortages, and</li>
+              <li>recommended capital projects and their sponsors.</li>
             </ul>
 
             <p>
@@ -90,7 +91,7 @@
             <p>Planning groups identify:</p>
             <ul>
               <li>water user groups that will not have enough water during times of drought, and</li>
-              <li>recommend strategies that could be implemented to address shortages.</li>
+              <li>recommend strategies and projects that could be implemented to address shortages.</li>
             </ul>
 
             <p>
@@ -204,29 +205,29 @@
               This website is a product of the Texas Water Development Board (TWDB). This project is part of our ongoing efforts to communicate information from the DRAFT 2017 State Water Plan to planners, scientists, policy makers, and the public.
             </p>
             <p>
-              TWDB is charged by the Texas Legislature with administering the regional water planning process and developing a state water plan every five years. The data presented are the result of that process and are based on the expertise of numerous people and organizations throughout the state of Texas who participated in development of the 2016 Regional Water Plans and the DRAFT 2017 State Water Plan, including the more than 450 regional water planning group members, consultants, and administrative agencies; staff of the TWDB; Texas Parks and Wildlife Department, Texas Department of Agriculture, Texas Commission on Environmental Quality, and other state and federal agencies; and the individuals and organizations that provided public input during the planning process.
+              TWDB is charged by the Texas Legislature with administering the regional water planning process and developing a state water plan every five years. The data presented are the result of that process and are based on the expertise of numerous people and organizations throughout the state of Texas who participated in development of the 2016 Regional Water Plans, including the more than 450 regional water planning group members, consultants, and administrative agencies; staff of the TWDB; Texas Parks and Wildlife Department, Texas Department of Agriculture, and Texas Commission on Environmental Quality; and the individuals and organizations that provided public input throughout the planning process.
             </p>
 
             <h4>How Do We Plan?</h4>
             <p>
-              Water planning in Texas starts at the regional level with 16 regional water planning groups, one for each of the 16 designated planning areas in the state. Each planning group consists of about 20 members who represent at least 12 interests, as required by Texas statute, including agriculture, industry, public, environment, municipalities, business, water districts, river authorities, water utilities, counties, power generation, and groundwater management areas.
+              Water planning in Texas starts at the regional level with 16 regional water planning groups, one for each of the 16 designated planning areas in the state. Each planning group consists of about 25 members who represent at least 12 interests, as required by Texas statute, including agriculture, industry, public, environment, municipalities, business, water districts, river authorities, water utilities, counties, power generation, and groundwater management areas.
             </p>
             <p>
-              During each five-year planning cycle, planning groups evaluate population projections, water demand projections, and existing water supplies that would be available during times of drought. Planning groups identify water user groups that will not have enough water during times of drought, recommend strategies that could be implemented to address shortages, and estimate the costs of these strategies. While carrying out these tasks, planning groups assess risks and uncertainties in the planning process and evaluate potential impacts of water management strategies on the state's water, agricultural, and natural resources.
+              During each five-year planning cycle, planning groups evaluate population projections, water demand projections, and existing water supplies that would already be available during times of drought for 2,600 water user groups. Planning groups identify water user groups that will not have enough water during times of drought, recommend strategies that could be implemented to address shortages, and estimate the costs of these strategies. While carrying out these tasks, planning groups assess risks and uncertainties in the planning process and evaluate potential impacts of water management strategies on the state's water, agricultural, and natural resources.
             </p>
             <p>
-              Once the planning groups adopt their regional water plans, they are sent to the TWDB - the state's water supply planning and financing agency - for approval. TWDB then compiles the state water plan, which serves as a guide to state water policy, with information from the regional water plans and policy recommendations to the Texas Legislature. Each step of the process is open to the public and provides numerous opportunities for public input.
+              Once the planning groups adopt their regional water plans, they are submitted to the TWDB &mdash; the state's water supply planning and financing agency &mdash; for approval. TWDB then compiles the state water plan, which serves as a guide to state water policy, with information from the regional water plans and policy recommendations to the Texas Legislature. Each step of the process is open to the public and provides numerous opportunities for public input.
             </p>
 
             <h4>Data Sources</h4>
             <p>
-              All data presented are based on the sixteen <a href="http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/index.asp" title="2016 Regional Water Plans">2016 Regional Water Plans</a> and the <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp" title="DRAFT 2017 State Water Plan">DRAFT 2017 State Water Plan</a>. The water planning data are based on the Regional Water Planning Data Application used to collect data from the regional water planning groups.
+              All data presented are based on the sixteen <a href="http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/index.asp" title="2016 Regional Water Plans">2016 Regional Water Plans</a> and the <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp" title="DRAFT 2017 State Water Plan">DRAFT 2017 State Water Plan</a>. The water planning data are based on the Regional Water Planning Data Application used to collect data directly from the regional water planning groups.
             </p>
             <p>
-              Statewide summaries of the data presented were published in the <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/" title="2017 State Water Plan">2017 State Water Plan</a>.
+              Statewide summaries of the data presented were published in the <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/" title="DRAFT 2017 State Water Plan">DRAFT 2017 State Water Plan</a>.
             </p>
             <p>
-              In the future, we will be adding information regarding projected population, water demands, existing water sources, identified water needs, recommended water management strategy projects, and other associated data.
+              In the future, we will be adding geographical information water sources, recommended water management strategy projects, and other associated data.
             </p>
           </section>
 
