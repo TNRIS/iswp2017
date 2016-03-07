@@ -1,7 +1,5 @@
 # iswp2017
 
-**Currently Under Development**
-
 Web application for the DRAFT 2017 Texas State Water Plan.
 
 ## Developing
@@ -12,7 +10,7 @@ Install node >= 0.12.0 and npm >= 3.3.3
 
 Install babel: `npm install -g babel@5`
 
-Download a copy of the water plan data sqlite3 database (PROVISIONAL DATA: https://s3.amazonaws.com/tnris-misc/iswp/2017/cache.db) and place it at `/app/db/cache.db`.
+Download a copy of the water plan data sqlite3 database (https://s3.amazonaws.com/tnris-misc/iswp/2017/cache.db) and place it at `/app/db/cache.db`.
 
 #### Webfont
 
@@ -32,8 +30,15 @@ We are using a custom [D3](http://d3js.org/) build to cut down on code size. To 
 
 Note that this application uses a `npm-shrinkwrap.json` file to freeze npm dependencies. If you'd like to update packages, you will have to do so manually and then re-run `npm shrinkwrap`.
 
-## Technologies Used
+### Deploying
 
-* React with Alt for the client-side application
-* HapiJS on the server side
-* Babel for ES2015
+#### Production
+
+1. Set `NODE_ENV to "production"
+2. Run `npm install --production` to install dependencies
+3. Run `npm run webpack` to build production client side assets
+4. Run the application with `npm start`. You can optionally set the `APP_PORT` environment variable to specify the port to listen to, otherwise 3333 will be used.
+
+#### Staging
+
+You can also build and run the app with `NODE_ENV` set to "staging" to make a version that serves a non-indexed robots.txt and does not use the production Google Analytics code. Otherwise follow the Production steps from above.
