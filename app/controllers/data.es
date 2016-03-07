@@ -10,8 +10,6 @@ import {handleApiError} from 'lib/utils';
 
 const needsPctDemandsTable = 'vw2017MapEntityNeedsAsPctOfDemand';
 const entityTable = 'vw2017MapEntityCoordinates';
-const projectsTable = 'vw2017MapWMSProjects';
-const projectEntityTable = 'vw2017MapWMSProjectEntityRelationships';
 
 const summaryTables = {
   demands: 'vw2017MapWugDemandsA1',
@@ -22,13 +20,20 @@ const summaryTables = {
 };
 
 const additionalFields = {
-  'supplies': [
+  supplies: [
     'SourceName', 'MapSourceId'
   ],
-  'needs': R.map((year) => `NPD${year}`, constants.YEARS),
-  'strategies': [
+  needs: R.map((year) => `NPD${year}`, constants.YEARS),
+  strategies: [
     'WmsName', 'WmsType', 'SourceName', 'SourceType', 'MapSourceId'
   ]
+};
+
+const projectTables = {
+  region: 'vw2017MapWMSProjects',
+  county: 'vw2017MapWMSProjectByCounty',
+  entity: 'vw2017MapWMSProjectByEntity'
+  //usagetype: vw2017MapWMSProjectByWUGType //Not included because results are too large
 };
 
 function renameValueFields(theme) {
@@ -168,26 +173,6 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
   };
 }
 
-function selectProjects({whereKey, whereVal}) {
-  const selection = db
-    .select([
-      'b.WMSProjectId', 'b.ProjectName', 'b.ProjectSponsors', 'b.CapitalCost', 'b.OnlineDecade',
-      'b.WMSProjectSponsorRegion', 'a.EntityId', 'a.EntityName', 'a.WugType', 'a.WugRegion', 'a.WugCounty'
-    ])
-    .from(`${projectEntityTable} as a`)
-    .join(`${projectsTable} as b`, 'a.WMSProjectId', 'b.WMSProjectId');
-
-  if (whereKey && whereVal) {
-    selection.modify((queryBuilder) => {
-      queryBuilder.where(whereKey, whereVal);
-    });
-  }
-
-  return selection.then((results) => {
-    return {projects: results};
-  });
-}
-
 class DataController {
   getForState(request, reply) {
     const themes = R.keys(constants.DATA_TABLES);
@@ -231,11 +216,9 @@ class DataController {
 
     //For Region projects, we select based on WMSProjectSponsorRegion
     const selectProjectsProm = db.select()
-      .from(projectsTable)
+      .from(projectTables.region)
       .where('WMSProjectSponsorRegion', region)
-      .then((results) => {
-        return {projects: results};
-      });
+      .then((projects) => { return {projects}; });
 
     dataPromises.push(selectProjectsProm);
 
@@ -255,10 +238,11 @@ class DataController {
       omitRows: !!request.query.omitRows
     }));
 
-    const selectProjectsProm = selectProjects({
-      whereKey: 'WugCounty',
-      whereVal: county
-    });
+    const selectProjectsProm = db.select()
+      .from(projectTables.county)
+      .where('WugCounty', county)
+      .then((projects) => { return {projects}; });
+
     dataPromises.push(selectProjectsProm);
 
     Promise.all(dataPromises)
@@ -270,16 +254,18 @@ class DataController {
     Hoek.assert(request.params.entityId, 'request.params.entityId is required');
 
     const themes = R.keys(constants.DATA_TABLES);
+    const entityId = request.params.entityId;
     const dataPromises = themes.map(dataSelectionsByTheme({
       whereKey: 'EntityId',
-      whereVal: request.params.entityId,
+      whereVal: entityId,
       omitRows: !!request.query.omitRows
     }));
 
-    const selectProjectsProm = selectProjects({
-      whereKey: 'EntityId',
-      whereVal: request.params.entityId
-    });
+    const selectProjectsProm = db.select()
+      .from(projectTables.entity)
+      .where('EntityId', entityId)
+      .then((projects) => { return {projects}; });
+
     dataPromises.push(selectProjectsProm);
 
     Promise.all(dataPromises)
