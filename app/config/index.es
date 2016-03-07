@@ -2,7 +2,7 @@
 import merge from 'merge';
 
 const config = {
-  port: 3333,
+  port: process.env.APP_PORT || 3333,
   gaTrackingCode: 'UA-XXXXXX-XX'
 };
 
