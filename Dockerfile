@@ -1,5 +1,6 @@
 FROM node:0.12
 
+#Set to 'production' for production instance
 ENV NODE_ENV staging
 
 RUN npm install -g babel@5
