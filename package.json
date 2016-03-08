@@ -1,6 +1,6 @@
 {
   "name": "iswp2017",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Web application for the Texas 2017 State Water Plan",
   "private": true,
   "main": "app/index.es",
@@ -14,8 +14,7 @@
     "unit-test": "NODE_PATH=./app tape test/unit/**.*",
     "integration-test": "NODE_PATH=./app lab -T test/integration/transform.js -S test/integration/",
     "dev-test": "nodemon --exec npm run unit-test",
-    "clean-dist": "rm -rf app/public/dist/*.js app/public/dist/*.map app/public/dist/*.css",
-    "eb-demo-zip": "rm -rf demo-* && zip -r demo-$(date +'%s').zip app package.json webpack.config.js Dockerfile Dockerrun.aws.json"
+    "clean-dist": "rm -rf app/public/dist/*.js app/public/dist/*.map app/public/dist/*.css"
   },
   "engines": {
     "node": ">=0.12.0",
