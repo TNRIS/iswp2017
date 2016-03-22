@@ -191,7 +191,7 @@
           <section id="PreviousPlans">
             <h3>Previous Plans</h3>
             <p>
-              Looking for the 2012 Interactive State Water Plan website? View it at <a title="2012 Interactive State Water Plan" href="https://2012.texasstatewaterplan.org">https://2012.texasstatewaterplan.org</a>.
+              Looking for the 2012 Interactive State Water Plan website? View it at <a title="2012 Interactive State Water Plan" href="http://2012.texasstatewaterplan.org">http://2012.texasstatewaterplan.org</a>.
             </p>
             <p>
               For past State Water Plans, please visit <a title="TWDB State Water Planning" href="http://www.twdb.texas.gov/waterplanning/index.asp">http://www.twdb.texas.gov/waterplanning/index.asp</a>.
