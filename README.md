@@ -34,7 +34,7 @@ Note that this application uses a `npm-shrinkwrap.json` file to freeze npm depen
 
 #### Production
 
-1. Set `NODE_ENV to "production"
+1. Set `NODE_ENV` to "production"
 2. Run `npm install --production` to install dependencies
 3. Run `npm run webpack` to build production client side assets
 4. Run the application with `npm start`. You can optionally set the `APP_PORT` environment variable to specify the port to listen to, otherwise 3333 will be used.
