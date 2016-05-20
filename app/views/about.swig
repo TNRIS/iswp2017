@@ -2,7 +2,7 @@
 {% extends 'layout/layout.swig' %}
 
 {% block title %}
-  <title>About | DRAFT 2017 Texas State Water Plan</title>
+  <title>About | 2017 Texas State Water Plan</title>
 {% endblock title %}
 
 {% block content %}
@@ -29,7 +29,7 @@
             <p><a href="#Top"><small>Back to Top</small></a></p>
 
             <p>
-              This website is an integral part of the DRAFT 2017 State Water Plan that lets water users statewide take an up-close look at data in the DRAFT 2017 State Water Plan and how water needs change over time. The user-friendly website, which is also easily viewed on most mobile devices, now shows:
+              This website is an integral part of the 2017 State Water Plan that lets water users statewide take an up-close look at data in the 2017 State Water Plan and how water needs change over time. The user-friendly website, which is also easily viewed on most mobile devices, now shows:
             </p>
 
             <ul>
@@ -99,7 +99,7 @@
             </p>
 
             <p>
-              The <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp" title="DRAFT 2017 State Water Plan">DRAFT 2017 State Water Plan</a> is the tenth state water plan and the fourth plan based on the regional water planning process. In addition to incorporating the regional water plans, the state water plan serves as a guide to state water policy.
+              The <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp" title="2017 State Water Plan">2017 State Water Plan</a> is the tenth state water plan and the fourth plan based on the regional water planning process. In addition to incorporating the regional water plans, the state water plan serves as a guide to state water policy.
             </p>
           </section>
 
@@ -108,7 +108,7 @@
             <p><a href="#Top"><small>Back to Top</small></a></p>
 
             <p>
-              For these and other terms, see also the DRAFT 2017 State Water Plan
+              For these and other terms, see also the 2017 State Water Plan
               <a title="Glossary" href="http://www.twdb.texas.gov/publications/state_water_plan/2017/12.pdf">glossary</a>.
             </p>
 
@@ -202,7 +202,7 @@
             <h3>About Us</h3>
             <p><a href="#Top"><small>Back to Top</small></a></p>
             <p>
-              This website is a product of the Texas Water Development Board (TWDB). This project is part of our ongoing efforts to communicate information from the DRAFT 2017 State Water Plan to planners, scientists, policy makers, and the public.
+              This website is a product of the Texas Water Development Board (TWDB). This project is part of our ongoing efforts to communicate information from the 2017 State Water Plan to planners, scientists, policy makers, and the public.
             </p>
             <p>
               TWDB is charged by the Texas Legislature with administering the regional water planning process and developing a state water plan every five years. The data presented are the result of that process and are based on the expertise of numerous people and organizations throughout the state of Texas who participated in development of the 2016 Regional Water Plans, including the more than 450 regional water planning group members, consultants, and administrative agencies; staff of the TWDB; Texas Parks and Wildlife Department, Texas Department of Agriculture, and Texas Commission on Environmental Quality; and the individuals and organizations that provided public input throughout the planning process.
@@ -221,10 +221,10 @@
 
             <h4>Data Sources</h4>
             <p>
-              All data presented are based on the sixteen <a href="http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/index.asp" title="2016 Regional Water Plans">2016 Regional Water Plans</a> and the <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp" title="DRAFT 2017 State Water Plan">DRAFT 2017 State Water Plan</a>. The water planning data are based on the Regional Water Planning Data Application used to collect data directly from the regional water planning groups.
+              All data presented are based on the sixteen <a href="http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/index.asp" title="2016 Regional Water Plans">2016 Regional Water Plans</a> and the <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp" title="2017 State Water Plan">2017 State Water Plan</a>. The water planning data are based on the Regional Water Planning Data Application used to collect data directly from the regional water planning groups.
             </p>
             <p>
-              Statewide summaries of the data presented were published in the <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/" title="DRAFT 2017 State Water Plan">DRAFT 2017 State Water Plan</a>.
+              Statewide summaries of the data presented were published in the <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/" title="2017 State Water Plan">2017 State Water Plan</a>.
             </p>
             <p>
               In the future, we will be adding geographical information water sources, recommended water management strategy projects, and other associated data.
@@ -267,12 +267,12 @@
 
             <h4>Website Link Policy</h4>
             <p>
-              This website provides links to other websites, both public and private, for informational purposes. This policy does not apply whenever visitors leave the Interactive DRAFT 2017 Texas State Water Plan website and follow a link to another website, including the websites of other state agencies and local governments.  Links to other websites from this website are provided solely as a courtesy. The TWDB has no control over the posting of material to such websites and cannot take responsibility for the validity of the content. The TWDB endeavors to follow the <a href="http://www.dir.texas.gov/pubs/retired/Pages/srrpub11-agencylink.aspx" title="State Website Link and Privacy Policy">State Website Link and Privacy Policy</a>, which addresses linking to and from state agency websites. TWDB encourages organizations that link to this website to comply with the provisions of the <a href="http://www.dir.texas.gov/pubs/retired/Pages/srrpub11-agencylink.aspx" title="State Website Link and Privacy Policy">State Website Link and Privacy Policy</a>, especially regarding protection of the privacy rights of individuals, and to make reasonable efforts to provide accessible websites.
+              This website provides links to other websites, both public and private, for informational purposes. This policy does not apply whenever visitors leave the Interactive 2017 Texas State Water Plan website and follow a link to another website, including the websites of other state agencies and local governments.  Links to other websites from this website are provided solely as a courtesy. The TWDB has no control over the posting of material to such websites and cannot take responsibility for the validity of the content. The TWDB endeavors to follow the <a href="http://www.dir.texas.gov/pubs/retired/Pages/srrpub11-agencylink.aspx" title="State Website Link and Privacy Policy">State Website Link and Privacy Policy</a>, which addresses linking to and from state agency websites. TWDB encourages organizations that link to this website to comply with the provisions of the <a href="http://www.dir.texas.gov/pubs/retired/Pages/srrpub11-agencylink.aspx" title="State Website Link and Privacy Policy">State Website Link and Privacy Policy</a>, especially regarding protection of the privacy rights of individuals, and to make reasonable efforts to provide accessible websites.
             </p>
 
             <h4>Cookies</h4>
             <p>
-              A cookie is a small text file that resides on the user's hard drive, created at the request of the web server to track specific information.  The Interactive DRAFT 2017 Texas State Water Plan Website will use cookies to create session information to facilitate your use of the site. The information contained in these cookies is randomly created information and contain no personally identifiable information, so your anonymity is preserved. These cookies are not stored or tracked after the session ends.
+              A cookie is a small text file that resides on the user's hard drive, created at the request of the web server to track specific information.  The Interactive 2017 Texas State Water Plan Website will use cookies to create session information to facilitate your use of the site. The information contained in these cookies is randomly created information and contain no personally identifiable information, so your anonymity is preserved. These cookies are not stored or tracked after the session ends.
             </p>
 
             <h4>Disclaimer</h4>
@@ -280,7 +280,7 @@
               With respect to documents or information available from this website, or documents or information from other servers made available through  this website, neither the TWDB nor any of their employees, nor any of their contractors, subcontractors, or their employees, makes any warranty, express or implied, including the warranties of merchantability and fitness for a particular  purpose, or assumes any legal liability or responsibility for the accuracy, completeness, or usefulness of any information, apparatus, product, or process disclosed, or represents that its use would not infringe privately owned rights.
             </p>
             <p>
-              TWDB makes no effort to independently verify, and does not exert editorial  control over, information on pages outside of the Interactive DRAFT 2017 Texas State Water Plan website. TWDB advises website visitors to read the privacy policies of any third-party websites accessed through this website. TWDB does not endorse any of the products, vendors, consultants, or documentation referenced in this website. Any mention of vendors, products, or services is for informational purposes only.
+              TWDB makes no effort to independently verify, and does not exert editorial  control over, information on pages outside of the Interactive 2017 Texas State Water Plan website. TWDB advises website visitors to read the privacy policies of any third-party websites accessed through this website. TWDB does not endorse any of the products, vendors, consultants, or documentation referenced in this website. Any mention of vendors, products, or services is for informational purposes only.
             </p>
 
             <h4>Copyright Policy</h4>

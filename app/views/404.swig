@@ -1,7 +1,7 @@
 {% extends 'layout/layout.swig' %}
 
 {% block title %}
-  <title>Not Found | DRAFT 2017 Texas State Water Plan</title>
+  <title>Not Found | 2017 Texas State Water Plan</title>
 {% endblock title %}
 
 {% block content %}
