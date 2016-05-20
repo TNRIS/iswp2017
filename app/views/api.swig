@@ -1,7 +1,7 @@
 {% extends 'layout/layout.swig' %}
 
 {% block title %}
-  <title>API | DRAFT 2017 Texas State Water Plan</title>
+  <title>API | 2017 Texas State Water Plan</title>
 {% endblock title %}
 
 {% block content %}

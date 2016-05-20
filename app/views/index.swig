@@ -6,7 +6,7 @@
 {% endblock styles %}
 
 {% block title %}
-  <title>DRAFT 2017 Texas State Water Plan</title>
+  <title>2017 Texas State Water Plan</title>
 {% endblock title %}
 
 {% block content %}
