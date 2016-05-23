@@ -87,7 +87,7 @@ export default React.createClass({
                     <div className="row panel-row">
                       <div className="twelve columns iswp-description">
                         <p>Development of the state water plan is central to the mission of the Texas Water Development Board. Based on 16 regional water plans, the plan addresses the needs of all water user groups in the state – municipal, irrigation, manufacturing, livestock, mining, and steam-electric power – during a repeat of the drought of record that the state suffered in the 1950s. The regional and state water plans consider a 50-year planning horizon: 2020 through 2070.</p>
-                        <p>This website lets water users statewide take an up-close look at data in the DRAFT 2017 State Water Plan and how water needs change over time by showing:</p>
+                        <p>This website lets water users statewide take an up-close look at data in the 2017 State Water Plan and how water needs change over time by showing:</p>
                         <ul>
                           <li>projected water demands,</li>
                           <li>existing water supplies,</li>
