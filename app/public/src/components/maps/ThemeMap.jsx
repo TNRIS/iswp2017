@@ -129,7 +129,6 @@ export default React.createClass({
 
   updateMap(props) {
     this.map.closePopup();
-
     // dataRows can have multiple rows for the same EntityId
     // so group them and sum their current year value to make
     // mappable entities features
@@ -177,6 +176,42 @@ export default React.createClass({
     const sortedFeatures = R.reverse(
       R.sortBy(R.path(['properties', 'ValueSum']))(entityFeatures)
     );
+
+    //clean source layer if previously used
+    if (this.sourceLayer && this.map.hasLayer(this.sourceLayer)) {
+      this.map.removeLayer(this.sourceLayer);
+    }
+    // use the data rows to organize a list of unique map source IDs. handle logic for which themes to do this.
+    if (props.theme === 'supplies' || props.theme === 'strategies') {
+      const sourceById = R.groupBy(R.prop('MapSourceId'))(props.data.rows);
+      //remove null map source ids
+      const sources = R.without("null", R.keys(sourceById));
+      //use the unique list of map source IDs to query the source dataset on Carto
+      if (sources.length != 0) {
+        CdbUtil.getSource(sources)
+        .then((results) => {
+          //create layer from source dataset response and wire events
+          //?????handle no data returned/bad query
+          this.sourceLayer = L.geoJson(results, {
+            pointToLayer: function (feature, latlng) {
+              return L.circleMarker(latlng, {
+                radius: 8,
+                fillColor: "#0033ff",
+                color: "#0033ff",
+                weight: 5,
+                opacity: .5,
+                fillOpacity: 0.2
+              });
+            }
+          });
+          this.sourceLayer.on("mousemove", this.showSourceLabel);
+          this.sourceLayer.on("mouseout", this.hideSourceLabel);
+          //add the layer to the map. 
+          this.map.addLayer(this.sourceLayer);
+          this.entitiesLayer.bringToFront();
+        });
+      }
+    }
 
     this.entitiesLayer = L.geoJson(sortedFeatures, {
       pointToLayer: (feat, latlng) => {
@@ -237,6 +272,25 @@ export default React.createClass({
 
     if (!this.state.isLocked) {
       this.map.fitBounds(bounds);
+    }
+  },
+
+  //live handle tooltip/label of source features
+  showSourceLabel(event) {
+    if (!this.label) {
+      this.label = new L.Label();
+    }
+    this.label.setContent(event.layer.feature.properties.name);
+    this.label.setLatLng(event.latlng);
+    if (!this.map.hasLayer(this.label)) {
+      this.map.addLayer(this.label);
+    }
+  },
+
+  hideSourceLabel() {
+    if (this.label && this.map.hasLayer(this.label)) {
+      this.map.removeLayer(this.label);
+      this.label = null;
     }
   },
 

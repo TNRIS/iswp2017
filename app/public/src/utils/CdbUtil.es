@@ -5,6 +5,7 @@ import condenseWhitespace from 'condense-whitespace';
 
 const countyTable = 'county_extended';
 const regionTable = 'regional_water_planning_areas';
+const sourceTable = 'iswp_sourcefeatures2017';
 
 function getLayer(opts) {
   const mapConfig = {
@@ -14,7 +15,7 @@ function getLayer(opts) {
       options: extend({cartocss_version: "2.1.1"}, opts)
     }]
   };
-
+  console.log(mapConfig);
   return axios.post('https://tnris.cartodb.com/api/v1/map/', mapConfig)
     .then(({data}) => {
       const layerid = data.layergroupid;
@@ -201,10 +202,20 @@ function getRegion(letter) {
     .then(({data}) => data);
 }
 
+function getSource(ids) {
+  const idsList = ids.join(",");
+  const query = `SELECT sourceid, name, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
+    FROM ${sourceTable} WHERE sourceid IN (${idsList}) ORDER BY drawingord`;
+    console.log(query);
+  return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
+    .then(({data}) => data);
+}
+
 export default {
   createEntityLayer,
   createCountiesLayer,
   createRegionsLayer,
   getCounty,
-  getRegion
+  getRegion,
+  getSource
 };
