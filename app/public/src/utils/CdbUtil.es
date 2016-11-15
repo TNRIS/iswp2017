@@ -15,7 +15,7 @@ function getLayer(opts) {
       options: extend({cartocss_version: "2.1.1"}, opts)
     }]
   };
-  console.log(mapConfig);
+
   return axios.post('https://tnris.cartodb.com/api/v1/map/', mapConfig)
     .then(({data}) => {
       const layerid = data.layergroupid;
