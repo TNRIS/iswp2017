@@ -204,7 +204,7 @@ function getRegion(letter) {
 
 function getSource(ids) {
   const idsList = ids.join(",");
-  const query = `SELECT sourceid, name, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
+  const query = `SELECT sourceid, name, sourcetype, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
     FROM ${sourceTable} WHERE sourceid IN (${idsList}) ORDER BY drawingord`;
   return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
     .then(({data}) => data);

@@ -56,5 +56,23 @@ export default {
     {limit: 50, color: '#FDAE61'},
     {limit: 100, color: 'rgb(237, 27, 47)'} //red
   ],
-  DATA_TABLE_ITEMS_PER_PAGE: 20
+  DATA_TABLE_ITEMS_PER_PAGE: 20,
+  GROUNDWATER_SOURCE: {
+    fillColor: '#0B3A71',
+    color: '#AFBFD0',
+    weight: 2,
+    opacity: .8,
+    fillOpacity: 0.8
+  },
+  SURFACEWATER_SOURCE: {
+    color: '#007DFF',
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 1
+  },
+  RIVERWATER_SOURCE: {
+    color: '#33B0FF',
+    weight: 2,
+    opacity: 1
+  }
 };

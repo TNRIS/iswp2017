@@ -186,6 +186,10 @@ export default React.createClass({
       const sourceById = R.groupBy(R.prop('MapSourceId'))(props.data.rows);
       //remove null map source ids
       const sources = R.without("null", R.keys(sourceById));
+      //grab the source styles from constants file
+      const groundwaterStyle = constants.GROUNDWATER_SOURCE;
+      const surfacewaterStyle = constants.SURFACEWATER_SOURCE;
+      const riverwaterStyle = constants.RIVERWATER_SOURCE;
       //use the unique list of map source IDs to query the source dataset on Carto
       if (sources.length != 0) {
         CdbUtil.getSource(sources)
@@ -193,14 +197,16 @@ export default React.createClass({
           //create layer from source dataset response and wire events
           //?????handle no data returned/bad query
           this.sourceLayer = L.geoJson(results, {
+            style: function(feature) {
+              switch (feature.properties.sourcetype) {
+                case 'groundwater': return groundwaterStyle;
+                case 'river': return riverwaterStyle;
+                default: return surfacewaterStyle;
+              }
+            },
             pointToLayer: function (feature, latlng) {
               return L.circleMarker(latlng, {
-                radius: 8,
-                fillColor: "#0033ff",
-                color: "#0033ff",
-                weight: 5,
-                opacity: .5,
-                fillOpacity: 0.2
+                radius: 8
               });
             }
           });
