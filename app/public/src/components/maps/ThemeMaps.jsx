@@ -40,7 +40,8 @@ export default React.createClass({
             theme={selectedTheme}
             data={placeData.data[selectedTheme]}
             boundary={placeData.boundary}
-            decade={selectedDecade} />
+            decade={selectedDecade}
+            entity={placeData.entity} />
         </div>
       </div>
     );

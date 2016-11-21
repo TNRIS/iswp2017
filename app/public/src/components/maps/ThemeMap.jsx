@@ -19,7 +19,8 @@ export default React.createClass({
     theme: React.PropTypes.string.isRequired,
     data: React.PropTypes.object.isRequired,
     decade: React.PropTypes.string,
-    boundary: PropTypes.Feature
+    boundary: PropTypes.Feature,
+    entity: React.PropTypes.object
   },
 
   mixins: [PureRenderMixin],
@@ -166,6 +167,10 @@ export default React.createClass({
       this.map.removeLayer(this.entitiesLayer);
       this.spiderfier.clearMarkers();
     }
+    //clean source layer if previously used
+    if (this.sourceLayer && this.map.hasLayer(this.sourceLayer)) {
+      this.map.removeLayer(this.sourceLayer);
+    }
 
     if (!entityFeatures || entityFeatures.length === 0) {
       return;
@@ -176,48 +181,6 @@ export default React.createClass({
     const sortedFeatures = R.reverse(
       R.sortBy(R.path(['properties', 'ValueSum']))(entityFeatures)
     );
-
-    //clean source layer if previously used
-    if (this.sourceLayer && this.map.hasLayer(this.sourceLayer)) {
-      this.map.removeLayer(this.sourceLayer);
-    }
-    // use the data rows to organize a list of unique map source IDs. handle logic for which themes to do this.
-    if (props.theme === 'supplies' || props.theme === 'strategies') {
-      const sourceById = R.groupBy(R.prop('MapSourceId'))(props.data.rows);
-      //remove null map source ids
-      const sources = R.without("null", R.keys(sourceById));
-      //grab the source styles from constants file
-      const groundwaterStyle = constants.GROUNDWATER_SOURCE;
-      const surfacewaterStyle = constants.SURFACEWATER_SOURCE;
-      const riverwaterStyle = constants.RIVERWATER_SOURCE;
-      //use the unique list of map source IDs to query the source dataset on Carto
-      if (sources.length != 0) {
-        CdbUtil.getSource(sources)
-        .then((results) => {
-          //create layer from source dataset response and wire events
-          //?????handle no data returned/bad query
-          this.sourceLayer = L.geoJson(results, {
-            style: function(feature) {
-              switch (feature.properties.sourcetype) {
-                case 'groundwater': return groundwaterStyle;
-                case 'river': return riverwaterStyle;
-                default: return surfacewaterStyle;
-              }
-            },
-            pointToLayer: function (feature, latlng) {
-              return L.circleMarker(latlng, {
-                radius: 8
-              });
-            }
-          });
-          this.sourceLayer.on("mousemove", this.showSourceLabel);
-          this.sourceLayer.on("mouseout", this.hideSourceLabel);
-          //add the layer to the map. 
-          this.map.addLayer(this.sourceLayer);
-          this.entitiesLayer.bringToFront();
-        });
-      }
-    }
 
     this.entitiesLayer = L.geoJson(sortedFeatures, {
       pointToLayer: (feat, latlng) => {
@@ -276,9 +239,58 @@ export default React.createClass({
 
     this.map.addLayer(this.entitiesLayer);
 
-    if (!this.state.isLocked) {
-      this.map.fitBounds(bounds);
+    
+
+    // use the data rows to organize a list of unique map source IDs. handle logic for which themes to do this.
+    if (props.theme === 'supplies' || props.theme === 'strategies') {
+      const sourceById = R.groupBy(R.prop('MapSourceId'))(props.data.rows);
+      //remove null map source ids
+      const sources = R.without("null", R.keys(sourceById));
+      //grab the source styles from constants file
+      const groundwaterStyle = constants.GROUNDWATER_SOURCE;
+      const surfacewaterStyle = constants.SURFACEWATER_SOURCE;
+      const riverwaterStyle = constants.RIVERWATER_SOURCE;
+      //use the unique list of map source IDs to query the source dataset on Carto
+      if (sources.length != 0) {
+        CdbUtil.getSource(sources)
+        .then((results) => {
+          //create layer from source dataset response and wire events
+          //?????handle no data returned/bad query
+          this.sourceLayer = L.geoJson(results, {
+            style: function(feature) {
+              switch (feature.properties.sourcetype) {
+                case 'groundwater': return groundwaterStyle;
+                case 'river': return riverwaterStyle;
+                case 'indirect': return riverwaterStyle;
+                default: return surfacewaterStyle;
+              }
+            },
+            pointToLayer: function (feature, latlng) {
+              return L.circleMarker(latlng, {
+                radius: 8
+              });
+            }
+          });
+          this.sourceLayer.on("mousemove", this.showSourceLabel);
+          this.sourceLayer.on("mouseout", this.hideSourceLabel);
+          //add the layer to the map. 
+          this.map.addLayer(this.sourceLayer);
+          this.entitiesLayer.bringToFront();
+
+          bounds = bounds.extend(this.sourceLayer.getBounds());
+          if (!this.state.isLocked) {
+            this.map.fitBounds(bounds);
+          }
+
+        });
+      } else {
+        this.applyBounds(bounds);
+      }
+    } else {
+      this.applyBounds(bounds);
     }
+
+    
   },
 
   //live handle tooltip/label of source features
@@ -297,6 +309,15 @@ export default React.createClass({
     if (this.label && this.map.hasLayer(this.label)) {
       this.map.removeLayer(this.label);
       this.label = null;
+    }
+  },
+
+  applyBounds(bounds) {
+    if (!this.state.isLocked) {
+      this.map.fitBounds(bounds);
+      if (this.props.entity) {
+        this.map.setZoom(12);
+      }
     }
   },
 
