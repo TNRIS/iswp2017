@@ -239,11 +239,13 @@ export default React.createClass({
 
     this.map.addLayer(this.entitiesLayer);
 
-    
-
     // use the data rows to organize a list of unique map source IDs. handle logic for which themes to do this.
-    if (props.theme === 'supplies' || props.theme === 'strategies') {
-      const sourceById = R.groupBy(R.prop('MapSourceId'))(props.data.rows);
+    if (props.theme === 'supplies' || props.theme === 'strategies') {      
+      const hasValue = props.data.rows.filter(record => record[`Value_${props.decade}`] > 0);
+      const decadeProps = constants.DECADES.map((d) => `Value_${d}`);
+      const displayZero = props.data.rows.filter(record => R.sum(decadeProps.map((d) => record[d])) == 0);
+
+      const sourceById = R.groupBy(R.prop('MapSourceId'))(hasValue.concat(displayZero));
       //remove null map source ids
       const sources = R.without("null", R.keys(sourceById));
       //grab the source styles from constants file
