@@ -33,6 +33,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
+    console.log(this);
     EntityDataStore.listen(this.onEntityDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 

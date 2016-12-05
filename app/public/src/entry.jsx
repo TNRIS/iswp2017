@@ -13,6 +13,7 @@ import App from './App';
 import history from './history';
 import PlaceView from './components/views/PlaceView';
 import UsageTypeView from './components/views/UsageTypeView';
+import SourceView from './components/views/SourceView';
 import EntityView from './components/views/EntityView';
 import StatewideView from './components/views/StatewideView';
 import ViewStateActions from './actions/ViewStateActions';
@@ -48,6 +49,7 @@ ReactDOM.render((
     <Route component={App}>
       <Route name="stateview" path="statewide" component={StatewideView}/>
       <Route name="entityview" path="entity/:entityId" component={EntityView}/>
+      <Route name="sourceview" path="source/:sourceId" component={SourceView}/>
       <Route name="usagetypeview" path="usagetype/:typeId" component={UsageTypeView}/>
       <Route name="placeview" path=":type/:typeId" component={PlaceView}/>
       <Redirect from="/" to="/statewide" />

@@ -10,13 +10,15 @@ import {countyNames} from '../utils/CountyNames';
 import history from '../history';
 import ViewStateStore from '../stores/ViewStateStore';
 import EntityFetcher from '../utils/EntityFetcher';
+import {sourceNames} from '../utils/SourceNames';
 
 const navCategoryOptions = [
   {value: "statewide", label: "All of Texas"},
   {value: "region", label: "Planning Region"},
   {value: "county", label: "County"},
   {value: "entity", label: "Water User Group"},
-  {value: "usagetype", label: "Usage Type"}
+  {value: "usagetype", label: "Usage Type"},
+  {value: "source", label: "Water Source"}
 ]
 
 const regionSelectOptions = constants.REGIONS.map((region) => {
@@ -30,6 +32,11 @@ const countySelectOptions = countyNames.map((name) => {
 const usageTypeSelectOptions = constants.USAGE_TYPES.map((type) => {
   return {value: type.toLowerCase(), label: titleize(type)};
 });
+
+const sourceSelectOptions = sourceNames.map((src) => {
+  return {value: src.sourceid, label: src.name};
+});
+
 
 export default React.createClass({
   getInitialState() {
@@ -89,6 +96,8 @@ export default React.createClass({
       });
   },
 
+
+
   isNavButtonEnabled() {
     return (this.state.navCategory === 'statewide')
       || !R.isEmpty(this.state.subNavValue);
@@ -110,6 +119,9 @@ export default React.createClass({
       break;
     case 'usagetype':
       history.push({pathname: `/usagetype/${this.state.subNavValue.value}`});
+      break;
+    case 'source':
+      history.push({pathname: `/source/${this.state.subNavValue.value}`});
       break;
     default:
       return;
@@ -174,6 +186,16 @@ export default React.createClass({
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
                   options={usageTypeSelectOptions} />
+              </div>
+            </ToggleDisplay>
+            <ToggleDisplay show={this.state.navCategory === 'source'}>
+              <div className="select-container" aria-live="polite">
+                <Select
+                  placeholder="Select Water Source"
+                  ignoreCase
+                  onChange={this.onSubNavChange}
+                  value={this.state.subNavValue}
+                  options={sourceSelectOptions} />
               </div>
             </ToggleDisplay>
 

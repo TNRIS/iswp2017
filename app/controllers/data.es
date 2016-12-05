@@ -273,6 +273,29 @@ class DataController {
       .catch(handleApiError(reply));
   }
 
+  getForSource(request, reply) {
+    Hoek.assert(request.params.sourceId, 'request.params.sourceId is required');
+
+    const themes = R.keys(constants.SOURCE_TABLES);
+    const sourceId = request.params.sourceId;
+    const dataPromises = themes.map(dataSelectionsByTheme({
+      whereKey: 'MapSourceId',
+      whereVal: sourceId,
+      omitRows: !!request.query.omitRows
+    }));
+
+    // const selectProjectsProm = db.select()
+    //   .from(projectTables.entity)
+    //   .where('EntityId', entityId)
+    //   .then((projects) => { return {projects}; });
+
+    // dataPromises.push(selectProjectsProm);
+
+    Promise.all(dataPromises)
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
+  }
+
   getForUsageType(request, reply) {
     Hoek.assert(request.params.usageType, 'request.params.usageType is required');
 

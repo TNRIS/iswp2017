@@ -10,6 +10,11 @@ const ViewData = React.PropTypes.shape({
   strategies: React.PropTypes.object
 });
 
+const SrcViewData = React.PropTypes.shape({
+  supplies: React.PropTypes.object,
+  strategies: React.PropTypes.object
+});
+
 const  Feature = React.PropTypes.shape({
   geometry: React.PropTypes.object,
   properties: React.PropTypes.object,
@@ -19,6 +24,11 @@ const  Feature = React.PropTypes.shape({
 const PlaceData = React.PropTypes.shape({
   boundary: Feature,
   data: ViewData
+});
+
+const SourceData = React.PropTypes.shape({
+  boundary: Feature,
+  data: SrcViewData
 });
 
 const EntityData = React.PropTypes.shape({
@@ -50,9 +60,11 @@ const ProjectData = React.PropTypes.arrayOf(React.PropTypes.shape({
 }));
 
 export default {
-  Feature,
   ViewData,
+  SrcViewData,
+  Feature,
   PlaceData,
+  SourceData,
   EntityData,
   TreemapData,
   ProjectData

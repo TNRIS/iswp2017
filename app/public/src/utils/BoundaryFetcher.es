@@ -15,6 +15,9 @@ export default {
     else if (type === 'county') {
       return CdbUtil.getCounty(typeId);
     }
+    else if (type === 'source') {
+      return CdbUtil.getSource([typeId]);
+    }
 
     throw new Error('Invalid type specified in BoundaryFetcher');
   }

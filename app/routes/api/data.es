@@ -105,6 +105,26 @@ export default function generateRoutes(validParams) {
     },
     {
       method: 'GET',
+      path: '/data/source/{sourceId}',
+      config: {
+        validate: {
+          params: {
+            sourceId: Joi.number().required()
+          },
+          query: {
+            omitRows: Joi.boolean()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        },
+        description: 'Get water source data and summaries for the water source identified by {sourceId}.',
+        notes: omitRowsNote
+      },
+      handler: bind('getForSource')
+    },
+    {
+      method: 'GET',
       path: '/data/usagetype/{usageType}',
       config: {
         validate: {

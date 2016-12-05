@@ -14,5 +14,12 @@ export default {
     population: 'vw2017MapWugPopulation',
     strategies: 'vw2017MapWMSWugSupply'
   },
+  SOURCE_TABLES: {
+    // demands: 'vw2017MapWugDemand',
+    // needs: 'vw2017MapWugNeeds',
+    supplies: 'vw2017MapExistingWugSupply',
+    // population: 'vw2017MapWugPopulation',
+    strategies: 'vw2017MapWMSWugSupply'
+  },
   API_CACHE_EXPIRES_IN: 60 * 60 * 24 * 1000
 };

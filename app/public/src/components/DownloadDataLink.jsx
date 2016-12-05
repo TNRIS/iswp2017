@@ -12,13 +12,15 @@ export default React.createClass({
     theme: React.PropTypes.oneOf(themesAndPopulation).isRequired,
     viewName: React.PropTypes.string,
     type: React.PropTypes.oneOf([
-      'statewide', 'region', 'county', 'entity', 'usagetype'
+      'statewide', 'region', 'county', 'entity', 'usagetype', 'source'
     ]).isRequired,
     typeId: React.PropTypes.oneOfType([
       React.PropTypes.string,
       React.PropTypes.number
     ])
   },
+
+
 
   mixins: [PureRenderMixin],
 

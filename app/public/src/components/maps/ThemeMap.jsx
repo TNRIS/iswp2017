@@ -9,6 +9,7 @@ import format from 'format-number';
 
 import CdbUtil from '../../utils/CdbUtil';
 import constants from '../../constants';
+import history from '../../history';
 import PropTypes from '../../utils/CustomPropTypes';
 import NeedsLegend from '../../utils/NeedsLegend';
 import ThemeMapStateActions from '../../actions/ThemeMapStateActions';
@@ -171,8 +172,8 @@ export default React.createClass({
     if (this.sourceLayer && this.map.hasLayer(this.sourceLayer)) {
       this.map.removeLayer(this.sourceLayer);
     }
-
-    if (!entityFeatures || entityFeatures.length === 0) {
+    
+    if (!props.boundary && (!entityFeatures || entityFeatures.length === 0)) {
       return;
     }
 
@@ -228,18 +229,38 @@ export default React.createClass({
     if (this.boundaryLayer && this.map.hasLayer(this.boundaryLayer)) {
       this.map.removeLayer(this.boundaryLayer);
     }
-    if (props.boundary) {
+
+    if (props.boundary && !R.isEmpty(props.data.rows)) {
       this.boundaryLayer = L.geoJson(props.boundary, {
-        style: constants.BOUNDARY_LAYER_STYLE
+        style: constants.BOUNDARY_LAYER_STYLE,
+        pointToLayer: function (feature, latlng) {
+          return L.circleMarker(latlng, constants.BOUNDARY_LAYER_STYLE)
+        }
       });
 
       this.map.addLayer(this.boundaryLayer);
       bounds = bounds.extend(this.boundaryLayer.getBounds());
+    } else if (props.boundary && R.isEmpty(props.data.rows)) {
+      bounds = this.map.getBounds();
     }
 
     this.map.addLayer(this.entitiesLayer);
 
     // use the data rows to organize a list of unique map source IDs. handle logic for which themes to do this.
+    try {
+      if (props.boundary.features[0].properties.sourceid != undefined) {
+        this.applyBounds(bounds);
+      } else {
+        this.displaySourcesLayer(props, bounds);
+      }
+    } catch (e) {
+      this.displaySourcesLayer(props, bounds);
+    }
+
+    
+  },
+
+  displaySourcesLayer(props, bounds) {
     if (props.theme === 'supplies' || props.theme === 'strategies') {      
       const hasValue = props.data.rows.filter(record => record[`Value_${props.decade}`] > 0);
       const decadeProps = constants.DECADES.map((d) => `Value_${d}`);
@@ -275,6 +296,7 @@ export default React.createClass({
           });
           this.sourceLayer.on("mousemove", this.showSourceLabel);
           this.sourceLayer.on("mouseout", this.hideSourceLabel);
+          this.sourceLayer.on("click", this.viewSourcePage);
           //add the layer to the map. 
           this.map.addLayer(this.sourceLayer);
           this.entitiesLayer.bringToFront();
@@ -291,8 +313,6 @@ export default React.createClass({
     } else {
       this.applyBounds(bounds);
     }
-
-    
   },
 
   //live handle tooltip/label of source features
@@ -312,6 +332,11 @@ export default React.createClass({
       this.map.removeLayer(this.label);
       this.label = null;
     }
+  },
+
+  viewSourcePage(event) {
+    const id = event.layer.feature.properties.sourceid;
+    history.push({pathname: `/source/${id}`});
   },
 
   applyBounds(bounds) {

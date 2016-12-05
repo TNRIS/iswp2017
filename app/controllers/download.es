@@ -97,6 +97,19 @@ class DownloadController {
       .catch(handleApiError(reply));
   }
 
+  getSourceCsv(request, reply) {
+    Hoek.assert(request.params.theme, 'request.params.theme is required');
+    Hoek.assert(request.params.sourceId, 'request.params.sourceId is required');
+
+    const theme = request.params.theme.toLowerCase();
+    const sourceId = request.params.sourceId;
+
+    selectData(theme, 'MapSourceId', sourceId)
+      .then(omitCols)
+      .then(toCsvReply(reply, `source_${sourceId}_${theme}.csv`))
+      .catch(handleApiError(reply));
+  }
+
   getUsageTypeCsv(request, reply) {
     Hoek.assert(request.params.theme, 'request.params.theme is required');
     Hoek.assert(request.params.usageType, 'request.params.usageType is required');

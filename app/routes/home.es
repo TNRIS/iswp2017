@@ -66,6 +66,19 @@ function addTo(server, basePath = '/') {
     },
     {
       method: 'GET',
+      path: '/source/{sourceId}',
+      config: {
+        validate: {
+          params: {
+            sourceId: Joi.number().required()
+          },
+          failAction: to404
+        }
+      },
+      handler: {view: 'index'}
+    },
+    {
+      method: 'GET',
       path: '/usagetype/{usageType}',
       config: {
         validate: {

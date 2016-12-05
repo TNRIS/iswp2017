@@ -35,6 +35,7 @@ export default React.createClass({
   },
 
   componentDidMount() {
+    console.log(this);
     PlaceDataStore.listen(this.onPlaceDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 

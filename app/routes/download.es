@@ -76,6 +76,19 @@ function addTo(server, basePath = '/') {
     },
     {
       method: 'GET',
+      path: '/source/{sourceId}/{theme}',
+      config: {
+        validate: {
+          params: {
+            theme: Joi.string().only(themes).insensitive().required(),
+            sourceId: Joi.number().required()
+          }
+        }
+      },
+      handler: bind('getSourceCsv')
+    },
+    {
+      method: 'GET',
       path: '/usagetype/{usageType}/{theme}',
       config: {
         validate: {
