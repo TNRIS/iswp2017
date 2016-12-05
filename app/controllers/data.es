@@ -284,13 +284,6 @@ class DataController {
       omitRows: !!request.query.omitRows
     }));
 
-    // const selectProjectsProm = db.select()
-    //   .from(projectTables.entity)
-    //   .where('EntityId', entityId)
-    //   .then((projects) => { return {projects}; });
-
-    // dataPromises.push(selectProjectsProm);
-
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
       .catch(handleApiError(reply));

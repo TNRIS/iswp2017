@@ -8,7 +8,6 @@ import classnames from 'classnames';
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 import SourceSummarySubhead from './SourceSummarySubhead';
-import PopulationChart from './charts/PopulationChart';
 
 function aggregateDescription(sourceName) {
   if (sourceName.indexOf(',') === -1) {
@@ -48,15 +47,6 @@ export default React.createClass({
         <div className="subhead">
           <SourceSummarySubhead sourceName={sourceName} />
         </div>
-        {/*
-        {(() => {
-          const desc = aggregateDescription(sourceName);
-          if (desc) {
-            return (<p>{desc}</p>);
-          }
-          return (<PopulationChart viewData={props.sourceData.data} />);
-        })()}
-      */}
       </div>
     );
   }

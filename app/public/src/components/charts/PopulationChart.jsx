@@ -20,7 +20,7 @@ const chartOptions = {
 
 export default React.createClass({
   propTypes: {
-    viewData: PropTypes.SrcViewData
+    viewData: PropTypes.ViewData
   },
 
   mixins: [PureRenderMixin],

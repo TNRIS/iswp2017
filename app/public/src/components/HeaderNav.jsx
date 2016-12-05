@@ -37,7 +37,6 @@ const sourceSelectOptions = sourceNames.map((src) => {
   return {value: src.sourceid, label: src.name};
 });
 
-
 export default React.createClass({
   getInitialState() {
     const viewState = ViewStateStore.getState().viewState;
@@ -95,8 +94,6 @@ export default React.createClass({
         callback(err);
       });
   },
-
-
 
   isNavButtonEnabled() {
     return (this.state.navCategory === 'statewide')

@@ -20,8 +20,6 @@ export default React.createClass({
     ])
   },
 
-
-
   mixins: [PureRenderMixin],
 
   render() {
