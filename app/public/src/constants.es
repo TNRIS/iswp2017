@@ -42,6 +42,12 @@ export default {
     color: '#3F556D',
     weight: 4
   },
+  THEME_BOUNDARY_LAYER_STYLE: {
+    fillOpacity: 0.1,
+    opacity: 1,
+    color: '#cc9200',
+    weight: 4
+  },
   MIN_ENTITY_POINT_RADIUS: 4,
   MAX_ENTITY_POINT_RADIUS: 12,
   VIEW_MAP_OPTIONS: {

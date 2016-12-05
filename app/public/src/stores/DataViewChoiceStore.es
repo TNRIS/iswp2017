@@ -6,7 +6,7 @@ import constants from '../constants';
 class DataViewChoiceStore {
   constructor() {
     this.selectedDecade = constants.DECADES[0];
-    this.selectedTheme = 'needs'; //default to Needs view
+    this.selectedTheme = 'strategies'; //default to Strategies view
 
     this.bindListeners({
       handleUpdateDecadeChoice: DataViewChoiceActions.UPDATE_DECADE_CHOICE,

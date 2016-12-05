@@ -202,12 +202,11 @@ export default React.createClass({
       }
     ];
 
-    return (
-      <div>
-        <h4>
-          Raw Data - {decade} - {themeTitle}
-          <Units theme={selectedTheme} />
-        </h4>
+    let table = null;
+    if (R.isEmpty(tableData)) {
+      table = <p> Sorry, there is no {themeTitle} data.</p>;
+    } else {
+      table = 
         <div className="table-container">
           <PivotTable
             //assign a unique key to force rerender of table
@@ -224,7 +223,16 @@ export default React.createClass({
             sortDir={sortDir}
             nPaginateRows={50}
           />
-        </div>
+        </div>;
+    }
+
+    return (
+      <div>
+        <h4>
+          Raw Data - {decade} - {themeTitle}
+          <Units theme={selectedTheme} />
+        </h4>
+        {table}
       </div>
     );
   }

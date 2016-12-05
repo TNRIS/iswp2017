@@ -131,7 +131,7 @@ export default React.createClass({
                                 if (R.isEmpty(sourceData.data[theme].rows)) {
                                   return (
                                     <li key={`download-${theme}`}>
-                                      No {constants.THEME_TITLES[theme]} data exist for this water source
+                                      No {constants.THEME_TITLES[theme]} data exists for this water source
                                     </li>
                                   );
                                 }

@@ -69,12 +69,11 @@ export default React.createClass({
 
     const stratTotal = R.sum(R.pluck(decade)(R.values(stratTypeTotals)));
 
-    return (
-      <div className="strategies-breakdown-container">
-        <h4>
-          Strategy Supplies Breakdown - {decade}
-          <Units />
-        </h4>
+    let breakdown = null;
+    if (stratTotal === 0) {
+      breakdown = <p> The strategies do not affect any water user groups in the chosen decade: {decade} </p>;
+    } else {
+      breakdown = 
         <div className="row">
           <div className="six columns strategies-by-source-type-container">
             <h5>Share by Water Resource</h5>
@@ -105,7 +104,16 @@ export default React.createClass({
               </Table>
             </div>
           </div>
-        </div>
+        </div>;
+    }
+
+    return (
+      <div className="strategies-breakdown-container">
+        <h4>
+          Strategy Supplies Breakdown - {decade}
+          <Units />
+        </h4>
+        {breakdown}
       </div>
     );
   }

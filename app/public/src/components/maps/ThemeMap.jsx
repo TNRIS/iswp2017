@@ -172,6 +172,11 @@ export default React.createClass({
     if (this.sourceLayer && this.map.hasLayer(this.sourceLayer)) {
       this.map.removeLayer(this.sourceLayer);
     }
+
+    if (this.legendControl) {
+      this.map.removeControl(this.legendControl);
+      this.legendControl = null;
+    }
     
     if (!props.boundary && (!entityFeatures || entityFeatures.length === 0)) {
       return;
@@ -182,6 +187,9 @@ export default React.createClass({
     const sortedFeatures = R.reverse(
       R.sortBy(R.path(['properties', 'ValueSum']))(entityFeatures)
     );
+    //use filteredFeatures instead of sortedFeatures? git issue #202
+    // const zeroSum = x => x.properties.ValueSum != 0;
+    // const filteredFeatures = R.filter(zeroSum, sortedFeatures);
 
     this.entitiesLayer = L.geoJson(sortedFeatures, {
       pointToLayer: (feat, latlng) => {
@@ -214,11 +222,6 @@ export default React.createClass({
       }
     });
 
-    if (this.legendControl) {
-      this.map.removeControl(this.legendControl);
-      this.legendControl = null;
-    }
-
     if (props.theme === 'needs') {
       this.legendControl = NeedsLegend.create();
       this.map.addControl(this.legendControl);
@@ -232,9 +235,9 @@ export default React.createClass({
 
     if (props.boundary && !R.isEmpty(props.data.rows)) {
       this.boundaryLayer = L.geoJson(props.boundary, {
-        style: constants.BOUNDARY_LAYER_STYLE,
+        style: constants.THEME_BOUNDARY_LAYER_STYLE,
         pointToLayer: function (feature, latlng) {
-          return L.circleMarker(latlng, constants.BOUNDARY_LAYER_STYLE)
+          return L.circleMarker(latlng, constants.THEME_BOUNDARY_LAYER_STYLE)
         }
       });
 
