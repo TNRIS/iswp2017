@@ -6,7 +6,11 @@ Web application for the DRAFT 2017 Texas State Water Plan.
 
 ### Prerequesites:
 
-Install node >= 0.12.0 and npm >= 3.3.3
+Install node >= 0.12.0 and npm >= 3.3.3.
+
+**Note** - versions 5 and 6 of Node will not work. Use v0.12 and then update npm (v3.10.8) for proper package installations.
+
+Install AWS Command Line Interface and configure with AWS credentials (IAM Key, Secret, Region). http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 
 Install babel: `npm install -g babel@5`
 
