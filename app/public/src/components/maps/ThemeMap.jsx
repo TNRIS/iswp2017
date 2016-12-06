@@ -216,6 +216,10 @@ export default React.createClass({
           markerOpts.color = color;
         }
 
+        if (props.theme === 'supplies') {
+          markerOpts.color = '#848484';
+        }
+
         const marker = L.circleMarker(latlng, markerOpts);
         this.spiderfier.addMarker(marker);
         return marker;
@@ -248,7 +252,6 @@ export default React.createClass({
     }
 
     this.map.addLayer(this.entitiesLayer);
-
     // use the data rows to organize a list of unique map source IDs. handle logic for which themes to do this.
     try {
       if (props.boundary.features[0].properties.sourceid != undefined) {

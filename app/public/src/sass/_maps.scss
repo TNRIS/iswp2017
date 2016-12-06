@@ -20,11 +20,12 @@
   }
 
   //needs colors are handled by ThemeMap component
-  @if $name != 'needs' {
+  @if $name != 'needs' and $name != 'supplies' {
     .entity-marker-#{$name} {
       fill: $color;
     }
   }
+
 }
 
 .leaflet-legend {
