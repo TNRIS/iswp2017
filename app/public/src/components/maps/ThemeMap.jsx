@@ -59,11 +59,18 @@ export default React.createClass({
       const content = `
         <h3>${props.EntityName}</h3>
         <p>Total Value: ${format()(props.ValueSum)}</p>
-        <a href="/entity/${props.EntityId}">View Entity Page</a>
+        <a id="${props.EntityId}">View Entity Page</a>
       `;
       popup.setContent(content);
       popup.setLatLng(marker.getLatLng());
       map.openPopup(popup);
+    });
+
+    map.on('popupopen', function(event) {  
+      const id = event.target._popup._contentNode.childNodes[5].id;
+      L.DomEvent.addListener(L.DomUtil.get(id), 'click', function(e) {
+        history.push({pathname: `/entity/${id}`});
+      });
     });
 
     map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
@@ -254,11 +261,7 @@ export default React.createClass({
     this.map.addLayer(this.entitiesLayer);
     // use the data rows to organize a list of unique map source IDs. handle logic for which themes to do this.
     try {
-      if (props.boundary.features[0].properties.sourceid != undefined) {
-        this.applyBounds(bounds);
-      } else {
-        this.displaySourcesLayer(props, bounds);
-      }
+      props.boundary.features[0].properties.sourceid != undefined ? this.applyBounds(bounds) : this.displaySourcesLayer(props, bounds);
     } catch (e) {
       this.displaySourcesLayer(props, bounds);
     }
