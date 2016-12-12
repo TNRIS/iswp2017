@@ -289,49 +289,32 @@
             </p>
 
             <h4>Accessibility Policy</h4>
-            <p>
-              Due to the fact that much of the content on this site is based on geographic information and is graphical in nature, it may not be fully accessible for users of certain assistive technologies.
-            </p>
-            <p>
-              In accordance with Texas Government Code, Chapter 2054, Subchapter M, the TWDB is committed to making its websites and other electronic and information resources accessible to individuals with disabilities, including members of the public and agency employees, according to the standards set forth by Title 1 Texas Administrative Code Chapter 205 and Chapter 213.
-            </p>
-            <p>
-              To ensure that we comply with state and federal law, we review each new web page or application for compliance with the <a href="http://www.w3.org/" title="WWW">Worldwide Web Consortium's</a> <a href="http://www.w3.org/TR/WCAG20/" title="Web Content Accessibility Guidelines">Web Content Accessibility Guidelines</a> (WCAG) 2.0.  We also review previously existing web pages and applications for accessibility when we make significant modifications to them.  Nonetheless, much of our current content was produced before these guidelines were developed.  We are working to ensure that these older web pages and applications also become accessible.
-            </p>
+            <p><i>Due to current technology constraints, there are some instances where the TWDB is unable to provide information in an accessible format (e.g. mapping information).</i></p>
+            <h5>Policy Intention</h5>
+            <p>The intention of this policy is to state clear accessibility principles that all Texas Water Development Board (TWDB) websites must follow.</p>
+
+            <p>The TWDB strives to ensure all of its websites comply with the <a href="http://www.w3.org/TR/WCAG20/">Web Content Accessibility Guidelines</a> (WCAG) when possible without causing undue burden to the agency.&nbsp; The TWDB will be monitoring these sections and will develop accessible solutions as technology improves.&nbsp; In order to ensure no user is disadvantaged, the TWDB will respond to all accessibility assistance requests by either altering the necessary content as soon as possible or, if requested, by providing the information in an alternative format at no cost to the user within a reasonable timeframe.&nbsp; It is the responsibility of the webpage owner to provide these alternative formats.&nbsp; The TWDB websites will provide appropriate channels of communication that allow visitors to request alternative formats and to give feedback about any accessibility problems.</p>
+            
+            <h5>Policy Dimensions</h5>
+            <p>For the purpose of this policy, the term "websites" includes:</p>
+            <ul>
+              <li>All websites (public and non-authenticated) managed and maintained by TWDB staff or on the behalf of TWDB, including, all external websites using the .twdb.texas.gov domain, agency ancillary sites, and social media sites.</li>
+              <li>All material associated with pages of the website such as documents, audio, video and any other additional files except for maps.</li>
+            </ul>
 
             <h5>To Get Information in a Different Format</h5>
-            <p>
-              If you use assistive technology and the format of any material on our website interferes with your ability to access information, please e-mail the TWDB's accessibility coordinator through <a href="mailto:ac@twdb.texas.gov">ac@twdb.texas.gov</a>.
-            </p>
-            <p>
-              When you contact us, please be sure to tell us each of these points:
-            </p>
+            <p>If you use assistive technology and the format of any material on our website interferes with your ability to access information, please send an e-mail to the TWDB <a href="mailto:ac@twdb.texas.gov">Accessibility Coordinator</a>.</p>
+
+            <p>When you contact us, please be sure to tell us each of these points:</p>
             <ul>
-              <li>The nature of your accessibility problem</li>
-              <li>The format in which you prefer to receive the material</li>
-              <li>The web address of the requested material</li>
-              <li>How we can contact you</li>
+              <li>the nature of your accessibility problem</li>
+              <li>the format in which you prefer to receive the material</li>
+              <li>the web address of the requested material</li>
+              <li>how we can contact you</li>
             </ul>
-            <p>
-              With this information, we will be able to respond in the most helpful way possible.
-            </p>
 
-            <h5>To Ask Us to Review Specific Content</h5>
-            <p>
-              You may also contact us if you would like to suggest that we review a specific web page or application for compliance with WCAG. In that case, be sure to also let us know specific issues you have accessing the content.
-            </p>
+            <p>With this information, we will be able to respond in the most helpful way possible.</p>  
 
-            <h5>To Learn More</h5>
-            <p>
-              Additional information about accessibility programs in Texas is available from the <a href="http://www.governor.texas.gov/disabilities/" title="Governor's Committee on People with Disabilities">Governor's Committee on People with Disabilities</a>.
-            </p>
-
-            <h5>Related Information</h5>
-            <ul>
-              <li><a href="http://www.section508.gov/summary-section508-standards" title="Federal Law: ADA Section 508">Federal Law: ADA Section 508</a></li>
-              <li><a href="http://info.sos.texas.gov/pls/pub/readtac$ext.ViewTAC?tac_view=4&amp;ti=1&amp;pt=10&amp;ch=206" title="State Rules: 1 TAC Section 206">State Rules: 1 TAC Section 206</a></li>
-              <li><a href="http://www2.dir.texas.gov/SitePolicies/Pages/accessibilitypolicy.aspx" title="Web Accessibility in Texas">Web Accessibility in Texas</a></li>
-            </ul>
           </section>
 
           <section id="Credits">
