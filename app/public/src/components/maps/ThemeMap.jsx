@@ -21,7 +21,8 @@ export default React.createClass({
     data: React.PropTypes.object.isRequired,
     decade: React.PropTypes.string,
     boundary: PropTypes.Feature,
-    entity: React.PropTypes.object
+    entity: React.PropTypes.object,
+    projects: React.PropTypes.array
   },
 
   mixins: [PureRenderMixin],
@@ -56,11 +57,17 @@ export default React.createClass({
     const popup = L.popup();
     this.spiderfier.addListener('click', (marker) => {
       const props = marker.feature.properties;
-      const content = `
+      const entityContent = `
         <h3>${props.EntityName}</h3>
         <p>Total Value: ${format()(props.ValueSum)}</p>
-        <a id="${props.EntityId}">View Entity Page</a>
+        <a id="entity_${props.EntityId}">View Entity Page</a>
       `;
+      const projectContent = `
+        <h3>${props.ProjectName}</h3>
+        <p>Decade Online: ${props.OnlineDecade}</p>
+        <p>Capital Cost: ${props.CapitalCost}</p>
+      `;
+      const content = props.EntityId ? entityContent : projectContent;
       popup.setContent(content);
       popup.setLatLng(marker.getLatLng());
       map.openPopup(popup);
@@ -68,9 +75,13 @@ export default React.createClass({
 
     map.on('popupopen', function(event) {  
       const id = event.target._popup._contentNode.childNodes[5].id;
-      L.DomEvent.addListener(L.DomUtil.get(id), 'click', function(e) {
-        history.push({pathname: `/entity/${id}`});
-      });
+      //remove this 'if' statement surrounding the event listener once Project View is created
+      //keep the event listener though, it is the view page link
+      if (id.split("_")[0] == "entity") {
+        L.DomEvent.addListener(L.DomUtil.get(id), 'click', function(e) {
+          history.push({pathname: `/${id.split("_")[0]}/${id.split("_")[1]}`});
+        });
+      }
     });
 
     map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
@@ -160,6 +171,7 @@ export default React.createClass({
         R.pick(R.concat(['EntityId', 'EntityName', 'ValueSum'], npdProps),
         entity
       ));
+
       return {
         type: 'Feature',
         geometry: {
@@ -178,6 +190,10 @@ export default React.createClass({
     //clean source layer if previously used
     if (this.sourceLayer && this.map.hasLayer(this.sourceLayer)) {
       this.map.removeLayer(this.sourceLayer);
+    }
+
+    if (this.projectLayer && this.map.hasLayer(this.projectLayer)) {
+      this.map.removeLayer(this.projectLayer);
     }
 
     if (this.legendControl) {
@@ -247,7 +263,7 @@ export default React.createClass({
     if (props.boundary && !R.isEmpty(props.data.rows)) {
       this.boundaryLayer = L.geoJson(props.boundary, {
         style: constants.THEME_BOUNDARY_LAYER_STYLE,
-        pointToLayer: function (feature, latlng) {
+        pointToLayer: (feature, latlng) => {
           return L.circleMarker(latlng, constants.THEME_BOUNDARY_LAYER_STYLE)
         }
       });
@@ -258,24 +274,68 @@ export default React.createClass({
       bounds = this.map.getBounds();
     }
 
-    this.map.addLayer(this.entitiesLayer);
-    // use the data rows to organize a list of unique map source IDs. handle logic for which themes to do this.
-    try {
-      props.boundary.features[0].properties.sourceid != undefined ? this.applyBounds(bounds) : this.displaySourcesLayer(props, bounds);
-    } catch (e) {
-      this.displaySourcesLayer(props, bounds);
+    if (props.theme === 'strategies' && props.projects != undefined) { 
+      //handle decade online, only display those coming online before or during the selected decade
+      const decades = x => parseInt(x.OnlineDecade) <= parseInt(props.decade);
+      const decadeProjects = R.filter(decades, props.projects)
+
+      const projectFeatures = R.map((prj) => {
+        const displayCost = prj.CapitalCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        const projectProperties = {
+          'ProjectName': prj.ProjectName,
+          'OnlineDecade': prj.OnlineDecade,
+          'CapitalCost': "$" + displayCost,
+          "WMSProjectId": prj.WMSProjectId
+        };
+
+        return {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [prj.LongCoord, prj.LatCoord]
+          },
+          properties: projectProperties
+        };
+      })(decadeProjects);
+
+      const icon = L.divIcon({
+        className: 'triangle-marker',
+        html: '<div class="triangle-marker-inner"></div>'
+      });
+
+      this.projectLayer = L.geoJson(projectFeatures, {
+        pointToLayer: (feature, latlng) => {
+          const marker = L.marker(latlng, {
+            icon: icon
+          });
+          this.spiderfier.addMarker(marker);
+          return marker;
+        }
+      });
+
+      this.map.addLayer(this.projectLayer);
     }
 
-    
+    this.map.addLayer(this.entitiesLayer);
+
+    // use the data rows to organize a list of unique map source IDs. handle logic for which themes to do this.
+    try {
+      props.boundary.features[0].properties.sourceid != undefined ? this.applyBounds(bounds) : this.displaySourceLayer(props, bounds);
+    } catch (e) {
+      this.displaySourceLayer(props, bounds);
+    }
+
   },
 
-  displaySourcesLayer(props, bounds) {
+  displaySourceLayer(props, bounds) {
     if (props.theme === 'supplies' || props.theme === 'strategies') {      
       const hasValue = props.data.rows.filter(record => record[`Value_${props.decade}`] > 0);
-      const decadeProps = constants.DECADES.map((d) => `Value_${d}`);
-      const displayZero = props.data.rows.filter(record => R.sum(decadeProps.map((d) => record[d])) == 0);
+      // const decadeProps = constants.DECADES.map((d) => `Value_${d}`);
+      // const displayZero = props.data.rows.filter(record => R.sum(decadeProps.map((d) => record[d])) == 0);
+      // const sourceById = R.groupBy(R.prop('MapSourceId'))(hasValue.concat(displayZero));
+      const sourceById = R.groupBy(R.prop('MapSourceId'))(hasValue);
 
-      const sourceById = R.groupBy(R.prop('MapSourceId'))(hasValue.concat(displayZero));
       //remove null map source ids
       const sources = R.without("null", R.keys(sourceById));
       //grab the source styles from constants file
@@ -297,7 +357,7 @@ export default React.createClass({
                 default: return surfacewaterStyle;
               }
             },
-            pointToLayer: function (feature, latlng) {
+            pointToLayer: (feature, latlng) => {
               return L.circleMarker(latlng, {
                 radius: 8
               });
@@ -319,6 +379,7 @@ export default React.createClass({
       } else {
         this.applyBounds(bounds);
       }
+
     } else {
       this.applyBounds(bounds);
     }

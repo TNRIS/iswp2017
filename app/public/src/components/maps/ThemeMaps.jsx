@@ -41,7 +41,8 @@ export default React.createClass({
             data={placeData.data[selectedTheme]}
             boundary={placeData.boundary}
             decade={selectedDecade}
-            entity={placeData.entity} />
+            entity={placeData.entity}
+            projects={placeData.data['projects']} />
         </div>
       </div>
     );

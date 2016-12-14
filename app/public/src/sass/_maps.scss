@@ -28,6 +28,24 @@
 
 }
 
+.triangle-marker {
+  width: 0 !important; 
+  height: 0 !important; 
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 12px solid rgb(83, 84, 86);
+}
+
+.triangle-marker-inner {
+  width: 0 !important; 
+  height: 0 !important; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 9px solid rgb(233, 237, 33);
+  margin-left: -5px;
+  margin-top: 2px;
+}
+
 .leaflet-legend {
   background: #fff;
   box-shadow: 0 1px 5px rgba(0,0,0,0.4);

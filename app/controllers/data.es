@@ -32,7 +32,8 @@ const additionalFields = {
 const projectTables = {
   region: 'vw2017MapWMSProjects',
   county: 'vw2017MapWMSProjectByCounty',
-  entity: 'vw2017MapWMSProjectByEntity'
+  entity: 'vw2017MapWMSProjectByEntity',
+  source: 'vw2017MapWMSProjectBySource'
   //usagetype: vw2017MapWMSProjectByWUGType //Not included because results are too large
 };
 
@@ -283,6 +284,13 @@ class DataController {
       whereVal: sourceId,
       omitRows: !!request.query.omitRows
     }));
+
+    const selectProjectsProm = db.select()
+      .from(projectTables.source)
+      .where('MapSourceId', sourceId)
+      .then((projects) => { return {projects}; });
+
+    dataPromises.push(selectProjectsProm);
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
