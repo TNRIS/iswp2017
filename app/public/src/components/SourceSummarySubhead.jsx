@@ -31,7 +31,7 @@ export default React.createClass({
 
       return (
         <p>
-          Ground Water Source in <Link to={`/county/${countyName}`} title={`View ${countyName} County`}>
+          Groundwater Source in <Link to={`/county/${countyName}`} title={`View ${countyName} County`}>
             {countyName}</Link>
         </p>);
     }
