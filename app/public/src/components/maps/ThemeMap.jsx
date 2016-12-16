@@ -211,10 +211,10 @@ export default React.createClass({
       R.sortBy(R.path(['properties', 'ValueSum']))(entityFeatures)
     );
     //use filteredFeatures instead of sortedFeatures? git issue #202
-    // const zeroSum = x => x.properties.ValueSum != 0;
-    // const filteredFeatures = R.filter(zeroSum, sortedFeatures);
+    const zeroSum = x => x.properties.ValueSum != 0;
+    const filteredFeatures = R.filter(zeroSum, sortedFeatures);
 
-    this.entitiesLayer = L.geoJson(sortedFeatures, {
+    this.entitiesLayer = L.geoJson(filteredFeatures, {
       pointToLayer: (feat, latlng) => {
         let radius;
         if (minVal === maxVal) {
@@ -331,9 +331,6 @@ export default React.createClass({
   displaySourceLayer(props, bounds) {
     if (props.theme === 'supplies' || props.theme === 'strategies') {      
       const hasValue = props.data.rows.filter(record => record[`Value_${props.decade}`] > 0);
-      // const decadeProps = constants.DECADES.map((d) => `Value_${d}`);
-      // const displayZero = props.data.rows.filter(record => R.sum(decadeProps.map((d) => record[d])) == 0);
-      // const sourceById = R.groupBy(R.prop('MapSourceId'))(hasValue.concat(displayZero));
       const sourceById = R.groupBy(R.prop('MapSourceId'))(hasValue);
 
       //remove null map source ids
@@ -423,6 +420,9 @@ export default React.createClass({
       <div>
         <div className="theme-map" ref="map"></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
+        {this.props.theme === 'strategies' &&
+          <p className="note">Red triangles indicate capital projects required to implement strategies shown.</p>
+        }
       </div>
     );
   }
