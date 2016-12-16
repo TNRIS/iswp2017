@@ -210,10 +210,8 @@ export default React.createClass({
     const sortedFeatures = R.reverse(
       R.sortBy(R.path(['properties', 'ValueSum']))(entityFeatures)
     );
-    //use filteredFeatures instead of sortedFeatures? git issue #202
     const zeroSum = x => x.properties.ValueSum != 0;
     const filteredFeatures = R.filter(zeroSum, sortedFeatures);
-
     this.entitiesLayer = L.geoJson(filteredFeatures, {
       pointToLayer: (feat, latlng) => {
         let radius;
@@ -315,6 +313,7 @@ export default React.createClass({
       });
 
       this.map.addLayer(this.projectLayer);
+      bounds = bounds.extend(this.projectLayer.getBounds());
     }
 
     this.map.addLayer(this.entitiesLayer);
@@ -408,6 +407,10 @@ export default React.createClass({
 
   applyBounds(bounds) {
     if (!this.state.isLocked) {
+      if (bounds._southWest == undefined) {
+        this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
+        return;
+      }
       this.map.fitBounds(bounds);
       if (this.props.entity) {
         this.map.setZoom(12);
