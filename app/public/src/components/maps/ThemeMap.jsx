@@ -65,6 +65,7 @@ export default React.createClass({
       const projectContent = `
         <h3>${props.ProjectName}</h3>
         <p>Decade Online: ${props.OnlineDecade}</p>
+        <p>Sponsor: ${props.ProjectSponsors}</p>
         <p>Capital Cost: ${props.CapitalCost}</p>
       `;
       const content = props.EntityId ? entityContent : projectContent;
@@ -283,8 +284,9 @@ export default React.createClass({
         const projectProperties = {
           'ProjectName': prj.ProjectName,
           'OnlineDecade': prj.OnlineDecade,
+          'ProjectSponsors': prj.ProjectSponsors,
           'CapitalCost': "$" + displayCost,
-          "WMSProjectId": prj.WMSProjectId
+          'WMSProjectId': prj.WMSProjectId
         };
 
         return {
