@@ -13,9 +13,11 @@ export default React.createClass({
     return (
       <div>
         <p>
-          {RegionDescriptions[region]} <a href={`http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/#region-${region.toLowerCase()}`}>
+          {RegionDescriptions.description[region]} <a href={`http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/#region-${region.toLowerCase()}`}>
             http://www.twdb.texas.gov/waterplanning/rwp/plans/2016/#region-{region.toLowerCase()}
-          </a>
+          </a>. {RegionDescriptions.regionalLink[region]} <a href={`http://www.twdb.texas.gov/waterplanning/swp/2017/doc/2016_RegionalSummary_${region}.pdf`}>
+            http://www.twdb.texas.gov/waterplanning/swp/2017/doc/2016_RegionalSummary_{region}.pdf
+          </a>.
         </p>
       </div>
     );

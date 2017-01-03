@@ -77,6 +77,12 @@ export default {
     opacity: 1,
     fillOpacity: 1
   },
+  ISNEW_SOURCE: {
+    color: '#00EDFF',
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 1
+  },
   RIVERWATER_SOURCE: {
     color: '#33B0FF',
     weight: 2,

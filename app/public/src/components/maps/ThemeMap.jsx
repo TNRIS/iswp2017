@@ -339,6 +339,7 @@ export default React.createClass({
       //grab the source styles from constants file
       const groundwaterStyle = constants.GROUNDWATER_SOURCE;
       const surfacewaterStyle = constants.SURFACEWATER_SOURCE;
+      const isnewStyle = constants.ISNEW_SOURCE;
       const riverwaterStyle = constants.RIVERWATER_SOURCE;
       //use the unique list of map source IDs to query the source dataset on Carto
       if (sources.length != 0) {
@@ -352,7 +353,11 @@ export default React.createClass({
                 case 'groundwater': return groundwaterStyle;
                 case 'river': return riverwaterStyle;
                 case 'indirect': return riverwaterStyle;
-                default: return surfacewaterStyle;
+                default: 
+                  switch (feature.properties.isnew) {
+                    case 1: return isnewStyle;
+                    default: return surfacewaterStyle;
+                  }
               }
             },
             pointToLayer: (feature, latlng) => {
@@ -426,7 +431,7 @@ export default React.createClass({
         <div className="theme-map" ref="map"></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
         {this.props.theme === 'strategies' &&
-          <p className="note">Red triangles indicate capital projects required to implement strategies shown.</p>
+          <p className="note">Red triangles indicate capital projects associated with strategies supplies.</p>
         }
       </div>
     );
