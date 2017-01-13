@@ -54,6 +54,9 @@ function create() {
         });
       }
     }
+
+    L.DomUtil.create('p', '', this._div)
+      .innerHTML = '*Zero needs not displayed';
   };
 
   return legend;
