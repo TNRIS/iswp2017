@@ -47,6 +47,11 @@ export default React.createClass({
       );
     }
 
+    let projectsData = placeData.data['projects'];
+    if (placeData.data.wugregion) {
+      projectsData = placeData.data['wugregion'];
+    }
+
     return (
       <div>
         <h4>
@@ -60,7 +65,7 @@ export default React.createClass({
             boundary={placeData.boundary}
             decade={selectedDecade}
             entity={placeData.entity}
-            projects={placeData.data['projects']} />
+            projects={projectsData} />
         </div>
       </div>
     );

@@ -224,6 +224,13 @@ class DataController {
 
     dataPromises.push(selectProjectsProm);
 
+    const selectWUGRegionProm = db.select()
+      .from(projectTables.region)
+      .where('WUGRegion', region)
+      .then((wugregion) => { return {wugregion}; });
+
+    dataPromises.push(selectWUGRegionProm);
+
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
       .catch(handleApiError(reply));
