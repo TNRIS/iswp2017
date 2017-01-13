@@ -10,7 +10,6 @@ import hat from 'hat';
 import constants from '../constants';
 import {formatCountyName} from '../utils/CountyNames';
 import PropTypes from '../utils/CustomPropTypes';
-import Units from './Units';
 import ViewStateStore from '../stores/ViewStateStore';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
@@ -26,34 +25,24 @@ const commonDimensions = [
     template: (val, row) => toAnchor(`/entity/${row.entityId}`, val)
   },
   {
-    value: 'WugCounty',
+    value: 'WUGCounty',
     title: 'County',
     template: (val) => toAnchor(`/county/${formatCountyName(val)}`, val)
   },
   {
-    value: 'WugRegion',
+    value: 'WUGRegion',
     title: 'Region',
     template: (val) => toAnchor(`/region/${val}`, val)
   }
 ];
 
 const additionalDimensions = {
-  supplies: [
-    {
-      value: 'SourceName',
-      title: 'Source'
-    }
-  ],
-  strategies: [
-    {
-      value: 'WmsName',
-      title: 'Strategy'
-    },
-    {
-      value: 'SourceName',
-      title: 'Source'
-    }
-  ]
+  // strategies: [
+  //   {
+  //     value: 'ProjectName',
+  //     title: 'Strategy'
+  //   }
+  // ]
 };
 
 export default React.createClass({
@@ -99,6 +88,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
+
     let newActive = R.clone(this.state.activeDimensions);
 
     const isSameTheme = newProps.theme === this.props.theme;
@@ -189,14 +179,14 @@ console.log(this);
     }
 
     const reduce = (row, memo) => {
-      memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${decade}`];
+      memo.valueTotal = (memo.valueTotal || 0) + row[`P${decade}`];
       memo.entityId = row.EntityId; //save the EntityId so a link can be made
       return memo;
     };
 
     const calculations = [
       {
-        title: `${decade} ${themeTitle}`,
+        title: `${decade} Population Benefiting`,
         value: 'valueTotal',
         template: (val) => format()(val)
       }
@@ -204,7 +194,7 @@ console.log(this);
 
     let table = null;
     if (R.isEmpty(tableData)) {
-      table = <p> Sorry, there is no {themeTitle} data.</p>;
+      table = <p> Sorry, there is no population data.</p>;
     } else {
       table = 
         <div className="table-container">
@@ -229,8 +219,7 @@ console.log(this);
     return (
       <div>
         <h4>
-          Raw Data - {decade} - {themeTitle}
-          <Units theme={selectedTheme} />
+          Raw Data - {decade} - Population Benefiting
         </h4>
         {table}
       </div>

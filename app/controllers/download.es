@@ -122,6 +122,19 @@ class DownloadController {
       .then(toCsvReply(reply, `usagetype_${usageType.toLowerCase()}_${theme}.csv`))
       .catch(handleApiError(reply));
   }
+
+  getProjectCsv(request, reply) {
+    Hoek.assert(request.params.theme, 'request.params.theme is required');
+    Hoek.assert(request.params.projectId, 'request.params.projectId is required');
+
+    const theme = request.params.theme.toLowerCase();
+    const projectId = request.params.projectId;
+
+    selectData(theme, 'WMSProjectId', projectId)
+      .then(omitCols)
+      .then(toCsvReply(reply, `project_${projectId}_${theme}.csv`))
+      .catch(handleApiError(reply));
+  }
 }
 
 export default DownloadController;

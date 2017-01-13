@@ -6,6 +6,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import constants from '../../constants';
 import PropTypes from '../../utils/CustomPropTypes';
 import ThemeMap from './ThemeMap';
+import PrjThemeMap from './PrjThemeMap';
 import Units from '../Units';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
@@ -28,6 +29,23 @@ export default React.createClass({
     const selectedDecade = this.props.decade;
     const selectedTheme = this.props.theme;
     const themeTitle = constants.THEME_TITLES[selectedTheme];
+
+    if (placeData.project) {
+      return (
+        <div>
+          <h4>
+            Water User Groups - {selectedDecade}
+          </h4>
+          <div className="twelve columns">
+            <PrjThemeMap
+              theme={selectedTheme}
+              data={placeData.data[selectedTheme]}
+              decade={selectedDecade}
+              project={placeData.project} />
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div>

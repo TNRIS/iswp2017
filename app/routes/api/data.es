@@ -142,6 +142,26 @@ export default function generateRoutes(validParams) {
         notes: omitRowsNote
       },
       handler: bind('getForUsageType')
+    },
+    {
+      method: 'GET',
+      path: '/data/project/{projectId}',
+      config: {
+        validate: {
+          params: {
+            projectId: Joi.number().required()
+          },
+          query: {
+            omitRows: Joi.boolean()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        },
+        description: 'Get project data and summaries for the project identified by {projectId}.',
+        notes: omitRowsNote
+      },
+      handler: bind('getForProject')
     }
   ];
 }

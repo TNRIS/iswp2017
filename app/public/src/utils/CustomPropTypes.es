@@ -15,6 +15,10 @@ const SrcViewData = React.PropTypes.shape({
   strategies: React.PropTypes.object
 });
 
+const PrjViewData = React.PropTypes.shape({
+  strategies: React.PropTypes.object
+});
+
 const  Feature = React.PropTypes.shape({
   geometry: React.PropTypes.object,
   properties: React.PropTypes.object,
@@ -29,6 +33,11 @@ const PlaceData = React.PropTypes.shape({
 const SourceData = React.PropTypes.shape({
   boundary: Feature,
   data: SrcViewData
+});
+
+const ProjectDataSplit = React.PropTypes.shape({
+  data: PrjViewData,
+  project: React.PropTypes.object
 });
 
 const EntityData = React.PropTypes.shape({
@@ -65,6 +74,7 @@ export default {
   Feature,
   PlaceData,
   SourceData,
+  ProjectDataSplit,
   EntityData,
   TreemapData,
   ProjectData

@@ -188,7 +188,13 @@ h4 > .units {
       &:focus {
         background: lighten($twdb-blue, 10%);
       }
+
+      &.prj {
+        border-radius: 4px 4px 4px 4px;
+      }
     }
+
+    
   }
 
   &.treemap-selector,
@@ -331,6 +337,10 @@ $top-height: 34rem;
   }
 
   .view-summary.src-summary {
+    min-height: 0;
+  }
+
+  .view-summary.prj-summary {
     min-height: 0;
   }
 }

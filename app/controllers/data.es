@@ -33,7 +33,8 @@ const projectTables = {
   region: 'vw2017MapWMSProjects',
   county: 'vw2017MapWMSProjectByCounty',
   entity: 'vw2017MapWMSProjectByEntity',
-  source: 'vw2017MapWMSProjectBySource'
+  source: 'vw2017MapWMSProjectBySource',
+  project: 'vw2017MapWMSProjectByWMS'
   //usagetype: vw2017MapWMSProjectByWUGType //Not included because results are too large
 };
 
@@ -307,6 +308,27 @@ class DataController {
       whereVal: usageType,
       omitRows: !!request.query.omitRows
     }));
+
+    Promise.all(dataPromises)
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
+  }
+
+  getForProject(request, reply) {
+    Hoek.assert(request.params.projectId, 'request.params.projectId is required');
+
+    const projectId = request.params.projectId;
+    const selectProjectsData = db.select()
+      .from(constants.PROJECT_TABLES.strategies)
+      .where('WMSProjectId', projectId)
+      .then((rows) => { return {strategies: {rows} }; });
+
+    const selectProjectsProm = db.select()
+      .from(projectTables.project)
+      .where('WMSProjectId', projectId)
+      .then((projects) => { return {projects}; });
+
+    const dataPromises = [selectProjectsData,selectProjectsProm];
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))

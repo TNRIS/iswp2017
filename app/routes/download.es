@@ -99,6 +99,19 @@ function addTo(server, basePath = '/') {
         }
       },
       handler: bind('getUsageTypeCsv')
+    },
+    {
+      method: 'GET',
+      path: '/project/{projectId}/{theme}',
+      config: {
+        validate: {
+          params: {
+            theme: Joi.string().only(themes).insensitive().required(),
+            projectId: Joi.number().required()
+          }
+        }
+      },
+      handler: bind('getProjectCsv')
     }
   ];
 

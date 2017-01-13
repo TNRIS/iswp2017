@@ -62,28 +62,25 @@ export default React.createClass({
         <p>Total Value: ${format()(props.ValueSum)}</p>
         <a id="entity_${props.EntityId}">View Entity Page</a>
       `;
-      // const projectContent = `
-      //   <h3>${props.ProjectName}</h3>
-      //   <p>Decade Online: ${props.OnlineDecade}</p>
-      //   <p>Sponsor: ${props.ProjectSponsors}</p>
-      //   <p>Capital Cost: ${props.CapitalCost}</p>
-      // `;
-      // const content = props.EntityId ? entityContent : projectContent;
-      const content = entityContent;
+      const projectContent = `
+        <h3>${props.ProjectName}</h3>
+        <p>Decade Online: ${props.OnlineDecade}</p>
+        <p>Sponsor: ${props.ProjectSponsors}</p>
+        <p>Capital Cost: ${props.CapitalCost}</p>
+        <a id="project_${props.WMSProjectId}">View Project Page</a>
+      `;
+      const content = props.EntityId ? entityContent : projectContent;
       popup.setContent(content);
       popup.setLatLng(marker.getLatLng());
       map.openPopup(popup);
     });
 
-    map.on('popupopen', function(event) {  
-      const id = event.target._popup._contentNode.childNodes[5].id;
-      //remove this 'if' statement surrounding the event listener once Project View is created
-      //keep the event listener though, it is the view page link
-      if (id.split("_")[0] == "entity") {
-        L.DomEvent.addListener(L.DomUtil.get(id), 'click', function(e) {
-          history.push({pathname: `/${id.split("_")[0]}/${id.split("_")[1]}`});
-        });
-      }
+    map.on('popupopen', function(event) {
+      const nodes = event.target._popup._contentNode.childNodes;
+      const id = nodes[nodes.length - 2].id;
+      L.DomEvent.addListener(L.DomUtil.get(id), 'click', function(e) {
+        history.push({pathname: `/${id.split("_")[0]}/${id.split("_")[1]}`});
+      });
     });
 
     map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
@@ -194,9 +191,9 @@ export default React.createClass({
       this.map.removeLayer(this.sourceLayer);
     }
 
-    // if (this.projectLayer && this.map.hasLayer(this.projectLayer)) {
-    //   this.map.removeLayer(this.projectLayer);
-    // }
+    if (this.projectLayer && this.map.hasLayer(this.projectLayer)) {
+      this.map.removeLayer(this.projectLayer);
+    }
 
     if (this.legendControl) {
       this.map.removeControl(this.legendControl);
@@ -274,50 +271,50 @@ export default React.createClass({
       bounds = this.map.getBounds();
     }
 
-    // if (props.theme === 'strategies' && props.projects != undefined) { 
-    //   //handle decade online, only display those coming online before or during the selected decade
-    //   const decades = x => parseInt(x.OnlineDecade) <= parseInt(props.decade);
-    //   const decadeProjects = R.filter(decades, props.projects)
+    if (props.theme === 'strategies' && props.projects != undefined) { 
+      //handle decade online, only display those coming online before or during the selected decade
+      const decades = x => parseInt(x.OnlineDecade) <= parseInt(props.decade);
+      const decadeProjects = R.filter(decades, props.projects)
 
-    //   const projectFeatures = R.map((prj) => {
-    //     const displayCost = prj.CapitalCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      const projectFeatures = R.map((prj) => {
+        const displayCost = prj.CapitalCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-    //     const projectProperties = {
-    //       'ProjectName': prj.ProjectName,
-    //       'OnlineDecade': prj.OnlineDecade,
-    //       'ProjectSponsors': prj.ProjectSponsors,
-    //       'CapitalCost': "$" + displayCost,
-    //       'WMSProjectId': prj.WMSProjectId
-    //     };
+        const projectProperties = {
+          'ProjectName': prj.ProjectName,
+          'OnlineDecade': prj.OnlineDecade,
+          'ProjectSponsors': prj.ProjectSponsors,
+          'CapitalCost': "$" + displayCost,
+          'WMSProjectId': prj.WMSProjectId
+        };
 
-    //     return {
-    //       type: 'Feature',
-    //       geometry: {
-    //         type: 'Point',
-    //         coordinates: [prj.LongCoord, prj.LatCoord]
-    //       },
-    //       properties: projectProperties
-    //     };
-    //   })(decadeProjects);
+        return {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [prj.LongCoord, prj.LatCoord]
+          },
+          properties: projectProperties
+        };
+      })(decadeProjects);
 
-    //   const icon = L.divIcon({
-    //     className: 'triangle-marker',
-    //     html: '<div class="triangle-marker-inner"></div>'
-    //   });
+      const icon = L.divIcon({
+        className: 'triangle-marker',
+        html: '<div class="triangle-marker-inner"></div>'
+      });
 
-    //   this.projectLayer = L.geoJson(projectFeatures, {
-    //     pointToLayer: (feature, latlng) => {
-    //       const marker = L.marker(latlng, {
-    //         icon: icon
-    //       });
-    //       this.spiderfier.addMarker(marker);
-    //       return marker;
-    //     }
-    //   });
+      this.projectLayer = L.geoJson(projectFeatures, {
+        pointToLayer: (feature, latlng) => {
+          const marker = L.marker(latlng, {
+            icon: icon
+          });
+          this.spiderfier.addMarker(marker);
+          return marker;
+        }
+      });
 
-    //   this.map.addLayer(this.projectLayer);
-    //   bounds = bounds.extend(this.projectLayer.getBounds());
-    // }
+      this.map.addLayer(this.projectLayer);
+      bounds = bounds.extend(this.projectLayer.getBounds());
+    }
 
     this.map.addLayer(this.entitiesLayer);
 
@@ -431,11 +428,9 @@ export default React.createClass({
       <div>
         <div className="theme-map" ref="map"></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
-        {/*
         {this.props.theme === 'strategies' &&
-          <p className="note">Red triangles indicate capital projects associated with strategies supplies.</p>
+          <p className="note">Red triangles indicate capital projects associated with strategies supplies that have been assigned to a Water User Group.</p>
         }
-        */}
       </div>
     );
   }

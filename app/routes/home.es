@@ -93,6 +93,19 @@ function addTo(server, basePath = '/') {
     },
     {
       method: 'GET',
+      path: '/project/{projectId}',
+      config: {
+        validate: {
+          params: {
+            projectId: Joi.number().required()
+          },
+          failAction: to404
+        }
+      },
+      handler: {view: 'index'}
+    },
+    {
+      method: 'GET',
       path: '/about',
       handler: {view: 'about'}
     },

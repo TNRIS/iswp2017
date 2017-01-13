@@ -10,6 +10,7 @@ import {countyNames} from '../utils/CountyNames';
 import history from '../history';
 import ViewStateStore from '../stores/ViewStateStore';
 import EntityFetcher from '../utils/EntityFetcher';
+import ProjectFetcher from '../utils/ProjectFetcher';
 import {sourceNames} from '../utils/SourceNames';
 
 const navCategoryOptions = [
@@ -18,7 +19,8 @@ const navCategoryOptions = [
   {value: "county", label: "County"},
   {value: "entity", label: "Water User Group"},
   {value: "usagetype", label: "Usage Type"},
-  {value: "source", label: "Water Source"}
+  {value: "source", label: "Water Source"},
+  {value: "project", label: "WMS Project"}
 ]
 
 const regionSelectOptions = constants.REGIONS.map((region) => {
@@ -95,6 +97,23 @@ export default React.createClass({
       });
   },
 
+  projectSearch(input, callback) {
+    if (input.length < 3) {
+      return callback(null, {options: []});
+    }
+
+    ProjectFetcher.search(input)
+      .then((projects) => {
+        const options = projects.map((project) => {
+          return {value: project.WMSProjectId, label: project.ProjectName};
+        });
+        callback(null, {options});
+      })
+      .catch((err) => {
+        callback(err);
+      });
+  },
+
   isNavButtonEnabled() {
     return (this.state.navCategory === 'statewide')
       || !R.isEmpty(this.state.subNavValue);
@@ -119,6 +138,9 @@ export default React.createClass({
       break;
     case 'source':
       history.push({pathname: `/source/${this.state.subNavValue.value}`});
+      break;
+    case 'project':
+      history.push({pathname: `/project/${this.state.subNavValue.value}`});
       break;
     default:
       return;
@@ -193,6 +215,18 @@ export default React.createClass({
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
                   options={sourceSelectOptions} />
+              </div>
+            </ToggleDisplay>
+            <ToggleDisplay show={this.state.navCategory === 'project'}>
+              <div className="select-container project-select" aria-live="polite">
+                <Select
+                  placeholder="Find Project"
+                  ignoreCase
+                  autoload={false}
+                  searchPromptText="Enter at least 3 characters to search"
+                  asyncOptions={this.projectSearch}
+                  onChange={this.onSubNavChange}
+                  value={this.state.subNavValue} />
               </div>
             </ToggleDisplay>
 
