@@ -12,7 +12,7 @@ export default React.createClass({
     theme: React.PropTypes.oneOf(themesAndPopulation).isRequired,
     viewName: React.PropTypes.string,
     type: React.PropTypes.oneOf([
-      'statewide', 'region', 'county', 'entity', 'usagetype', 'source'
+      'statewide', 'region', 'county', 'entity', 'usagetype', 'source', 'project'
     ]).isRequired,
     typeId: React.PropTypes.oneOfType([
       React.PropTypes.string,
@@ -29,7 +29,10 @@ export default React.createClass({
       `/download/statewide/${theme}`
       : `/download/${this.props.type}/${this.props.typeId}/${theme}`;
 
-    const dlTitle = `${R.defaultTo('', this.props.viewName)} ${themeTitle}`;
+    let dlTitle = `${R.defaultTo('', this.props.viewName)} ${themeTitle}`;
+    if (this.props.type == 'project') {
+      dlTitle = `WMS Project`;
+    }
 
     return (
       <a href={href} download target="_blank"

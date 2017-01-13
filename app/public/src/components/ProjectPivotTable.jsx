@@ -12,8 +12,6 @@ import {formatCountyName} from '../utils/CountyNames';
 import PropTypes from '../utils/CustomPropTypes';
 import ViewStateStore from '../stores/ViewStateStore';
 
-const themesAndPopulation = R.append('population', constants.THEMES);
-
 function toAnchor(href, text) {
   return `<a href="${href}">${text}</a>`;
 }
@@ -36,20 +34,11 @@ const commonDimensions = [
   }
 ];
 
-const additionalDimensions = {
-  // strategies: [
-  //   {
-  //     value: 'ProjectName',
-  //     title: 'Strategy'
-  //   }
-  // ]
-};
-
 export default React.createClass({
   propTypes: {
     viewData: PropTypes.ViewData,
     decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
+    theme: React.PropTypes.oneOf(constants.PRJ_THEMES).isRequired
   },
 
   mixins: [PureRenderMixin],
@@ -87,40 +76,6 @@ export default React.createClass({
     ViewStateStore.listen(this.onViewStateChange);
   },
 
-  componentWillReceiveProps(newProps) {
-
-    let newActive = R.clone(this.state.activeDimensions);
-
-    const isSameTheme = newProps.theme === this.props.theme;
-    const hasNewAdditional = !!additionalDimensions[newProps.theme];
-    const hasOldAdditional = !!additionalDimensions[this.props.theme];
-
-    if (isSameTheme) {
-      //do nothing
-      return;
-    }
-
-    //else if the theme has changed...
-
-    // and there are previous additional dimensions, then remove them
-    if (hasOldAdditional) {
-      const oldTheme = this.props.theme;
-      newActive = R.without(
-        R.pluck('title', additionalDimensions[oldTheme]), newActive
-      );
-    }
-
-    // and after removal, if there are new additional dimensions, then add them
-    if (hasNewAdditional) {
-      newActive = R.concat(newActive,
-        R.pluck('title', additionalDimensions[newProps.theme])
-      );
-    }
-
-    // finally save the newActive dimensions into state
-    this.setState({activeDimensions: newActive});
-  },
-
   componentWillUnmount() {
     ViewStateStore.unlisten(this.onViewStateChange);
   },
@@ -130,28 +85,7 @@ export default React.createClass({
   },
 
   getViewDefaultActiveDimensions(viewState) {
-    const view = viewState.view;
-    let activeDimensions = [];
-    switch (view) {
-    case 'region':
-      activeDimensions = ['County', 'Entity'];
-      break;
-    case 'county':
-      activeDimensions = ['Region', 'Entity'];
-      break;
-    case 'usagetype':
-      activeDimensions = ['Entity'];
-      break;
-    default:
-      activeDimensions = ['Region', 'County', 'Entity'];
-    }
-
-    //add additional dimensions to the active dimensions list
-    const theme = this.props.theme;
-    if (additionalDimensions[theme]) {
-      activeDimensions = R.concat(R.pluck('title', additionalDimensions[theme]), activeDimensions);
-    }
-
+    const activeDimensions = ['Region', 'County', 'Entity'];
     return activeDimensions;
   },
 
@@ -162,7 +96,7 @@ export default React.createClass({
         <div />
       );
     }
-console.log(this);
+
     const selectedTheme = this.props.theme;
     const tableData = viewData[selectedTheme].rows;
     const decade = this.props.decade;
@@ -173,10 +107,6 @@ console.log(this);
     const activeDimensions = this.state.activeDimensions;
     const sortBy = this.state.sortBy;
     const sortDir = this.state.sortDir;
-
-    if (additionalDimensions[selectedTheme]) {
-      additionalDimensions[selectedTheme].forEach((d) => availableDimensions.push(d));
-    }
 
     const reduce = (row, memo) => {
       memo.valueTotal = (memo.valueTotal || 0) + row[`P${decade}`];

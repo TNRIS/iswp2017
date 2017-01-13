@@ -60,7 +60,6 @@ export default React.createClass({
   },
 
   render() {
-    console.log(this);
     const params = this.props.params;
     const sourceData = this.state.sourceData;
     const title = sourceData.boundary ? sourceData.boundary.features[0].properties.name : '';

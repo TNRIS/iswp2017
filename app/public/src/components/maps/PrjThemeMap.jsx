@@ -164,9 +164,11 @@ export default React.createClass({
 
     //build list of features for entities. limit based on decade-online and selected decade
     if (props.data.rows.length > 0) {
-      const entityFeatures = R.map((prjEntity) => {
+      const groupedById = R.groupBy(R.prop('EntityId'))(props.data.rows)
+      const entityFeatures = R.map((group) => {
         const decadeField = `P${props.decade}`;
-        const valueSum = prjEntity[decadeField];
+        const prjEntity = R.nth(0, group);
+        const valueSum = R.sum(R.pluck(decadeField)(group));
 
         const entityProperties = {
           EntityName: prjEntity.EntityName,
@@ -182,7 +184,7 @@ export default React.createClass({
           },
           properties: entityProperties
         };
-      })(props.data.rows);
+      })(R.values(groupedById));
 
       this.entitiesLayer = L.geoJson(entityFeatures, {
         pointToLayer: (feat, latlng) => {

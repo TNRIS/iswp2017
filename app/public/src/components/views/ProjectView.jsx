@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
 import constants from '../../constants';
-// import DownloadDataLink from '../DownloadDataLink';
+import DownloadDataLink from '../DownloadDataLink';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import ProjectPivotTable from '../ProjectPivotTable';
 import ProjectDataStore from '../../stores/ProjectDataStore';
@@ -114,27 +114,27 @@ export default React.createClass({
                           decade={this.state.viewChoice.selectedDecade}
                           theme={selectedTheme} />
                           <h4>Download Data</h4>
-                         {/*} <ul>
+                          <ul>
                             {
                               (() => {
                                 if (R.isEmpty(projectData.data[selectedTheme].rows)) {
                                   return (
-                                    <li key={`download-${theme}`}>
+                                    <li key={`download-${selectedTheme}`}>
                                       No {constants.THEME_TITLES[selectedTheme]} data exists for this water management strategy project
                                     </li>
                                   );
                                 }
                                 return (
-                                  <li key={`download-${theme}`}>
+                                  <li key={`download-${selectedTheme}`}>
                                     <DownloadDataLink
                                       type="project"
                                       typeId={projectData.project.WMSProjectId}
-                                      theme={theme} />
+                                      theme={selectedTheme} />
                                   </li>
                                 );
-                              }
+                              })()
                             }
-                          </ul>*/}
+                          </ul>
                         </div>
                       </div>
 

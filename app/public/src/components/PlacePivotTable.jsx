@@ -172,7 +172,7 @@ export default React.createClass({
         <div />
       );
     }
-console.log(this);
+    
     const selectedTheme = this.props.theme;
     const tableData = viewData[selectedTheme].rows;
     const decade = this.props.decade;
