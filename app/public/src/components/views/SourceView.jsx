@@ -106,18 +106,6 @@ export default React.createClass({
                         </div>
                       </div>
 
-                      {selectedTheme === 'strategies' &&
-                        (
-                          <div className="row panel-row">
-                            <div className="twelve columns">
-                              <span className="view-name">{title}</span>
-                              <StrategiesBreakdown viewData={sourceData.data}
-                                decade={this.state.viewChoice.selectedDecade} />
-                            </div>
-                          </div>
-                        )
-                      }
-
                       <div className="row panel-row">
                         <div className="twelve columns">
                           <span className="view-name">{title}</span>
