@@ -34,7 +34,7 @@ export default React.createClass({
       return (
         <div>
           <h4>
-            Water User Groups - {selectedDecade}
+            Water User Groups - {selectedDecade} - Population Benefiting
           </h4>
           <div className="twelve columns">
             <PrjThemeMap
