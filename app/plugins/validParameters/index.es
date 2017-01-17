@@ -15,15 +15,17 @@ const validParametersModule = {
     dbPromises.push(distinctValues('WugRegion', 'vw2017MapSelectEntitiesInRegion'));
     dbPromises.push(distinctValues('EntityId', 'vw2017MapEntityCoordinates'));
     dbPromises.push(distinctValues('WugType', 'vw2017MapWugDemand'));
+    dbPromises.push(distinctValues('WMSProjectId', 'vw2017MapWMSProjects'));
 
     Promise.all(dbPromises)
-      .then(([counties, regions, entityIds, usageTypes]) => {
+      .then(([counties, regions, entityIds, usageTypes, projects]) => {
         // save the names and ids to the server object for use by route validation rules
         server.expose({
           counties,
           regions,
           entityIds,
-          usageTypes
+          usageTypes,
+          projects
         });
 
         next();

@@ -9,6 +9,7 @@ const bind = (method) => projectsController[method].bind(projectsController);
 
 export default function generateRoutes(validParams) {
   const validRegions = validParams.regions;
+  const validProjects = validParams.projects;
   return [
     {
       method: 'GET',
@@ -27,7 +28,7 @@ export default function generateRoutes(validParams) {
       config: {
         validate: {
           params: {
-            projectId: Joi.number().required()
+            projectId: Joi.number().only(validProjects).required()
           }
         },
         cache: {

@@ -14,6 +14,7 @@ export default function generateRoutes(validParams) {
   const validRegions = validParams.regions;
   const validEntityIds = validParams.entityIds;
   const validUsageTypes = validParams.usageTypes;
+  const validProjects = validParams.projects;
   return [
     {
       method: 'GET',
@@ -149,7 +150,7 @@ export default function generateRoutes(validParams) {
       config: {
         validate: {
           params: {
-            projectId: Joi.number().required()
+            projectId: Joi.number().only(validProjects).required()
           },
           query: {
             omitRows: Joi.boolean()

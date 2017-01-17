@@ -83,8 +83,7 @@ function addTo(server, basePath = '/') {
       config: {
         validate: {
           params: {
-            //TODO: validate usageType .only(validParams.usageTypes)
-            usageType: Joi.string().required()
+            usageType: Joi.string().only(validParams.usageTypes).required()
           },
           failAction: to404
         }
@@ -97,7 +96,7 @@ function addTo(server, basePath = '/') {
       config: {
         validate: {
           params: {
-            projectId: Joi.number().required()
+            projectId: Joi.number().only(validParams.projects).required()
           },
           failAction: to404
         }
