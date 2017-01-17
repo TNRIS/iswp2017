@@ -47,10 +47,26 @@ export default function generateRoutes(validParams) {
           }
         },
         //no cache for search
-        description: 'Find a water managemnet strategy project by name or partial name.',
+        description: 'Find a water management strategy project by name or partial name.',
         notes: 'Use the <code>name={nameOrPartial}</code> query parameter to provide a name or partial name.'
       },
       handler: bind('getByNamePartial')
+    },
+    {
+      method: 'GET',
+      path: '/projects/sponsor/{regionLetter}',
+      config: {
+        validate: {
+          params: {
+            regionLetter: Joi.string().only(validRegions).insensitive().required()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        },
+        description: 'Get all water management strategy projects sponsored by the region identified by {regionLetter}.'
+      },
+      handler: bind('getSponsorRegion')
     },
     {
       method: 'GET',
@@ -64,9 +80,9 @@ export default function generateRoutes(validParams) {
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
         },
-        description: 'Get all water management strategy projects sponsored by the region identified by {regionLetter}.'
+        description: 'Get all water management strategy projects in the water user group region identified by {regionLetter}.'
       },
-      handler: bind('getInRegion')
+      handler: bind('getWUGRegion')
     }
   ];
 }

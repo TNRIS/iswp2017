@@ -38,11 +38,20 @@ class ProjectsController {
       .catch(handleApiError(reply));
   }
 
-  getInRegion(request, reply) {
+  getSponsorRegion(request, reply) {
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
     db.select().from(projectTable)
       .where('WMSProjectSponsorRegion', request.params.regionLetter.toUpperCase())
+      .then(reply)
+      .catch(handleApiError(reply));
+  }
+
+  getWUGRegion(request, reply) {
+    Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
+
+    db.select().from(projectTable)
+      .where('WUGRegion', request.params.regionLetter.toUpperCase())
       .then(reply)
       .catch(handleApiError(reply));
   }

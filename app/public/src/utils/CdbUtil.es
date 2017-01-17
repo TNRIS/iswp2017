@@ -210,11 +210,40 @@ function getSource(ids) {
     .then(({data}) => data);
 }
 
+function apiSources(id) {
+  let query = `SELECT DISTINCT sourceid, name, sourcetype, isnew, drawingord, featuretyp FROM ${sourceTable}`;
+  if (id) {
+    query += ` WHERE sourceid = ${id}`
+  }
+  return axios.get(`https://tnris.cartodb.com/api/v2/sql?q=${query}`)
+    .then(({data}) => data);
+}
+
+function apiNameSources(searchName) {
+  const query = `SELECT DISTINCT sourceid, name, sourcetype, isnew, drawingord, featuretyp FROM ${sourceTable} WHERE name LIKE '${searchName}' ORDER BY name`;
+
+  return axios.get(`https://tnris.cartodb.com/api/v2/sql?q=${query}`)
+    .then(({data}) => data);
+}
+
+function apiGeoJsonSources(id) {
+  let query = `SELECT sourceid, name, sourcetype, isnew, drawingord, featuretyp, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
+    FROM ${sourceTable}`;
+  if (id) {
+    query += ` WHERE sourceid = ${id}`
+  }
+  return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
+    .then(({data}) => data);
+}
+
 export default {
   createEntityLayer,
   createCountiesLayer,
   createRegionsLayer,
   getCounty,
   getRegion,
-  getSource
+  getSource,
+  apiSources,
+  apiNameSources,
+  apiGeoJsonSources
 };
