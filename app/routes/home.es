@@ -70,7 +70,7 @@ function addTo(server, basePath = '/') {
       config: {
         validate: {
           params: {
-            sourceId: Joi.number().required()
+            sourceId: Joi.number().only(validParams.sources).required()
           },
           failAction: to404
         }

@@ -3,9 +3,17 @@ import R from 'ramda';
 
 import db from 'db';
 
+import {sourceNames} from '../../public/src/utils/SourceNames';
+
 //Returns a Promise that resolves to an array of distinct values for 'prop' from 'table'
 function distinctValues(prop, table) {
   return db.distinct(prop).orderBy(prop).from(table).then(R.pluck([prop]));
+}
+
+function distinctSources() {
+  const sourceid = x => x['sourceid'];
+  const diff = (a, b) => a - b;
+  return R.sort(diff, R.map(sourceid, sourceNames));
 }
 
 const validParametersModule = {
@@ -16,16 +24,18 @@ const validParametersModule = {
     dbPromises.push(distinctValues('EntityId', 'vw2017MapEntityCoordinates'));
     dbPromises.push(distinctValues('WugType', 'vw2017MapWugDemand'));
     dbPromises.push(distinctValues('WMSProjectId', 'vw2017MapWMSProjects'));
+    dbPromises.push(distinctSources());
 
     Promise.all(dbPromises)
-      .then(([counties, regions, entityIds, usageTypes, projects]) => {
+      .then(([counties, regions, entityIds, usageTypes, projects, sources]) => {
         // save the names and ids to the server object for use by route validation rules
         server.expose({
           counties,
           regions,
           entityIds,
           usageTypes,
-          projects
+          projects,
+          sources
         });
 
         next();

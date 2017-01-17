@@ -81,7 +81,7 @@ function addTo(server, basePath = '/') {
         validate: {
           params: {
             theme: Joi.string().only(themes).insensitive().required(),
-            sourceId: Joi.number().required()
+            sourceId: Joi.number().only(validParams.sources).required()
           }
         }
       },
