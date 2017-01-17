@@ -140,6 +140,7 @@ export default React.createClass({
     this.spiderfier.clearListeners('spiderfy');
     //unlock map state so that the lock button for the next ThemeMap is not in a weird state
     ThemeMapStateActions.unlockMap();
+    ThemeMapStateActions.hidePrj();
   },
 
   onMapStateChange(state) {
@@ -312,8 +313,10 @@ export default React.createClass({
         }
       });
 
-      this.map.addLayer(this.projectLayer);
-      bounds = bounds.extend(this.projectLayer.getBounds());
+      if (this.state.showProjects == "Hide") {
+        this.map.addLayer(this.projectLayer);
+        bounds = bounds.extend(this.projectLayer.getBounds());
+      }
     }
 
     this.map.addLayer(this.entitiesLayer);
@@ -423,13 +426,24 @@ export default React.createClass({
     }
   },
 
+  toggleProjects() {
+    if (this.state.showProjects == 'Hide') {
+      this.map.removeLayer(this.projectLayer);
+      ThemeMapStateActions.showPrj();
+    } else {
+      this.map.addLayer(this.projectLayer);
+      ThemeMapStateActions.hidePrj();
+      this.applyBounds(this.map.getBounds().extend(this.projectLayer.getBounds()));
+    }
+  },
+
   render() {
     return (
       <div>
         <div className="theme-map" ref="map"></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
         {this.props.theme === 'strategies' &&
-          <p className="note">Red triangles indicate capital projects associated with strategies supplies that have been assigned to a Water User Group.</p>
+          <p className="note">Red triangles indicate capital projects associated with strategies supplies that have been assigned to a Water User Group. <a className="prjToggle" onClick={this.toggleProjects}>{this.state.showProjects} Projects</a></p>
         }
       </div>
     );
