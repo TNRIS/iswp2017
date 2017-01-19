@@ -33,8 +33,8 @@ const projectTables = {
   region: 'vw2017MapWMSProjects',
   county: 'vw2017MapWMSProjectByCounty',
   entity: 'vw2017MapWMSProjectByEntity',
-  source: 'vw2017MapWMSProjectBySource',
-  project: 'vw2017MapWMSProjectByWMS'
+  source: 'vw2017MapWMSProjectBySource'
+  // project: 'vw2017MapWMSProjectByWMS'//Not included as project information in project view is pulled from the vw2017MapWMSProjectByEntityWUGSplit table
   //usagetype: vw2017MapWMSProjectByWUGType //Not included because results are too large
 };
 
