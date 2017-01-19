@@ -60,7 +60,6 @@ export default React.createClass({
   },
 
   render() {
-    // const params = this.props.params;
     const projectData = this.state.projectData;
     const title = projectData.project ? projectData.project.ProjectName : '';
     const selectedTheme = "strategies";
