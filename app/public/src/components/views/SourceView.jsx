@@ -12,6 +12,7 @@ import SourceViewMap from '../maps/SourceViewMap';
 import SourceSummary from '../SourceSummary';
 import SrcDataViewChoiceWrap from '../SrcDataViewChoiceWrap';
 import ThemeMaps from '../maps/ThemeMaps';
+import ProjectTable from '../ProjectTable';
 
 export default React.createClass({
   propTypes: {
@@ -92,6 +93,15 @@ export default React.createClass({
 
               return (
                 <div>
+                  <div className="container">
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <span className="view-name">{title}</span>
+                        <ProjectTable type="source" projectData={sourceData.data.projects} />
+                      </div>
+                    </div>
+                  </div>
+
                   <SrcDataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
                     theme={selectedTheme}>
                     <div className="container">
