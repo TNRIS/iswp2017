@@ -83,7 +83,7 @@ function addTo(server, basePath = '/') {
       config: {
         validate: {
           params: {
-            usageType: Joi.string().only(validParams.usageTypes).required()
+            usageType: Joi.string().only(validParams.usageTypes).insensitive().required()
           },
           failAction: to404
         }
