@@ -162,49 +162,50 @@ export default React.createClass({
 
     let bounds;
 
-    //build list of features for entities. limit based on decade-online and selected decade
-    if (props.data.rows.length > 0) {
-      const groupedById = R.groupBy(R.prop('EntityId'))(props.data.rows)
-      const entityFeatures = R.map((group) => {
-        const decadeField = `P${props.decade}`;
-        const prjEntity = R.nth(0, group);
-        const valueSum = R.sum(R.pluck(decadeField)(group));
-
-        const entityProperties = {
-          EntityName: prjEntity.EntityName,
-          EntityId: prjEntity.EntityId,
-          ValueSum: valueSum
-        };
-
-        return {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: [prjEntity.EntityLongCoord, prjEntity.EntityLatCoord]
-          },
-          properties: entityProperties
-        };
-      })(R.values(groupedById));
-
-      this.entitiesLayer = L.geoJson(entityFeatures, {
-        pointToLayer: (feat, latlng) => {
-          const markerOpts = {
-            radius: 4,
-            className: `entity-marker-${props.theme}`
-          };
-
-          const marker = L.circleMarker(latlng, markerOpts);
-          this.spiderfier.addMarker(marker);
-          return marker;
-        }
-      });
-
-      bounds = this.entitiesLayer.getBounds();
-      this.map.addLayer(this.entitiesLayer);
-    }
-
       //handle decade online, only display those coming online before or during the selected decade
     if (parseInt(props.decade) >= parseInt(props.project.OnlineDecade)) {
+      //build list of features for entities. limit based on decade-online and selected decade
+      if (props.data.rows.length > 0) {
+        const groupedById = R.groupBy(R.prop('EntityId'))(props.data.rows)
+        const entityFeatures = R.map((group) => {
+          const decadeField = `P${props.decade}`;
+          const prjEntity = R.nth(0, group);
+          const valueSum = R.sum(R.pluck(decadeField)(group));
+
+          const entityProperties = {
+            EntityName: prjEntity.EntityName,
+            EntityId: prjEntity.EntityId,
+            ValueSum: valueSum
+          };
+
+          return {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [prjEntity.EntityLongCoord, prjEntity.EntityLatCoord]
+            },
+            properties: entityProperties
+          };
+        })(R.values(groupedById));
+
+        this.entitiesLayer = L.geoJson(entityFeatures, {
+          pointToLayer: (feat, latlng) => {
+            const markerOpts = {
+              radius: 4,
+              className: `entity-marker-${props.theme}`
+            };
+
+            const marker = L.circleMarker(latlng, markerOpts);
+            this.spiderfier.addMarker(marker);
+            return marker;
+          }
+        });
+
+        bounds = this.entitiesLayer.getBounds();
+        this.map.addLayer(this.entitiesLayer);
+      }
+
+    
       const prj = props.project;
       const displayCost = prj.CapitalCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
@@ -249,9 +250,10 @@ export default React.createClass({
     }
 
     if (!bounds) {
-      bounds = this.map.getBounds();
+      this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
+    } else {
+      this.applyBounds(bounds);
     }
-    this.applyBounds(bounds)
 
   },
 

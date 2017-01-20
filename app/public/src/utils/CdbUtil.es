@@ -31,11 +31,12 @@ function getLayer(opts) {
 }
 
 function createEntityLayer(entity) {
+  const fixedName = entity.EntityName.replace("'", " ");
   return getLayer({
     sql: condenseWhitespace(`
       SELECT
         ST_Transform(ST_SetSRID(ST_MakePoint(${entity.Longitude}, ${entity.Latitude}),4326),3857) as the_geom_webmercator,
-        '${entity.EntityName}' as name
+        '${fixedName}' as name
       FROM ${countyTable} LIMIT 1
     `),
     cartocss: condenseWhitespace(`
