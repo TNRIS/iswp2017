@@ -25,7 +25,14 @@ export default React.createClass({
   },
 
   render() {
-    const projectData = this.props.projectData;
+    let projectData = this.props.projectData;
+    if (this.props.type === 'region') {
+      const groupedById = R.groupBy(R.prop('WMSProjectId'))(this.props.projectData);
+      projectData = R.map((group) => {
+        const prj = R.nth(0, group);
+        return prj;
+      })(R.values(groupedById));
+    }
     const totalCost = R.sum(R.pluck('CapitalCost', projectData));
     const perPage = projectData.length <= itemsPerPage ? 0 : itemsPerPage;
 
