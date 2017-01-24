@@ -36,8 +36,16 @@ export default React.createClass({
     const totalCost = R.sum(R.pluck('CapitalCost', projectData));
     const perPage = projectData.length <= itemsPerPage ? 0 : itemsPerPage;
 
-    const title = this.props.type.toLowerCase() === 'region' ?
-      'Recommended Projects' : 'Recommended Projects Serving Area of Interest';
+    let title;
+    switch (this.props.type.toLowerCase()) {
+      case 'source': 
+        title = 'Recommended Projects Associated with Source';
+        break;
+      case 'region':
+        title = 'Recommended Projects';
+        break;
+      default: title = 'Recommended Projects Serving Area of Interest';
+    };
 
     projectData.map((d) => {
       const id = d.WMSProjectId;
