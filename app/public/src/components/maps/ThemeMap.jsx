@@ -443,7 +443,7 @@ export default React.createClass({
         <div className="theme-map" ref="map"></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
         {this.props.theme === 'strategies' &&
-          <p className="note">Red triangles indicate capital projects. If a water user group does not display with the selected project, the project is not currently assigned to a specific water user group. <a className="pointerHover" onClick={this.toggleProjects}>{this.state.showProjects} Projects</a></p>
+          <p className="note">Red triangles indicate capital projects associated with strategies supplies that have been assigned to a Water User Group. <a className="pointerHover" onClick={this.toggleProjects}>{this.state.showProjects} Projects</a></p>
         }
       </div>
     );
