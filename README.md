@@ -8,11 +8,14 @@ Web application for the 2017 Texas State Water Plan.
 
 Install node >= 0.12.0 and npm >= 3.3.3.
 
+Update npm: `npm install npm@latest`
+
 **Note** - versions 5 and 6 of Node will not work. Use v0.12 and then update npm (v3.10.8) for proper package installations.
 
 Install AWS Command Line Interface and configure with AWS credentials (IAM Key, Secret, Region). http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 
 Install babel: `npm install -g babel@5`
+Install dependencies: `npm install`
 
 Download a copy of the water plan data sqlite3 database (https://s3.amazonaws.com/tnris-misc/iswp/2017/cache.db) and place it at `/app/db/cache.db`.
 
@@ -27,6 +30,7 @@ This command should do it for you (requires aws cli and credentials): `aws s3 cp
 We are using a custom [D3](http://d3js.org/) build to cut down on code size. To make a new custom build, see instructions in `d3_build/README.md`.
 
 ### Developing
+cd into app/
 
 `npm run dev-start` in a terminal to continuously build client-side scripts and css and serve the application
 
