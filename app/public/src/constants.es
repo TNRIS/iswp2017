@@ -3,6 +3,7 @@ export default {
   API_BASE: '/api/v1',
   THEMES: ['demands', 'supplies', 'needs', 'strategies'],
   SRC_THEMES: ['supplies', 'strategies'],
+  PRJ_THEMES: ['strategies'],
   THEME_TITLES: {
     demands: 'Demands',
     supplies: 'Existing Supplies',

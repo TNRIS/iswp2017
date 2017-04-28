@@ -6,6 +6,7 @@ import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {Table, Tr, Td} from 'reactable';
 import ToggleDisplay from 'react-toggle-display';
 import format from 'format-number';
+import history from '../history';
 
 import PropTypes from '../utils/CustomPropTypes';
 
@@ -14,7 +15,7 @@ const itemsPerPage = 10;
 export default React.createClass({
   propTypes: {
     projectData: PropTypes.ProjectData.isRequired,
-    type: React.PropTypes.oneOf(['region', 'county', 'entity']).isRequired
+    type: React.PropTypes.oneOf(['region', 'county', 'entity', 'source']).isRequired
   },
 
   mixins: [LinkedStateMixin, PureRenderMixin],
@@ -24,12 +25,32 @@ export default React.createClass({
   },
 
   render() {
-    const projectData = this.props.projectData;
+    let projectData = this.props.projectData;
+    if (this.props.type === 'region') {
+      const groupedById = R.groupBy(R.prop('WMSProjectId'))(this.props.projectData);
+      projectData = R.map((group) => {
+        const prj = R.nth(0, group);
+        return prj;
+      })(R.values(groupedById));
+    }
     const totalCost = R.sum(R.pluck('CapitalCost', projectData));
     const perPage = projectData.length <= itemsPerPage ? 0 : itemsPerPage;
 
-    const title = this.props.type.toLowerCase() === 'region' ?
-      'Recommended Projects' : 'Recommended Projects Serving Area of Interest';
+    let title;
+    switch (this.props.type.toLowerCase()) {
+      case 'source': 
+        title = 'Recommended Projects Associated with Source';
+        break;
+      case 'region':
+        title = 'Recommended Projects';
+        break;
+      default: title = 'Recommended Projects Serving Area of Interest';
+    };
+
+    projectData.map((d) => {
+      const id = d.WMSProjectId;
+      d["linkRef"] = function () {history.push({pathname: `/project/${id}`})};
+    });
 
     return (
       <div className="recommended-projects-container">
@@ -59,7 +80,7 @@ export default React.createClass({
                   return (
                     <Tr key={d.WMSProjectId}>
                       <Td column="Project" value={d.ProjectName}>
-                        {d.ProjectName}
+                        <a className="pointerHover" onClick={d.linkRef}>{d.ProjectName}</a>
                       </Td>
                       <Td column="Decade Online" value={d.OnlineDecade}>
                         {d.OnlineDecade}

@@ -14,6 +14,8 @@ export default function generateRoutes(validParams) {
   const validRegions = validParams.regions;
   const validEntityIds = validParams.entityIds;
   const validUsageTypes = validParams.usageTypes;
+  const validProjects = validParams.projects;
+  const validSources = validParams.sources;
   return [
     {
       method: 'GET',
@@ -109,7 +111,7 @@ export default function generateRoutes(validParams) {
       config: {
         validate: {
           params: {
-            sourceId: Joi.number().required()
+            sourceId: Joi.number().only(validSources).required()
           },
           query: {
             omitRows: Joi.boolean()
@@ -142,6 +144,26 @@ export default function generateRoutes(validParams) {
         notes: omitRowsNote
       },
       handler: bind('getForUsageType')
+    },
+    {
+      method: 'GET',
+      path: '/data/project/{projectId}',
+      config: {
+        validate: {
+          params: {
+            projectId: Joi.number().only(validProjects).required()
+          },
+          query: {
+            omitRows: Joi.boolean()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        },
+        description: 'Get project data and summaries for the project identified by {projectId}.',
+        notes: omitRowsNote
+      },
+      handler: bind('getForProject')
     }
   ];
 }

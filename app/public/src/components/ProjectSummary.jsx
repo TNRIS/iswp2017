@@ -7,11 +7,11 @@ import classnames from 'classnames';
 
 import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
-import SourceSummarySubhead from './SourceSummarySubhead';
+import ProjectSummarySubhead from './ProjectSummarySubhead';
 
 export default React.createClass({
   propTypes: {
-    sourceData: PropTypes.SourceData
+    projectData: PropTypes.ProjectDataSplit
   },
 
   mixins: [PureRenderMixin],
@@ -19,7 +19,7 @@ export default React.createClass({
   render() {
     const props = this.props;
 
-    if (!props.sourceData || R.isEmpty(R.keys(props.sourceData))) {
+    if (!props.projectData || R.isEmpty(R.keys(props.projectData))) {
       return (
         <div className="view-summary">
           <Spinner spinnerName="double-bounce" noFadeIn />
@@ -27,16 +27,16 @@ export default React.createClass({
       );
     }
 
-    const sourceName = props.sourceData.boundary.features[0].properties.name;
-    const isLong = sourceName.length > constants.LONG_NAME_THRESHOLD;
+    const projectName = props.projectData.project.ProjectName;
+    const isLong = projectName.length > constants.LONG_NAME_THRESHOLD;
 
     return (
-      <div className="view-summary src-summary">
+      <div className="view-summary prj-summary">
         <h2 className={classnames({'long-name': isLong})}>
-          {sourceName}
+          {projectName}
         </h2>
         <div className="subhead">
-          <SourceSummarySubhead sourceName={sourceName} />
+          <ProjectSummarySubhead project={props.projectData.project} />
         </div>
       </div>
     );

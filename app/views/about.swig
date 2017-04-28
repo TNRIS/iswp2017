@@ -16,6 +16,7 @@
               <li><a href="#WhatIsThis">What is this site and what does it do?</a></li>
               <li><a href="#HowDoIFindData">How do I find the information I'm looking for?</a></li>
               <li><a href="#StateWaterPlanData">State Water Plan Data</a></li>
+              <li><a href="#HowProjectsLocated">How are the locations of the projects determined?</a></li>
               <li><a href="#Glossary">Glossary</a></li>
               <li><a href="#DownloadingData">Downloading Data</a></li>
               <li><a href="#PreviousPlans">Previous Plans</a></li>
@@ -100,6 +101,26 @@
 
             <p>
               The <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/index.asp" title="2017 State Water Plan">2017 State Water Plan</a> is the tenth state water plan and the fourth plan based on the regional water planning process. In addition to incorporating the regional water plans, the state water plan serves as a guide to state water policy.
+            </p>
+          </section>
+
+          <section id="HowProjectsLocated">
+            <h3>How are the locations of the projects determined?</h3>
+            <p><a href="#Top"><small>Back to Top</small></a></p>
+
+            <p>
+              Water “projects” are the future capital investments in infrastructure that support water management strategies. Capital project symbols (red triangles) are mapped to a single point as a necessary simplification to represent a geographic location of each water project (e.g., well fields, reservoirs, pipelines) solely for the purposes of representing the water plan visually. The basis for selecting each representative location varied depending on the regional water plan and particular type of infrastructure but, in general, the default project locations relate to:
+            </p>
+
+            <ul>
+              <li>approximate locations of at least one component of major infrastructure such as dams, water treatment plants, water intakes for pipelines, or well fields proposed in the plan; or</li>
+              <li>the primary location of the water user group in which certain types of infrastructure would be located, such as some water treatment plants within a city or water conservation investments; or</li>
+              <li>the centroid of the county in which a project with dispersed infrastructure would be located, such as county-wide irrigation, mining, or manufacturing conservation projects, or</li>
+              <li>the centroid of a county-aquifer polygon for certain, generalized groundwater supply projects.</li>
+            </ul>
+
+            <p>
+              The actual locations and physical extent of recommended projects will vary and, in many instances such as pipelines, will encompass multiple geographic locations and facilities.
             </p>
           </section>
 

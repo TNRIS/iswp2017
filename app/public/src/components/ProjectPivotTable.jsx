@@ -10,10 +10,7 @@ import hat from 'hat';
 import constants from '../constants';
 import {formatCountyName} from '../utils/CountyNames';
 import PropTypes from '../utils/CustomPropTypes';
-import Units from './Units';
 import ViewStateStore from '../stores/ViewStateStore';
-
-const themesAndPopulation = R.append('population', constants.THEMES);
 
 function toAnchor(href, text) {
   return `<a href="${href}">${text}</a>`;
@@ -26,41 +23,22 @@ const commonDimensions = [
     template: (val, row) => toAnchor(`/entity/${row.entityId}`, val)
   },
   {
-    value: 'WugCounty',
+    value: 'WUGCounty',
     title: 'County',
     template: (val) => toAnchor(`/county/${formatCountyName(val)}`, val)
   },
   {
-    value: 'WugRegion',
+    value: 'WUGRegion',
     title: 'Region',
     template: (val) => toAnchor(`/region/${val}`, val)
   }
 ];
 
-const additionalDimensions = {
-  supplies: [
-    {
-      value: 'SourceName',
-      title: 'Source'
-    }
-  ],
-  strategies: [
-    {
-      value: 'WmsName',
-      title: 'Strategy'
-    },
-    {
-      value: 'SourceName',
-      title: 'Source'
-    }
-  ]
-};
-
 export default React.createClass({
   propTypes: {
     viewData: PropTypes.ViewData,
     decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
+    theme: React.PropTypes.oneOf(constants.PRJ_THEMES).isRequired
   },
 
   mixins: [PureRenderMixin],
@@ -98,39 +76,6 @@ export default React.createClass({
     ViewStateStore.listen(this.onViewStateChange);
   },
 
-  componentWillReceiveProps(newProps) {
-    let newActive = R.clone(this.state.activeDimensions);
-
-    const isSameTheme = newProps.theme === this.props.theme;
-    const hasNewAdditional = !!additionalDimensions[newProps.theme];
-    const hasOldAdditional = !!additionalDimensions[this.props.theme];
-
-    if (isSameTheme) {
-      //do nothing
-      return;
-    }
-
-    //else if the theme has changed...
-
-    // and there are previous additional dimensions, then remove them
-    if (hasOldAdditional) {
-      const oldTheme = this.props.theme;
-      newActive = R.without(
-        R.pluck('title', additionalDimensions[oldTheme]), newActive
-      );
-    }
-
-    // and after removal, if there are new additional dimensions, then add them
-    if (hasNewAdditional) {
-      newActive = R.concat(newActive,
-        R.pluck('title', additionalDimensions[newProps.theme])
-      );
-    }
-
-    // finally save the newActive dimensions into state
-    this.setState({activeDimensions: newActive});
-  },
-
   componentWillUnmount() {
     ViewStateStore.unlisten(this.onViewStateChange);
   },
@@ -140,28 +85,7 @@ export default React.createClass({
   },
 
   getViewDefaultActiveDimensions(viewState) {
-    const view = viewState.view;
-    let activeDimensions = [];
-    switch (view) {
-    case 'region':
-      activeDimensions = ['County', 'Entity'];
-      break;
-    case 'county':
-      activeDimensions = ['Region', 'Entity'];
-      break;
-    case 'usagetype':
-      activeDimensions = ['Entity'];
-      break;
-    default:
-      activeDimensions = ['Region', 'County', 'Entity'];
-    }
-
-    //add additional dimensions to the active dimensions list
-    const theme = this.props.theme;
-    if (additionalDimensions[theme]) {
-      activeDimensions = R.concat(R.pluck('title', additionalDimensions[theme]), activeDimensions);
-    }
-
+    const activeDimensions = ['Region', 'County', 'Entity'];
     return activeDimensions;
   },
 
@@ -172,7 +96,7 @@ export default React.createClass({
         <div />
       );
     }
-    
+
     const selectedTheme = this.props.theme;
     const tableData = viewData[selectedTheme].rows;
     const decade = this.props.decade;
@@ -184,19 +108,15 @@ export default React.createClass({
     const sortBy = this.state.sortBy;
     const sortDir = this.state.sortDir;
 
-    if (additionalDimensions[selectedTheme]) {
-      additionalDimensions[selectedTheme].forEach((d) => availableDimensions.push(d));
-    }
-
     const reduce = (row, memo) => {
-      memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${decade}`];
+      memo.valueTotal = (memo.valueTotal || 0) + row[`P${decade}`];
       memo.entityId = row.EntityId; //save the EntityId so a link can be made
       return memo;
     };
 
     const calculations = [
       {
-        title: `${decade} ${themeTitle}`,
+        title: `${decade} Population Benefiting`,
         value: 'valueTotal',
         template: (val) => format()(val)
       }
@@ -204,7 +124,7 @@ export default React.createClass({
 
     let table = null;
     if (R.isEmpty(tableData)) {
-      table = <p> Sorry, there is no {themeTitle} data.</p>;
+      table = <p> Sorry, there is no population data.</p>;
     } else {
       table = 
         <div className="table-container">
@@ -229,8 +149,7 @@ export default React.createClass({
     return (
       <div>
         <h4>
-          Raw Data - {decade} - {themeTitle}
-          <Units theme={selectedTheme} />
+          Raw Data - {decade} - Population Benefiting
         </h4>
         {table}
       </div>

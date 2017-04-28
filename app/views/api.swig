@@ -11,7 +11,7 @@
         <div class="twelve columns">
           <h2>API Documentation</h2>
           <p>
-            This page contains documentation for the application programming interface (API) that powers the interactive state water plan application. All methods are available via standard HTML requests and are <a title="W3C definition of CORS" href="http://www.w3.org/wiki/CORS_Enabled">CORS-enabled</a> so that cross-browser requests can be made. All water volums are given in units of <code>acre-feet/year</code>. Unless otherwise specified, all methods return JSON responses.
+            This page contains documentation for the application programming interface (API) that powers the interactive state water plan application. All methods are available via standard HTML requests and are <a title="W3C definition of CORS" href="http://www.w3.org/wiki/CORS_Enabled">CORS-enabled</a> so that cross-browser requests can be made. All water volumes are given in units of <code>acre-feet/year</code>. Unless otherwise specified, all methods return JSON responses.
           </p>
           <p>
             For any questions regarding the data or how to apply it, please contact: <a href="mailto:WRPdatarequests@twdb.texas.gov">WRPdatarequests@twdb.texas.gov</a>.

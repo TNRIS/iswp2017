@@ -6,80 +6,80 @@ import Spinner from 'react-spinkit';
 import constants from '../../constants';
 import DownloadDataLink from '../DownloadDataLink';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
-import PlacePivotTable from '../PlacePivotTable';
-import SourceDataStore from '../../stores/SourceDataStore';
-import SourceViewMap from '../maps/SourceViewMap';
-import SourceSummary from '../SourceSummary';
-import SrcDataViewChoiceWrap from '../SrcDataViewChoiceWrap';
+import ProjectPivotTable from '../ProjectPivotTable';
+import ProjectDataStore from '../../stores/ProjectDataStore';
+import ProjectViewMap from '../maps/ProjectViewMap';
+import ProjectSummary from '../ProjectSummary';
+import PrjDataViewChoiceWrap from '../PrjDataViewChoiceWrap';
 import ThemeMaps from '../maps/ThemeMaps';
-import ProjectTable from '../ProjectTable';
 
 export default React.createClass({
   propTypes: {
     params: React.PropTypes.shape({
-      sourceId: React.PropTypes.integer
+      projectId: React.PropTypes.integer
     }).isRequired
   },
 
   getInitialState() {
     return {
-      sourceData: SourceDataStore.getState().sourceData,
+      projectData: ProjectDataStore.getState().projectData,
       viewChoice: DataViewChoiceStore.getState()
     };
   },
 
   componentDidMount() {
-    SourceDataStore.listen(this.onSourceDataChange);
+    ProjectDataStore.listen(this.onProjectDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
-    this.fetchSourceData(this.props.params);
+    this.fetchProjectData(this.props.params);
   },
 
   componentWillReceiveProps(nextProps) {
     // Route params are in this.props, and when route changes the data
     // need to be fetched again
-    this.fetchSourceData(nextProps.params);
+    this.fetchProjectData(nextProps.params);
   },
 
   componentWillUnmount() {
-    SourceDataStore.unlisten(this.onSourceDataChange);
+    ProjectDataStore.unlisten(this.onProjectDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
   },
 
-  onSourceDataChange(state) {
-    this.setState({sourceData: state.sourceData});
+  onProjectDataChange(state) {
+    this.setState({projectData: state.projectData});
   },
 
   onDataViewChoiceChange(state) {
     this.setState({viewChoice: state});
   },
 
-  fetchSourceData(params) {
-    SourceDataStore.fetch({
-      sourceId: params.sourceId
+  fetchProjectData(params) {
+    ProjectDataStore.fetch({
+      projectId: params.projectId
     });
   },
 
   render() {
-    const params = this.props.params;
-    const sourceData = this.state.sourceData;
-    const title = sourceData.boundary ? sourceData.boundary.features[0].properties.name : '';
-    const selectedTheme = !(constants.SRC_THEMES.includes(this.state.viewChoice.selectedTheme)) ? "supplies" : this.state.viewChoice.selectedTheme;
+    const projectData = this.state.projectData;
+    const title = projectData.project ? projectData.project.ProjectName : '';
+    const selectedTheme = "strategies";
 
     return (
-      <div className="source-view">
+      <div className="project-view">
+
       <Helmet title={title} />
+
         <section>
           <div className="view-top source-view-top">
             <div className="summary-wrapper container">
-              <SourceSummary sourceData={sourceData} />
+              <ProjectSummary projectData={projectData} />
             </div>
-            <SourceViewMap sourceData={sourceData} />
+            <ProjectViewMap projectData={projectData} />
           </div>
-
+      
           {
             (() => {
-              if (!sourceData || R.isEmpty(R.keys(sourceData))) {
+              if (!projectData || R.isEmpty(R.keys(projectData))) {
                 return (
                   <div className="container">
                     <div className="row panel-row">
@@ -93,68 +93,59 @@ export default React.createClass({
 
               return (
                 <div>
-                  <div className="container">
-                    <div className="row panel-row">
-                      <div className="twelve columns">
-                        <span className="view-name">{title}</span>
-                        <ProjectTable type="source" projectData={sourceData.data.projects} />
-                      </div>
-                    </div>
-                  </div>
-
-                  <SrcDataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
+                  <PrjDataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
                     theme={selectedTheme}>
                     <div className="container">
-                      
+                   
                       <div className="row panel-row">
                         <div className="twelve columns">
                           <span className="view-name">{title}</span>
-                          <ThemeMaps placeData={sourceData}
+                          <ThemeMaps placeData={projectData}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={selectedTheme} />
                         </div>
                       </div>
-
+  
                       <div className="row panel-row">
                         <div className="twelve columns">
                           <span className="view-name">{title}</span>
-                          <PlacePivotTable viewData={sourceData.data}
+                          <ProjectPivotTable viewData={projectData.data}
                           decade={this.state.viewChoice.selectedDecade}
                           theme={selectedTheme} />
                           <h4>Download Data</h4>
                           <ul>
                             {
-                              constants.SRC_THEMES.map((theme) => {
-                                if (R.isEmpty(sourceData.data[theme].rows)) {
+                              (() => {
+                                if (R.isEmpty(projectData.data[selectedTheme].rows)) {
                                   return (
-                                    <li key={`download-${theme}`}>
-                                      No {constants.THEME_TITLES[theme]} data exists for this water source
+                                    <li key={`download-${selectedTheme}`}>
+                                      No {constants.THEME_TITLES[selectedTheme]} data exists for this water management strategy project
                                     </li>
                                   );
                                 }
                                 return (
-                                  <li key={`download-${theme}`}>
+                                  <li key={`download-${selectedTheme}`}>
                                     <DownloadDataLink
-                                      type="source"
-                                      typeId={sourceData.boundary.features[0].properties.sourceid}
-                                      theme={theme} />
+                                      type="project"
+                                      typeId={projectData.project.WMSProjectId}
+                                      theme={selectedTheme} />
                                   </li>
                                 );
-                              })
+                              })()
                             }
                           </ul>
                         </div>
                       </div>
 
                     </div>
-                  </SrcDataViewChoiceWrap>
+                  </PrjDataViewChoiceWrap>
                 </div>
               );
             })()
           }
-          
-
+                
         </section>
+ 
       </div>
     );
   }

@@ -81,7 +81,7 @@ function addTo(server, basePath = '/') {
         validate: {
           params: {
             theme: Joi.string().only(themes).insensitive().required(),
-            sourceId: Joi.number().required()
+            sourceId: Joi.number().only(validParams.sources).required()
           }
         }
       },
@@ -99,6 +99,19 @@ function addTo(server, basePath = '/') {
         }
       },
       handler: bind('getUsageTypeCsv')
+    },
+    {
+      method: 'GET',
+      path: '/project/{projectId}/{theme}',
+      config: {
+        validate: {
+          params: {
+            theme: Joi.string().only(themes).insensitive().required(),
+            projectId: Joi.number().only(validParams.projects).required()
+          }
+        }
+      },
+      handler: bind('getProjectCsv')
     }
   ];
 
