@@ -1,3 +1,5 @@
+[![Stories in Ready](https://badge.waffle.io/TNRIS/iswp2017.png?label=ready&title=Ready)](http://waffle.io/TNRIS/iswp2017)
+
 # iswp2017
 
 Web application for the 2017 Texas State Water Plan.
