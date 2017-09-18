@@ -130,7 +130,7 @@
 
             <p>
               For these and other terms, see also the 2017 State Water Plan
-              <a title="Glossary" href="http://www.twdb.texas.gov/publications/state_water_plan/2017/12.pdf">glossary</a>.
+              <a title="Glossary" href="http://www.twdb.texas.gov/waterplanning/swp/2017/chapters/10-SWP17-GLOSSARY-APPENDICES.pdf?d=3717.1800000000003">glossary</a>.
             </p>
 
             <h5 id="acre-foot">ACRE-FOOT</h5>
@@ -315,7 +315,7 @@
             <p>The intention of this policy is to state clear accessibility principles that all Texas Water Development Board (TWDB) websites must follow.</p>
 
             <p>The TWDB strives to ensure all of its websites comply with the <a href="http://www.w3.org/TR/WCAG20/">Web Content Accessibility Guidelines</a> (WCAG) when possible without causing undue burden to the agency.&nbsp; The TWDB will be monitoring these sections and will develop accessible solutions as technology improves.&nbsp; In order to ensure no user is disadvantaged, the TWDB will respond to all accessibility assistance requests by either altering the necessary content as soon as possible or, if requested, by providing the information in an alternative format at no cost to the user within a reasonable timeframe.&nbsp; It is the responsibility of the webpage owner to provide these alternative formats.&nbsp; The TWDB websites will provide appropriate channels of communication that allow visitors to request alternative formats and to give feedback about any accessibility problems.</p>
-            
+
             <h5>Policy Dimensions</h5>
             <p>For the purpose of this policy, the term "websites" includes:</p>
             <ul>
@@ -334,7 +334,7 @@
               <li>how we can contact you</li>
             </ul>
 
-            <p>With this information, we will be able to respond in the most helpful way possible.</p>  
+            <p>With this information, we will be able to respond in the most helpful way possible.</p>
 
           </section>
 
