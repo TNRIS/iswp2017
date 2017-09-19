@@ -200,7 +200,7 @@ export default React.createClass({
       this.map.removeControl(this.legendControl);
       this.legendControl = null;
     }
-    
+
     if (!props.boundary && (!entityFeatures || entityFeatures.length === 0)) {
       return;
     }
@@ -272,7 +272,7 @@ export default React.createClass({
       bounds = this.map.getBounds();
     }
 
-    if (props.theme === 'strategies' && props.projects != undefined) { 
+    if (props.theme === 'strategies' && props.projects != undefined) {
       //handle decade online, only display those coming online before or during the selected decade
       const decades = x => parseInt(x.OnlineDecade) <= parseInt(props.decade);
       const decadeProjects = R.filter(decades, props.projects)
@@ -331,7 +331,7 @@ export default React.createClass({
   },
 
   displaySourceLayer(props, bounds) {
-    if (props.theme === 'supplies' || props.theme === 'strategies') {      
+    if (props.theme === 'supplies' || props.theme === 'strategies') {
       const hasValue = props.data.rows.filter(record => record[`Value_${props.decade}`] > 0);
       const sourceById = R.groupBy(R.prop('MapSourceId'))(hasValue);
 
@@ -354,7 +354,7 @@ export default React.createClass({
                 case 'groundwater': return groundwaterStyle;
                 case 'river': return riverwaterStyle;
                 case 'indirect': return riverwaterStyle;
-                default: 
+                default:
                   switch (feature.properties.isnew) {
                     case 1: return isnewStyle;
                     default: return surfacewaterStyle;
@@ -370,7 +370,7 @@ export default React.createClass({
           this.sourceLayer.on("mousemove", this.showSourceLabel);
           this.sourceLayer.on("mouseout", this.hideSourceLabel);
           this.sourceLayer.on("click", this.viewSourcePage);
-          //add the layer to the map. 
+          //add the layer to the map.
           this.map.addLayer(this.sourceLayer);
           this.entitiesLayer.bringToFront();
 
@@ -443,7 +443,7 @@ export default React.createClass({
         <div className="theme-map" ref="map"></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
         {this.props.theme === 'strategies' &&
-          <p className="note">Red triangles indicate capital projects associated with strategies supplies that have been assigned to a Water User Group. <a className="pointerHover" onClick={this.toggleProjects}>{this.state.showProjects} Projects</a></p>
+          <p className="note">Red triangles indicate capital projects associated with strategy supplies that have been assigned to a Water User Group. <a className="pointerHover" onClick={this.toggleProjects}>{this.state.showProjects} Projects</a></p>
         }
       </div>
     );
