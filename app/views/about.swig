@@ -15,6 +15,7 @@
             <ol>
               <li><a href="#WhatIsThis">What is this site and what does it do?</a></li>
               <li><a href="#HowDoIFindData">How do I find the information I'm looking for?</a></li>
+              <li><a href="#HowDoIUseTheMap">How do I use the interactive map?</a></li>
               <li><a href="#StateWaterPlanData">State Water Plan Data</a></li>
               <li><a href="#HowProjectsLocated">How are the locations of the projects determined?</a></li>
               <li><a href="#Glossary">Glossary</a></li>
@@ -50,28 +51,59 @@
             <h3>How do I find the information I'm looking for?</h3>
             <p><a href="#Top"><small>Back to Top</small></a></p>
 
-            <ol>
-              <li>
-                Choose the geographic area of interest, either a regional water planning area (A-O), county, or specific water user group (e.g., city) from the navigation menu or click on a region or county on the top map.
-              </li>
-              <li>
-                Depending on the graphic that displays, you may be given the option to view a single data category
-                by selecting that category "button," including for:
-                <ul>
-                  <li>Projected Water <strong>Demands</strong></li>
-                  <li><strong>Existing Supplies</strong></li>
-                  <li>Water <strong>Needs</strong> (potential shortages)</li>
-                  <li>Recommended <strong>Strategy Supplies</strong></li>
-                </ul>
-              </li>
-              <li>
-                You may also view the data behind the graphics using the "show data" button or by using the maps toward the bottom or table at the very bottom.<br>
-                In certain cases, you must select a decade (2020 - 2070) of interest.
-              </li>
-              <li>
-                Hit the <strong>Home</strong> link in the upper right corner of the page to reset the page.
-              </li>
-            </ol>
+            <p>
+              A good place to start is the <strong>‘View data for’</strong> drop down menu found in the upper left of the home page. From this drop down you can navigate to pages with state water plan data organized by a specific area of interest or data type.
+            </p>
+
+            <img src="/public/static/img/HowDoIFindData.png" width="80%" style="padding:10px;">
+
+            <p>
+            Once you’ve navigated to a specific page you can start exploring the data related to that topic/area. Each page will contain demand, existing supply, need (potential shortage), and strategy supply data related to that page topic. The data are presented in a variety of formats such as graphs, figures, tables, and maps. Many of the page elements are interactive so you can hover over and click elements to show more detail, use embedded search and sort functions to locate information, or click hyperlinks to navigate to other pages in the application.
+            If you are interested in digging deeper and interacting more with the data on a page, scroll down to the <strong>‘Raw Data’</strong> section. In addition to reflecting the decade and theme button selections in the banner above the map, the data displayed in this section can be filtered and sorted using the drop-down boxes below the <strong>‘Raw Data’</strong> section heading. The column toggles allow you to control the aggregation levels of the data.
+            </p>
+
+            <ul>
+              <li>To change an existing column, update that selected drop-down to another item in the list</li>
+              <li>To remove an existing column, update that selected drop-down to the blank entry in the list</li>
+              <li>To add a new column, select it from the <strong>‘Sub Dimension…’</strong> drop down list</li>
+            </ul>
+
+            <img src="/public/static/img/HowDoIFindData2.png" width="90%" style="padding:10px;">
+
+          </section>
+
+          <section id="HowDoIUseTheMap">
+            <h3>How do I use the interactive map?</h3>
+            <p><a href="#Top"><small>Back to Top</small></a></p>
+
+            <p>
+              Interactive maps are included to view and explore the state water plan data geographically. Here are some tools that will help you navigate and use the maps:
+            </p>
+            <ul>
+              <li><strong>Pan –</strong> To move the map click and hold the left mouse button and drag the map to a new place.</li>
+              <li><strong>Zoom –</strong> To see more details or a larger area on the map you can zoom in and out using the +/- sign buttons in the top right. Double left clicking your mouse on a map area will also zoom you into that location.</li>
+              <li><strong>Statewide View –</strong> To quickly view all of Texas click on the button in the upper right with the Texas graphic.</li>
+              <li><strong>Lock Extent –</strong> To freeze the map at a specific location and zoom level click the lock button on the right side of the screen. The button will darken when turned on and lock the map extent as you click through the different theme and decade buttons.</li>
+              <li><strong>Map Information –</strong> Symbol descriptions, notes, and disclaimers may appear just below the map panel to provide more information about what is being displayed.</li>
+              <li><strong>Hover Labels –</strong> Some map items will display labels when you hover your mouse over them. Clicking on any of these items will navigate you away from the current page to a page related to that item in the interactive state water plan.</li>
+              <li><strong>Decade Buttons –</strong> These are in the banner above the map and filter the map data by decade. For example, Project symbols will begin displaying on the map in the decade that matches the project’s online decade and continue to show in all subsequent decades.</li>
+              <li><strong>Theme Buttons –</strong> These are in the banner above the map and filter the map data by type.</li>
+              <li><strong>Symbol Popups –</strong> You can click on individual symbols to open a popup displaying data associated with that item. If there are overlapping symbols clicking on the cluster will cause them to spread out and allow you to select each one individually.</li>
+            </ul>
+
+            <img src="/public/static/img/HowDoIUseTheMap.png" width="90%" style="padding:10px;">
+
+            <p>
+              Due to the nature of the state water plan data not everything is relevant to display on the map. Please keep the following in mind when exploring the interactive maps:
+            </p>
+            <ul>
+              <li>The map for a selected region page will only display projects that benefit water user group splits within that planning region.</li>
+              <li>Sources will only display in the map if at least one water user group has an existing supply or water management strategy supply amount greater than zero tied to it in the selected decade.</li>
+              <li>Only the following sources are mapped: groundwater, indirect reuse, reservoir, system, run-of-river, and seawater.</li>
+              <li>If a water user group is related to a zero value for a specific theme and decade it will not display on the map, except for WUGs with zero associated population on the project page. For example, the needs map theme will not display a WUG point if they have zero needs in the selected decade.</li>
+              <li>If the water management strategy water supplies for a project are not assigned to a specific water user group, then the project will not display on the map. For example, the Region L project called “Integrated Water-Power Project” will display in the list because it is a recommended project, but it does not have any WUGs associated with its strategy supplies so it will not display in the map.</li>
+            </ul>
+
           </section>
 
           <section id="StateWaterPlanData">
@@ -115,7 +147,7 @@
             <ul>
               <li>approximate locations of at least one component of major infrastructure such as dams, water treatment plants, water intakes for pipelines, or well fields proposed in the plan; or</li>
               <li>the primary location of the water user group in which certain types of infrastructure would be located, such as some water treatment plants within a city or water conservation investments; or</li>
-              <li>the centroid of the county in which a project with dispersed infrastructure would be located, such as county-wide irrigation, mining, or manufacturing conservation projects, or</li>
+              <li>the centroid of the county in which a project with dispersed infrastructure would be located, such as county-wide irrigation, mining, or manufacturing conservation projects; or</li>
               <li>the centroid of a county-aquifer polygon for certain, generalized groundwater supply projects.</li>
             </ul>
 
@@ -188,17 +220,8 @@
             <h3>Downloading Data</h3>
             <p><a href="#Top"><small>Back to Top</small></a></p>
 
-            <p>Data are available for download as Comma-Separated Value (CSV) files, which can be opened by most common spreadsheet software programs:</p>
-            <ul>
-              <li><a download target="_blank" href="/download/statewide/population" title="Download Population Data">Population Data</a></li>
-              <li><a download target="_blank" href="/download/statewide/demands" title="Download Demands Data">Demands Data</a></li>
-              <li><a download target="_blank" href="/download/statewide/supplies" title="Download Existing Supplies Data">Existing Supplies Data</a></li>
-              <li><a download target="_blank" href="/download/statewide/needs" title="Download Needs (Potential Shortages) Data">Needs (Potential Shortages) Data</a></li>
-              <li><a download target="_blank" href="/download/statewide/strategies" title="Download Strategy Supplies Data">Strategy Supplies Data</a></li>
-              <li><a download target="_blank" href="/download/entities" title="Download Water User Group Entities">Water User Group Entities</a></li>
-            </ul>
+            <p>Data is available for you to download as Comma-Separated Value (.csv) files through links at the bottom of each page. Downloads of statewide datasets are available at the bottom of the application homepage, and all water volumes are in units of acre-feet/year.</p>
 
-            <p>All water volumes are in units of acre-feet/year.</p>
             <p>
               For any questions regarding the data or how to apply it, please contact: <a href="mailto:WRPdatarequests@twdb.texas.gov" title="">WRPdatarequests@twdb.texas.gov</a>
             </p>
