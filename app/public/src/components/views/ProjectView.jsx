@@ -76,7 +76,7 @@ export default React.createClass({
             </div>
             <ProjectViewMap projectData={projectData} />
           </div>
-      
+
           {
             (() => {
               if (!projectData || R.isEmpty(R.keys(projectData))) {
@@ -96,7 +96,7 @@ export default React.createClass({
                   <PrjDataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
                     theme={selectedTheme}>
                     <div className="container">
-                   
+
                       <div className="row panel-row">
                         <div className="twelve columns">
                           <span className="view-name">{title}</span>
@@ -105,7 +105,7 @@ export default React.createClass({
                             theme={selectedTheme} />
                         </div>
                       </div>
-  
+
                       <div className="row panel-row">
                         <div className="twelve columns">
                           <span className="view-name">{title}</span>
@@ -143,9 +143,9 @@ export default React.createClass({
               );
             })()
           }
-                
+
         </section>
- 
+
       </div>
     );
   }

@@ -37,11 +37,12 @@ export default React.createClass({
             onSelect={this.onDecadeSelect} />
         </div>
         <div>
-          <span className="inline-label show-medium">Theme: </span>
+          {/* this block was removed during the fall 2017 updates per WSI request (issue #232)
+            <span className="inline-label show-medium">Theme: </span>
           <PrjThemeSelector
             value={this.props.theme}
             onSelect={this.onThemeSelect}
-            includePopulation={!this.props.hidePopulation} />
+            includePopulation={!this.props.hidePopulation} /> */}
         </div>
       </div>
     );
