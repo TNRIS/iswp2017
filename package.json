@@ -7,7 +7,7 @@
   "scripts": {
     "start": "NODE_PATH=./app babel-node app/index.es",
     "webpack": "./node_modules/webpack/bin/webpack.js -p --config webpack.config.js",
-    "dev-start": "concurrent \"yarn run dev-webpack\" \"yarn run dev-server\" ",
+    "dev-start": "concurrently \"yarn run dev-webpack\" \"yarn run dev-server\" ",
     "dev-server": "NODE_PATH=./app nodemon --exec babel-node -- app/index.es",
     "dev-webpack": "yarn run clean-dist && ./node_modules/webpack/bin/webpack.js -d --progress --colors --watch --config webpack.config.js",
     "test": "yarn run unit-test && yarn run integration-test",

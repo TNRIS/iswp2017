@@ -23,9 +23,9 @@ if (isProdBuild) {
 }
 
 module.exports = {
-  entry: path.join(__dirname, 'app/public/src/entry.jsx'),
+  entry: path.join(__dirname, './app/public/src/entry.jsx'),
   output: {
-    path: path.join(__dirname, 'app/public/dist/'),
+    path: path.join(__dirname, '/app/public/dist/'),
     filename: isProdBuild ? 'scripts.[hash].js' : 'scripts.js'
   },
   module: {
@@ -36,14 +36,14 @@ module.exports = {
           path.resolve(__dirname, 'app/public/src/vendor/'),
           path.resolve(__dirname, 'node_modules'),
         ],
-        use: ExtractTextPlugin.extract({
+        use: extractText.extract({
           fallback: "style-loader",
           use: "css-loader"
         })
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
+        use: extractText.extract({
           fallback: 'style-loader',
           use: "css-loader!sass-loader"
         })
