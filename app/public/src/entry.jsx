@@ -33,28 +33,29 @@ import './vendor/js/leaflet.easybutton.js';
 
 import './sass/main.scss';
 
-//setup listener so Google Analytics can send pageviews on location change
+// setup listener so Google Analytics can send pageviews on location change
 history.listen((loc) => {
   if (window && window.ga) {
     window.ga('send', 'pageview', loc);
   }
 });
 
-//setup listener to update the ViewState based on location
+// setup listener to update the ViewState based on location
 history.listen((loc) => {
   ViewStateActions.updateViewState(loc.pathname);
 });
 
 ReactDOM.render((
-  <Router history={history}>
-    <Route component={App}>
-      <Route name="stateview" path="statewide" component={StatewideView}/>
-      <Route name="entityview" path="entity/:entityId" component={EntityView}/>
-      <Route name="sourceview" path="source/:sourceId" component={SourceView}/>
-      <Route name="projectview" path="project/:projectId" component={ProjectView}/>
-      <Route name="usagetypeview" path="usagetype/:typeId" component={UsageTypeView}/>
-      <Route name="placeview" path=":type/:typeId" component={PlaceView}/>
-      <Redirect from="/" to="/statewide" />
-    </Route>
-  </Router>
+  // <Router history={history}>
+  //   <Route component={App}>
+  //     <Route name="stateview" path="statewide" component={StatewideView}/>
+  //     <Route name="entityview" path="entity/:entityId" component={EntityView}/>
+  //     <Route name="sourceview" path="source/:sourceId" component={SourceView}/>
+  //     <Route name="projectview" path="project/:projectId" component={ProjectView}/>
+  //     <Route name="usagetypeview" path="usagetype/:typeId" component={UsageTypeView}/>
+  //     <Route name="placeview" path=":type/:typeId" component={PlaceView}/>
+  //     <Redirect from="/" to="/statewide" />
+  //   </Route>
+  // </Router>
+  <h1>Hello, World!</h1>
 ), document.getElementById('reactApp'));
