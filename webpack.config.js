@@ -29,18 +29,24 @@ module.exports = {
     filename: isProdBuild ? 'scripts.[hash].js' : 'scripts.js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.css$/,
         include: [
           path.resolve(__dirname, 'app/public/src/vendor/'),
           path.resolve(__dirname, 'node_modules'),
         ],
-        loader: ExtractTextPlugin.extract('css')
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader"
+        })
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass')
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: "css-loader!sass-loader"
+        })
       },
       {
         test: /\.(es|jsx)$/,
@@ -57,13 +63,13 @@ module.exports = {
       {
         test: /\.svg$/,
         exclude: /node_modules/,
-        loader: 'babel!svg-react-loader'
+        loader: 'babel-loader!svg-react-loader'
       }
     ]
   },
   resolve: {
     // allows extension-less require/import statements for files with these extensions
-    extensions: ['', '.es', '.js', '.jsx']
+    extensions: ['.es', '.js', '.jsx']
   },
   plugins: plugins
 };
