@@ -1,19 +1,19 @@
-const Hapi = require('hapi');
-const Inert = require('inert');
-const Vision = require('vision');
-const Etags = require('hapi-etags');
-const Good = require('good');
-const GoodConsole = require('good-console');
-const RequireHttps = require('hapi-require-https');
-const swig = require('swig');
+import Hapi from 'hapi';
+import Inert from 'inert';
+import Vision from 'vision';
+import Etags from 'hapi-etags';
+import Good from 'good';
+import GoodConsole from 'good-console';
+import RequireHttps from 'hapi-require-https';
+import swig from 'swig';
 
-const ValidParameters = require('plugins/validParameters');
-const homeRoutes = require('routes/home');
-const publicRoutes = require('routes/public');
-const apiRoutes = require('routes/api');
-const downloadRoutes = require('routes/download');
-const config = require('config');
-const webpackAssets = require('webpack-assets.json');
+import ValidParameters from 'plugins/validParameters';
+import homeRoutes from 'routes/home';
+import publicRoutes from 'routes/public';
+import apiRoutes from 'routes/api';
+import downloadRoutes from 'routes/download';
+import config from 'config';
+import webpackAssets from 'webpack-assets.json';
 
 const server = new Hapi.Server({
   debug: {request: ['*']},
@@ -47,7 +47,7 @@ const plugins = [
   Vision,
   Etags,
   {register: Good, options: loggingOptions},
-  require('plugins/validParameters'),
+  ValidParameters,
 ];
 
 if (process.env.NODE_ENV === 'production') {
