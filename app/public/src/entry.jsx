@@ -2,9 +2,6 @@
  * Interactive Texas State Water Plan 2017
  * TNRIS | TWDB
  */
-
-import 'babel-core/polyfill';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, Redirect} from 'react-router';

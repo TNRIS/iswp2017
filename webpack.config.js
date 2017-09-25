@@ -24,9 +24,9 @@ if (isProdBuild) {
 }
 
 module.exports = {
-  entry: path.join(__dirname, '/app/public/src/entry.jsx'),
+  entry: ['babel-polyfill', path.join(__dirname, 'app/public/src/entry.jsx')],
   output: {
-    path: path.join(__dirname, '/app/public/dist/'),
+    path: path.join(__dirname, 'app/public/dist/'),
     filename: isProdBuild ? 'scripts.[hash].js' : 'scripts.js',
   },
   module: {
