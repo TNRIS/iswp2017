@@ -9,21 +9,26 @@ const routes = [
     path: '/static/{param*}',
     handler: {
       directory: {
-        path: path.normalize(__dirname + '../../public/static/')
-      }
-    }
+        path: path.normalize(__dirname + '../../public/static/'),
+      },
+    },
   },
   {
     method: 'GET',
     path: '/{param*}',
     handler: {
       directory: {
-        path: path.normalize(__dirname + '../../public/dist/')
-      }
-    }
-  }
+        path: path.normalize(__dirname + '../../public/dist/'),
+      },
+    },
+  },
 ];
 
+/**
+ * Add a route
+ * @param {object} server - server the server instance to attach to
+ * @param {string} basePath - path
+ */
 function addTo(server, basePath = '/') {
   const validParams = server.plugins.validParameters;
   if (!validParams) {
@@ -34,5 +39,5 @@ function addTo(server, basePath = '/') {
 }
 
 export default {
-  addTo
+  addTo,
 };

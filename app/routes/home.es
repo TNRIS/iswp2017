@@ -4,10 +4,21 @@ import Joi from 'joi';
 
 import utils from 'lib/utils';
 
+/**
+ * Returns a 404 error
+ * @param {object} request - server request
+ * @param {object} reply - server reply 
+ * @return {view} 404 error
+ */
 function to404(request, reply) {
   return reply.view('404').code(404);
 }
 
+/**
+ * Add routes to the server
+ * @param {object} server - server instance 
+ * @param {string} basePath - base path string
+ */
 function addTo(server, basePath = '/') {
   const validParams = server.plugins.validParameters;
   if (!validParams) {
@@ -18,12 +29,12 @@ function addTo(server, basePath = '/') {
     {
       method: 'GET',
       path: '/',
-      handler: {view: 'index'}
+      handler: {view: 'index'},
     },
     {
       method: 'GET',
       path: '/statewide',
-      handler: {view: 'index'}
+      handler: {view: 'index'},
     },
     {
       method: 'GET',
@@ -31,12 +42,13 @@ function addTo(server, basePath = '/') {
       config: {
         validate: {
           params: {
-            regionLetter: Joi.string().only(validParams.regions).insensitive().required()
+            regionLetter: Joi.string().only(validParams.regions)
+            .insensitive().required(),
           },
-          failAction: to404
-        }
+          failAction: to404,
+        },
       },
-      handler: {view: 'index'}
+      handler: {view: 'index'},
     },
     {
       method: 'GET',
@@ -44,12 +56,13 @@ function addTo(server, basePath = '/') {
       config: {
         validate: {
           params: {
-            county: Joi.string().only(validParams.counties).insensitive().required()
+            county: Joi.string().only(validParams.counties)
+            .insensitive().required(),
           },
-          failAction: to404
-        }
+          failAction: to404,
+        },
       },
-      handler: {view: 'index'}
+      handler: {view: 'index'},
     },
     {
       method: 'GET',
@@ -57,12 +70,12 @@ function addTo(server, basePath = '/') {
       config: {
         validate: {
           params: {
-            entityId: Joi.number().only(validParams.entityIds).required()
+            entityId: Joi.number().only(validParams.entityIds).required(),
           },
-          failAction: to404
-        }
+          failAction: to404,
+        },
       },
-      handler: {view: 'index'}
+      handler: {view: 'index'},
     },
     {
       method: 'GET',
@@ -70,12 +83,12 @@ function addTo(server, basePath = '/') {
       config: {
         validate: {
           params: {
-            sourceId: Joi.number().only(validParams.sources).required()
+            sourceId: Joi.number().only(validParams.sources).required(),
           },
-          failAction: to404
-        }
+          failAction: to404,
+        },
       },
-      handler: {view: 'index'}
+      handler: {view: 'index'},
     },
     {
       method: 'GET',
@@ -83,12 +96,13 @@ function addTo(server, basePath = '/') {
       config: {
         validate: {
           params: {
-            usageType: Joi.string().only(validParams.usageTypes).insensitive().required()
+            usageType: Joi.string().only(validParams.usageTypes)
+            .insensitive().required(),
           },
-          failAction: to404
-        }
+          failAction: to404,
+        },
       },
-      handler: {view: 'index'}
+      handler: {view: 'index'},
     },
     {
       method: 'GET',
@@ -96,46 +110,45 @@ function addTo(server, basePath = '/') {
       config: {
         validate: {
           params: {
-            projectId: Joi.number().only(validParams.projects).required()
+            projectId: Joi.number().only(validParams.projects).required(),
           },
-          failAction: to404
-        }
+          failAction: to404,
+        },
       },
-      handler: {view: 'index'}
+      handler: {view: 'index'},
     },
     {
       method: 'GET',
       path: '/about',
-      handler: {view: 'about'}
+      handler: {view: 'about'},
     },
     {
       method: 'GET',
       path: '/humans.txt',
       handler: {
         file: {
-          path: path.normalize(__dirname + '../../public/static/humans.txt')
-        }
-      }
+          path: path.normalize(__dirname + '../../public/static/humans.txt'),
+        },
+      },
     },
     {
       method: 'GET',
       path: '/robots.txt',
       handler: (request, reply) => {
-        //serve blank (allow-all) robots.txt when in production
+        // serve blank (allow-all) robots.txt when in production
         if (process.env.NODE_ENV === 'production') {
           reply('');
+        } else {
+          reply.file(
+            path.normalize(__dirname + '../../public/static/nobots.txt'));
         }
-        //else disallow all
-        else {
-          reply.file(path.normalize(__dirname + '../../public/static/nobots.txt'));
-        }
-      }
-    }
+      },
+    },
   ];
 
   utils.addRoutes(server, routes, basePath);
 }
 
 export default {
-  addTo
+  addTo,
 };
