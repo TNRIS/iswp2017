@@ -1,11 +1,11 @@
-import Hapi from 'hapi';
-import Inert from 'inert'; // for static directory serving
-import Vision from 'vision'; // for view rendering
-import Etags from 'hapi-etags';
-import Good from 'good';
-import GoodConsole from 'good-console';
-import RequireHttps from 'hapi-require-https';
-import swig from 'swig';
+const Hapi = require('hapi');
+const Inert = require('Inert');
+const Vision = require('Vision');
+const Etags = require('hapi-tags');
+const Good = require('Good');
+const GoodConsole = require('GoodConsole');
+const RequireHttps = require('hapi-require-https');
+const swig = require('swig');
 
 import ValidParameters from 'plugins/validParameters';
 import homeRoutes from 'routes/home';
@@ -16,7 +16,7 @@ import config from 'config';
 import webpackAssets from 'webpack-assets.json';
 
 const server = new Hapi.Server({
-  debug: {request: ['*']},
+  debug: { request: ['*'] },
   connections: {
     routes: {
       //enable cors on all routes
@@ -31,7 +31,7 @@ server.on('request-error', (request, err) => {
 
 server.connection({
   port: config.port,
-  router: {stripTrailingSlash: true}
+  router: { stripTrailingSlash: true }
 });
 
 const loggingOptions = {
@@ -46,7 +46,7 @@ const plugins = [
   Inert,
   Vision,
   Etags,
-  {register: Good, options: loggingOptions},
+  { register: Good, options: loggingOptions },
   ValidParameters
 ];
 
@@ -62,7 +62,7 @@ server.register(plugins, (err) => {
 
   server.views({
     engines: {
-      swig: swig
+      swig
     },
     relativeTo: __dirname,
     path: './views',

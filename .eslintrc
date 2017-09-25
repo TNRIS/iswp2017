@@ -15,7 +15,7 @@
     "quotes": 0,
     "spaced-comment": 0
   },
-  "environment": {
+  "env": {
     "browser": true,
     "es6": true
   },
