@@ -12,7 +12,7 @@ import PropTypes from '../../utils/CustomPropTypes';
 import ThemeSelector from '../ThemeSelector';
 import TitlePlugin from '../../utils/ChartistAxisTitlePlugin';
 import Units from '../Units';
-import utils from '../../utils';
+import {slugify} from '../../utils';
 
 const chartOptions = {
   height: '240px',
@@ -58,7 +58,7 @@ export default React.createClass({
         return {
           name: titleize(type),
           meta: type.toLowerCase(),
-          className: `series-${utils.slugify(type.toLowerCase())}`,
+          className: `series-${slugify(type.toLowerCase())}`,
           data: constants.DECADES.map((year) => {
             if (R.path([this.state.selectedTheme, 'typeTotals', type], viewData)) {
               return viewData[this.state.selectedTheme].typeTotals[type][year];

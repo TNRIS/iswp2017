@@ -2,7 +2,7 @@
 import path from 'path';
 import Joi from 'joi';
 
-import utils from 'lib/utils';
+import {addRoutes} from 'lib/utils';
 
 /**
  * Returns a 404 error
@@ -146,7 +146,7 @@ function addTo(server, basePath = '/') {
     },
   ];
 
-  utils.addRoutes(server, routes, basePath);
+  addRoutes(server, routes, basePath);
 }
 
 export default {

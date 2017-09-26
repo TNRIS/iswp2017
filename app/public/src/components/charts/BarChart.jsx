@@ -8,7 +8,7 @@ import classList from 'dom-classlist';
 import isFirefox from 'is-firefox';
 import format from 'format-number';
 
-import utils from '../../utils';
+import {getChartLeftPadding} from '../../utils';
 import SeriesHighlightActions from '../../actions/SeriesHighlightActions';
 
 const tooltipClass = 'ct-tooltip';
@@ -99,7 +99,7 @@ export default React.createClass({
     // to the hovered chart element
     tooltip.style.top = `${matrix.f - height - heightAdjust}px`;
     tooltip.style.left = `${matrix.e - width / 2}px`;
-    tooltip.className = classnames(tooltipClass, `tooltip-${utils.slugify(seriesName.toLowerCase())}`);
+    tooltip.className = classnames(tooltipClass, `tooltip-${slugify(seriesName.toLowerCase())}`);
   },
 
   centerHorizontalLabels(event) {
@@ -133,7 +133,7 @@ export default React.createClass({
       width: '100%',
       seriesBarDistance: 10,
       chartPadding: {
-        left: utils.getChartLeftPadding(props.chartData),
+        left: getChartLeftPadding(props.chartData),
         //chartist calculates internal padding strangely in firefox
         // so accomodate for that here, ref #161
         bottom: isFirefox ? 20 : 10

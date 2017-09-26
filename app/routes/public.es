@@ -1,5 +1,5 @@
 
-import utils from 'lib/utils';
+import {addRoutes} from 'lib/utils';
 
 const routes = [
   {
@@ -35,7 +35,7 @@ function addTo(server, basePath = '/') {
     throw new Error('validParameters must be loaded before adding api routes');
   }
 
-  utils.addRoutes(server, routes, basePath);
+  addRoutes(server, routes, basePath);
 }
 
 export default {

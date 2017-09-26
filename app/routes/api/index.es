@@ -1,5 +1,5 @@
 
-import utils from 'lib/utils';
+import {addRoutes} from 'lib/utils';
 import genDataRoutes from './data';
 import genEntityRoutes from './entities';
 import genPlacesRoutes from './places';
@@ -23,11 +23,11 @@ function addTo(server, basePath = '/') {
   const sourceRoutes = genSourceRoutes(validParams);
   const projectRoutes = genProjectRoutes(validParams);
 
-  utils.addRoutes(server, dataRoutes, basePath);
-  utils.addRoutes(server, entityRoutes, basePath);
-  utils.addRoutes(server, placesRoutes, basePath);
-  utils.addRoutes(server, sourceRoutes, basePath);
-  utils.addRoutes(server, projectRoutes, basePath);
+  addRoutes(server, dataRoutes, basePath);
+  addRoutes(server, entityRoutes, basePath);
+  addRoutes(server, placesRoutes, basePath);
+  addRoutes(server, sourceRoutes, basePath);
+  addRoutes(server, projectRoutes, basePath);
 
   server.route({
     method: 'GET',

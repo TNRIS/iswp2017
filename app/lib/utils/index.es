@@ -7,7 +7,7 @@ import Boom from 'boom';
  * @param {object} o
  * @return {boolean}
  */
-function isEmptyObj(o) {
+export function isEmptyObj(o) {
   if (!o) {
     return true;
   }
@@ -19,7 +19,7 @@ function isEmptyObj(o) {
  * @param {object} reply 
  * @return {err}
  */
-function handleApiError(reply) {
+export function handleApiError(reply) {
   return (err) => {
     console.error(err);
     reply(Boom.badImplementation());
@@ -32,7 +32,7 @@ function handleApiError(reply) {
  * @param {array} routes 
  * @param {string} base 
  */
-function addRoutes(server, routes, base = '') {
+export function addRoutes(server, routes, base = '') {
   if (!Array.isArray(routes)) {
     throw new Error('routes must be an array');
   }
@@ -47,5 +47,3 @@ function addRoutes(server, routes, base = '') {
     server.route(route);
   });
 }
-
-export default {isEmptyObj, handleApiError, addRoutes};
