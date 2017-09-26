@@ -9,7 +9,8 @@ const routes = [
     path: '/static/{param*}',
     handler: {
       directory: {
-        path: path.normalize(__dirname + '../../public/static/'),
+        path: 'static/',
+        redirectToSlash: true,
       },
     },
   },
@@ -18,7 +19,8 @@ const routes = [
     path: '/{param*}',
     handler: {
       directory: {
-        path: path.normalize(__dirname + '../../public/dist/'),
+        path: 'dist/',
+        redirectToSlash: true,
       },
     },
   },

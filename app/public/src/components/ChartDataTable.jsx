@@ -22,7 +22,7 @@ export default React.createClass({
   getInitialState() {
     return {
       showTable: this.props.alwaysVisible || false,
-      highlightSeries: SeriesHighlightStore.getState().selectedSeries
+      highlightSeries: SeriesHighlightStore.getState().selectedSeries,
     };
   },
 
@@ -61,33 +61,42 @@ export default React.createClass({
       return (<div/>);
     }
 
+    const toggleContainer = () => {
+      if (!this.props.alwaysVisible) {
+        return (
+          <div className="toggle-container">
+            <button className="button-small" onClick={this.toggleTableClick}>
+              <small>
+              {this.state.showTable ? 'Hide Data Table' : 'Show Data Table'}
+              </small>
+            </button>
+          </div>
+        );
+      }
+    };
+
     return (
-      <div className={classnames("chart-table-container", this.props.className)}>
-        {() => {
-          if (!this.props.alwaysVisible) {
-            return (
-              <div className="toggle-container">
-                <button className="button-small" onClick={this.toggleTableClick}>
-                  <small>{this.state.showTable ? "Hide Data Table" : "Show Data Table"}</small>
-                </button>
-              </div>
-            );
-          }
-        }()}
+      <div className={
+        classnames('chart-table-container', this.props.className)}>
+        {toggleContainer()}
         <ToggleDisplay show={this.state.showTable}>
           <div aria-live="polite" className="table-scroll-container">
             <table className="u-full-width" >
               <thead>
                 <tr>
                   {!this.props.omitLabels && <th></th>}
-                  {chartData.labels.map((text, i) => (<th scope="row" key={i}>{text}</th>))}
+                  {chartData.labels.map((text, i) => (
+                    <th scope="row" key={i}>{text}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
                 {chartData.series.map((series) => {
                   const isHighlighted = series.meta === this.state.highlightSeries;
                   return (
-                    <tr className={classnames(series.className, {'highlight': isHighlighted})} key={series.name}>
+                    <tr className={
+                      classnames(series.className,
+                        {'highlight': isHighlighted})} key={series.name}>
                       {
                         !this.props.omitLabels &&
                         <td className="row-label">
@@ -116,5 +125,5 @@ export default React.createClass({
         </ToggleDisplay>
       </div>
     );
-  }
+  },
 });

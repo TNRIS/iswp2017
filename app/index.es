@@ -6,6 +6,7 @@ import Good from 'good';
 import GoodConsole from 'good-console';
 import RequireHttps from 'hapi-require-https';
 import swig from 'swig';
+import path from 'path';
 
 import ValidParameters from 'plugins/validParameters';
 import homeRoutes from 'routes/home';
@@ -21,6 +22,10 @@ const server = new Hapi.Server({
     routes: {
       // enable cors on all routes
       cors: true,
+      files: {
+        // FIXME: make this a relative path
+        relativeTo: '/home/dhickman/Dev/iswp2017/app/public',
+      },
     },
   },
 });

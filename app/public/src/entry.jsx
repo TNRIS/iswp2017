@@ -1,4 +1,4 @@
-/*!
+/*
  * Interactive Texas State Water Plan 2017
  * TNRIS | TWDB
  */
@@ -43,16 +43,15 @@ history.listen((loc) => {
 });
 
 ReactDOM.render((
-  // <Router history={history}>
-  //   <Route component={App}>
-  //     <Route name="stateview" path="statewide" component={StatewideView}/>
-  //     <Route name="entityview" path="entity/:entityId" component={EntityView}/>
-  //     <Route name="sourceview" path="source/:sourceId" component={SourceView}/>
-  //     <Route name="projectview" path="project/:projectId" component={ProjectView}/>
-  //     <Route name="usagetypeview" path="usagetype/:typeId" component={UsageTypeView}/>
-  //     <Route name="placeview" path=":type/:typeId" component={PlaceView}/>
-  //     <Redirect from="/" to="/statewide" />
-  //   </Route>
-  // </Router>
-  <h1>Hello, World!</h1>
+  <Router history={history}>
+    <Route component={App}>
+      <Route name="stateview" path="statewide" component={StatewideView}/>
+      <Route name="entityview" path="entity/:entityId" component={EntityView}/>
+      <Route name="sourceview" path="source/:sourceId" component={SourceView}/>
+      <Route name="projectview" path="project/:projectId" component={ProjectView}/>
+      <Route name="usagetypeview" path="usagetype/:typeId" component={UsageTypeView}/>
+      <Route name="placeview" path=":type/:typeId" component={PlaceView}/>
+      <Redirect from="/" to="/statewide" />
+    </Route>
+  </Router>
 ), document.getElementById('reactApp'));

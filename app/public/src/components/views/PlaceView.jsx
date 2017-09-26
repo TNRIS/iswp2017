@@ -30,7 +30,7 @@ export default React.createClass({
   getInitialState() {
     return {
       placeData: PlaceDataStore.getState().placeData,
-      viewChoice: DataViewChoiceStore.getState()
+      viewChoice: DataViewChoiceStore.getState(),
     };
   },
 
@@ -62,7 +62,7 @@ export default React.createClass({
 
   fetchPlaceData(params) {
     PlaceDataStore.fetch({
-      type: params.type, typeId: params.typeId
+      type: params.type, typeId: params.typeId,
     });
   },
 
@@ -110,7 +110,8 @@ export default React.createClass({
                       isRegion &&
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <RegionDescription region={params.typeId.toUpperCase()} />
+                          <RegionDescription
+                          region={params.typeId.toUpperCase()} />
                         </div>
                       </div>
                     }
@@ -139,14 +140,17 @@ export default React.createClass({
                     <div className="row panel-row">
                       <div className="twelve columns">
                         <span className="view-name">{viewName}</span>
-                        <ProjectTable type={params.type} projectData={placeData.data.projects} />
+                        <ProjectTable
+                        type={params.type}
+                        projectData={placeData.data.projects} />
                       </div>
                     </div>
 
                   </div>
 
-                  <DataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
-                    theme={this.state.viewChoice.selectedTheme}>
+                  <DataViewChoiceWrap
+                  decade={this.state.viewChoice.selectedDecade}
+                  theme={this.state.viewChoice.selectedTheme}>
 
                     <div className="container">
                       <div className="row panel-row">
@@ -193,6 +197,5 @@ export default React.createClass({
         </section>
       </div>
     );
-  }
-
+  },
 });
