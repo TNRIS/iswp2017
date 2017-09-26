@@ -1,9 +1,10 @@
 
+import R from 'ramda';
 import React from 'react';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
-import utils from '../../utils';
+import constants from '../../constants';
 import DataByTypeCharts from '../charts/DataByTypeCharts';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
@@ -18,6 +19,7 @@ import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
+import utils from '../../utils';
 
 export default React.createClass({
   propTypes: {
@@ -177,11 +179,28 @@ export default React.createClass({
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
                           <h5>Download Data</h5>
-                          <DownloadDataLink
-                            type={this.props.params.type}
-                            typeId={this.props.params.typeId}
-                            theme={this.state.viewChoice.selectedTheme}
-                            viewName={viewName} />
+                          <ul>
+                            {
+                              R.prepend('population', constants.THEMES).map((theme) => {
+                                if (R.isEmpty(placeData)) {
+                                  return (
+                                    <li key={`download-${theme}`}>
+                                      No {constants.THEME_TITLES[theme]} data exists for {viewName}
+                                    </li>
+                                  );
+                                }
+                                return (
+                                  <li key={`download-${theme}`}>
+                                    <DownloadDataLink
+                                      type={this.props.params.type}
+                                      typeId={this.props.params.typeId}
+                                      theme={theme}
+                                      viewName={viewName} />
+                                  </li>
+                                );
+                              })
+                            }
+                          </ul>
                         </div>
                       </div>
                     </div>
