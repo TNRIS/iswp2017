@@ -1,14 +1,11 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 import HeaderNav from './components/HeaderNav';
 
-export default React.createClass({
-  propTypes: {
-    children: React.PropTypes.object
-  },
-
+class App extends React.Component {
   render() {
     return (
       <div>
@@ -18,4 +15,10 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+App.propTypes = {
+  children: PropTypes.object
+}
+
+export default App;

@@ -75,7 +75,7 @@
     "react-dom": "^15.6.2",
     "react-helmet": "^2.1.0",
     "react-pivot": "1.13.1",
-    "react-router": "1.0.2",
+    "react-router": "4.2.0",
     "react-select": "^1.0.0-rc.10",
     "react-spinkit": "^1.1.4",
     "react-toggle-display": "^1.0.0",
