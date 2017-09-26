@@ -6,6 +6,11 @@ import genPlacesRoutes from './places';
 import genSourceRoutes from './sources';
 import genProjectRoutes from './projects';
 
+/**
+ * Add API routes
+ * @param {object} server
+ * @param {string} basePath 
+ */
 function addTo(server, basePath = '/') {
   const validParams = server.plugins.validParameters;
   if (!validParams) {
@@ -34,27 +39,35 @@ function addTo(server, basePath = '/') {
           routeGroups: [
             {
               name: 'Data',
-              description: 'Methods to retrieve raw and summary water planning data.',
+              description:
+                'Methods to retrieve raw and summary water planning data.',
               routes: dataRoutes
             },
             {
               name: 'Entities',
-              description: 'Methods to retrieve entity (water user group) information.',
+              description:
+                'Methods to retrieve entity (water user group) information.',
               routes: entityRoutes
             },
             {
               name: 'Places',
-              description: 'Methods to retrieve places (regional water planning areas, counties, etc.) information.',
+              description:
+                'Methods to retrieve places (regional water planning areas, ' +
+                'counties, etc.) information.',
               routes: placesRoutes
             },
             {
               name: 'Sources',
-              description: 'Methods to retrieve ground and surface water source information.',
+              description:
+                'Methods to retrieve ground and surface water source ' +
+                'information.',
               routes: sourceRoutes
             },
             {
               name: 'Projects',
-              description: 'Methods to retrieve water management strategies projects information.',
+              description:
+                'Methods to retrieve water management strategies ' +
+                'projects information.',
               routes: projectRoutes
             }
           ]

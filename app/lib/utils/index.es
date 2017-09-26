@@ -2,11 +2,23 @@
 import R from 'ramda';
 import Boom from 'boom';
 
+/**
+ * Checks for empty object
+ * @param {object} o
+ * @return {boolean}
+ */
 function isEmptyObj(o) {
-  if (!o) { return true; }
+  if (!o) {
+    return true;
+  }
   return R.isEmpty(R.keys(o));
 }
 
+/**
+ * Handles API errors
+ * @param {object} reply 
+ * @return {err}
+ */
 function handleApiError(reply) {
   return (err) => {
     console.error(err);
@@ -14,6 +26,12 @@ function handleApiError(reply) {
   };
 }
 
+/**
+ * Adds route to server
+ * @param {object} server 
+ * @param {array} routes 
+ * @param {string} base 
+ */
 function addRoutes(server, routes, base = '') {
   if (!Array.isArray(routes)) {
     throw new Error('routes must be an array');
@@ -30,8 +48,4 @@ function addRoutes(server, routes, base = '') {
   });
 }
 
-export default {
-  isEmptyObj,
-  handleApiError,
-  addRoutes
-};
+export default {isEmptyObj, handleApiError, addRoutes};

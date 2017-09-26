@@ -8,3 +8,5 @@ parserOptions:
     jsx: true
 plugins:
   - react
+rules:
+  comma-dangle: never

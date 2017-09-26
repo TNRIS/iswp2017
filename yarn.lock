@@ -3242,7 +3242,7 @@ joi@10.x.x:
     items "2.x.x"
     topo "2.x.x"
 
-joi@6.x.x, joi@^6.4.1, joi@^6.7.0:
+joi@6.x.x, joi@^6.4.1:
   version "6.10.1"
   resolved "https://registry.yarnpkg.com/joi/-/joi-6.10.1.tgz#4d50c318079122000fe5f16af1ff8e1917b77e06"
   dependencies:
@@ -3251,7 +3251,7 @@ joi@6.x.x, joi@^6.4.1, joi@^6.7.0:
     moment "2.x.x"
     topo "1.x.x"
 
-joi@^11.1.0:
+joi@^11.1.0, joi@^11.1.1:
   version "11.1.1"
   resolved "https://registry.yarnpkg.com/joi/-/joi-11.1.1.tgz#08194537d3b9c796bac8666deb3a825c1a5d83c1"
   dependencies:

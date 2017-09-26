@@ -1,6 +1,4 @@
 
-import path from 'path';
-
 import utils from 'lib/utils';
 
 const routes = [

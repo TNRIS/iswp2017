@@ -6,7 +6,6 @@ import Good from 'good';
 import GoodConsole from 'good-console';
 import RequireHttps from 'hapi-require-https';
 import swig from 'swig';
-import path from 'path';
 
 import ValidParameters from 'plugins/validParameters';
 import homeRoutes from 'routes/home';
@@ -25,9 +24,9 @@ const server = new Hapi.Server({
       files: {
         // FIXME: make this a relative path
         relativeTo: '/home/dhickman/Dev/iswp2017/app/public',
-      },
-    },
-  },
+      }
+    }
+  }
 });
 
 server.on('request-error', (request, err) => {
@@ -36,15 +35,16 @@ server.on('request-error', (request, err) => {
 
 server.connection({
   port: config.port,
-  router: {stripTrailingSlash: true},
+  routes: {log: true},
+  router: {stripTrailingSlash: true}
 });
 
 const loggingOptions = {
   opsInterval: 1000,
   reporters: [{
     reporter: GoodConsole,
-    events: {log: '*', error: '*', request: '*'},
-  },
+    events: {log: '*', error: '*', request: '*'}
+  }
 ]};
 
 const plugins = [
@@ -52,7 +52,7 @@ const plugins = [
   Vision,
   Etags,
   {register: Good, options: loggingOptions},
-  ValidParameters,
+  ValidParameters
 ];
 
 if (process.env.NODE_ENV === 'production') {
@@ -74,8 +74,8 @@ server.register(plugins, (err) => {
     context: {
       gaTrackingCode: config.gaTrackingCode,
       jsBundleName: webpackAssets.main.js,
-      cssBundleName: webpackAssets.main.css,
-    },
+      cssBundleName: webpackAssets.main.css
+    }
   });
 
   publicRoutes.addTo(server, '/public');
@@ -88,7 +88,7 @@ server.register(plugins, (err) => {
     path: '/{p*}',
     handler: (request, reply) => {
       reply.view('404').code(404);
-    },
+    }
   });
 
   if (!module.parent) {
