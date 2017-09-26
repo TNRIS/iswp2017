@@ -1,6 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 import classnames from 'classnames';
@@ -9,7 +10,9 @@ import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 import ProjectSummarySubhead from './ProjectSummarySubhead';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'ProjectSummary',
+
   propTypes: {
     projectData: PropTypes.ProjectDataSplit
   },
@@ -40,5 +43,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });

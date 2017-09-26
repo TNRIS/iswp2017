@@ -1,6 +1,8 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 import titleize from 'titleize';
@@ -8,9 +10,11 @@ import titleize from 'titleize';
 import constants from '../constants';
 import UsageTypeIcon from './UsageTypeIcon';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'UsageTypeChartLegend',
+
   propTypes: {
-    className: React.PropTypes.string
+    className: PropTypes.string
   },
 
   mixins: [PureRenderMixin],
@@ -29,5 +33,5 @@ export default React.createClass({
         </ul>
       </div>
     );
-  }
+  },
 });

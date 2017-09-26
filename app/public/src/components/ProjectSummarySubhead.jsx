@@ -1,10 +1,14 @@
 
+import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'ProjectSummarySubhead',
+
   propTypes: {
-    project: React.PropTypes.object
+    project: PropTypes.object
   },
 
   mixins: [PureRenderMixin],
@@ -30,5 +34,5 @@ export default React.createClass({
           </p>
         </div>
     );
-  }
+  },
 });

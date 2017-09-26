@@ -1,17 +1,21 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 
 import constants from '../constants';
-import PropTypes from '../utils/CustomPropTypes';
+import CustomPropTypes from '../utils/CustomPropTypes';
 import UsageTypeIcon from './UsageTypeIcon';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'UsageTypeSummary',
+
   propTypes: {
-    viewData: PropTypes.ViewData,
-    usageType: React.PropTypes.string
+    viewData: CustomPropTypes.ViewData,
+    usageType: PropTypes.string
   },
 
   mixins: [PureRenderMixin],
@@ -36,5 +40,5 @@ export default React.createClass({
         <p>{constants.USAGE_TYPE_DESCRIPTIONS[props.usageType.toUpperCase()]}</p>
       </div>
     );
-  }
+  },
 });

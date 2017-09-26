@@ -1,6 +1,8 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 import format from 'format-number';
@@ -8,13 +10,15 @@ import ToggleDisplay from 'react-toggle-display';
 
 import SeriesHighlightStore from '../stores/SeriesHighlightStore';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'ChartDataTable',
+
   propTypes: {
-    className: React.PropTypes.string,
-    alwaysVisible: React.PropTypes.bool,
-    chartData: React.PropTypes.object.isRequired,
-    showTotals: React.PropTypes.bool,
-    omitLabels: React.PropTypes.bool
+    className: PropTypes.string,
+    alwaysVisible: PropTypes.bool,
+    chartData: PropTypes.object.isRequired,
+    showTotals: PropTypes.bool,
+    omitLabels: PropTypes.bool
   },
 
   mixins: [PureRenderMixin],

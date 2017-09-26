@@ -39,48 +39,50 @@ const sourceSelectOptions = sourceNames.map((src) => {
   return {value: src.sourceid, label: src.name};
 });
 
-export default React.createClass({
-  getInitialState() {
+export default class extends React.Component {
+  constructor(props) {
+    super(props);
     const viewState = ViewStateStore.getState().viewState;
-    return {
+
+    this.state = {
       navButtonEnabled: viewState.view === 'statewide',
       navCategory: viewState.view,
       subNavValue: ''
     };
-  },
+  }
 
   componentDidMount() {
     ViewStateStore.listen(this.onViewStateChange);
-  },
+  }
 
   componentWillUnmount() {
     ViewStateStore.unlisten(this.onViewStateChange);
-  },
+  }
 
-  onViewStateChange(storeState) {
+  onViewStateChange = (storeState) => {
     this.setState({
       navCategory: storeState.viewState.view,
       subNavValue: ''
     });
-  },
+  };
 
-  onChangeNavCategory(val) {
+  onChangeNavCategory = (val) => {
     this.setState({
       navCategory: val,
       subNavValue: ''
     });
-  },
+  };
 
-  onSubNavChange(val, matches) {
+  onSubNavChange = (val, matches) => {
     if (!R.isEmpty(val)) {
       this.setState({subNavValue: R.nth(0, matches)});
     }
     else {
       this.setState({subNavValue: ''});
     }
-  },
+  };
 
-  entitySearch(input, callback) {
+  entitySearch = (input, callback) => {
     if (input.length < 3) {
       return callback(null, {options: []});
     }
@@ -95,9 +97,9 @@ export default React.createClass({
       .catch((err) => {
         callback(err);
       });
-  },
+  };
 
-  projectSearch(input, callback) {
+  projectSearch = (input, callback) => {
     if (input.length < 3) {
       return callback(null, {options: []});
     }
@@ -112,14 +114,14 @@ export default React.createClass({
       .catch((err) => {
         callback(err);
       });
-  },
+  };
 
-  isNavButtonEnabled() {
+  isNavButtonEnabled = () => {
     return (this.state.navCategory === 'statewide')
       || !R.isEmpty(this.state.subNavValue);
-  },
+  };
 
-  navigate() {
+  navigate = () => {
     switch (this.state.navCategory) {
     case 'statewide':
       history.push({pathname: '/statewide'});
@@ -147,7 +149,7 @@ export default React.createClass({
     }
 
     this.setState({subNavValue: ''});
-  },
+  };
 
   render() {
     return (
@@ -240,4 +242,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}

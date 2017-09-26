@@ -1,12 +1,13 @@
 
+import PropTypes from 'prop-types';
 import React from 'react';
 import constants from '../constants';
 import RegionDescriptions from '../utils/RegionDescriptions';
 
-export default React.createClass({
-  propTypes: {
-    region: React.PropTypes.oneOf(constants.REGIONS).isRequired
-  },
+export default class extends React.Component {
+  static propTypes = {
+    region: PropTypes.oneOf(constants.REGIONS).isRequired
+  };
 
   render() {
     const region = this.props.region;
@@ -22,4 +23,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}

@@ -1,6 +1,8 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import constants from '../constants';
@@ -10,11 +12,13 @@ import DataViewChoiceActions from '../actions/DataViewChoiceActions';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'SrcDataViewChoiceSelectors',
+
   propTypes: {
-    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired,
-    hidePopulation: React.PropTypes.bool
+    decade: PropTypes.oneOf(constants.DECADES).isRequired,
+    theme: PropTypes.oneOf(themesAndPopulation).isRequired,
+    hidePopulation: PropTypes.bool
   },
 
   mixins: [PureRenderMixin],
@@ -45,6 +49,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  }
-
+  },
 });

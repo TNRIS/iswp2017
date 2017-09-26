@@ -1,6 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Table, Tr, Td} from 'reactable';
 import ToggleDisplay from 'react-toggle-display';
@@ -11,7 +12,9 @@ import PropTypes from '../utils/CustomPropTypes';
 import Units from './Units';
 import {objFromKeys} from '../utils';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'EntityStrategiesTable',
+
   propTypes: {
     viewData: PropTypes.ViewData
   },
@@ -80,6 +83,5 @@ export default React.createClass({
         </ToggleDisplay>
       </div>
     );
-  }
-
+  },
 });

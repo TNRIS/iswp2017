@@ -8,7 +8,7 @@ import DataByTypeCharts from '../charts/DataByTypeCharts';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
 import DownloadDataLink from '../DownloadDataLink';
-import RegionalSummaryTable from '../RegionalSummaryTable';
+import {RegionalSummaryTable} from '../RegionalSummaryTable';
 import RegionalSummaryTreemap from '../charts/RegionalSummaryTreemap';
 import StatewideDataStore from '../../stores/StatewideDataStore';
 import StatewideSummary from '../StatewideSummary';
@@ -17,41 +17,45 @@ import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 
-export default React.createClass({
-  getInitialState() {
-    return {
+class StatewideView extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.onChange = this.onChange.bind(this);
+
+    this.state = {
       data: StatewideDataStore.getState().data,
       viewChoice: DataViewChoiceStore.getState()
-    };
-  },
+    }
+  }
 
   componentDidMount() {
     StatewideDataStore.listen(this.onChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
     this.fetchData();
-  },
+  }
 
   componentWillReceiveProps() {
     this.fetchData();
-  },
+  }
 
   componentWillUnmount() {
     StatewideDataStore.unlisten(this.onChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
-  },
+  }
 
   onChange(state) {
     this.setState(state);
-  },
+  }
 
   onDataViewChoiceChange(state) {
     this.setState({viewChoice: state});
-  },
+  }
 
   fetchData() {
     // Fetch statewide data
     StatewideDataStore.fetch();
-  },
+  }
 
   render() {
     const data = this.state.data;
@@ -74,7 +78,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" noFadeIn />
+                        <Spinner name="double-bounce" fadeIn='none' />
                       </div>
                     </div>
                   </div>
@@ -158,10 +162,11 @@ export default React.createClass({
               );
             })()
           }
-
         </section>
       </div>
     );
   }
+}
 
-});
+
+export default StatewideView;

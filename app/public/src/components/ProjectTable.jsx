@@ -1,6 +1,8 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {Table, Tr, Td} from 'reactable';
@@ -8,14 +10,16 @@ import ToggleDisplay from 'react-toggle-display';
 import format from 'format-number';
 import history from '../history';
 
-import PropTypes from '../utils/CustomPropTypes';
+import CustomPropTypes from '../utils/CustomPropTypes';
 
 const itemsPerPage = 10;
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'ProjectTable',
+
   propTypes: {
-    projectData: PropTypes.ProjectData.isRequired,
-    type: React.PropTypes.oneOf(['region', 'county', 'entity', 'source']).isRequired
+    projectData: CustomPropTypes.ProjectData.isRequired,
+    type: PropTypes.oneOf(['region', 'county', 'entity', 'source']).isRequired
   },
 
   mixins: [LinkedStateMixin, PureRenderMixin],
@@ -100,6 +104,5 @@ export default React.createClass({
         </ToggleDisplay>
       </div>
     );
-  }
-
+  },
 });

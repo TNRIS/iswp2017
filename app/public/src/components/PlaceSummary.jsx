@@ -1,6 +1,8 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 import classnames from 'classnames';
@@ -8,14 +10,16 @@ import classnames from 'classnames';
 import constants from '../constants';
 import utils from '../utils';
 import PlaceSummarySubhead from './PlaceSummarySubhead';
-import PropTypes from '../utils/CustomPropTypes';
+import CustomPropTypes from '../utils/CustomPropTypes';
 import PopulationChart from './charts/PopulationChart';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'PlaceSummary',
+
   propTypes: {
-    type: React.PropTypes.string,
-    typeId: React.PropTypes.string,
-    viewData: PropTypes.ViewData
+    type: PropTypes.string,
+    typeId: PropTypes.string,
+    viewData: CustomPropTypes.ViewData
   },
 
   mixins: [PureRenderMixin],
@@ -45,5 +49,5 @@ export default React.createClass({
 
       </div>
     );
-  }
+  },
 });

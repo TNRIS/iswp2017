@@ -4,16 +4,11 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, Redirect} from 'react-router';
+import {Router, Route} from 'react-router-dom';
 
 import App from './App';
 import history from './history';
-import PlaceView from './components/views/PlaceView';
-import UsageTypeView from './components/views/UsageTypeView';
-import SourceView from './components/views/SourceView';
-import ProjectView from './components/views/ProjectView';
-import EntityView from './components/views/EntityView';
-import StatewideView from './components/views/StatewideView';
+
 import ViewStateActions from './actions/ViewStateActions';
 
 import './vendor/css/normalize.css';
@@ -44,14 +39,6 @@ history.listen((loc) => {
 
 ReactDOM.render((
   <Router history={history}>
-    <Route component={App}>
-      <Route name="stateview" path="statewide" component={StatewideView}/>
-      <Route name="entityview" path="entity/:entityId" component={EntityView}/>
-      <Route name="sourceview" path="source/:sourceId" component={SourceView}/>
-      <Route name="projectview" path="project/:projectId" component={ProjectView}/>
-      <Route name="usagetypeview" path="usagetype/:typeId" component={UsageTypeView}/>
-      <Route name="placeview" path=":type/:typeId" component={PlaceView}/>
-      <Redirect from="/" to="/statewide" />
-    </Route>
+    <Route component={App} />
   </Router>
 ), document.getElementById('reactApp'));
