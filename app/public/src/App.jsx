@@ -4,8 +4,6 @@ import {Redirect, Route, Switch} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import history from './history';
-
 import HeaderNav from './components/HeaderNav';
 import PlaceView from './components/views/PlaceView';
 import UsageTypeView from './components/views/UsageTypeView';
@@ -14,7 +12,14 @@ import ProjectView from './components/views/ProjectView';
 import EntityView from './components/views/EntityView';
 import StatewideView from './components/views/StatewideView';
 
-class App extends React.Component {
+/**
+ * Main application component
+ */
+export default class App extends React.Component {
+  /**
+   * Render the main app
+   * @return {Component}
+   */
   render() {
     return (
       <div>
@@ -36,6 +41,4 @@ class App extends React.Component {
 
 App.propTypes = {
   children: PropTypes.object
-}
-
-export default App;
+};

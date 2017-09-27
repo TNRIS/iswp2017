@@ -8,7 +8,7 @@ import DataByTypeCharts from '../charts/DataByTypeCharts';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
 import DownloadDataLink from '../DownloadDataLink';
-import {RegionalSummaryTable} from '../RegionalSummaryTable';
+import RegionalSummaryTable from '../RegionalSummaryTable';
 import RegionalSummaryTreemap from '../charts/RegionalSummaryTreemap';
 import StatewideDataStore from '../../stores/StatewideDataStore';
 import StatewideSummary from '../StatewideSummary';
@@ -17,8 +17,14 @@ import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 
-class StatewideView extends React.Component {
-
+/**
+ * 
+ */
+export default class StatewideView extends React.Component {
+  /**
+   * Statewide view component
+   * @param {*} props
+   */
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
@@ -26,37 +32,61 @@ class StatewideView extends React.Component {
     this.state = {
       data: StatewideDataStore.getState().data,
       viewChoice: DataViewChoiceStore.getState()
-    }
+    };
   }
 
+  /**
+   * 
+   */
   componentDidMount() {
     StatewideDataStore.listen(this.onChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
     this.fetchData();
   }
 
+  /**
+   * 
+   */
   componentWillReceiveProps() {
     this.fetchData();
   }
 
+  /**
+   * 
+   */
   componentWillUnmount() {
     StatewideDataStore.unlisten(this.onChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
   }
 
+  /**
+   * 
+   * @param {*} state 
+   */
   onChange(state) {
     this.setState(state);
   }
 
+  /**
+   * 
+   * @param {*} state 
+   */
   onDataViewChoiceChange(state) {
     this.setState({viewChoice: state});
   }
 
+  /**
+   * 
+   */
   fetchData() {
     // Fetch statewide data
     StatewideDataStore.fetch();
   }
 
+  /**
+   * Render the component
+   * @return {Component}
+   */
   render() {
     const data = this.state.data;
 
@@ -167,6 +197,3 @@ class StatewideView extends React.Component {
     );
   }
 }
-
-
-export default StatewideView;

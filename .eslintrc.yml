@@ -9,4 +9,4 @@ parserOptions:
 plugins:
   - react
 rules:
-  comma-dangle: never
+  comma-dangle: 0

@@ -8,12 +8,17 @@ import classList from 'dom-classlist';
 import isFirefox from 'is-firefox';
 import format from 'format-number';
 
-import {getChartLeftPadding} from '../../utils';
+import {getChartLeftPadding, slugify} from '../../utils';
 import SeriesHighlightActions from '../../actions/SeriesHighlightActions';
 
 const tooltipClass = 'ct-tooltip';
 const heightAdjust = 9;
 
+/**
+ * Checks data series to see if it is all zeroes
+ * @param {*} chartData
+ * @return {boolean}
+ */
 function isAllZero(chartData) {
   for (let i = 0; i < chartData.series.length; i++) {
     const s = chartData.series[i];
@@ -51,8 +56,7 @@ export default React.createClass({
       try {
         this.chart.off('draw', this.centerHorizontalLabels);
         this.chart.detach();
-      }
-      catch (err) {
+      } catch (err) {
         console.error(err);
       }
     }
@@ -64,13 +68,14 @@ export default React.createClass({
   },
 
   onMouseOver(event) {
-    // use library to check classList because IE doesn't implement classList on SVG elements
+    // use library to check classList because IE doesn't
+    // implement classList on SVG elements
     const isOverBar = classList(event.target).contains('ct-bar');
     if (!isOverBar) {
       this.clearInteraction();
       return;
     }
-    //else
+    // else
     const me = event.target;
     const matrix = me.getScreenCTM().translate(
       +me.getAttribute('x1'), +me.getAttribute('y2')
@@ -87,7 +92,7 @@ export default React.createClass({
     // ref: https://github.com/gionkunz/chartist-js/issues/464
     const val = event.target.attributes['ct:value'].value || 0;
 
-    //first set the innerHTML to the formatted value
+    // first set the innerHTML to the formatted value
     // and place the tooltip offscreen so that its
     // height and width can be calculated
     tooltip.innerHTML = format()(val);
@@ -126,7 +131,9 @@ export default React.createClass({
   },
 
   updateChart(props) {
-    if (!props.chartData) { return; }
+    if (!props.chartData) {
+      return;
+    }
 
     const defaultOptions = {
       fullWidth: true,
@@ -134,7 +141,7 @@ export default React.createClass({
       seriesBarDistance: 10,
       chartPadding: {
         left: getChartLeftPadding(props.chartData),
-        //chartist calculates internal padding strangely in firefox
+        // chartist calculates internal padding strangely in firefox
         // so accomodate for that here, ref #161
         bottom: isFirefox ? 20 : 10
       },
@@ -154,8 +161,7 @@ export default React.createClass({
 
     if (this.chart) {
       this.chart.update(props.chartData, chartOptions, responsiveOptions);
-    }
-    else {
+    } else {
       this.chart = new Chartist.Bar(this.refs.chart,
         props.chartData, chartOptions, responsiveOptions);
     }
