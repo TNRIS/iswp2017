@@ -72,7 +72,7 @@ export default React.createClass({
       <div className="view-choice-wrap" ref="viewChoiceSection" style={wrapStyle}>
         <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
           ref="stickyEl">
-          <h4>Data by Planning Decade and Theme</h4>
+          <h4>Data by Planning Decade</h4>
           <PrjDataViewChoiceSelectors
             decade={this.props.decade}
             theme={this.props.theme}
