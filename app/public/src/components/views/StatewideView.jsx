@@ -27,12 +27,12 @@ export default class StatewideView extends React.Component {
    */
   constructor(props) {
     super(props);
-    this.onChange = this.onChange.bind(this);
-
     this.state = {
       data: StatewideDataStore.getState().data,
       viewChoice: DataViewChoiceStore.getState()
     };
+    this.onChange = this.onChange.bind(this);
+    this.onDataViewChoiceChange = this.onDataViewChoiceChange.bind(this);
   }
 
   /**

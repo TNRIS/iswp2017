@@ -1,36 +1,28 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import titleize from 'titleize';
 
 import constants from '../../constants';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import Treemap from './Treemap';
 import Units from '../Units';
 import utils from '../../utils';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
-export default React.createClass({
-  propTypes: {
-    viewData: PropTypes.ViewData,
-    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
-  },
-
-  mixins: [PureRenderMixin],
-
+export default class RegionalSummaryTreemap extends React.PureComponent {
   getInitialState() {
     return {
       selectedTreemap: 'region'
     };
-  },
+  }
 
   selectTreemap(type) {
     this.setState({selectedTreemap: type});
-  },
+  }
 
   formatData() {
     const selectedDecade = this.props.decade;
@@ -89,7 +81,7 @@ export default React.createClass({
         };
       })
     };
-  },
+  }
 
   render() {
     if (!this.props.viewData) {
@@ -125,4 +117,10 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+RegionalSummaryTreemap.propTypes = {
+  viewData: CustomPropTypes.ViewData,
+  decade: PropTypes.oneOf(constants.DECADES).isRequired,
+  theme: PropTypes.oneOf(themesAndPopulation).isRequired
+};

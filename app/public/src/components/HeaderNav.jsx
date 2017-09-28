@@ -14,14 +14,14 @@ import ProjectFetcher from '../utils/ProjectFetcher';
 import {sourceNames} from '../utils/SourceNames';
 
 const navCategoryOptions = [
-  {value: "statewide", label: "All of Texas"},
-  {value: "region", label: "Planning Region"},
-  {value: "county", label: "County"},
-  {value: "entity", label: "Water User Group"},
-  {value: "usagetype", label: "Usage Type"},
-  {value: "source", label: "Water Source"},
-  {value: "project", label: "WMS Project"}
-]
+  {value: 'statewide', label: 'All of Texas'},
+  {value: 'region', label: 'Planning Region'},
+  {value: 'county', label: 'County'},
+  {value: 'entity', label: 'Water User Group'},
+  {value: 'usagetype', label: 'Usage Type'},
+  {value: 'source', label: 'Water Source'},
+  {value: 'project', label: 'WMS Project'}
+];
 
 const regionSelectOptions = constants.REGIONS.map((region) => {
   return {value: region, label: `Region ${region}`};
@@ -39,7 +39,14 @@ const sourceSelectOptions = sourceNames.map((src) => {
   return {value: src.sourceid, label: src.name};
 });
 
-export default class extends React.Component {
+/**
+ * Header component
+ */
+export default class HeaderNav extends React.Component {
+  /**
+   * Header component constructor
+   * @param {*} props 
+   */
   constructor(props) {
     super(props);
     const viewState = ViewStateStore.getState().viewState;
@@ -49,16 +56,27 @@ export default class extends React.Component {
       navCategory: viewState.view,
       subNavValue: ''
     };
+
+    this.onViewStateChange = this.onViewStateChange.bind(this);
   }
 
+  /**
+   * 
+   */
   componentDidMount() {
     ViewStateStore.listen(this.onViewStateChange);
   }
 
+  /**
+   * 
+   */
   componentWillUnmount() {
     ViewStateStore.unlisten(this.onViewStateChange);
   }
 
+  /**
+   * 
+   */
   onViewStateChange = (storeState) => {
     this.setState({
       navCategory: storeState.viewState.view,
@@ -66,6 +84,9 @@ export default class extends React.Component {
     });
   };
 
+  /**
+   * 
+   */
   onChangeNavCategory = (val) => {
     this.setState({
       navCategory: val,
@@ -73,6 +94,9 @@ export default class extends React.Component {
     });
   };
 
+  /**
+   * 
+   */
   onSubNavChange = (val, matches) => {
     if (!R.isEmpty(val)) {
       this.setState({subNavValue: R.nth(0, matches)});
@@ -99,6 +123,9 @@ export default class extends React.Component {
       });
   };
 
+  /**
+   * 
+   */
   projectSearch = (input, callback) => {
     if (input.length < 3) {
       return callback(null, {options: []});
@@ -116,36 +143,42 @@ export default class extends React.Component {
       });
   };
 
+  /**
+   * 
+   */
   isNavButtonEnabled = () => {
     return (this.state.navCategory === 'statewide')
       || !R.isEmpty(this.state.subNavValue);
   };
 
+  /**
+   * 
+   */
   navigate = () => {
     switch (this.state.navCategory) {
-    case 'statewide':
-      history.push({pathname: '/statewide'});
-      break;
-    case 'county':
-      history.push({pathname: `/county/${this.state.subNavValue.value}`});
-      break;
-    case 'region':
-      history.push({pathname: `/region/${this.state.subNavValue.value}`});
-      break;
-    case 'entity':
-      history.push({pathname: `/entity/${this.state.subNavValue.value}`});
-      break;
-    case 'usagetype':
-      history.push({pathname: `/usagetype/${this.state.subNavValue.value}`});
-      break;
-    case 'source':
-      history.push({pathname: `/source/${this.state.subNavValue.value}`});
-      break;
-    case 'project':
-      history.push({pathname: `/project/${this.state.subNavValue.value}`});
-      break;
-    default:
-      return;
+      case 'statewide':
+        history.push({pathname: '/statewide'});
+        break;
+      case 'county':
+        history.push({pathname: `/county/${this.state.subNavValue.value}`});
+        break;
+      case 'region':
+        history.push({pathname: `/region/${this.state.subNavValue.value}`});
+        break;
+      case 'entity':
+        history.push({pathname: `/entity/${this.state.subNavValue.value}`});
+        break;
+      case 'usagetype':
+        history.push({pathname: `/usagetype/${this.state.subNavValue.value}`});
+        break;
+      case 'source':
+        history.push({pathname: `/source/${this.state.subNavValue.value}`});
+        break;
+      case 'project':
+        history.push({pathname: `/project/${this.state.subNavValue.value}`});
+        break;
+      default:
+        return;
     }
 
     this.setState({subNavValue: ''});
@@ -188,7 +221,9 @@ export default class extends React.Component {
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'entity'}>
-              <div className="select-container entity-select" aria-live="polite">
+              <div 
+              className="select-container entity-select" 
+              aria-live="polite">
                 <Select
                   placeholder="Find Water User Group"
                   ignoreCase
@@ -220,7 +255,9 @@ export default class extends React.Component {
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'project'}>
-              <div className="select-container project-select" aria-live="polite">
+              <div 
+              className="select-container project-select" 
+              aria-live="polite">
                 <Select
                   placeholder="Find Project"
                   ignoreCase

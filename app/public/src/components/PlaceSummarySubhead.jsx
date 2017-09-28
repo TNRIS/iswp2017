@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import createReactClass from 'create-react-class';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import intersperse from 'intersperse';
 

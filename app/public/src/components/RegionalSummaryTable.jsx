@@ -54,7 +54,12 @@ export default class RegionalSummaryTable extends React.PureComponent {
         <div className="twelve columns">
           <div className="table-container">
             <Table
-              className={classnames({'u-full-width': !isPopulation}, 'table-condensed regional-summary-table')}
+              className={
+                classnames(
+                  {
+                    'u-full-width': !isPopulation},
+                    'table-condensed regional-summary-table')
+                }
               defaultSort={{column: 'Region', direction: 'asc'}}
               sortable>
               {selectedData.map((row, i) => {
@@ -63,14 +68,19 @@ export default class RegionalSummaryTable extends React.PureComponent {
                         <Td column="Region" value={row.REGION}>
                           <Link to={`/region/${row.REGION}`}>{row.REGION}</Link>
                         </Td>
-                        {!isPopulation && constants.USAGE_TYPES.map((type, j) => {
+                        {!isPopulation && constants.USAGE_TYPES.map(
+                          (type, j) => {
                           return (
-                            <Td key={`${j}${type}`} column={titleize(type)} value={row[type]}>
+                            <Td key={`${j}${type}`}
+                            column={titleize(type)}
+                            value={row[type]}>
                               {format()(row[type])}
                             </Td>
                           );
                         })}
-                        <Td className="totals-col" column="Total" value={row.TOTAL}>
+                        <Td className="totals-col"
+                        column="Total"
+                        value={row.TOTAL}>
                           {format()(row.TOTAL)}
                         </Td>
                       </Tr>

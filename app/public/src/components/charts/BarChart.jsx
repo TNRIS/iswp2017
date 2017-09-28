@@ -1,7 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 import Chartist from 'chartist';
 import classnames from 'classnames';
 import classList from 'dom-classlist';
@@ -31,25 +31,18 @@ function isAllZero(chartData) {
   return true;
 }
 
-export default React.createClass({
-  propTypes: {
-    chartData: React.PropTypes.object,
-    chartOptions: React.PropTypes.object
-  },
-
-  mixins: [PureRenderMixin],
-
+export default class BarChart extends React.PureComponent {
   componentDidMount() {
     this.updateChart(this.props);
     window.addEventListener('scroll', this.clearInteraction);
     this.chart.on('draw', this.centerHorizontalLabels);
-  },
+  }
 
   componentWillUpdate(nextProps) {
     if (nextProps !== this.props) {
       this.updateChart(nextProps);
     }
-  },
+  }
 
   componentWillUnmount() {
     if (this.chart) {
@@ -61,11 +54,11 @@ export default React.createClass({
       }
     }
     window.removeEventListener('scroll', this.clearInteraction);
-  },
+  }
 
   onMouseOut() {
     this.clearInteraction();
-  },
+  }
 
   onMouseOver(event) {
     // use library to check classList because IE doesn't
@@ -81,7 +74,7 @@ export default React.createClass({
       +me.getAttribute('x1'), +me.getAttribute('y2')
     );
     const parent = me.parentNode;
-    const tooltip = this.refs.tooltip;
+    const tooltip = this.tooltip;
 
     const seriesName = parent.attributes['ct:meta'] ?
       parent.attributes['ct:meta'].value : 'default';
@@ -105,7 +98,7 @@ export default React.createClass({
     tooltip.style.top = `${matrix.f - height - heightAdjust}px`;
     tooltip.style.left = `${matrix.e - width / 2}px`;
     tooltip.className = classnames(tooltipClass, `tooltip-${slugify(seriesName.toLowerCase())}`);
-  },
+  }
 
   centerHorizontalLabels(event) {
     // If the draw event is for labels on the x-axis
@@ -119,16 +112,16 @@ export default React.createClass({
         });
       }
     }
-  },
+  }
 
   clearInteraction() {
     SeriesHighlightActions.clearSeries();
     this.hideTooltip();
-  },
+  }
 
   hideTooltip() {
-    this.refs.tooltip.className = classnames(tooltipClass, 'hide');
-  },
+    this.tooltip.className = classnames(tooltipClass, 'hide');
+  }
 
   updateChart(props) {
     if (!props.chartData) {
@@ -162,10 +155,10 @@ export default React.createClass({
     if (this.chart) {
       this.chart.update(props.chartData, chartOptions, responsiveOptions);
     } else {
-      this.chart = new Chartist.Bar(this.refs.chart,
+      this.chart = new Chartist.Bar(this.chart,
         props.chartData, chartOptions, responsiveOptions);
     }
-  },
+  }
 
   render() {
     return (
@@ -174,14 +167,18 @@ export default React.createClass({
           isAllZero(this.props.chartData) &&
           (<div className="zero-message">All values are zero</div>)
         }
-        <div ref="chart" className="ct-chart"
+        <div ref={(chart) => {this.chart = chart; }} className="ct-chart"
           onMouseOver={this.onMouseOver}
           onMouseOut={this.onMouseOut}>
         </div>
 
-        <div ref="tooltip" className={classnames(tooltipClass, 'hide')}></div>
+        <div ref={(tooltip) => {this.tooltip = tooltip}} className={classnames(tooltipClass, 'hide')}></div>
       </div>
     );
   }
+}
 
-});
+BarChart.propTypes = {
+  chartData: PropTypes.object,
+  chartOptions: PropTypes.object
+}

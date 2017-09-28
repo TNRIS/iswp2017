@@ -1,25 +1,17 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 
 import constants from '../../constants';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import ThemeMap from './ThemeMap';
 import PrjThemeMap from './PrjThemeMap';
 import Units from '../Units';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
-export default React.createClass({
-  propTypes: {
-    placeData: PropTypes.PlaceData,
-    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
-  },
-
-  mixins: [PureRenderMixin],
-
+export default class ThemeMaps extends React.Component {
   render() {
     if (!this.props.placeData || !this.props.placeData.data) {
       return (<div />);
@@ -70,4 +62,10 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+ThemeMaps.propTypes = {
+  placeData: CustomPropTypes.PlaceData,
+  decade: PropTypes.oneOf(constants.DECADES).isRequired,
+  theme: PropTypes.oneOf(themesAndPopulation).isRequired
+};

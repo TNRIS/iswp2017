@@ -1,14 +1,13 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import titleize from 'titleize';
 
 import ChartDataTable from '../ChartDataTable';
 import UsageTypeChartLegend from '../UsageTypeChartLegend';
 import constants from '../../constants';
 import LineChart from './LineChart';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import ThemeSelector from '../ThemeSelector';
 import TitlePlugin from '../../utils/ChartistAxisTitlePlugin';
 import Units from '../Units';
@@ -25,22 +24,17 @@ const chartOptions = {
   ]
 };
 
-export default React.createClass({
-  propTypes: {
-    viewData: PropTypes.ViewData
-  },
-
-  mixins: [PureRenderMixin],
-
-  getInitialState() {
-    return {
+export default class ThemeTypesByDecadeChart extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       selectedTheme: R.nth(0, constants.THEMES)
-    };
-  },
+    }
+  }
 
   selectTheme(theme) {
     this.setState({selectedTheme: theme});
-  },
+  }
 
   render() {
     const viewData = this.props.viewData;
@@ -86,4 +80,8 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+ThemeTypesByDecadeChart.propTypes = {
+  viewData: CustomPropTypes.ViewData
+};

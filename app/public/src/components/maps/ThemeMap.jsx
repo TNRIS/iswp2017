@@ -3,42 +3,32 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 import scale from 'scale-number-range';
 import format from 'format-number';
 
 import CdbUtil from '../../utils/CdbUtil';
 import constants from '../../constants';
 import history from '../../history';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import NeedsLegend from '../../utils/NeedsLegend';
 import ThemeMapStateActions from '../../actions/ThemeMapStateActions';
 import ThemeMapStateStore from '../../stores/ThemeMapStateStore';
 
-export default React.createClass({
-  propTypes: {
-    theme: React.PropTypes.string.isRequired,
-    data: React.PropTypes.object.isRequired,
-    decade: React.PropTypes.string,
-    boundary: PropTypes.Feature,
-    entity: React.PropTypes.object,
-    projects: React.PropTypes.array
-  },
-
-  mixins: [PureRenderMixin],
+export default class ThemeMap extends React.Component{
 
   getDefaultProps() {
     return {
       decade: '2020'
     };
-  },
+  }
 
   getInitialState() {
     return ThemeMapStateStore.getState();
-  },
+  }
 
   componentDidMount() {
-    const map = this.map = L.map(this.refs.map, {
+    const map = this.map = L.map(this.map, {
       scrollWheelZoom: false,
       zoomControl: false
     });
@@ -128,11 +118,11 @@ export default React.createClass({
     this.updateMap(this.props);
 
     ThemeMapStateStore.listen(this.onMapStateChange);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     this.updateMap(nextProps);
-  },
+  }
 
   componentWillUnmount() {
     ThemeMapStateStore.unlisten(this.onMapStateChange);
@@ -141,11 +131,11 @@ export default React.createClass({
     //unlock map state so that the lock button for the next ThemeMap is not in a weird state
     ThemeMapStateActions.unlockMap();
     ThemeMapStateActions.hidePrj();
-  },
+  }
 
   onMapStateChange(state) {
     this.setState(state);
-  },
+  }
 
   updateMap(props) {
     this.map.closePopup();
@@ -328,7 +318,7 @@ export default React.createClass({
       this.displaySourceLayer(props, bounds);
     }
 
-  },
+  }
 
   displaySourceLayer(props, bounds) {
     if (props.theme === 'supplies' || props.theme === 'strategies') {
@@ -387,7 +377,7 @@ export default React.createClass({
     } else {
       this.applyBounds(bounds);
     }
-  },
+  }
 
   //live handle tooltip/label of source features
   showSourceLabel(event) {
@@ -399,19 +389,19 @@ export default React.createClass({
     if (!this.map.hasLayer(this.label)) {
       this.map.addLayer(this.label);
     }
-  },
+  }
 
   hideSourceLabel() {
     if (this.label && this.map.hasLayer(this.label)) {
       this.map.removeLayer(this.label);
       this.label = null;
     }
-  },
+  }
 
   viewSourcePage(event) {
     const id = event.layer.feature.properties.sourceid;
     history.push({pathname: `/source/${id}`});
-  },
+  }
 
   applyBounds(bounds) {
     if (!this.state.isLocked) {
@@ -424,7 +414,7 @@ export default React.createClass({
         this.map.setZoom(12);
       }
     }
-  },
+  }
 
   toggleProjects() {
     if (this.state.showProjects == 'Hide') {
@@ -435,12 +425,12 @@ export default React.createClass({
       ThemeMapStateActions.hidePrj();
       this.applyBounds(this.map.getBounds().extend(this.projectLayer.getBounds()));
     }
-  },
+  }
 
   render() {
     return (
       <div>
-        <div className="theme-map" ref="map"></div>
+        <div className="theme-map" ref={(map) => {this.map = map;}}></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
         {this.props.theme === 'strategies' &&
           <p className="note">Red triangles indicate capital projects associated with strategy supplies that have been assigned to a Water User Group. <a className="pointerHover" onClick={this.toggleProjects}>{this.state.showProjects} Projects</a></p>
@@ -448,4 +438,13 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+ThemeMap.propTypes = {
+  theme: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
+  decade: PropTypes.string,
+  boundary: CustomPropTypes.Feature,
+  entity: PropTypes.object,
+  projects: PropTypes.array
+}

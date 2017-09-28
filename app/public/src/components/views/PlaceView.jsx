@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
@@ -19,52 +20,45 @@ import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 
-export default React.createClass({
-  propTypes: {
-    params: React.PropTypes.shape({
-      type: React.PropTypes.string.isRequired,
-      typeId: React.PropTypes.string
-    }).isRequired
-  },
-
+export default class PlaceView extends React.Component {
   getInitialState() {
     return {
       placeData: PlaceDataStore.getState().placeData,
       viewChoice: DataViewChoiceStore.getState(),
     };
-  },
+  }
 
   componentDidMount() {
     PlaceDataStore.listen(this.onPlaceDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
     this.fetchPlaceData(this.props.params);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     // Route params are in this.props, and when route changes the data
     // need to be fetched again
     this.fetchPlaceData(nextProps.params);
-  },
+  }
 
   componentWillUnmount() {
     PlaceDataStore.unlisten(this.onPlaceDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
-  },
+  }
 
   onPlaceDataChange(state) {
     this.setState({placeData: state.placeData});
-  },
+  }
 
   onDataViewChoiceChange(state) {
     this.setState({viewChoice: state});
-  },
+  }
 
   fetchPlaceData(params) {
     PlaceDataStore.fetch({
       type: params.type, typeId: params.typeId,
     });
-  },
+  }
 
   render() {
     const params = this.props.params;
@@ -197,5 +191,12 @@ export default React.createClass({
         </section>
       </div>
     );
-  },
-});
+  }
+}
+
+PlaceView.propTypes = {
+  params: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+    typeId: PropTypes.string
+  }).isRequired
+}

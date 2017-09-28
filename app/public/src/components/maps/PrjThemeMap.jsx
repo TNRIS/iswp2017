@@ -3,39 +3,30 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import scale from 'scale-number-range';
+import PropTypes from 'prop-types';
 import format from 'format-number';
 
 import CdbUtil from '../../utils/CdbUtil';
 import constants from '../../constants';
 import history from '../../history';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import ThemeMapStateActions from '../../actions/ThemeMapStateActions';
 import ThemeMapStateStore from '../../stores/ThemeMapStateStore';
 
-export default React.createClass({
-  propTypes: {
-    theme: React.PropTypes.string.isRequired,
-    data: React.PropTypes.object.isRequired,
-    decade: React.PropTypes.string,
-    project: React.PropTypes.object
-  },
-
-  mixins: [PureRenderMixin],
+export default class PrjThemeMap extends React.Component {
 
   getDefaultProps() {
     return {
       decade: '2020'
     };
-  },
+  }
 
   getInitialState() {
     return ThemeMapStateStore.getState();
-  },
+  }
 
   componentDidMount() {
-    const map = this.map = L.map(this.refs.map, {
+    const map = this.map = L.map(this.map, {
       scrollWheelZoom: false,
       zoomControl: false,
       maxZoom: 11
@@ -126,11 +117,11 @@ export default React.createClass({
     this.updateMap(this.props);
 
     ThemeMapStateStore.listen(this.onMapStateChange);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     this.updateMap(nextProps);
-  },
+  }
 
   componentWillUnmount() {
     ThemeMapStateStore.unlisten(this.onMapStateChange);
@@ -138,11 +129,11 @@ export default React.createClass({
     this.spiderfier.clearListeners('spiderfy');
     //unlock map state so that the lock button for the next ThemeMap is not in a weird state
     ThemeMapStateActions.unlockMap();
-  },
+  }
 
   onMapStateChange(state) {
     this.setState(state);
-  },
+  }
 
   updateMap(props) {
     this.map.closePopup();
@@ -255,7 +246,7 @@ export default React.createClass({
       this.applyBounds(bounds);
     }
 
-  },
+  }
 
   applyBounds(bounds) {
     if (!this.state.isLocked) {
@@ -268,15 +259,23 @@ export default React.createClass({
         this.map.setZoom(12);
       }
     }
-  },
+  }
 
   render() {
     return (
       <div>
-        <div className="theme-map" ref="map"></div>
+        <div className="theme-map" ref={(map) => {this.map = map;}}></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
         <p className="note">Red triangles indicate capital projects. If a water user group does not display with the selected project, the project is not currently assigned to a specific water user group.</p>
       </div>
     );
   }
-});
+}
+
+PrjThemeMap.propTypes = {
+  theme: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
+  decade: PropTypes.string,
+  project: PropTypes.object,
+  entity: CustomPropTypes.entity
+};

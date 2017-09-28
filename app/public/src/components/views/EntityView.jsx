@@ -1,6 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
@@ -18,19 +19,13 @@ import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 
-export default React.createClass({
-  propTypes: {
-    params: React.PropTypes.shape({
-      entityId: React.PropTypes.integer
-    }).isRequired
-  },
-
+export default class EntityView extends React.Component {
   getInitialState() {
     return {
       entityData: EntityDataStore.getState().entityData,
       viewChoice: DataViewChoiceStore.getState()
     };
-  },
+  }
 
   componentDidMount() {
     EntityDataStore.listen(this.onEntityDataChange);
@@ -38,28 +33,28 @@ export default React.createClass({
 
 
     this.fetchData(this.props.params);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     this.fetchData(nextProps.params);
-  },
+  }
 
   componentWillUnmount() {
     EntityDataStore.unlisten(this.onEntityDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
-  },
+  }
 
   onEntityDataChange(state) {
     this.setState({entityData: state.entityData});
-  },
+  }
 
   onDataViewChoiceChange(state) {
     this.setState({viewChoice: state});
-  },
+  }
 
   fetchData(params) {
     EntityDataStore.fetch({entityId: params.entityId});
-  },
+  }
 
   render() {
     const entityId = this.props.params.entityId;
@@ -184,4 +179,10 @@ export default React.createClass({
     );
   }
 
-});
+}
+
+EntityView.propTypes = {
+  params: PropTypes.shape({
+    entityId: PropTypes.integer
+  }).isRequired
+};

@@ -1,13 +1,11 @@
-
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import format from 'format-number';
 
 import constants from '../../constants';
 import ChartDataTable from '../ChartDataTable';
 import LineChart from './LineChart';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 
 const chartOptions = {
   height: '100px',
@@ -18,13 +16,7 @@ const chartOptions = {
   }
 };
 
-export default React.createClass({
-  propTypes: {
-    viewData: PropTypes.ViewData
-  },
-
-  mixins: [PureRenderMixin],
-
+export default class PopulationChart extends React.PureComponent {
   render() {
     const viewData = this.props.viewData;
 
@@ -52,9 +44,14 @@ export default React.createClass({
           <h5>Population</h5>
         </div>
         <LineChart chartData={popChartData} chartOptions={chartOptions} />
-        <ChartDataTable className="u-full-width" chartData={popChartData} omitLabels />
+        <ChartDataTable className="u-full-width" 
+        chartData={popChartData} omitLabels />
       </div>
     );
   }
 
-});
+}
+
+PopulationChart.propTypes = {
+  viewData: CustomPropTypes.ViewData  
+}

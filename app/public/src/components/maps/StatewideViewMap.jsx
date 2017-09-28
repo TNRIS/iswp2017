@@ -1,20 +1,15 @@
 /*global L*/
 
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import {getMapPadding} from '../../utils';
 import history from '../../history';
 import constants from '../../constants';
 import CdbUtil from '../../utils/CdbUtil';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  componentDidMount() {
-    this.map = L.map(this.refs.map,
-      constants.VIEW_MAP_OPTIONS
-    );
+export default class StatewideViewMap extends React.Component {
+  componentDidMount = () => {
+    this.map = L.map(this.map, constants.VIEW_MAP_OPTIONS);
 
     this.map.attributionControl.setPrefix('');
 
@@ -45,21 +40,21 @@ export default React.createClass({
         this.map.addLayer(this.utfGrid);
         this.utfGrid.on('click', this.navigateToRegion);
       });
-  },
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.utfGrid.off('click', this.navigateToRegion);
-  },
+  }
 
-  navigateToRegion({data}) {
+  navigateToRegion = ({data}) => {
     if (data) {
       history.push({pathname: `/region/${data.letter}`});
     }
-  },
+  }
 
   render() {
     return (
-      <div ref="map" className="view-map"></div>
+      <div ref={(map) => {this.map = map;}} className="view-map"></div>
     );
   }
-});
+}

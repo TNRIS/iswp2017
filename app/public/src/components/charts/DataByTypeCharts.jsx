@@ -1,6 +1,5 @@
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import titleize from 'titleize';
 
 import BarChart from './BarChart';
@@ -8,7 +7,7 @@ import ChartLegend from '../ChartLegend';
 import ChartDataTable from '../ChartDataTable';
 import UsageTypeIcon from '../UsageTypeIcon';
 import constants from '../../constants';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import TitlePlugin from '../../utils/ChartistAxisTitlePlugin';
 import Units from '../Units';
 import {slugify} from '../../utils';
@@ -25,13 +24,7 @@ const chartOptions = {
   ],
 };
 
-export default React.createClass({
-  propTypes: {
-    viewData: PropTypes.ViewData
-  },
-
-  mixins: [PureRenderMixin],
-
+export class DataByTypeCharts extends React.PureComponent{
   render() {
     const viewData = this.props.viewData;
 
@@ -124,4 +117,9 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+
+DataByTypeCharts.propTypes = {
+  viewData: CustomPropTypes.ViewData
+}

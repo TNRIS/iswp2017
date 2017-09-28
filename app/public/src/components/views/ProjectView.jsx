@@ -1,5 +1,6 @@
 import R from 'ramda';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
@@ -13,51 +14,45 @@ import ProjectSummary from '../ProjectSummary';
 import PrjDataViewChoiceWrap from '../PrjDataViewChoiceWrap';
 import ThemeMaps from '../maps/ThemeMaps';
 
-export default React.createClass({
-  propTypes: {
-    params: React.PropTypes.shape({
-      projectId: React.PropTypes.integer
-    }).isRequired
-  },
-
+export default class ProjectView extends React.Component {
   getInitialState() {
     return {
       projectData: ProjectDataStore.getState().projectData,
       viewChoice: DataViewChoiceStore.getState()
     };
-  },
+  }
 
   componentDidMount() {
     ProjectDataStore.listen(this.onProjectDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
     this.fetchProjectData(this.props.params);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     // Route params are in this.props, and when route changes the data
     // need to be fetched again
     this.fetchProjectData(nextProps.params);
-  },
+  }
 
   componentWillUnmount() {
     ProjectDataStore.unlisten(this.onProjectDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
-  },
+  }
 
   onProjectDataChange(state) {
     this.setState({projectData: state.projectData});
-  },
+  }
 
   onDataViewChoiceChange(state) {
     this.setState({viewChoice: state});
-  },
+  }
 
   fetchProjectData(params) {
     ProjectDataStore.fetch({
       projectId: params.projectId
     });
-  },
+  }
 
   render() {
     const projectData = this.state.projectData;
@@ -149,5 +144,10 @@ export default React.createClass({
       </div>
     );
   }
+}
 
-});
+ProjectView.propTypes = {
+  params: PropTypes.shape({
+    projectId: PropTypes.integer
+  }).isRequired
+};

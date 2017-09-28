@@ -1,7 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 import Chartist from 'chartist';
 import classnames from 'classnames';
 import classList from 'dom-classlist';
@@ -9,29 +9,23 @@ import isFirefox from 'is-firefox';
 import format from 'format-number';
 
 import SeriesHighlightActions from '../../actions/SeriesHighlightActions';
-import {getChartLeftPadding} from '../../utils';
+import {getChartLeftPadding, slugify} from '../../utils';
 
 const tooltipClass = 'ct-tooltip';
 const heightAdjust = 14;
 
-export default React.createClass({
-  propTypes: {
-    chartData: React.PropTypes.object,
-    chartOptions: React.PropTypes.object,
-  },
-
-  mixins: [PureRenderMixin],
+export default class LineChart extends React.PureComponent{
 
   componentDidMount() {
     this.updateChart(this.props);
     window.addEventListener('scroll', this.clearInteraction);
-  },
+  }
 
   componentWillUpdate(nextProps) {
     if (nextProps !== this.props) {
       this.updateChart(nextProps);
     }
-  },
+  }
 
   componentWillUnmount() {
     if (this.chart) {
@@ -43,11 +37,11 @@ export default React.createClass({
       }
     }
     window.removeEventListener('scroll', this.clearInteraction);
-  },
+  }
 
   onMouseOut() {
     this.clearInteraction();
-  },
+  }
 
   onMouseOver(event) {
     // use library to check classList because IE doesn't implement classList on SVG elements
@@ -63,7 +57,7 @@ export default React.createClass({
       +me.getAttribute('x1'), +me.getAttribute('y2')
     );
     const parent = me.parentNode;
-    const tooltip = this.refs.tooltip;
+    const tooltip = this.tooltip;
 
     const seriesName = parent.attributes['ct:meta'] ?
       parent.attributes['ct:meta'].value : 'default';
@@ -87,16 +81,16 @@ export default React.createClass({
     tooltip.style.top = `${matrix.f - height - heightAdjust}px`;
     tooltip.style.left = `${matrix.e - width / 2}px`;
     tooltip.className = classnames(tooltipClass, `tooltip-${slugify(seriesName.toLowerCase())}`);
-  },
+  }
 
   clearInteraction() {
     SeriesHighlightActions.clearSeries();
     this.hideTooltip();
-  },
+  }
 
   hideTooltip() {
-    this.refs.tooltip.className = classnames(tooltipClass, 'hide');
-  },
+    this.tooltip.className = classnames(tooltipClass, 'hide');
+  }
 
   updateChart(props) {
     if (!props.chartData) { return; }
@@ -129,22 +123,27 @@ export default React.createClass({
       this.chart.update(props.chartData, chartOptions);
     }
     else {
-      this.chart = new Chartist.Line(this.refs.chart,
+      this.chart = new Chartist.Line(this.chart,
         props.chartData, chartOptions
       );
     }
-  },
+  }
 
   render() {
     return (
       <div style={{position: 'relative'}}>
-        <div ref="chart" className="ct-chart"
+        <div ref={(chart) => {this.chart = chart;}} className="ct-chart"
           onMouseOver={this.onMouseOver}
           onMouseOut={this.onMouseOut}>
         </div>
-        <div ref="tooltip" className={classnames(tooltipClass, 'hide')}></div>
+        <div ref={(tooltip) => {this.tooltip = tooltip; }} 
+        className={classnames(tooltipClass, 'hide')}></div>
       </div>
     );
   }
+}
 
-});
+LineChart.propTypes = {
+  chartData: PropTypes.object,
+  chartOptions: PropTypes.object,
+}

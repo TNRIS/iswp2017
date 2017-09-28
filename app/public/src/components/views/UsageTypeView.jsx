@@ -1,6 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 import titleize from 'titleize';
@@ -17,31 +18,25 @@ import UsageTypeSummary from '../UsageTypeSummary';
 import UsageTypeDataStore from '../../stores/UsageTypeDataStore';
 import ViewStateStore from '../../stores/ViewStateStore';
 
-export default React.createClass({
-  propTypes: {
-    params: React.PropTypes.shape({
-      typeId: React.PropTypes.string
-    }).isRequired
-  },
-
+export default class UsageTypeView extends React.Component {
   getInitialState() {
     return {
       viewData: UsageTypeDataStore.getState().data,
       viewChoice: DataViewChoiceStore.getState(),
       hidePopulation: this.shouldHidePopulation(ViewStateStore.getState().viewState)
     };
-  },
+  }
 
   componentDidMount() {
     UsageTypeDataStore.listen(this.onViewDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
     ViewStateStore.listen(this.onViewStateChange);
     this.fetchViewData(this.props.params);
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     this.fetchViewData(nextProps.params);
-  },
+  }
 
   componentDidUpdate() {
     //if population theme selection is hidden but it is the currently selected theme,
@@ -49,33 +44,33 @@ export default React.createClass({
     if (this.state.hidePopulation && this.state.viewChoice.selectedTheme === 'population') {
       DataViewChoiceActions.updateThemeChoice('needs');
     }
-  },
+  }
 
   componentWillUnmount() {
     UsageTypeDataStore.unlisten(this.onViewDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
     ViewStateStore.unlisten(this.onViewStateChange);
-  },
+  }
 
   onViewDataChange(state) {
     this.setState({viewData: state.data});
-  },
+  }
 
   onViewStateChange(storeState) {
     this.setState({hidePopulation: this.shouldHidePopulation(storeState.viewState)});
-  },
+  }
 
   onDataViewChoiceChange(state) {
     this.setState({viewChoice: state});
-  },
+  }
 
   fetchViewData(params) {
     UsageTypeDataStore.fetch({typeId: params.typeId});
-  },
+  }
 
   shouldHidePopulation(viewState) {
     return viewState && viewState.id !== 'municipal';
-  },
+  }
 
   render() {
     const viewData = this.state.viewData;
@@ -169,5 +164,10 @@ export default React.createClass({
       </div>
     );
   }
+}
 
-});
+UsageTypeView.propTypes = {
+  params: PropTypes.shape({
+    typeId: PropTypes.string
+  }).isRequired
+};

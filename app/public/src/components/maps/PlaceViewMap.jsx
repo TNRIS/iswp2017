@@ -1,27 +1,17 @@
 /*global L*/
 
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 
 import utils from '../../utils';
 import history from '../../history';
 import constants from '../../constants';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import CdbUtil from '../../utils/CdbUtil';
 
-export default React.createClass({
-  propTypes: {
-    type: React.PropTypes.string,
-    typeId: React.PropTypes.string,
-    placeData: PropTypes.PlaceData
-  },
-
-  mixins: [PureRenderMixin],
-
+export default class PlaceViewMap extends React.Component{
   componentDidMount() {
-    this.map = L.map(this.refs.map,
-      constants.VIEW_MAP_OPTIONS
-    );
+    this.map = L.map(this.map, constants.VIEW_MAP_OPTIONS);
 
     this.map.attributionControl.setPrefix('');
 
@@ -54,7 +44,7 @@ export default React.createClass({
         this.utfGrid.on('mousemove', this.showCountyLabel);
         this.utfGrid.on('mouseout', this.hideCountyLabel);
       });
-  },
+  }
 
   componentDidUpdate() {
     if (!this.props.placeData || !this.props.placeData.boundary) {
@@ -75,7 +65,7 @@ export default React.createClass({
     this.map.fitBounds(this.boundaryLayer.getBounds(), {
       paddingTopLeft: utils.getMapPadding()
     });
-  },
+  }
 
   componentWillUnmount() {
     if (this.utfGrid) {
@@ -83,13 +73,13 @@ export default React.createClass({
       this.utfGrid.off('mousemove', this.showCountyLabel);
       this.utfGrid.off('mouseout', this.hideCountyLabel);
     }
-  },
+  }
 
   navigateToCounty({data}) {
     if (data) {
       history.push({pathname: `/county/${data.name}`});
     }
-  },
+  }
 
   showCountyLabel(event) {
     if (!this.label) {
@@ -100,18 +90,24 @@ export default React.createClass({
     if (!this.map.hasLayer(this.label)) {
       this.map.addLayer(this.label);
     }
-  },
+  }
 
   hideCountyLabel() {
     if (this.label && this.map.hasLayer(this.label)) {
       this.map.removeLayer(this.label);
       this.label = null;
     }
-  },
+  }
 
   render() {
     return (
-      <div ref="map" className="view-map"></div>
+      <div ref={(map) => {this.map = map;}} className="view-map"></div>
     );
   }
-});
+}
+
+PlaceViewMap.propTypes = {
+  type: PropTypes.string,
+  typeId: PropTypes.string,
+  placeData: CustomPropTypes.PlaceData
+}
