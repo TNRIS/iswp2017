@@ -45,10 +45,5 @@ export default createReactClass({
         Download {dlTitle} data (Comma-Separated Values)
       </a>
     );
-<<<<<<< HEAD
-  },
-});
-=======
   }
 });
->>>>>>> develop

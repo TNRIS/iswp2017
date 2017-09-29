@@ -5,11 +5,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
-<<<<<<< HEAD
-import {getViewName} from '../../utils';
-=======
 import constants from '../../constants';
->>>>>>> develop
 import DataByTypeCharts from '../charts/DataByTypeCharts';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
@@ -24,7 +20,6 @@ import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
-import utils from '../../utils';
 
 export default class PlaceView extends React.Component {
   constructor(props) {
@@ -182,13 +177,11 @@ export default class PlaceView extends React.Component {
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
                           <h5>Download Data</h5>
-<<<<<<< HEAD
                           <DownloadDataLink
                             type={this.props.match.params.type}
                             typeId={this.props.match.params.typeId}
                             theme={this.state.viewChoice.selectedTheme}
                             viewName={viewName} />
-=======
                           <ul>
                             {
                               R.prepend('population', constants.THEMES).map((theme) => {
@@ -211,7 +204,6 @@ export default class PlaceView extends React.Component {
                               })
                             }
                           </ul>
->>>>>>> develop
                         </div>
                       </div>
                     </div>
@@ -226,7 +218,6 @@ export default class PlaceView extends React.Component {
   }
 }
 
-<<<<<<< HEAD
 PlaceView.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -235,6 +226,3 @@ PlaceView.propTypes = {
     }).isRequired
   })
 }
-=======
-});
->>>>>>> develop
