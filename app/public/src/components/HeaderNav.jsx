@@ -21,7 +21,7 @@ const navCategoryOptions = [
   {value: "usagetype", label: "Usage Type"},
   {value: "source", label: "Water Source"},
   {value: "project", label: "WMS Project"}
-]
+];
 
 const regionSelectOptions = constants.REGIONS.map((region) => {
   return {value: region, label: `Region ${region}`};
