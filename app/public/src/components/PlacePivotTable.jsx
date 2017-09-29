@@ -172,7 +172,7 @@ export default React.createClass({
         <div />
       );
     }
-    
+
     const selectedTheme = this.props.theme;
     const tableData = viewData[selectedTheme].rows;
     const decade = this.props.decade;
@@ -206,7 +206,7 @@ export default React.createClass({
     if (R.isEmpty(tableData)) {
       table = <p> Sorry, there is no {themeTitle} data.</p>;
     } else {
-      table = 
+      table =
         <div className="table-container">
           <PivotTable
             //assign a unique key to force rerender of table
@@ -237,4 +237,3 @@ export default React.createClass({
     );
   }
 });
-

@@ -105,7 +105,6 @@ export default React.createClass({
                   <SrcDataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
                     theme={selectedTheme}>
                     <div className="container">
-                      
                       <div className="row panel-row">
                         <div className="twelve columns">
                           <span className="view-name">{title}</span>
@@ -152,8 +151,6 @@ export default React.createClass({
               );
             })()
           }
-          
-
         </section>
       </div>
     );
