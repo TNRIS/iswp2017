@@ -16,40 +16,41 @@ import ThemeMaps from '../maps/ThemeMaps';
 import ProjectTable from '../ProjectTable';
 
 export default class SourceView extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       sourceData: SourceDataStore.getState().sourceData,
       viewChoice: DataViewChoiceStore.getState()
-    };
+    }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     SourceDataStore.listen(this.onSourceDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
-    this.fetchSourceData(this.props.params);
+    this.fetchSourceData(this.props.match.params);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     // Route params are in this.props, and when route changes the data
     // need to be fetched again
-    this.fetchSourceData(nextProps.params);
+    this.fetchSourceData(nextProps.match.params);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     SourceDataStore.unlisten(this.onSourceDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
   }
 
-  onSourceDataChange(state) {
+  onSourceDataChange = (state) => {
     this.setState({sourceData: state.sourceData});
   }
 
-  onDataViewChoiceChange(state) {
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
   }
 
-  fetchSourceData(params) {
+  fetchSourceData = (params) => {
     SourceDataStore.fetch({
       sourceId: params.sourceId
     });
@@ -155,7 +156,9 @@ export default class SourceView extends React.Component {
 }
 
 SourceView.propTypes = {
-  params: PropTypes.shape({
-    sourceId: PropTypes.integer
-  }).isRequired
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      sourceId: PropTypes.integer
+    }).isRequired
+  })
 };

@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import utils from '../../utils';
+import {getMapPadding} from '../../utils';
 import history from '../../history';
 import constants from '../../constants';
 import CustomPropTypes from '../../utils/CustomPropTypes';
@@ -10,7 +10,7 @@ import CdbUtil from '../../utils/CdbUtil';
 
 export default class SourceViewMap extends React.Component {
   componentDidMount() {
-    this.map = L.map(this.map,
+    this.map = L.map(this.mapDiv,
       constants.VIEW_MAP_OPTIONS
     );
 
@@ -24,7 +24,7 @@ export default class SourceViewMap extends React.Component {
     }).addTo(this.map);
 
     this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS, {
-      paddingTopLeft: utils.getMapPadding()
+      paddingTopLeft: getMapPadding()
     });
 
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
@@ -47,7 +47,7 @@ export default class SourceViewMap extends React.Component {
       });
   }
 
-    componentDidUpdate() {
+    componentDidUpdate = () => {
     if (!this.props.sourceData || !this.props.sourceData.boundary) {
       return;
     }
@@ -67,12 +67,12 @@ export default class SourceViewMap extends React.Component {
     this.map.addLayer(this.boundaryLayer);
 
     this.map.fitBounds(this.boundaryLayer.getBounds(), {
-      paddingTopLeft: utils.getMapPadding()
+      paddingTopLeft: getMapPadding()
     });
   }
 
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     if (this.utfGrid) {
       this.utfGrid.off('click', this.navigateToCounty);
       this.utfGrid.off('mousemove', this.showCountyLabel);
@@ -80,13 +80,13 @@ export default class SourceViewMap extends React.Component {
     }
   }
 
-  navigateToCounty({data}) {
+  navigateToCounty = ({data}) => {
     if (data) {
       history.push({pathname: `/county/${data.name}`});
     }
   }
 
-  showCountyLabel(event) {
+  showCountyLabel = (event) => {
     if (!this.label) {
       this.label = new L.Label({className: 'label-county'});
     }
@@ -97,7 +97,7 @@ export default class SourceViewMap extends React.Component {
     }
   }
 
-  hideCountyLabel() {
+  hideCountyLabel = () => {
     if (this.label && this.map.hasLayer(this.label)) {
       this.map.removeLayer(this.label);
       this.label = null;
@@ -106,7 +106,7 @@ export default class SourceViewMap extends React.Component {
 
   render() {
     return (
-      <div ref={(map) => {this.map = map;}} className="view-map"></div>
+      <div ref={(mapDiv) => {this.mapDiv = mapDiv;}} className="view-map"></div>
     );
   }
 }

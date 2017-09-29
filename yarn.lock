@@ -960,7 +960,7 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
 
-boom@2.x.x, boom@^2.10.1, boom@^2.7.1:
+boom@2.x.x, boom@^2.7.1:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
   dependencies:
@@ -977,6 +977,12 @@ boom@5.x.x, boom@^5.2.0:
   resolved "https://registry.yarnpkg.com/boom/-/boom-5.2.0.tgz#5dd9da6ee3a5f302077436290cb717d3f4a54e02"
   dependencies:
     hoek "4.x.x"
+
+boom@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/boom/-/boom-6.0.0.tgz#9b36c52a12afab3f0e55536131b7fd5021aad0cc"
+  dependencies:
+    hoek "5.x.x"
 
 bossy@3.x.x:
   version "3.0.4"
@@ -1302,9 +1308,15 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
-code@4.1.x, code@^4.1.0:
+code@4.1.x:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/code/-/code-4.1.0.tgz#209ad11d05af8a0c1c7aaf694d9fa4d2c7d95b85"
+  dependencies:
+    hoek "4.x.x"
+
+code@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/code/-/code-5.1.0.tgz#205e4213536c3cf21b12194384901fadcd81bc1a"
   dependencies:
     hoek "4.x.x"
 
@@ -2923,9 +2935,13 @@ hoek@2.x.x, hoek@^2.13.0:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoek@4, hoek@4.x.x, hoek@^4.2.0:
+hoek@4.x.x, hoek@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.0.tgz#72d9d0754f7fe25ca2d01ad8f8f9a9449a89526d"
+
+hoek@5.x.x, hoek@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/hoek/-/hoek-5.0.0.tgz#b88953e0fec8e58082e4abd223ed20915d535831"
 
 hoist-non-react-statics@^2.3.0:
   version "2.3.1"
