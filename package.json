@@ -17,8 +17,8 @@
     "clean-dist": "rm -rf app/public/dist/*.js app/public/dist/*.map app/public/dist/*.css"
   },
   "engines": {
-    "node": ">=4.8.4",
-    "yarn": "1.1.0"
+    "node": ">=8.6.0",
+    "yarn": ">=1.1.0"
   },
   "repository": {
     "type": "git",
