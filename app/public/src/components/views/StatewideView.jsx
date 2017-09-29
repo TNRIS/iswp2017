@@ -4,6 +4,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
+import constants from '../../constants';
 import DataByTypeCharts from '../charts/DataByTypeCharts';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
@@ -178,10 +179,27 @@ export default class StatewideView extends React.Component {
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
                           <h5>Download Data</h5>
-                          <DownloadDataLink
-                            type="statewide"
-                            theme={this.state.viewChoice.selectedTheme}
-                            viewName="Statewide" />
+                          <ul>
+                            {
+                              R.prepend('population', constants.THEMES).map((theme) => {
+                                if (R.isEmpty(data)) {
+                                  return (
+                                    <li key={`download-${theme}`}>
+                                      No {constants.THEME_TITLES[theme]} data exists for Texas
+                                    </li>
+                                  );
+                                }
+                                return (
+                                  <li key={`download-${theme}`}>
+                                    <DownloadDataLink
+                                      type="statewide"
+                                      theme={theme}
+                                      viewName="Statewide" />
+                                  </li>
+                                );
+                              })
+                            }
+                          </ul>
                         </div>
                       </div>
                     </div>

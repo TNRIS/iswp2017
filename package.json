@@ -27,7 +27,10 @@
   "author": "TNRIS",
   "contributors": [
     "James Seppi",
-    "Andy Wilson"
+    "Andy Wilson",
+    "Adam Breznicky",
+    "David Hickman",
+    "Jason Kleinert"
   ],
   "license": "MIT",
   "bugs": {
