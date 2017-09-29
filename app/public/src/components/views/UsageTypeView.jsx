@@ -19,26 +19,27 @@ import UsageTypeDataStore from '../../stores/UsageTypeDataStore';
 import ViewStateStore from '../../stores/ViewStateStore';
 
 export default class UsageTypeView extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       viewData: UsageTypeDataStore.getState().data,
       viewChoice: DataViewChoiceStore.getState(),
       hidePopulation: this.shouldHidePopulation(ViewStateStore.getState().viewState)
-    };
+    }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     UsageTypeDataStore.listen(this.onViewDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
     ViewStateStore.listen(this.onViewStateChange);
-    this.fetchViewData(this.props.params);
+    this.fetchViewData(this.props.match.params);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.fetchViewData(nextProps.params);
+  componentWillReceiveProps = (nextProps) => {
+    this.fetchViewData(nextProps.match.params);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate = () => {
     //if population theme selection is hidden but it is the currently selected theme,
     // then update the theme choice to 'needs'
     if (this.state.hidePopulation && this.state.viewChoice.selectedTheme === 'population') {
@@ -46,35 +47,35 @@ export default class UsageTypeView extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     UsageTypeDataStore.unlisten(this.onViewDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
     ViewStateStore.unlisten(this.onViewStateChange);
   }
 
-  onViewDataChange(state) {
+  onViewDataChange = (state) => {
     this.setState({viewData: state.data});
   }
 
-  onViewStateChange(storeState) {
+  onViewStateChange = (storeState) => {
     this.setState({hidePopulation: this.shouldHidePopulation(storeState.viewState)});
   }
 
-  onDataViewChoiceChange(state) {
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
   }
 
-  fetchViewData(params) {
+  fetchViewData = (params) => {
     UsageTypeDataStore.fetch({typeId: params.typeId});
   }
 
-  shouldHidePopulation(viewState) {
+  shouldHidePopulation = (viewState) => {
     return viewState && viewState.id !== 'municipal';
   }
 
   render() {
     const viewData = this.state.viewData;
-    const usageType = this.props.params.typeId;
+    const usageType = this.props.match.params.typeId;
 
     const title = titleize(usageType) + ' Usage';
     const viewName = titleize(usageType);
@@ -167,7 +168,9 @@ export default class UsageTypeView extends React.Component {
 }
 
 UsageTypeView.propTypes = {
-  params: PropTypes.shape({
-    typeId: PropTypes.string
-  }).isRequired
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      typeId: PropTypes.string
+    }).isRequired
+  })
 };

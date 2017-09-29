@@ -27,7 +27,7 @@ export default class LineChart extends React.PureComponent{
   }
 
   componentWillUnmount = () => {
-    if (this.chart) {
+    if (this.chart instanceof Chartist.Line) {
       try {
         this.chart.detach();
       }
