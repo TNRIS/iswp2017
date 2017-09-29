@@ -40,12 +40,16 @@ server.connection({
 });
 
 const loggingOptions = {
-  opsInterval: 1000,
-  reporters: [{
-    reporter: GoodConsole,
-    events: {log: '*', error: '*', request: '*'}
+  ops: {
+    interval: 1000
+  },
+  reporters: {
+    goodConsoleReporter: [{
+      module: 'good-console',
+      args: [{log: '*', error: '*', request: '*'}]
+    }]
   }
-]};
+}
 
 const plugins = [
   Inert,
