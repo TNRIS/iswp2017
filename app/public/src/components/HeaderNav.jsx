@@ -14,96 +14,98 @@ import ProjectFetcher from '../utils/ProjectFetcher';
 import {sourceNames} from '../utils/SourceNames';
 
 const navCategoryOptions = [
-  {value: 'statewide', label: 'All of Texas'},
-  {value: 'region', label: 'Planning Region'},
-  {value: 'county', label: 'County'},
-  {value: 'entity', label: 'Water User Group'},
-  {value: 'usagetype', label: 'Usage Type'},
-  {value: 'source', label: 'Water Source'},
-  {value: 'project', label: 'WMS Project'}
-];
+  {value: "statewide", label: "All of Texas"},
+  {value: "region", label: "Planning Region"},
+  {value: "county", label: "County"},
+  {value: "entity", label: "Water User Group"},
+  {value: "usagetype", label: "Usage Type"},
+  {value: "source", label: "Water Source"},
+  {value: "project", label: "WMS Project"}
+]
 
-const regionSelectOptions = constants.REGIONS.map((region) => {
-  return {value: region, label: `Region ${region}`};
-});
-
-const countySelectOptions = countyNames.map((name) => {
-  return {value: name, label: name};
-});
-
-const usageTypeSelectOptions = constants.USAGE_TYPES.map((type) => {
-  return {value: type.toLowerCase(), label: titleize(type)};
-});
-
-const sourceSelectOptions = sourceNames.map((src) => {
-  return {value: src.sourceid, label: src.name};
-});
-
-/**
- * Header component
- */
 export default class HeaderNav extends React.Component {
-  /**
-   * Header component constructor
-   * @param {*} props 
-   */
   constructor(props) {
     super(props);
     const viewState = ViewStateStore.getState().viewState;
-
     this.state = {
       navButtonEnabled: viewState.view === 'statewide',
       navCategory: viewState.view,
       subNavValue: ''
-    };
-
-    this.onViewStateChange = this.onViewStateChange.bind(this);
+    }
   }
 
-  /**
-   * 
-   */
-  componentDidMount() {
+  componentDidMount = () => {
     ViewStateStore.listen(this.onViewStateChange);
   }
 
-  /**
-   * 
-   */
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     ViewStateStore.unlisten(this.onViewStateChange);
   }
 
-  /**
-   * 
-   */
   onViewStateChange = (storeState) => {
     this.setState({
       navCategory: storeState.viewState.view,
       subNavValue: ''
     });
-  };
+  }
 
-  /**
-   * 
-   */
-  onChangeNavCategory = (val) => {
+  onChangeNavCategory = (selection) => {
     this.setState({
-      navCategory: val,
+      navCategory: selection.value,
       subNavValue: ''
     });
-  };
+  }
 
-  /**
-   * 
-   */
-  onSubNavChange = (val, matches) => {
-    if (!R.isEmpty(val)) {
-      this.setState({subNavValue: R.nth(0, matches)});
-    }
-    else {
+  onSubNavChange = (selection) => {
+    if (!R.isEmpty(selection)) {
+      this.setState({subNavValue: selection});
+    } else {
       this.setState({subNavValue: ''});
     }
+  }
+
+  regionSelectOptions = (input, callback) => {
+    setTimeout(() => {
+      callback(null, {
+        options: constants.REGIONS.map((region) => {
+          return {value: region, label: `Region ${region}`};
+        }),
+        complete: true
+      });
+    }, 500);
+  };
+
+  countySelectOptions = (input, callback) => {
+    setTimeout(() => {
+      callback(null, {
+        options: countyNames.map((name) => {
+          return {value: name, label: name};
+        }),
+        complete: true
+      });
+    }, 500);
+  };
+
+  usageTypeSelectOptions = (input, callback) => {
+    setTimeout(() => {
+      callback(null, {
+        options: constants.USAGE_TYPES.map((type) => {
+          return {value: type.toLowerCase(), label: titleize(type)};
+        }),
+        complete: true
+      });
+    }, 500);
+  };
+
+  sourceSelectOptions = (input, callback) => {
+    setTimeout(() => {
+      callback(null, {
+        options: sourceNames.map((src) => {
+          return {value: src.sourceid, label: src.name};
+        }),
+        complete: true
+      });
+    }, 500);
   };
 
   entitySearch = (input, callback) => {
@@ -121,11 +123,8 @@ export default class HeaderNav extends React.Component {
       .catch((err) => {
         callback(err);
       });
-  };
+  }
 
-  /**
-   * 
-   */
   projectSearch = (input, callback) => {
     if (input.length < 3) {
       return callback(null, {options: []});
@@ -141,48 +140,40 @@ export default class HeaderNav extends React.Component {
       .catch((err) => {
         callback(err);
       });
-  };
+  }
 
-  /**
-   * 
-   */
   isNavButtonEnabled = () => {
-    return (this.state.navCategory === 'statewide')
-      || !R.isEmpty(this.state.subNavValue);
-  };
+    return (this.state.navCategory === 'statewide') || !R.isEmpty(this.state.subNavValue);
+  }
 
-  /**
-   * 
-   */
   navigate = () => {
     switch (this.state.navCategory) {
-      case 'statewide':
-        history.push({pathname: '/statewide'});
-        break;
-      case 'county':
-        history.push({pathname: `/county/${this.state.subNavValue.value}`});
-        break;
-      case 'region':
-        history.push({pathname: `/region/${this.state.subNavValue.value}`});
-        break;
-      case 'entity':
-        history.push({pathname: `/entity/${this.state.subNavValue.value}`});
-        break;
-      case 'usagetype':
-        history.push({pathname: `/usagetype/${this.state.subNavValue.value}`});
-        break;
-      case 'source':
-        history.push({pathname: `/source/${this.state.subNavValue.value}`});
-        break;
-      case 'project':
-        history.push({pathname: `/project/${this.state.subNavValue.value}`});
-        break;
-      default:
-        return;
+    case 'statewide':
+      history.push({pathname: '/statewide'});
+      break;
+    case 'county':
+      history.push({pathname: `/county/${this.state.subNavValue.value}`});
+      break;
+    case 'region':
+      history.push({pathname: `/region/${this.state.subNavValue.value}`});
+      break;
+    case 'entity':
+      history.push({pathname: `/entity/${this.state.subNavValue.value}`});
+      break;
+    case 'usagetype':
+      history.push({pathname: `/usagetype/${this.state.subNavValue.value}`});
+      break;
+    case 'source':
+      history.push({pathname: `/source/${this.state.subNavValue.value}`});
+      break;
+    case 'project':
+      history.push({pathname: `/project/${this.state.subNavValue.value}`});
+      break;
+    default:
+      return;
     }
-
     this.setState({subNavValue: ''});
-  };
+  }
 
   render() {
     return (
@@ -201,69 +192,65 @@ export default class HeaderNav extends React.Component {
             </div>
             <ToggleDisplay show={this.state.navCategory === 'region'}>
               <div className="select-container" aria-live="polite">
-                <Select matchPos="start"
+                <Select.Async matchPos="start"
                   placeholder="Select Region"
                   ignoreCase
                   clearable={false}
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
-                  options={regionSelectOptions} />
+                  loadOptions={this.regionSelectOptions} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'county'}>
               <div className="select-container" aria-live="polite">
-                <Select matchPos="start"
+                <Select.Async matchPos="start"
                   placeholder="Select County"
                   ignoreCase
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
-                  options={countySelectOptions} />
+                  loadOptions={this.countySelectOptions} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'entity'}>
-              <div 
-              className="select-container entity-select" 
-              aria-live="polite">
-                <Select
+              <div className="select-container entity-select" aria-live="polite">
+                <Select.Async
                   placeholder="Find Water User Group"
                   ignoreCase
                   autoload={false}
                   searchPromptText="Enter at least 3 characters to search"
-                  asyncOptions={this.entitySearch}
+                  loadOptions={this.entitySearch}
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'usagetype'}>
               <div className="select-container" aria-live="polite">
-                <Select
+                <Select.Async
                   placeholder="Select Usage Type"
                   ignoreCase
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
-                  options={usageTypeSelectOptions} />
+                  loadOptions={this.usageTypeSelectOptions} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'source'}>
               <div className="select-container" aria-live="polite">
-                <Select
+                <Select.Async
                   placeholder="Select Water Source"
                   ignoreCase
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
-                  options={sourceSelectOptions} />
+                  loadOptions={this.sourceSelectOptions} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'project'}>
-              <div 
-              className="select-container project-select" 
-              aria-live="polite">
-                <Select
+              <div className="select-container project-select" aria-live="polite">
+                <Select.Async
                   placeholder="Find Project"
                   ignoreCase
                   autoload={false}
                   searchPromptText="Enter at least 3 characters to search"
-                  asyncOptions={this.projectSearch}
+                  loadOptions={this.projectSearch}
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue} />
               </div>

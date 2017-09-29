@@ -12,19 +12,19 @@ const tooltipClass = 'ct-tooltip';
 const heightAdjust = 9;
 
 export default class PieChart extends React.PureComponent{
-  componentDidMount() {
+  componentDidMount = () => {
     this.updateChart(this.props);
     window.addEventListener('scroll', this.clearInteraction);
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillUpdate = (nextProps) => {
     if (nextProps !== this.props) {
       this.updateChart(nextProps);
     }
   }
 
-  componentWillUnmount() {
-    if (this.chart) {
+  componentWillUnmount = () => {
+    if (this.chart instanceof Chartist.Pie) {
       try {
         this.chart.detach();
       }
@@ -35,11 +35,11 @@ export default class PieChart extends React.PureComponent{
     window.removeEventListener('scroll', this.clearInteraction);
   }
 
-  onMouseOut() {
+  onMouseOut = () => {
     this.clearInteraction();
   }
 
-  onMouseOver(event) {
+  onMouseOver = (event) => {
     // use library to check classList because IE doesn't implement classList on SVG elements
     const isOverBar = classList(event.target).contains('ct-slice-pie');
     if (!isOverBar) {
@@ -68,15 +68,15 @@ export default class PieChart extends React.PureComponent{
     tooltip.className = classnames(tooltipClass);
   }
 
-  clearInteraction() {
+  clearInteraction = () => {
     this.hideTooltip();
   }
 
-  hideTooltip() {
+  hideTooltip = () => {
     this.tooltip.className = classnames(tooltipClass, 'hide');
   }
 
-  updateChart(props) {
+  updateChart = (props) => {
     if (!props.chartData) { return; }
 
     const total = R.sum(R.pluck('value', props.chartData.series));
@@ -92,7 +92,7 @@ export default class PieChart extends React.PureComponent{
 
     const chartOptions = R.merge(defaultOptions, props.chartOptions || {});
 
-    if (this.chart) {
+    if (this.chart instanceof Chartist.Pie) {
       this.chart.update(props.chartData, chartOptions);
     }
     else {

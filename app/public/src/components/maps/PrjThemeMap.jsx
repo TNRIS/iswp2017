@@ -9,24 +9,17 @@ import format from 'format-number';
 import CdbUtil from '../../utils/CdbUtil';
 import constants from '../../constants';
 import history from '../../history';
-import CustomPropTypes from '../../utils/CustomPropTypes';
 import ThemeMapStateActions from '../../actions/ThemeMapStateActions';
 import ThemeMapStateStore from '../../stores/ThemeMapStateStore';
 
-export default class PrjThemeMap extends React.Component {
-
-  getDefaultProps() {
-    return {
-      decade: '2020'
-    };
+export default class PrjThemeMap extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = ThemeMapStateStore.getState();
   }
 
-  getInitialState() {
-    return ThemeMapStateStore.getState();
-  }
-
-  componentDidMount() {
-    const map = this.map = L.map(this.map, {
+  componentDidMount = () => {
+    this.map = L.map(this.mapDiv, {
       scrollWheelZoom: false,
       zoomControl: false,
       maxZoom: 11
@@ -34,13 +27,13 @@ export default class PrjThemeMap extends React.Component {
 
     this.map.attributionControl.setPrefix('');
 
-    this.spiderfier = new OverlappingMarkerSpiderfier(map, {
+    this.spiderfier = new OverlappingMarkerSpiderfier(this.map, {
       keepSpiderfied: true,
       nearbyDistance: 5
     });
 
     this.spiderfier.addListener('spiderfy', () => {
-      map.closePopup();
+      this.map.closePopup();
     });
 
     const popup = L.popup();
@@ -61,10 +54,10 @@ export default class PrjThemeMap extends React.Component {
       const content = props.EntityId ? entityContent : projectContent;
       popup.setContent(content);
       popup.setLatLng(marker.getLatLng());
-      map.openPopup(popup);
+      this.map.openPopup(popup);
     });
 
-    map.on('popupopen', function(event) {
+    this.map.on('popupopen', function(event) {
       const nodes = event.target._popup._contentNode.childNodes;
       const id = nodes[nodes.length - 2].id;
       L.DomEvent.addListener(L.DomUtil.get(id), 'click', function(e) {
@@ -72,7 +65,7 @@ export default class PrjThemeMap extends React.Component {
       });
     });
 
-    map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
+    this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
     L.control.defaultExtent({
@@ -108,7 +101,7 @@ export default class PrjThemeMap extends React.Component {
       constants.BASE_MAP_LAYER.options
     );
 
-    map.addLayer(baseLayer);
+    this.map.addLayer(baseLayer);
     CdbUtil.createCountiesLayer()
       .then((result) => {
         this.map.addLayer(L.tileLayer(result.tilesUrl));
@@ -119,11 +112,11 @@ export default class PrjThemeMap extends React.Component {
     ThemeMapStateStore.listen(this.onMapStateChange);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     this.updateMap(nextProps);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     ThemeMapStateStore.unlisten(this.onMapStateChange);
     this.spiderfier.clearListeners('click');
     this.spiderfier.clearListeners('spiderfy');
@@ -131,11 +124,11 @@ export default class PrjThemeMap extends React.Component {
     ThemeMapStateActions.unlockMap();
   }
 
-  onMapStateChange(state) {
+  onMapStateChange = (state) => {
     this.setState(state);
   }
 
-  updateMap(props) {
+  updateMap = (props) => {
     this.map.closePopup();
 
     if (this.entitiesLayer && this.map.hasLayer(this.entitiesLayer)) {
@@ -248,7 +241,7 @@ export default class PrjThemeMap extends React.Component {
 
   }
 
-  applyBounds(bounds) {
+  applyBounds = (bounds) => {
     if (!this.state.isLocked) {
       if (bounds._southWest == undefined) {
         this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
@@ -264,7 +257,7 @@ export default class PrjThemeMap extends React.Component {
   render() {
     return (
       <div>
-        <div className="theme-map" ref={(map) => {this.map = map;}}></div>
+        <div className="theme-map" ref={(mapDiv) => {this.mapDiv = mapDiv;}}></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
         <p className="note">Red triangles indicate capital projects. If a water user group does not display with the selected project, the project is not currently assigned to a specific water user group.</p>
       </div>
@@ -276,6 +269,9 @@ PrjThemeMap.propTypes = {
   theme: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
   decade: PropTypes.string,
-  project: PropTypes.object,
-  entity: CustomPropTypes.entity
+  project: PropTypes.object
+};
+
+PrjThemeMap.defaultProps = {
+  decade: '2020'
 };

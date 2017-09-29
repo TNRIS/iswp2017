@@ -32,7 +32,7 @@ export default class ThemeTypesByDecadeChart extends React.Component {
     }
   }
 
-  selectTheme(theme) {
+  selectTheme = (theme) => {
     this.setState({selectedTheme: theme});
   }
 

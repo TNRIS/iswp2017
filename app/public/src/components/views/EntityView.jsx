@@ -20,44 +20,44 @@ import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 
 export default class EntityView extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       entityData: EntityDataStore.getState().entityData,
       viewChoice: DataViewChoiceStore.getState()
-    };
+    }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     EntityDataStore.listen(this.onEntityDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
-
-    this.fetchData(this.props.params);
+    this.fetchData(this.props.match.params);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.fetchData(nextProps.params);
+  componentWillReceiveProps = (nextProps) => {
+    this.fetchData(nextProps.match.params);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     EntityDataStore.unlisten(this.onEntityDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
   }
 
-  onEntityDataChange(state) {
+  onEntityDataChange = (state) => {
     this.setState({entityData: state.entityData});
   }
 
-  onDataViewChoiceChange(state) {
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
   }
 
-  fetchData(params) {
+  fetchData = (params) => {
     EntityDataStore.fetch({entityId: params.entityId});
   }
 
   render() {
-    const entityId = this.props.params.entityId;
+    const entityId = this.props.match.params.entityId;
     const entityData = this.state.entityData;
     const title = entityData.entity ? entityData.entity.EntityName
       : '';
@@ -80,7 +80,7 @@ export default class EntityView extends React.Component {
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" noFadeIn />
+                        <Spinner name="double-bounce" fadeIn='none' />
                       </div>
                     </div>
                   </div>
@@ -182,7 +182,9 @@ export default class EntityView extends React.Component {
 }
 
 EntityView.propTypes = {
-  params: PropTypes.shape({
-    entityId: PropTypes.integer
-  }).isRequired
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      entityId: PropTypes.integer
+    }).isRequired
+  })
 };

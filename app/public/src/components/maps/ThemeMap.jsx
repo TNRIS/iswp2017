@@ -11,24 +11,19 @@ import CdbUtil from '../../utils/CdbUtil';
 import constants from '../../constants';
 import history from '../../history';
 import CustomPropTypes from '../../utils/CustomPropTypes';
-import NeedsLegend from '../../utils/NeedsLegend';
+import {getColorForValue, create} from '../../utils/NeedsLegend';
 import ThemeMapStateActions from '../../actions/ThemeMapStateActions';
 import ThemeMapStateStore from '../../stores/ThemeMapStateStore';
 
 export default class ThemeMap extends React.Component{
-
-  getDefaultProps() {
-    return {
-      decade: '2020'
-    };
+  constructor(props) {
+    super(props);
+    const themeMapStateStore = ThemeMapStateStore.getState();
+    this.state = themeMapStateStore;
   }
 
-  getInitialState() {
-    return ThemeMapStateStore.getState();
-  }
-
-  componentDidMount() {
-    const map = this.map = L.map(this.map, {
+  componentDidMount = () => {
+    const map = this.map = L.map(this.mapDiv, {
       scrollWheelZoom: false,
       zoomControl: false
     });
@@ -120,11 +115,11 @@ export default class ThemeMap extends React.Component{
     ThemeMapStateStore.listen(this.onMapStateChange);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     this.updateMap(nextProps);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     ThemeMapStateStore.unlisten(this.onMapStateChange);
     this.spiderfier.clearListeners('click');
     this.spiderfier.clearListeners('spiderfy');
@@ -133,11 +128,11 @@ export default class ThemeMap extends React.Component{
     ThemeMapStateActions.hidePrj();
   }
 
-  onMapStateChange(state) {
+  onMapStateChange = (state) => {
     this.setState(state);
   }
 
-  updateMap(props) {
+  updateMap = (props) => {
     this.map.closePopup();
     // dataRows can have multiple rows for the same EntityId
     // so group them and sum their current year value to make
@@ -223,7 +218,7 @@ export default class ThemeMap extends React.Component{
 
         if (props.theme === 'needs') {
           const npdVal = feat.properties[`NPD${props.decade}`];
-          const color = NeedsLegend.getColorForValue(npdVal);
+          const color = getColorForValue(npdVal);
           markerOpts.color = color;
         }
 
@@ -238,7 +233,7 @@ export default class ThemeMap extends React.Component{
     });
 
     if (props.theme === 'needs') {
-      this.legendControl = NeedsLegend.create();
+      this.legendControl = create();
       this.map.addControl(this.legendControl);
     }
 
@@ -320,7 +315,7 @@ export default class ThemeMap extends React.Component{
 
   }
 
-  displaySourceLayer(props, bounds) {
+  displaySourceLayer = (props, bounds) => {
     if (props.theme === 'supplies' || props.theme === 'strategies') {
       const hasValue = props.data.rows.filter(record => record[`Value_${props.decade}`] > 0);
       const sourceById = R.groupBy(R.prop('MapSourceId'))(hasValue);
@@ -380,7 +375,7 @@ export default class ThemeMap extends React.Component{
   }
 
   //live handle tooltip/label of source features
-  showSourceLabel(event) {
+  showSourceLabel = (event) => {
     if (!this.label) {
       this.label = new L.Label();
     }
@@ -391,19 +386,19 @@ export default class ThemeMap extends React.Component{
     }
   }
 
-  hideSourceLabel() {
+  hideSourceLabel = () => {
     if (this.label && this.map.hasLayer(this.label)) {
       this.map.removeLayer(this.label);
       this.label = null;
     }
   }
 
-  viewSourcePage(event) {
+  viewSourcePage = (event) => {
     const id = event.layer.feature.properties.sourceid;
     history.push({pathname: `/source/${id}`});
   }
 
-  applyBounds(bounds) {
+  applyBounds = (bounds) => {
     if (!this.state.isLocked) {
       if (bounds._southWest == undefined) {
         this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
@@ -416,7 +411,7 @@ export default class ThemeMap extends React.Component{
     }
   }
 
-  toggleProjects() {
+  toggleProjects = () => {
     if (this.state.showProjects == 'Hide') {
       this.map.removeLayer(this.projectLayer);
       ThemeMapStateActions.showPrj();
@@ -430,7 +425,7 @@ export default class ThemeMap extends React.Component{
   render() {
     return (
       <div>
-        <div className="theme-map" ref={(map) => {this.map = map;}}></div>
+        <div className="theme-map" ref={(mapDiv) => {this.mapDiv = mapDiv;}}></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
         {this.props.theme === 'strategies' &&
           <p className="note">Red triangles indicate capital projects associated with strategy supplies that have been assigned to a Water User Group. <a className="pointerHover" onClick={this.toggleProjects}>{this.state.showProjects} Projects</a></p>
@@ -447,4 +442,8 @@ ThemeMap.propTypes = {
   boundary: CustomPropTypes.Feature,
   entity: PropTypes.object,
   projects: PropTypes.array
+}
+
+ThemeMap.defaultProps = {
+  decade: '2020'
 }

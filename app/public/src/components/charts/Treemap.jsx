@@ -9,30 +9,21 @@ import CustomPropTypes from '../../utils/CustomPropTypes';
 
 // Treemap based on example from http://bost.ocks.org/mike/treemap/
 export default class Treemap extends React.PureComponent {
-  getDefaultProps() {
-    return {
-      height: 500,
-      marginTop: 20,
-      titlePad: 6,
-      showPercent: false
-    };
-  }
-
-  componentDidMount() {
+  componentDidMount = () => {
     this.updateTreemap(this.props);
     this.debouncedUpdateTreemap = debounce(() => this.updateTreemap(this.props), 200).bind(this);
     window.addEventListener('resize', this.debouncedUpdateTreemap);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     this.updateTreemap(nextProps);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     window.removeEventListener('resize', this.debouncedUpdateTreemap);
   }
 
-  updateTreemap(props) {
+  updateTreemap = (props) => {
     const marginTop = props.marginTop;
     const height = props.height - marginTop;
     const width = this.treemapContainer.offsetWidth;
@@ -244,4 +235,11 @@ Treemap.propTypes = {
   marginTop: PropTypes.number,
   titlePad: PropTypes.number,
   showPercent: PropTypes.bool
+};
+
+Treemap.defaultProps = {    
+  height: 500,
+  marginTop: 20,
+  titlePad: 6,
+  showPercent: false
 };

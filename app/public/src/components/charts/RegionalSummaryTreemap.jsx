@@ -9,22 +9,23 @@ import constants from '../../constants';
 import CustomPropTypes from '../../utils/CustomPropTypes';
 import Treemap from './Treemap';
 import Units from '../Units';
-import utils from '../../utils';
+import {slugify} from '../../utils';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
 export default class RegionalSummaryTreemap extends React.PureComponent {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       selectedTreemap: 'region'
-    };
+    }
   }
 
-  selectTreemap(type) {
+  selectTreemap = (type) => {
     this.setState({selectedTreemap: type});
   }
 
-  formatData() {
+  formatData = () => {
     const selectedDecade = this.props.decade;
     const selectedTheme = this.props.theme;
     const isPopulation = selectedTheme === 'population';
@@ -69,12 +70,12 @@ export default class RegionalSummaryTreemap extends React.PureComponent {
       children: constants.USAGE_TYPES.map((type) => {
         return {
           label: titleize(type),
-          className: `type-${utils.slugify(type).toLowerCase()}`,
+          className: `type-${slugify(type).toLowerCase()}`,
           children: constants.REGIONS.map((region) => {
             const entry = R.nth(0, dataByRegion[region]);
             return {
               label: `Region ${region.toUpperCase()}`,
-              className: `type-${utils.slugify(type).toLowerCase()}`,
+              className: `type-${slugify(type).toLowerCase()}`,
               value: entry[type]
             };
           })

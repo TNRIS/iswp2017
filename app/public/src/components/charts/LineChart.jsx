@@ -15,19 +15,18 @@ const tooltipClass = 'ct-tooltip';
 const heightAdjust = 14;
 
 export default class LineChart extends React.PureComponent{
-
-  componentDidMount() {
+  componentDidMount = () => {
     this.updateChart(this.props);
     window.addEventListener('scroll', this.clearInteraction);
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillUpdate = (nextProps) => {
     if (nextProps !== this.props) {
       this.updateChart(nextProps);
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     if (this.chart) {
       try {
         this.chart.detach();
@@ -39,12 +38,13 @@ export default class LineChart extends React.PureComponent{
     window.removeEventListener('scroll', this.clearInteraction);
   }
 
-  onMouseOut() {
+  onMouseOut = () => {
     this.clearInteraction();
   }
 
-  onMouseOver(event) {
-    // use library to check classList because IE doesn't implement classList on SVG elements
+  onMouseOver = (event) => {
+    // use library to check classList because IE doesn't 
+    // implement classList on SVG elements
     const isOverPoint = classList(event.target).contains('ct-point');
 
     if (!isOverPoint) {
@@ -80,19 +80,21 @@ export default class LineChart extends React.PureComponent{
     // to the hovered chart element
     tooltip.style.top = `${matrix.f - height - heightAdjust}px`;
     tooltip.style.left = `${matrix.e - width / 2}px`;
-    tooltip.className = classnames(tooltipClass, `tooltip-${slugify(seriesName.toLowerCase())}`);
+    tooltip.className = classnames(
+      tooltipClass, 
+      `tooltip-${slugify(seriesName.toLowerCase())}`);
   }
 
-  clearInteraction() {
+  clearInteraction = () => {
     SeriesHighlightActions.clearSeries();
     this.hideTooltip();
   }
 
-  hideTooltip() {
+  hideTooltip = () => {
     this.tooltip.className = classnames(tooltipClass, 'hide');
   }
 
-  updateChart(props) {
+  updateChart = (props) => {
     if (!props.chartData) { return; }
 
     const defaultOptions = {
@@ -119,7 +121,7 @@ export default class LineChart extends React.PureComponent{
       chartOptions.chartPadding.left -= 10;
     }
 
-    if (this.chart) {
+    if (this.chart instanceof Chartist.Line) {
       this.chart.update(props.chartData, chartOptions);
     }
     else {
@@ -136,7 +138,7 @@ export default class LineChart extends React.PureComponent{
           onMouseOver={this.onMouseOver}
           onMouseOut={this.onMouseOut}>
         </div>
-        <div ref={(tooltip) => {this.tooltip = tooltip; }} 
+        <div ref={(tooltip) => {this.tooltip = tooltip;}} 
         className={classnames(tooltipClass, 'hide')}></div>
       </div>
     );

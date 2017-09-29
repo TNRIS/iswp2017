@@ -14,17 +14,14 @@ import {slugify} from '../../utils';
 
 const chartOptions = {
   height: '200px',
-  plugins: [
-    new TitlePlugin(
-      {
-        axisY: {
-          axisTitle: 'acre-feet/year',
-        },
-    }),
-  ],
+  plugins: [new TitlePlugin({
+      axisY: {
+        axisTitle: 'acre-feet/year'
+      }
+    })]
 };
 
-export class DataByTypeCharts extends React.PureComponent{
+export default class DataByTypeCharts extends React.PureComponent {
   render() {
     const viewData = this.props.viewData;
 
@@ -48,12 +45,12 @@ export class DataByTypeCharts extends React.PureComponent{
                 .DECADES
                 .map((year) => {
                   if (R.path([
-                    theme, 'typeTotals', type,
+                    theme, 'typeTotals', type
                   ], viewData)) {
                     return viewData[theme].typeTotals[type][year];
                   }
                   return 0;
-                }),
+                })
             };
           });
       });
@@ -61,9 +58,7 @@ export class DataByTypeCharts extends React.PureComponent{
     const legendEntries = constants
       .THEMES
       .map((theme) => {
-        return {
-          className: `series-${theme}`,
-          display: constants.THEME_TITLES[theme]};
+        return {className: `series-${theme}`, display: constants.THEME_TITLES[theme]};
       });
 
     const everyTwoTypes = R.splitEvery(2, constants.USAGE_TYPES);
@@ -75,21 +70,19 @@ export class DataByTypeCharts extends React.PureComponent{
             Data by Usage Type
             <Units/>
           </h4>
-          <ChartLegend
-          rectangle className="u-pull-right"
-          entries={legendEntries}/>
+          <ChartLegend rectangle className="u-pull-right" entries={legendEntries}/>
         </div>
         <div className="clear-float u-full-width">
           {everyTwoTypes.map(([
-            groupOne, groupTwo,
+            groupOne, groupTwo
           ], i) => {
             const groupOneData = {
               labels: constants.DECADES,
-              series: seriesByType[groupOne],
+              series: seriesByType[groupOne]
             };
             const groupTwoData = {
               labels: constants.DECADES,
-              series: seriesByType[groupTwo],
+              series: seriesByType[groupTwo]
             };
             return (
               <div className="row" key={i}>
@@ -112,13 +105,12 @@ export class DataByTypeCharts extends React.PureComponent{
               </div>
             );
           })
-}
+        }
         </div>
       </div>
     );
   }
 }
-
 
 DataByTypeCharts.propTypes = {
   viewData: CustomPropTypes.ViewData

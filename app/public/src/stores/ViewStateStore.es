@@ -4,10 +4,7 @@ import ViewStateActions from '../actions/ViewStateActions';
 
 class ViewStateStore {
   constructor() {
-    this.viewState = {
-      view: null, 
-      id: null
-    };
+    this.viewState = {};
 
     this.bindListeners({
       handleUpdateViewState: ViewStateActions.UPDATE_VIEW_STATE

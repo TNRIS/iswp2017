@@ -15,40 +15,41 @@ import PrjDataViewChoiceWrap from '../PrjDataViewChoiceWrap';
 import ThemeMaps from '../maps/ThemeMaps';
 
 export default class ProjectView extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       projectData: ProjectDataStore.getState().projectData,
       viewChoice: DataViewChoiceStore.getState()
-    };
+    }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     ProjectDataStore.listen(this.onProjectDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
-    this.fetchProjectData(this.props.params);
+    this.fetchProjectData(this.props.match.params);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     // Route params are in this.props, and when route changes the data
     // need to be fetched again
-    this.fetchProjectData(nextProps.params);
+    this.fetchProjectData(nextProps.match.params);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     ProjectDataStore.unlisten(this.onProjectDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
   }
 
-  onProjectDataChange(state) {
+  onProjectDataChange = (state) => {
     this.setState({projectData: state.projectData});
   }
 
-  onDataViewChoiceChange(state) {
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
   }
 
-  fetchProjectData(params) {
+  fetchProjectData = (params) => {
     ProjectDataStore.fetch({
       projectId: params.projectId
     });
@@ -79,7 +80,7 @@ export default class ProjectView extends React.Component {
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" noFadeIn />
+                        <Spinner name="double-bounce" fadeIn='none' />
                       </div>
                     </div>
                   </div>
@@ -147,7 +148,9 @@ export default class ProjectView extends React.Component {
 }
 
 ProjectView.propTypes = {
-  params: PropTypes.shape({
-    projectId: PropTypes.integer
-  }).isRequired
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      projectId: PropTypes.integer
+    }).isRequired
+  })
 };

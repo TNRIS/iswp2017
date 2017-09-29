@@ -78,7 +78,7 @@ export default class SourceView extends React.Component {
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" noFadeIn />
+                        <Spinner name="double-bounce" fadeIn='none' />
                       </div>
                     </div>
                   </div>

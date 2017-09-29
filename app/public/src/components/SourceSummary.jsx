@@ -25,7 +25,7 @@ export default createReactClass({
     if (!props.sourceData || R.isEmpty(R.keys(props.sourceData))) {
       return (
         <div className="view-summary">
-          <Spinner spinnerName="double-bounce" noFadeIn />
+          <Spinner name="double-bounce" fadeIn='none' />
         </div>
       );
     }

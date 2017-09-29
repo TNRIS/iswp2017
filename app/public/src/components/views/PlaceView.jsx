@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
-import utils from '../../utils';
+import {getViewName} from '../../utils';
 import DataByTypeCharts from '../charts/DataByTypeCharts';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
@@ -21,50 +21,51 @@ import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 
 export default class PlaceView extends React.Component {
-  getInitialState() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       placeData: PlaceDataStore.getState().placeData,
-      viewChoice: DataViewChoiceStore.getState(),
-    };
+      viewChoice: DataViewChoiceStore.getState()
+    }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     PlaceDataStore.listen(this.onPlaceDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
-    this.fetchPlaceData(this.props.params);
+    this.fetchPlaceData(this.props.match.params);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     // Route params are in this.props, and when route changes the data
     // need to be fetched again
-    this.fetchPlaceData(nextProps.params);
+    this.fetchPlaceData(nextProps.match.params);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     PlaceDataStore.unlisten(this.onPlaceDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
   }
 
-  onPlaceDataChange(state) {
+  onPlaceDataChange = (state) => {
     this.setState({placeData: state.placeData});
   }
 
-  onDataViewChoiceChange(state) {
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
   }
 
-  fetchPlaceData(params) {
+  fetchPlaceData = (params) => {
     PlaceDataStore.fetch({
       type: params.type, typeId: params.typeId,
     });
   }
 
   render() {
-    const params = this.props.params;
+    const params = this.props.match.params;
     const placeData = this.state.placeData;
 
-    const viewName = utils.getViewName(params.type, params.typeId);
+    const viewName = getViewName(params.type, params.typeId);
     const isRegion = params.type.toLowerCase() === 'region';
 
     return (
@@ -90,7 +91,7 @@ export default class PlaceView extends React.Component {
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" noFadeIn />
+                        <Spinner name="double-bounce" fadeIn='none' />
                       </div>
                     </div>
                   </div>
@@ -176,8 +177,8 @@ export default class PlaceView extends React.Component {
                             theme={this.state.viewChoice.selectedTheme} />
                           <h5>Download Data</h5>
                           <DownloadDataLink
-                            type={this.props.params.type}
-                            typeId={this.props.params.typeId}
+                            type={this.props.match.params.type}
+                            typeId={this.props.match.params.typeId}
                             theme={this.state.viewChoice.selectedTheme}
                             viewName={viewName} />
                         </div>
@@ -195,8 +196,10 @@ export default class PlaceView extends React.Component {
 }
 
 PlaceView.propTypes = {
-  params: PropTypes.shape({
-    type: PropTypes.string.isRequired,
-    typeId: PropTypes.string
-  }).isRequired
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      typeId: PropTypes.string
+    }).isRequired
+  })
 }

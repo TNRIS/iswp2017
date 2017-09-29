@@ -27,14 +27,10 @@ export default class App extends React.Component {
         <HeaderNav />
         <Switch>
           <Route name="stateview" path="/statewide" component={StatewideView}/>
-          <Route
-          name="entityview" path="/entity/:entityId" component={EntityView}/>
-          <Route name="sourceview" path="/source/:sourceId"
-          component={SourceView}/>
-          <Route name="projectview" path="/project/:projectId"
-          component={ProjectView}/>
-          <Route name="usagetypeview" path="/usagetype/:typeId"
-          component={UsageTypeView}/>
+          <Route name="entityview" path="/entity/:entityId" component={EntityView}/>
+          <Route name="sourceview" path="/source/:sourceId" component={SourceView}/>
+          <Route name="projectview" path="/project/:projectId" component={ProjectView}/>
+          <Route name="usagetypeview" path="/usagetype/:typeId" component={UsageTypeView}/>
           <Route name="placeview" path="/:type/:typeId" component={PlaceView}/>
           <Redirect exact from='/' to="/statewide"/>
         </Switch>

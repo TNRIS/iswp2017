@@ -31,14 +31,12 @@ export default class StatewideView extends React.Component {
       data: StatewideDataStore.getState().data,
       viewChoice: DataViewChoiceStore.getState()
     };
-    this.onChange = this.onChange.bind(this);
-    this.onDataViewChoiceChange = this.onDataViewChoiceChange.bind(this);
   }
 
   /**
    * 
    */
-  componentDidMount() {
+  componentDidMount = () => {
     StatewideDataStore.listen(this.onChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
     this.fetchData();
@@ -47,14 +45,14 @@ export default class StatewideView extends React.Component {
   /**
    * 
    */
-  componentWillReceiveProps() {
+  componentWillReceiveProps = () => {
     this.fetchData();
   }
 
   /**
    * 
    */
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     StatewideDataStore.unlisten(this.onChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
   }
@@ -63,7 +61,7 @@ export default class StatewideView extends React.Component {
    * 
    * @param {*} state 
    */
-  onChange(state) {
+  onChange = (state) => {
     this.setState(state);
   }
 
@@ -71,14 +69,14 @@ export default class StatewideView extends React.Component {
    * 
    * @param {*} state 
    */
-  onDataViewChoiceChange(state) {
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
   }
 
   /**
    * 
    */
-  fetchData() {
+  fetchData = () => {
     // Fetch statewide data
     StatewideDataStore.fetch();
   }

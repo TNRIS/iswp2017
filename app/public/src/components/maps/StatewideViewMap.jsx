@@ -7,10 +7,9 @@ import history from '../../history';
 import constants from '../../constants';
 import CdbUtil from '../../utils/CdbUtil';
 
-export default class StatewideViewMap extends React.Component {
+export default class StatewideViewMap extends React.PureComponent {
   componentDidMount = () => {
-    this.map = L.map(this.map, constants.VIEW_MAP_OPTIONS);
-
+    this.map = L.map(this.mapDiv, constants.VIEW_MAP_OPTIONS);
     this.map.attributionControl.setPrefix('');
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
@@ -33,7 +32,6 @@ export default class StatewideViewMap extends React.Component {
     CdbUtil.createRegionsLayer()
       .then((result) => {
         this.map.addLayer(L.tileLayer(result.tilesUrl));
-
         this.utfGrid = L.utfGrid(result.gridUrl, {
           useJsonP: false
         });
@@ -54,7 +52,7 @@ export default class StatewideViewMap extends React.Component {
 
   render() {
     return (
-      <div ref={(map) => {this.map = map;}} className="view-map"></div>
+      <div ref={(mapDiv) => {this.mapDiv = mapDiv;}} className="view-map"></div>
     );
   }
 }

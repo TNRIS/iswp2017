@@ -32,19 +32,19 @@ function isAllZero(chartData) {
 }
 
 export default class BarChart extends React.PureComponent {
-  componentDidMount() {
+  componentDidMount = () => {
     this.updateChart(this.props);
     window.addEventListener('scroll', this.clearInteraction);
     this.chart.on('draw', this.centerHorizontalLabels);
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillUpdate = (nextProps) => {
     if (nextProps !== this.props) {
       this.updateChart(nextProps);
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     if (this.chart) {
       try {
         this.chart.off('draw', this.centerHorizontalLabels);
@@ -56,11 +56,11 @@ export default class BarChart extends React.PureComponent {
     window.removeEventListener('scroll', this.clearInteraction);
   }
 
-  onMouseOut() {
+  onMouseOut = () => {
     this.clearInteraction();
   }
 
-  onMouseOver(event) {
+  onMouseOver = (event) => {
     // use library to check classList because IE doesn't
     // implement classList on SVG elements
     const isOverBar = classList(event.target).contains('ct-bar');
@@ -100,7 +100,7 @@ export default class BarChart extends React.PureComponent {
     tooltip.className = classnames(tooltipClass, `tooltip-${slugify(seriesName.toLowerCase())}`);
   }
 
-  centerHorizontalLabels(event) {
+  centerHorizontalLabels = (event) => {
     // If the draw event is for labels on the x-axis
     if (event.type === 'label' && event.axis.units.pos === 'x') {
       //and if foreign objects are not supported
@@ -114,16 +114,16 @@ export default class BarChart extends React.PureComponent {
     }
   }
 
-  clearInteraction() {
+  clearInteraction = () => {
     SeriesHighlightActions.clearSeries();
     this.hideTooltip();
   }
 
-  hideTooltip() {
+  hideTooltip = () => {
     this.tooltip.className = classnames(tooltipClass, 'hide');
   }
 
-  updateChart(props) {
+  updateChart = (props) => {
     if (!props.chartData) {
       return;
     }
@@ -152,7 +152,7 @@ export default class BarChart extends React.PureComponent {
     const chartOptions = R.merge(defaultOptions,
       props.chartOptions || {});
 
-    if (this.chart) {
+    if (this.chart instanceof Chartist.Bar) {
       this.chart.update(props.chartData, chartOptions, responsiveOptions);
     } else {
       this.chart = new Chartist.Bar(this.chart,
@@ -167,7 +167,7 @@ export default class BarChart extends React.PureComponent {
           isAllZero(this.props.chartData) &&
           (<div className="zero-message">All values are zero</div>)
         }
-        <div ref={(chart) => {this.chart = chart; }} className="ct-chart"
+        <div ref={(chart) => {this.chart = chart;}} className="ct-chart"
           onMouseOver={this.onMouseOver}
           onMouseOut={this.onMouseOut}>
         </div>
