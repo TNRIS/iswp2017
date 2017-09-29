@@ -188,7 +188,6 @@ export default class UsageTypeView extends React.Component {
   }
 }
 
-<<<<<<< HEAD
 UsageTypeView.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -196,6 +195,3 @@ UsageTypeView.propTypes = {
     }).isRequired
   })
 };
-=======
-});
->>>>>>> develop
