@@ -6,6 +6,7 @@ import db from 'db';
 import constants from 'lib/constants';
 
 import {handleApiError} from 'lib/utils';
+
 //TODO: Remove "typeTotals" from the population response?
 
 const needsPctDemandsTable = 'vw2017MapEntityNeedsAsPctOfDemand';

@@ -4,7 +4,7 @@ import ViewStateActions from '../actions/ViewStateActions';
 
 class ViewStateStore {
   constructor() {
-    this.viewState = null;
+    this.viewState = {};
 
     this.bindListeners({
       handleUpdateViewState: ViewStateActions.UPDATE_VIEW_STATE
@@ -20,6 +20,7 @@ class ViewStateStore {
     if (path[0] === '/') {
       path = path.substring(1);
     }
+
     //remove trailing slash if it has one
     if (path[path.length - 1] === '/') {
       path = path.substring(0, path.length - 1);

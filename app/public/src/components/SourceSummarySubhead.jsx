@@ -1,21 +1,15 @@
 
+import PropTypes from 'prop-types';
 import React from 'react';
-import {Link} from 'react-router';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import intersperse from 'intersperse';
+import {Link} from 'react-router-dom';
 
 import {formatCountyName} from '../utils/CountyNames';
 
-export default React.createClass({
-  propTypes: {
-    sourceName: React.PropTypes.string
-  },
-
-  mixins: [PureRenderMixin],
-
-  getInitialState() {
-    return {};
-  },
+export default class SourceSummarySubhead extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   render() {
     const sourceName = this.props.sourceName;
@@ -42,7 +36,9 @@ export default React.createClass({
         </p>
       );
     }
-
-    return (<div/>);
   }
-});
+}
+
+SourceSummarySubhead.propTypes = {
+  sourceName: PropTypes.string
+}

@@ -1,26 +1,16 @@
 /*global L*/
 
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-import utils from '../../utils';
+import {getMapPadding} from '../../utils';
 import history from '../../history';
 import constants from '../../constants';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import CdbUtil from '../../utils/CdbUtil';
 
-export default React.createClass({
-  propTypes: {
-    projectData: PropTypes.ProjectDataSplit
-  },
-
-  mixins: [PureRenderMixin],
-
-  componentDidMount() {
-    this.map = L.map(this.refs.map,
-      constants.VIEW_MAP_OPTIONS
-    );
-
+export default class ProjectViewMap extends React.PureComponent {
+  componentDidMount = () => {
+    this.map = L.map(this.mapDiv, constants.VIEW_MAP_OPTIONS);
     this.map.attributionControl.setPrefix('');
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
@@ -31,7 +21,7 @@ export default React.createClass({
     }).addTo(this.map);
 
     this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS, {
-      paddingTopLeft: utils.getMapPadding()
+      paddingTopLeft: getMapPadding()
     });
 
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
@@ -39,22 +29,22 @@ export default React.createClass({
     );
 
     this.map.addLayer(baseLayer);
+    
 
     CdbUtil.createCountiesLayer()
-      .then((result) => {
-        this.map.addLayer(L.tileLayer(result.tilesUrl));
-
-        this.utfGrid = L.utfGrid(result.gridUrl, {
-          useJsonP: false
-        });
-        this.map.addLayer(this.utfGrid);
-        this.utfGrid.on('click', this.navigateToCounty);
-        this.utfGrid.on('mousemove', this.showCountyLabel);
-        this.utfGrid.on('mouseout', this.hideCountyLabel);
+    .then((result) => {
+      this.map.addLayer(L.tileLayer(result.tilesUrl));
+      this.utfGrid = L.utfGrid(result.gridUrl, {
+        useJsonP: false
       });
-  },
+      this.map.addLayer(this.utfGrid);
+      this.utfGrid.on('click', this.navigateToCounty);
+      this.utfGrid.on('mousemove', this.showCountyLabel);
+      this.utfGrid.on('mouseout', this.hideCountyLabel);
+    });
+  }
 
-  componentDidUpdate() {
+  componentDidUpdate = () => {
     if (!this.props.projectData.project) {
       return;
     }
@@ -86,31 +76,30 @@ export default React.createClass({
           });
           return marker;
         }
-    })
-
-    this.map.addLayer(this.projectLayer);
-    this.map.fitBounds([[project.LatCoord, project.LongCoord], [project.LatCoord, project.LongCoord]], {
-      paddingTopLeft: utils.getMapPadding(),
-      maxZoom: 9
     });
 
-  },
+    this.map.addLayer(this.projectLayer);
+    this.map.fitBounds([
+      [project.LatCoord, project.LongCoord], 
+      [project.LatCoord, project.LongCoord]], 
+      {paddingTopLeft: getMapPadding(), maxZoom: 9});
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     if (this.utfGrid) {
       this.utfGrid.off('click', this.navigateToCounty);
       this.utfGrid.off('mousemove', this.showCountyLabel);
       this.utfGrid.off('mouseout', this.hideCountyLabel);
     }
-  },
+  }
 
-  navigateToCounty({data}) {
+  navigateToCounty = ({data}) => {
     if (data) {
       history.push({pathname: `/county/${data.name}`});
     }
-  },
+  }
 
-  showCountyLabel(event) {
+  showCountyLabel = (event) => {
     if (!this.label) {
       this.label = new L.Label({className: 'label-county'});
     }
@@ -119,18 +108,22 @@ export default React.createClass({
     if (!this.map.hasLayer(this.label)) {
       this.map.addLayer(this.label);
     }
-  },
+  }
 
-  hideCountyLabel() {
+  hideCountyLabel = () => {
     if (this.label && this.map.hasLayer(this.label)) {
       this.map.removeLayer(this.label);
       this.label = null;
     }
-  },
+  }
 
   render() {
     return (
-      <div ref="map" className="view-map"></div>
+      <div ref={(mapDiv) => {this.mapDiv = mapDiv;}} className="view-map"></div>
     );
   }
-});
+}
+
+ProjectViewMap.propTypes = {
+  projectData: CustomPropTypes.ProjectDataSplit
+};

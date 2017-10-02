@@ -1,6 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
@@ -19,60 +20,53 @@ import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
-import utils from '../../utils';
 
-export default React.createClass({
-  propTypes: {
-    params: React.PropTypes.shape({
-      type: React.PropTypes.string.isRequired,
-      typeId: React.PropTypes.string
-    }).isRequired
-  },
-
-  getInitialState() {
-    return {
+export default class PlaceView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       placeData: PlaceDataStore.getState().placeData,
       viewChoice: DataViewChoiceStore.getState()
-    };
-  },
+    }
+  }
 
-  componentDidMount() {
+  componentDidMount = () => {
     PlaceDataStore.listen(this.onPlaceDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
-    this.fetchPlaceData(this.props.params);
-  },
+    this.fetchPlaceData(this.props.match.params);
+  }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     // Route params are in this.props, and when route changes the data
     // need to be fetched again
-    this.fetchPlaceData(nextProps.params);
-  },
+    this.fetchPlaceData(nextProps.match.params);
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     PlaceDataStore.unlisten(this.onPlaceDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
-  },
+  }
 
-  onPlaceDataChange(state) {
+  onPlaceDataChange = (state) => {
     this.setState({placeData: state.placeData});
-  },
+  }
 
-  onDataViewChoiceChange(state) {
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
-  },
+  }
 
-  fetchPlaceData(params) {
+  fetchPlaceData = (params) => {
     PlaceDataStore.fetch({
-      type: params.type, typeId: params.typeId
+      type: params.type, typeId: params.typeId,
     });
-  },
+  }
 
   render() {
-    const params = this.props.params;
+    const params = this.props.match.params;
     const placeData = this.state.placeData;
 
-    const viewName = utils.getViewName(params.type, params.typeId);
+    const viewName = getViewName(params.type, params.typeId);
     const isRegion = params.type.toLowerCase() === 'region';
 
     return (
@@ -98,7 +92,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" noFadeIn />
+                        <Spinner name="double-bounce" fadeIn='none' />
                       </div>
                     </div>
                   </div>
@@ -112,7 +106,8 @@ export default React.createClass({
                       isRegion &&
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <RegionDescription region={params.typeId.toUpperCase()} />
+                          <RegionDescription
+                          region={params.typeId.toUpperCase()} />
                         </div>
                       </div>
                     }
@@ -141,14 +136,17 @@ export default React.createClass({
                     <div className="row panel-row">
                       <div className="twelve columns">
                         <span className="view-name">{viewName}</span>
-                        <ProjectTable type={params.type} projectData={placeData.data.projects} />
+                        <ProjectTable
+                        type={params.type}
+                        projectData={placeData.data.projects} />
                       </div>
                     </div>
 
                   </div>
 
-                  <DataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
-                    theme={this.state.viewChoice.selectedTheme}>
+                  <DataViewChoiceWrap
+                  decade={this.state.viewChoice.selectedDecade}
+                  theme={this.state.viewChoice.selectedTheme}>
 
                     <div className="container">
                       <div className="row panel-row">
@@ -179,6 +177,11 @@ export default React.createClass({
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
                           <h5>Download Data</h5>
+                          <DownloadDataLink
+                            type={this.props.match.params.type}
+                            typeId={this.props.match.params.typeId}
+                            theme={this.state.viewChoice.selectedTheme}
+                            viewName={viewName} />
                           <ul>
                             {
                               R.prepend('population', constants.THEMES).map((theme) => {
@@ -213,5 +216,13 @@ export default React.createClass({
       </div>
     );
   }
+}
 
-});
+PlaceView.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      typeId: PropTypes.string
+    }).isRequired
+  })
+}

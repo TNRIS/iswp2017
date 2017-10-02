@@ -1,4 +1,5 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
 import classnames from 'classnames';
@@ -9,22 +10,20 @@ import PrjDataViewChoiceSelectors from './PrjDataViewChoiceSelectors';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
-export default React.createClass({
-  propTypes: {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+export default class extends React.Component {
+  static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
     ]).isRequired,
-    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired,
-    hidePopulation: React.PropTypes.bool
-  },
+    decade: PropTypes.oneOf(constants.DECADES).isRequired,
+    theme: PropTypes.oneOf(themesAndPopulation).isRequired,
+    hidePopulation: PropTypes.bool
+  };
 
-  getInitialState() {
-    return {
-      isStuck: false
-    };
-  },
+  state = {
+    isStuck: false
+  };
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
@@ -32,14 +31,14 @@ export default React.createClass({
     //use debounced version for window resize
     this.debouncedHandleScroll = debounce(this.handleScroll, 200);
     window.addEventListener('resize', this.debouncedHandleScroll);
-  },
+  }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
     window.removeEventListener('resize', this.debouncedHandleScroll);
-  },
+  }
 
-  handleScroll() {
+  handleScroll = () => {
     if (!this.shouldCheckStick()) {
       this.setState({isStuck: false});
       return;
@@ -57,11 +56,11 @@ export default React.createClass({
     else {
       this.setState({isStuck: false});
     }
-  },
+  };
 
-  shouldCheckStick() {
+  shouldCheckStick = () => {
     return window.matchMedia("(min-width: 550px)").matches;
-  },
+  };
 
   render() {
     const wrapStyle = {};
@@ -83,4 +82,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}

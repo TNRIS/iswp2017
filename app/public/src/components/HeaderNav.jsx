@@ -23,64 +23,92 @@ const navCategoryOptions = [
   {value: "project", label: "WMS Project"}
 ];
 
-const regionSelectOptions = constants.REGIONS.map((region) => {
-  return {value: region, label: `Region ${region}`};
-});
-
-const countySelectOptions = countyNames.map((name) => {
-  return {value: name, label: name};
-});
-
-const usageTypeSelectOptions = constants.USAGE_TYPES.map((type) => {
-  return {value: type.toLowerCase(), label: titleize(type)};
-});
-
-const sourceSelectOptions = sourceNames.map((src) => {
-  return {value: src.sourceid, label: src.name};
-});
-
-export default React.createClass({
-  getInitialState() {
+export default class HeaderNav extends React.Component {
+  constructor(props) {
+    super(props);
     const viewState = ViewStateStore.getState().viewState;
-    return {
+    this.state = {
       navButtonEnabled: viewState.view === 'statewide',
       navCategory: viewState.view,
       subNavValue: ''
-    };
-  },
+    }
+  }
 
-  componentDidMount() {
+  componentDidMount = () => {
     ViewStateStore.listen(this.onViewStateChange);
-  },
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     ViewStateStore.unlisten(this.onViewStateChange);
-  },
+  }
 
-  onViewStateChange(storeState) {
+  onViewStateChange = (storeState) => {
     this.setState({
       navCategory: storeState.viewState.view,
       subNavValue: ''
     });
-  },
+  }
 
-  onChangeNavCategory(val) {
+  onChangeNavCategory = (selection) => {
     this.setState({
-      navCategory: val,
+      navCategory: selection.value,
       subNavValue: ''
     });
-  },
+  }
 
-  onSubNavChange(val, matches) {
-    if (!R.isEmpty(val)) {
-      this.setState({subNavValue: R.nth(0, matches)});
-    }
-    else {
+  onSubNavChange = (selection) => {
+    if (!R.isEmpty(selection)) {
+      this.setState({subNavValue: selection});
+    } else {
       this.setState({subNavValue: ''});
     }
-  },
+  }
 
-  entitySearch(input, callback) {
+  regionSelectOptions = (input, callback) => {
+    setTimeout(() => {
+      callback(null, {
+        options: constants.REGIONS.map((region) => {
+          return {value: region, label: `Region ${region}`};
+        }),
+        complete: true
+      });
+    }, 500);
+  };
+
+  countySelectOptions = (input, callback) => {
+    setTimeout(() => {
+      callback(null, {
+        options: countyNames.map((name) => {
+          return {value: name, label: name};
+        }),
+        complete: true
+      });
+    }, 500);
+  };
+
+  usageTypeSelectOptions = (input, callback) => {
+    setTimeout(() => {
+      callback(null, {
+        options: constants.USAGE_TYPES.map((type) => {
+          return {value: type.toLowerCase(), label: titleize(type)};
+        }),
+        complete: true
+      });
+    }, 500);
+  };
+
+  sourceSelectOptions = (input, callback) => {
+    setTimeout(() => {
+      callback(null, {
+        options: sourceNames.map((src) => {
+          return {value: src.sourceid, label: src.name};
+        }),
+        complete: true
+      });
+    }, 500);
+  };
+
+  entitySearch = (input, callback) => {
     if (input.length < 3) {
       return callback(null, {options: []});
     }
@@ -95,9 +123,9 @@ export default React.createClass({
       .catch((err) => {
         callback(err);
       });
-  },
+  }
 
-  projectSearch(input, callback) {
+  projectSearch = (input, callback) => {
     if (input.length < 3) {
       return callback(null, {options: []});
     }
@@ -112,14 +140,13 @@ export default React.createClass({
       .catch((err) => {
         callback(err);
       });
-  },
+  }
 
-  isNavButtonEnabled() {
-    return (this.state.navCategory === 'statewide')
-      || !R.isEmpty(this.state.subNavValue);
-  },
+  isNavButtonEnabled = () => {
+    return (this.state.navCategory === 'statewide') || !R.isEmpty(this.state.subNavValue);
+  }
 
-  navigate() {
+  navigate = () => {
     switch (this.state.navCategory) {
     case 'statewide':
       history.push({pathname: '/statewide'});
@@ -145,9 +172,8 @@ export default React.createClass({
     default:
       return;
     }
-
     this.setState({subNavValue: ''});
-  },
+  }
 
   render() {
     return (
@@ -166,65 +192,65 @@ export default React.createClass({
             </div>
             <ToggleDisplay show={this.state.navCategory === 'region'}>
               <div className="select-container" aria-live="polite">
-                <Select matchPos="start"
+                <Select.Async matchPos="start"
                   placeholder="Select Region"
                   ignoreCase
                   clearable={false}
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
-                  options={regionSelectOptions} />
+                  loadOptions={this.regionSelectOptions} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'county'}>
               <div className="select-container" aria-live="polite">
-                <Select matchPos="start"
+                <Select.Async matchPos="start"
                   placeholder="Select County"
                   ignoreCase
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
-                  options={countySelectOptions} />
+                  loadOptions={this.countySelectOptions} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'entity'}>
               <div className="select-container entity-select" aria-live="polite">
-                <Select
+                <Select.Async
                   placeholder="Find Water User Group"
                   ignoreCase
                   autoload={false}
                   searchPromptText="Enter at least 3 characters to search"
-                  asyncOptions={this.entitySearch}
+                  loadOptions={this.entitySearch}
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'usagetype'}>
               <div className="select-container" aria-live="polite">
-                <Select
+                <Select.Async
                   placeholder="Select Usage Type"
                   ignoreCase
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
-                  options={usageTypeSelectOptions} />
+                  loadOptions={this.usageTypeSelectOptions} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'source'}>
               <div className="select-container" aria-live="polite">
-                <Select
+                <Select.Async
                   placeholder="Select Water Source"
                   ignoreCase
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
-                  options={sourceSelectOptions} />
+                  loadOptions={this.sourceSelectOptions} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'project'}>
               <div className="select-container project-select" aria-live="polite">
-                <Select
+                <Select.Async
                   placeholder="Find Project"
                   ignoreCase
                   autoload={false}
                   searchPromptText="Enter at least 3 characters to search"
-                  asyncOptions={this.projectSearch}
+                  loadOptions={this.projectSearch}
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue} />
               </div>
@@ -240,4 +266,4 @@ export default React.createClass({
       </div>
     );
   }
-});
+}

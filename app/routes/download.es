@@ -4,7 +4,7 @@ import Joi from 'joi';
 
 import constants from 'lib/constants';
 import DownloadController from 'controllers/download';
-import utils from 'lib/utils';
+import {addRoutes} from 'lib/utils';
 
 const downloadController = new DownloadController();
 const bind = (method) => downloadController[method].bind(downloadController);
@@ -115,7 +115,7 @@ function addTo(server, basePath = '/') {
     }
   ];
 
-  utils.addRoutes(server, routes, basePath);
+  addRoutes(server, routes, basePath);
 }
 
 export default {

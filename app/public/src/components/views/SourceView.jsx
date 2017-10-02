@@ -1,5 +1,6 @@
 import R from 'ramda';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
@@ -14,54 +15,48 @@ import SrcDataViewChoiceWrap from '../SrcDataViewChoiceWrap';
 import ThemeMaps from '../maps/ThemeMaps';
 import ProjectTable from '../ProjectTable';
 
-export default React.createClass({
-  propTypes: {
-    params: React.PropTypes.shape({
-      sourceId: React.PropTypes.integer
-    }).isRequired
-  },
-
-  getInitialState() {
-    return {
+export default class SourceView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       sourceData: SourceDataStore.getState().sourceData,
       viewChoice: DataViewChoiceStore.getState()
-    };
-  },
+    }
+  }
 
-  componentDidMount() {
+  componentDidMount = () => {
     SourceDataStore.listen(this.onSourceDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
-    this.fetchSourceData(this.props.params);
-  },
+    this.fetchSourceData(this.props.match.params);
+  }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     // Route params are in this.props, and when route changes the data
     // need to be fetched again
-    this.fetchSourceData(nextProps.params);
-  },
+    this.fetchSourceData(nextProps.match.params);
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     SourceDataStore.unlisten(this.onSourceDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
-  },
+  }
 
-  onSourceDataChange(state) {
+  onSourceDataChange = (state) => {
     this.setState({sourceData: state.sourceData});
-  },
+  }
 
-  onDataViewChoiceChange(state) {
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
-  },
+  }
 
-  fetchSourceData(params) {
+  fetchSourceData = (params) => {
     SourceDataStore.fetch({
       sourceId: params.sourceId
     });
-  },
+  }
 
   render() {
-    const params = this.props.params;
     const sourceData = this.state.sourceData;
     const title = sourceData.boundary ? sourceData.boundary.features[0].properties.name : '';
     const selectedTheme = !(constants.SRC_THEMES.includes(this.state.viewChoice.selectedTheme)) ? "supplies" : this.state.viewChoice.selectedTheme;
@@ -84,7 +79,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" noFadeIn />
+                        <Spinner name="double-bounce" fadeIn='none' />
                       </div>
                     </div>
                   </div>
@@ -155,5 +150,12 @@ export default React.createClass({
       </div>
     );
   }
+}
 
-});
+SourceView.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      sourceId: PropTypes.integer
+    }).isRequired
+  })
+};

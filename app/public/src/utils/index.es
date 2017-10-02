@@ -3,18 +3,18 @@ import R from 'ramda';
 
 import {formatCountyName} from './CountyNames';
 
-function slugify(s) {
+export function slugify(s) {
   return s.replace(/\s+/g, '-');
 }
 
-function getMapPadding() {
+export function getMapPadding() {
   if (window.matchMedia("(min-width: 750px)").matches) {
     return [500, 0];
   }
   return [0, 0];
 }
 
-function getChartLeftPadding(chartData) {
+export function getChartLeftPadding(chartData) {
   const seriesMaxes = chartData.series.map((series) => {
     return R.apply(Math.max, series.data);
   });
@@ -35,7 +35,7 @@ function getChartLeftPadding(chartData) {
   return 10;
 }
 
-function getViewName(type, typeId) {
+export function getViewName(type, typeId) {
   switch (type.toLowerCase()) {
   case 'region':
     return `Region ${typeId.toUpperCase()}`;
@@ -48,14 +48,6 @@ function getViewName(type, typeId) {
 
 //Make an object out of keys, with values derived from them
 // from https://github.com/ramda/ramda/wiki/Cookbook#make-an-object-out-of-keys-with-values-derived-from-them
-const objFromKeys = R.curry((fn, keys) => {
+export const objFromKeys = R.curry((fn, keys) => {
   return R.zipObj(keys, R.map(fn, keys));
 });
-
-export default {
-  slugify,
-  getMapPadding,
-  getChartLeftPadding,
-  getViewName,
-  objFromKeys
-};

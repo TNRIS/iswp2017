@@ -1,5 +1,6 @@
 import R from 'ramda';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
@@ -13,51 +14,46 @@ import ProjectSummary from '../ProjectSummary';
 import PrjDataViewChoiceWrap from '../PrjDataViewChoiceWrap';
 import ThemeMaps from '../maps/ThemeMaps';
 
-export default React.createClass({
-  propTypes: {
-    params: React.PropTypes.shape({
-      projectId: React.PropTypes.integer
-    }).isRequired
-  },
-
-  getInitialState() {
-    return {
+export default class ProjectView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       projectData: ProjectDataStore.getState().projectData,
       viewChoice: DataViewChoiceStore.getState()
-    };
-  },
+    }
+  }
 
-  componentDidMount() {
+  componentDidMount = () => {
     ProjectDataStore.listen(this.onProjectDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
-    this.fetchProjectData(this.props.params);
-  },
+    this.fetchProjectData(this.props.match.params);
+  }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     // Route params are in this.props, and when route changes the data
     // need to be fetched again
-    this.fetchProjectData(nextProps.params);
-  },
+    this.fetchProjectData(nextProps.match.params);
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     ProjectDataStore.unlisten(this.onProjectDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
-  },
+  }
 
-  onProjectDataChange(state) {
+  onProjectDataChange = (state) => {
     this.setState({projectData: state.projectData});
-  },
+  }
 
-  onDataViewChoiceChange(state) {
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
-  },
+  }
 
-  fetchProjectData(params) {
+  fetchProjectData = (params) => {
     ProjectDataStore.fetch({
       projectId: params.projectId
     });
-  },
+  }
 
   render() {
     const projectData = this.state.projectData;
@@ -84,7 +80,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" noFadeIn />
+                        <Spinner name="double-bounce" fadeIn='none' />
                       </div>
                     </div>
                   </div>
@@ -149,5 +145,12 @@ export default React.createClass({
       </div>
     );
   }
+}
 
-});
+ProjectView.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      projectId: PropTypes.integer
+    }).isRequired
+  })
+};

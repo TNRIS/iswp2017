@@ -1,6 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 import classnames from 'classnames';
@@ -19,7 +20,9 @@ function aggregateDescription(entityName) {
   return constants.USAGE_TYPE_DESCRIPTIONS[usageType.toUpperCase()];
 }
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'EntitySummary',
+
   propTypes: {
     entityData: PropTypes.EntityData
   },
@@ -32,7 +35,7 @@ export default React.createClass({
     if (!props.entityData || R.isEmpty(R.keys(props.entityData))) {
       return (
         <div className="view-summary">
-          <Spinner spinnerName="double-bounce" noFadeIn />
+          <Spinner name="double-bounce" fadeIn='none' />
         </div>
       );
     }
@@ -57,5 +60,5 @@ export default React.createClass({
         })()}
       </div>
     );
-  }
+  },
 });

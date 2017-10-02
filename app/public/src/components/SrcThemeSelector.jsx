@@ -1,17 +1,21 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import hat from 'hat';
 import classnames from 'classnames';
 
 import constants from '../constants';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'SrcThemeSelector',
+
   propTypes: {
-    value: React.PropTypes.string.isRequired,
-    onSelect: React.PropTypes.func.isRequired,
-    includePopulation: React.PropTypes.bool
+    value: PropTypes.string.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    includePopulation: PropTypes.bool
   },
 
   mixins: [PureRenderMixin],
@@ -75,6 +79,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  }
-
+  },
 });

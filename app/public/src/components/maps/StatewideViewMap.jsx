@@ -1,21 +1,15 @@
 /*global L*/
 
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-import utils from '../../utils';
+import {getMapPadding} from '../../utils';
 import history from '../../history';
 import constants from '../../constants';
 import CdbUtil from '../../utils/CdbUtil';
 
-export default React.createClass({
-  mixins: [PureRenderMixin],
-
-  componentDidMount() {
-    this.map = L.map(this.refs.map,
-      constants.VIEW_MAP_OPTIONS
-    );
-
+export default class StatewideViewMap extends React.PureComponent {
+  componentDidMount = () => {
+    this.map = L.map(this.mapDiv, constants.VIEW_MAP_OPTIONS);
     this.map.attributionControl.setPrefix('');
 
     L.control.zoom({position: 'topright'}).addTo(this.map);
@@ -26,7 +20,7 @@ export default React.createClass({
     }).addTo(this.map);
 
     this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS, {
-      paddingTopLeft: utils.getMapPadding()
+      paddingTopLeft: getMapPadding()
     });
 
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
@@ -38,28 +32,27 @@ export default React.createClass({
     CdbUtil.createRegionsLayer()
       .then((result) => {
         this.map.addLayer(L.tileLayer(result.tilesUrl));
-
         this.utfGrid = L.utfGrid(result.gridUrl, {
           useJsonP: false
         });
         this.map.addLayer(this.utfGrid);
         this.utfGrid.on('click', this.navigateToRegion);
       });
-  },
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.utfGrid.off('click', this.navigateToRegion);
-  },
+  }
 
-  navigateToRegion({data}) {
+  navigateToRegion = ({data}) => {
     if (data) {
       history.push({pathname: `/region/${data.letter}`});
     }
-  },
+  }
 
   render() {
     return (
-      <div ref="map" className="view-map"></div>
+      <div ref={(mapDiv) => {this.mapDiv = mapDiv;}} className="view-map"></div>
     );
   }
-});
+}

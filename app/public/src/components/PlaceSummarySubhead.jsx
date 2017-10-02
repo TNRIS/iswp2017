@@ -1,15 +1,19 @@
 
+import PropTypes from 'prop-types';
 import React from 'react';
-import {Link} from 'react-router';
+import createReactClass from 'create-react-class';
+import {Link} from 'react-router-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import intersperse from 'intersperse';
 
 import ParentPlaceStore from '../stores/ParentPlaceStore';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'PlaceSummarySubhead',
+
   propTypes: {
-    type: React.PropTypes.string,
-    typeId: React.PropTypes.string
+    type: PropTypes.string,
+    typeId: PropTypes.string
   },
 
   mixins: [PureRenderMixin],
@@ -76,5 +80,5 @@ export default React.createClass({
     }
 
     return (<div/>);
-  }
+  },
 });

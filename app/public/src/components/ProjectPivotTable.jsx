@@ -1,6 +1,8 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import format from 'format-number';
 import Emitter from 'wildemitter';
@@ -9,7 +11,7 @@ import hat from 'hat';
 
 import constants from '../constants';
 import {formatCountyName} from '../utils/CountyNames';
-import PropTypes from '../utils/CustomPropTypes';
+import CustomPropTypes from '../utils/CustomPropTypes';
 import ViewStateStore from '../stores/ViewStateStore';
 
 function toAnchor(href, text) {
@@ -34,11 +36,13 @@ const commonDimensions = [
   }
 ];
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'ProjectPivotTable',
+
   propTypes: {
-    viewData: PropTypes.ViewData,
-    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(constants.PRJ_THEMES).isRequired
+    viewData: CustomPropTypes.ViewData,
+    decade: PropTypes.oneOf(constants.DECADES).isRequired,
+    theme: PropTypes.oneOf(constants.PRJ_THEMES).isRequired
   },
 
   mixins: [PureRenderMixin],
@@ -154,6 +158,6 @@ export default React.createClass({
         {table}
       </div>
     );
-  }
+  },
 });
 

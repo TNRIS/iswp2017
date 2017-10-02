@@ -1,5 +1,7 @@
 
+import PropTypes from 'prop-types';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 
@@ -10,10 +12,12 @@ import SteamElectricPower from '../../static/img/icon-steam-electric-power.svg';
 import Livestock from '../../static/img/icon-livestock.svg';
 import Mining from '../../static/img/icon-mining.svg';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'UsageTypeIcon',
+
   propTypes: {
-    type: React.PropTypes.string.isRequired,
-    className: React.PropTypes.string
+    type: PropTypes.string.isRequired,
+    className: PropTypes.string
   },
 
   mixins: [PureRenderMixin],
@@ -37,5 +41,5 @@ export default React.createClass({
     default:
       return <div />;
     }
-  }
+  },
 });

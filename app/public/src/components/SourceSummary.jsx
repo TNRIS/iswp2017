@@ -1,6 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import Spinner from 'react-spinkit';
 import classnames from 'classnames';
@@ -9,7 +10,9 @@ import constants from '../constants';
 import PropTypes from '../utils/CustomPropTypes';
 import SourceSummarySubhead from './SourceSummarySubhead';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'SourceSummary',
+
   propTypes: {
     sourceData: PropTypes.SourceData
   },
@@ -22,7 +25,7 @@ export default React.createClass({
     if (!props.sourceData || R.isEmpty(R.keys(props.sourceData))) {
       return (
         <div className="view-summary">
-          <Spinner spinnerName="double-bounce" noFadeIn />
+          <Spinner name="double-bounce" fadeIn='none' />
         </div>
       );
     }
@@ -40,5 +43,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  }
+  },
 });

@@ -1,6 +1,6 @@
 import Hapi from 'hapi';
-import Inert from 'inert'; // for static directory serving
-import Vision from 'vision'; // for view rendering
+import Inert from 'inert';
+import Vision from 'vision';
 import Etags from 'hapi-etags';
 import Good from 'good';
 import GoodConsole from 'good-console';
@@ -19,8 +19,12 @@ const server = new Hapi.Server({
   debug: {request: ['*']},
   connections: {
     routes: {
-      //enable cors on all routes
-      cors: true
+      // enable cors on all routes
+      cors: true,
+      files: {
+        // FIXME: make this a relative path
+        relativeTo: '/home/dhickman/Dev/iswp2017/app/public',
+      }
     }
   }
 });
@@ -31,16 +35,21 @@ server.on('request-error', (request, err) => {
 
 server.connection({
   port: config.port,
+  routes: {log: true},
   router: {stripTrailingSlash: true}
 });
 
 const loggingOptions = {
-  opsInterval: 1000,
-  reporters: [{
-    reporter: GoodConsole,
-    events: { log: '*', error: '*', request: '*' }
-  }]
-};
+  ops: {
+    interval: 1000
+  },
+  reporters: {
+    goodConsoleReporter: [{
+      module: 'good-console',
+      args: [{log: '*', error: '*', request: '*'}]
+    }]
+  }
+}
 
 const plugins = [
   Inert,
@@ -62,7 +71,7 @@ server.register(plugins, (err) => {
 
   server.views({
     engines: {
-      swig: swig
+      swig,
     },
     relativeTo: __dirname,
     path: './views',
