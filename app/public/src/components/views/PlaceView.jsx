@@ -1,4 +1,3 @@
-
 import R from 'ramda';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -10,6 +9,7 @@ import DataByTypeCharts from '../charts/DataByTypeCharts';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
 import DataViewChoiceWrap from '../DataViewChoiceWrap';
 import DownloadDataLink from '../DownloadDataLink';
+import {getViewName} from '../../utils';
 import PlaceDataStore from '../../stores/PlaceDataStore';
 import PlacePivotTable from '../PlacePivotTable';
 import PlaceSummary from '../PlaceSummary';
@@ -21,11 +21,14 @@ import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 
+
 export default class PlaceView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      placeData: PlaceDataStore.getState().placeData,
+      placeData: PlaceDataStore
+        .getState()
+        .placeData,
       viewChoice: DataViewChoiceStore.getState()
     }
   }
@@ -38,8 +41,8 @@ export default class PlaceView extends React.Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    // Route params are in this.props, and when route changes the data
-    // need to be fetched again
+    // Route params are in this.props, and when route changes the data need to be
+    // fetched again
     this.fetchPlaceData(nextProps.match.params);
   }
 
@@ -57,9 +60,7 @@ export default class PlaceView extends React.Component {
   }
 
   fetchPlaceData = (params) => {
-    PlaceDataStore.fetch({
-      type: params.type, typeId: params.typeId,
-    });
+    PlaceDataStore.fetch({type: params.type, typeId: params.typeId});
   }
 
   render() {
@@ -67,151 +68,152 @@ export default class PlaceView extends React.Component {
     const placeData = this.state.placeData;
 
     const viewName = getViewName(params.type, params.typeId);
-    const isRegion = params.type.toLowerCase() === 'region';
+    const isRegion = params
+      .type
+      .toLowerCase() === 'region';
 
     return (
       <div className="place-view">
-        <Helmet title={viewName} />
+        <Helmet title={viewName}/>
         <section>
           <div className="view-top place-view-top">
             <div className="summary-wrapper container">
               <PlaceSummary
                 type={params.type}
                 typeId={params.typeId}
-                viewData={placeData.data} />
+                viewData={placeData.data}/>
             </div>
-            <PlaceViewMap
-              type={params.type}
-              placeData={placeData} />
+            <PlaceViewMap type={params.type} placeData={placeData}/>
           </div>
 
-          {
-            (() => {
-              if (!placeData.data) {
-                return (
-                  <div className="container">
-                    <div className="row panel-row">
-                      <div className="twelve columns">
-                        <Spinner name="double-bounce" fadeIn='none' />
-                      </div>
-                    </div>
-                  </div>
-                );
-              }
-
+          {(() => {
+            if (!placeData.data) {
               return (
-                <div>
-                  <div className="container">
-                    {
-                      isRegion &&
-                      <div className="row panel-row">
-                        <div className="twelve columns">
-                          <RegionDescription
-                          region={params.typeId.toUpperCase()} />
-                        </div>
-                      </div>
-                    }
-
-                    <div className="row panel-row">
-                      <div className="twelve columns">
-                        <span className="view-name">{viewName}</span>
-                        <ThemeTotalsByDecadeChart viewData={placeData.data} />
-                      </div>
+                <div className="container">
+                  <div className="row panel-row">
+                    <div className="twelve columns">
+                      <Spinner name="double-bounce" fadeIn='none'/>
                     </div>
+                  </div>
+                </div>
+              );
+            }
 
-                    <div className="row panel-row">
-                      <div className="twelve columns">
-                        <span className="view-name">{viewName}</span>
-                        <ThemeTypesByDecadeChart viewData={placeData.data} />
-                      </div>
+            return (
+              <div>
+                <div className="container">
+                  {isRegion && <div className="row panel-row">
+                    <div className="twelve columns">
+                      <RegionDescription
+                        region={params
+                        .typeId
+                        .toUpperCase()}/>
                     </div>
+                  </div>
+}
 
-                    <div className="row panel-row">
-                      <div className="twelve columns">
-                        <span className="view-name">{viewName}</span>
-                        <DataByTypeCharts viewData={placeData.data} />
-                      </div>
+                  <div className="row panel-row">
+                    <div className="twelve columns">
+                      <span className="view-name">{viewName}</span>
+                      <ThemeTotalsByDecadeChart viewData={placeData.data}/>
                     </div>
-
-                    <div className="row panel-row">
-                      <div className="twelve columns">
-                        <span className="view-name">{viewName}</span>
-                        <ProjectTable
-                        type={params.type}
-                        projectData={placeData.data.projects} />
-                      </div>
-                    </div>
-
                   </div>
 
-                  <DataViewChoiceWrap
+                  <div className="row panel-row">
+                    <div className="twelve columns">
+                      <span className="view-name">{viewName}</span>
+                      <ThemeTypesByDecadeChart viewData={placeData.data}/>
+                    </div>
+                  </div>
+
+                  <div className="row panel-row">
+                    <div className="twelve columns">
+                      <span className="view-name">{viewName}</span>
+                      <DataByTypeCharts viewData={placeData.data}/>
+                    </div>
+                  </div>
+
+                  <div className="row panel-row">
+                    <div className="twelve columns">
+                      <span className="view-name">{viewName}</span>
+                      <ProjectTable type={params.type} projectData={placeData.data.projects}/>
+                    </div>
+                  </div>
+
+                </div>
+
+                <DataViewChoiceWrap
                   decade={this.state.viewChoice.selectedDecade}
                   theme={this.state.viewChoice.selectedTheme}>
 
-                    <div className="container">
-                      <div className="row panel-row">
-                        <div className="twelve columns">
-                          <span className="view-name">{viewName}</span>
-                          <ThemeMaps placeData={placeData}
-                            decade={this.state.viewChoice.selectedDecade}
-                            theme={this.state.viewChoice.selectedTheme} />
-                        </div>
-                      </div>
-
-                      {this.state.viewChoice.selectedTheme === 'strategies' &&
-                        (
-                          <div className="row panel-row">
-                            <div className="twelve columns">
-                              <span className="view-name">{viewName}</span>
-                              <StrategiesBreakdown viewData={placeData.data}
-                                decade={this.state.viewChoice.selectedDecade} />
-                            </div>
-                          </div>
-                        )
-                      }
-
-                      <div className="row panel-row">
-                        <div className="twelve columns">
-                          <span className="view-name">{viewName}</span>
-                          <PlacePivotTable viewData={placeData.data}
-                            decade={this.state.viewChoice.selectedDecade}
-                            theme={this.state.viewChoice.selectedTheme} />
-                          <h5>Download Data</h5>
-                          <DownloadDataLink
-                            type={this.props.match.params.type}
-                            typeId={this.props.match.params.typeId}
-                            theme={this.state.viewChoice.selectedTheme}
-                            viewName={viewName} />
-                          <ul>
-                            {
-                              R.prepend('population', constants.THEMES).map((theme) => {
-                                if (R.isEmpty(placeData)) {
-                                  return (
-                                    <li key={`download-${theme}`}>
-                                      No {constants.THEME_TITLES[theme]} data exists for {viewName}
-                                    </li>
-                                  );
-                                }
-                                return (
-                                  <li key={`download-${theme}`}>
-                                    <DownloadDataLink
-                                      type={this.props.params.type}
-                                      typeId={this.props.params.typeId}
-                                      theme={theme}
-                                      viewName={viewName} />
-                                  </li>
-                                );
-                              })
-                            }
-                          </ul>
-                        </div>
+                  <div className="container">
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <span className="view-name">{viewName}</span>
+                        <ThemeMaps
+                          placeData={placeData}
+                          decade={this.state.viewChoice.selectedDecade}
+                          theme={this.state.viewChoice.selectedTheme}/>
                       </div>
                     </div>
-                  </DataViewChoiceWrap>
-                </div>
-              );
-            })()
-          }
+
+                    {this.state.viewChoice.selectedTheme === 'strategies' && (
+                      <div className="row panel-row">
+                        <div className="twelve columns">
+                          <span className="view-name">{viewName}</span>
+                          <StrategiesBreakdown
+                            viewData={placeData.data}
+                            decade={this.state.viewChoice.selectedDecade}/>
+                        </div>
+                      </div>
+                    )
+}
+
+                    <div className="row panel-row">
+                      <div className="twelve columns">
+                        <span className="view-name">{viewName}</span>
+                        <PlacePivotTable
+                          viewData={placeData.data}
+                          decade={this.state.viewChoice.selectedDecade}
+                          theme={this.state.viewChoice.selectedTheme}/>
+                        <h5>Download Data</h5>
+                        <DownloadDataLink
+                          type={this.props.match.params.type}
+                          typeId={this.props.match.params.typeId}
+                          theme={this.state.viewChoice.selectedTheme}
+                          viewName={viewName}/>
+                        <ul>
+                          {R
+                            .prepend('population', constants.THEMES)
+                            .map((theme) => {
+                              if (R.isEmpty(placeData)) {
+                                return (
+                                  <li key={`download-${theme}`}>
+                                    No {constants.THEME_TITLES[theme]}
+                                    data exists for {viewName}
+                                  </li>
+                                );
+                              }
+                              return (
+                                <li key={`download-${theme}`}>
+                                  <DownloadDataLink
+                                    type={this.props.match.params.type}
+                                    typeId={this.props.match.params.typeId}
+                                    theme={theme}
+                                    viewName={viewName}/>
+                                </li>
+                              );
+                            })
+}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </DataViewChoiceWrap>
+              </div>
+            );
+          })()
+}
         </section>
       </div>
     );
@@ -220,9 +222,8 @@ export default class PlaceView extends React.Component {
 
 PlaceView.propTypes = {
   match: PropTypes.shape({
-    params: PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      typeId: PropTypes.string
-    }).isRequired
+    params: PropTypes
+      .shape({type: PropTypes.string.isRequired, typeId: PropTypes.string})
+      .isRequired
   })
 }
