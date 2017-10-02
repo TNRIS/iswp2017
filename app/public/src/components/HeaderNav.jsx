@@ -12,6 +12,7 @@ import ViewStateStore from '../stores/ViewStateStore';
 import EntityFetcher from '../utils/EntityFetcher';
 import ProjectFetcher from '../utils/ProjectFetcher';
 import {sourceNames} from '../utils/SourceNames';
+import {WMSTypes} from '../constants/WMSTypes';
 
 const navCategoryOptions = [
   {value: "statewide", label: "All of Texas"},
@@ -20,7 +21,9 @@ const navCategoryOptions = [
   {value: "entity", label: "Water User Group"},
   {value: "usagetype", label: "Usage Type"},
   {value: "source", label: "Water Source"},
-  {value: "project", label: "WMS Project"}
+  {value: "project", label: "WMS Project"},
+  {value: "wms", label: "WMS"},
+  {value: "wmstype", label: "WMS Type"}
 ];
 
 const regionSelectOptions = constants.REGIONS.map((region) => {
@@ -37,6 +40,10 @@ const usageTypeSelectOptions = constants.USAGE_TYPES.map((type) => {
 
 const sourceSelectOptions = sourceNames.map((src) => {
   return {value: src.sourceid, label: src.name};
+});
+
+const wmsTypeSelectOptions = WMSTypes.WMS_TYPES.map((type) => {
+  return {value: type.toLowerCase(), label: titleize(type)};
 });
 
 export default React.createClass({
@@ -114,6 +121,23 @@ export default React.createClass({
       });
   },
 
+  wmsSearch(input, callback) {
+    if (input.length < 3) {
+      return callback(null, {options: []});
+    }
+
+    WMSFetcher.search(input)
+      .then((wmses) => {
+        const options = wmses.map((wms) => {
+          return {value: wms.WMSProjectId, label: project.ProjectName};
+        });
+        callback(null, {options});
+      })
+      .catch((err) => {
+        callback(err);
+      });
+  },
+
   isNavButtonEnabled() {
     return (this.state.navCategory === 'statewide')
       || !R.isEmpty(this.state.subNavValue);
@@ -141,6 +165,12 @@ export default React.createClass({
       break;
     case 'project':
       history.push({pathname: `/project/${this.state.subNavValue.value}`});
+      break;
+    case 'wms':
+      history.push({pathname: `/wms/${this.state.subNavValue.value}`});
+      break;
+    case 'wmstype':
+      history.push({pathname: `/wmstype/${this.state.subNavValue.value}`});
       break;
     default:
       return;
@@ -221,6 +251,28 @@ export default React.createClass({
               <div className="select-container project-select" aria-live="polite">
                 <Select
                   placeholder="Find Project"
+                  ignoreCase
+                  autoload={false}
+                  searchPromptText="Enter at least 3 characters to search"
+                  asyncOptions={this.projectSearch}
+                  onChange={this.onSubNavChange}
+                  value={this.state.subNavValue} />
+              </div>
+            </ToggleDisplay>
+            <ToggleDisplay show={this.state.navCategory === 'wmstype'}>
+              <div className="select-container" aria-live="polite">
+                <Select
+                  placeholder="Select WMS Type"
+                  ignoreCase
+                  onChange={this.onSubNavChange}
+                  value={this.state.subNavValue}
+                  options={wmsTypeSelectOptions} />
+              </div>
+            </ToggleDisplay>
+            <ToggleDisplay show={this.state.navCategory === 'wms'}>
+              <div className="select-container project-select" aria-live="polite">
+                <Select
+                  placeholder="Find WMS"
                   ignoreCase
                   autoload={false}
                   searchPromptText="Enter at least 3 characters to search"

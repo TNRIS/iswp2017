@@ -1,4 +1,4 @@
-export default {
+export const WMSTypes = {
   WMS_TYPES: [
     'AQUIFER STORAGE & RECOVERY',
     'CONJUNCTIVE USE',
