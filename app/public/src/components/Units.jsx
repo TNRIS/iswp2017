@@ -1,15 +1,19 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import constants from '../constants';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'Units',
+
   propTypes: {
-    theme: React.PropTypes.oneOf(themesAndPopulation)
+    theme: PropTypes.oneOf(themesAndPopulation)
   },
 
   mixins: [PureRenderMixin],

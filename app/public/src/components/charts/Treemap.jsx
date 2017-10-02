@@ -1,51 +1,32 @@
 /* global d3*/
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 import debounce from 'debounce';
 import format from 'format-number';
 
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 
 // Treemap based on example from http://bost.ocks.org/mike/treemap/
-export default React.createClass({
-  propTypes: {
-    treemapData: PropTypes.TreemapData.isRequired,
-    height: React.PropTypes.number,
-    marginTop: React.PropTypes.number,
-    titlePad: React.PropTypes.number,
-    showPercent: React.PropTypes.bool
-  },
-
-  mixins: [PureRenderMixin],
-
-  getDefaultProps() {
-    return {
-      height: 500,
-      marginTop: 20,
-      titlePad: 6,
-      showPercent: false
-    };
-  },
-
-  componentDidMount() {
+export default class Treemap extends React.PureComponent {
+  componentDidMount = () => {
     this.updateTreemap(this.props);
     this.debouncedUpdateTreemap = debounce(() => this.updateTreemap(this.props), 200).bind(this);
     window.addEventListener('resize', this.debouncedUpdateTreemap);
-  },
+  }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     this.updateTreemap(nextProps);
-  },
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     window.removeEventListener('resize', this.debouncedUpdateTreemap);
-  },
+  }
 
-  updateTreemap(props) {
+  updateTreemap = (props) => {
     const marginTop = props.marginTop;
     const height = props.height - marginTop;
-    const width = this.refs.treemapContainer.offsetWidth;
+    const width = this.treemapContainer.offsetWidth;
     const titlePad = props.titlePad;
     let isTransitioning = false;
 
@@ -68,7 +49,7 @@ export default React.createClass({
       this.svg.remove();
     }
 
-    this.svg = d3.select(this.refs.treemapContainer)
+    this.svg = d3.select(this.treemapContainer)
       .append('svg')
         .attr('width', width)
         .attr('height', height + marginTop);
@@ -233,7 +214,7 @@ export default React.createClass({
     accumulate(this.root);
     layout(this.root);
     display(this.root);
-  },
+  }
 
   render() {
     if (!this.props.treemapData) {
@@ -242,8 +223,23 @@ export default React.createClass({
 
     return (
       <div className="treemap-container">
-        <div ref="treemapContainer" className="treemap-chart"></div>
+        <div ref={(treemapContainer) => {this.treemapContainer = treemapContainer}} className="treemap-chart"></div>
       </div>
     );
   }
-});
+}
+
+Treemap.propTypes = {
+  treemapData: CustomPropTypes.TreemapData.isRequired,
+  height: PropTypes.number,
+  marginTop: PropTypes.number,
+  titlePad: PropTypes.number,
+  showPercent: PropTypes.bool
+};
+
+Treemap.defaultProps = {    
+  height: 500,
+  marginTop: 20,
+  titlePad: 6,
+  showPercent: false
+};

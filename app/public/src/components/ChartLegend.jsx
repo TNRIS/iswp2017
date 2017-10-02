@@ -1,17 +1,21 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'ChartLegend',
+
   propTypes: {
-    entries: React.PropTypes.arrayOf(React.PropTypes.shape({
-      className: React.PropTypes.string.isRequired,
-      display: React.PropTypes.string.isRequired
+    entries: PropTypes.arrayOf(PropTypes.shape({
+      className: PropTypes.string.isRequired,
+      display: PropTypes.string.isRequired
     })).isRequired,
-    rectangle: React.PropTypes.bool,
-    className: React.PropTypes.string
+    rectangle: PropTypes.bool,
+    className: PropTypes.string
   },
 
   mixins: [PureRenderMixin],
@@ -43,5 +47,5 @@ export default React.createClass({
         </ul>
       </div>
     );
-  }
+  },
 });

@@ -3,42 +3,27 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 import scale from 'scale-number-range';
 import format from 'format-number';
 
 import CdbUtil from '../../utils/CdbUtil';
 import constants from '../../constants';
 import history from '../../history';
-import PropTypes from '../../utils/CustomPropTypes';
-import NeedsLegend from '../../utils/NeedsLegend';
+import CustomPropTypes from '../../utils/CustomPropTypes';
+import {getColorForValue, create} from '../../utils/NeedsLegend';
 import ThemeMapStateActions from '../../actions/ThemeMapStateActions';
 import ThemeMapStateStore from '../../stores/ThemeMapStateStore';
 
-export default React.createClass({
-  propTypes: {
-    theme: React.PropTypes.string.isRequired,
-    data: React.PropTypes.object.isRequired,
-    decade: React.PropTypes.string,
-    boundary: PropTypes.Feature,
-    entity: React.PropTypes.object,
-    projects: React.PropTypes.array
-  },
+export default class ThemeMap extends React.Component{
+  constructor(props) {
+    super(props);
+    const themeMapStateStore = ThemeMapStateStore.getState();
+    this.state = themeMapStateStore;
+  }
 
-  mixins: [PureRenderMixin],
-
-  getDefaultProps() {
-    return {
-      decade: '2020'
-    };
-  },
-
-  getInitialState() {
-    return ThemeMapStateStore.getState();
-  },
-
-  componentDidMount() {
-    const map = this.map = L.map(this.refs.map, {
+  componentDidMount = () => {
+    const map = this.map = L.map(this.mapDiv, {
       scrollWheelZoom: false,
       zoomControl: false
     });
@@ -128,26 +113,26 @@ export default React.createClass({
     this.updateMap(this.props);
 
     ThemeMapStateStore.listen(this.onMapStateChange);
-  },
+  }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     this.updateMap(nextProps);
-  },
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     ThemeMapStateStore.unlisten(this.onMapStateChange);
     this.spiderfier.clearListeners('click');
     this.spiderfier.clearListeners('spiderfy');
     //unlock map state so that the lock button for the next ThemeMap is not in a weird state
     ThemeMapStateActions.unlockMap();
     ThemeMapStateActions.hidePrj();
-  },
+  }
 
-  onMapStateChange(state) {
+  onMapStateChange = (state) => {
     this.setState(state);
-  },
+  }
 
-  updateMap(props) {
+  updateMap = (props) => {
     this.map.closePopup();
     // dataRows can have multiple rows for the same EntityId
     // so group them and sum their current year value to make
@@ -233,7 +218,7 @@ export default React.createClass({
 
         if (props.theme === 'needs') {
           const npdVal = feat.properties[`NPD${props.decade}`];
-          const color = NeedsLegend.getColorForValue(npdVal);
+          const color = getColorForValue(npdVal);
           markerOpts.color = color;
         }
 
@@ -248,7 +233,7 @@ export default React.createClass({
     });
 
     if (props.theme === 'needs') {
-      this.legendControl = NeedsLegend.create();
+      this.legendControl = create();
       this.map.addControl(this.legendControl);
     }
 
@@ -328,9 +313,9 @@ export default React.createClass({
       this.displaySourceLayer(props, bounds);
     }
 
-  },
+  }
 
-  displaySourceLayer(props, bounds) {
+  displaySourceLayer = (props, bounds) => {
     if (props.theme === 'supplies' || props.theme === 'strategies') {
       const hasValue = props.data.rows.filter(record => record[`Value_${props.decade}`] > 0);
       const sourceById = R.groupBy(R.prop('MapSourceId'))(hasValue);
@@ -387,10 +372,10 @@ export default React.createClass({
     } else {
       this.applyBounds(bounds);
     }
-  },
+  }
 
   //live handle tooltip/label of source features
-  showSourceLabel(event) {
+  showSourceLabel = (event) => {
     if (!this.label) {
       this.label = new L.Label();
     }
@@ -399,21 +384,21 @@ export default React.createClass({
     if (!this.map.hasLayer(this.label)) {
       this.map.addLayer(this.label);
     }
-  },
+  }
 
-  hideSourceLabel() {
+  hideSourceLabel = () => {
     if (this.label && this.map.hasLayer(this.label)) {
       this.map.removeLayer(this.label);
       this.label = null;
     }
-  },
+  }
 
-  viewSourcePage(event) {
+  viewSourcePage = (event) => {
     const id = event.layer.feature.properties.sourceid;
     history.push({pathname: `/source/${id}`});
-  },
+  }
 
-  applyBounds(bounds) {
+  applyBounds = (bounds) => {
     if (!this.state.isLocked) {
       if (bounds._southWest == undefined) {
         this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS);
@@ -424,9 +409,9 @@ export default React.createClass({
         this.map.setZoom(12);
       }
     }
-  },
+  }
 
-  toggleProjects() {
+  toggleProjects = () => {
     if (this.state.showProjects == 'Hide') {
       this.map.removeLayer(this.projectLayer);
       ThemeMapStateActions.showPrj();
@@ -435,12 +420,12 @@ export default React.createClass({
       ThemeMapStateActions.hidePrj();
       this.applyBounds(this.map.getBounds().extend(this.projectLayer.getBounds()));
     }
-  },
+  }
 
   render() {
     return (
       <div>
-        <div className="theme-map" ref="map"></div>
+        <div className="theme-map" ref={(mapDiv) => {this.mapDiv = mapDiv;}}></div>
         <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
         {this.props.theme === 'strategies' &&
           <p className="note">Red triangles indicate capital projects associated with strategy supplies that have been assigned to a Water User Group. <a className="pointerHover" onClick={this.toggleProjects}>{this.state.showProjects} Projects</a></p>
@@ -448,4 +433,17 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+ThemeMap.propTypes = {
+  theme: PropTypes.string.isRequired,
+  data: PropTypes.object.isRequired,
+  decade: PropTypes.string,
+  boundary: CustomPropTypes.Feature,
+  entity: PropTypes.object,
+  projects: PropTypes.array
+}
+
+ThemeMap.defaultProps = {
+  decade: '2020'
+}

@@ -1,17 +1,21 @@
 
+import PropTypes from 'prop-types';
 import React from 'react';
-import {Link} from 'react-router';
+import createReactClass from 'create-react-class';
+import {Link} from 'react-router-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import intersperse from 'intersperse';
 
 import {formatCountyName} from '../utils/CountyNames';
 import ParentPlaceStore from '../stores/ParentPlaceStore';
 
-export default React.createClass({
+export default createReactClass({
+  displayName: 'EntitySummarySubhead',
+
   propTypes: {
-    entityId: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.number
+    entityId: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
     ])
   },
 
@@ -70,5 +74,5 @@ export default React.createClass({
     }
 
     return (<div/>);
-  }
+  },
 });

@@ -2,19 +2,37 @@
 import R from 'ramda';
 import Boom from 'boom';
 
-function isEmptyObj(o) {
-  if (!o) { return true; }
+/**
+ * Checks for empty object
+ * @param {object} o
+ * @return {boolean}
+ */
+export function isEmptyObj(o) {
+  if (!o) {
+    return true;
+  }
   return R.isEmpty(R.keys(o));
 }
 
-function handleApiError(reply) {
+/**
+ * Handles API errors
+ * @param {object} reply 
+ * @return {err}
+ */
+export function handleApiError(reply) {
   return (err) => {
     console.error(err);
     reply(Boom.badImplementation());
   };
 }
 
-function addRoutes(server, routes, base = '') {
+/**
+ * Adds route to server
+ * @param {object} server 
+ * @param {array} routes 
+ * @param {string} base 
+ */
+export function addRoutes(server, routes, base = '') {
   if (!Array.isArray(routes)) {
     throw new Error('routes must be an array');
   }
@@ -29,9 +47,3 @@ function addRoutes(server, routes, base = '') {
     server.route(route);
   });
 }
-
-export default {
-  isEmptyObj,
-  handleApiError,
-  addRoutes
-};

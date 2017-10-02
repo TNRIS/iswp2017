@@ -1,38 +1,31 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import titleize from 'titleize';
 
 import constants from '../../constants';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import Treemap from './Treemap';
 import Units from '../Units';
-import utils from '../../utils';
+import {slugify} from '../../utils';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
-export default React.createClass({
-  propTypes: {
-    viewData: PropTypes.ViewData,
-    decade: React.PropTypes.oneOf(constants.DECADES).isRequired,
-    theme: React.PropTypes.oneOf(themesAndPopulation).isRequired
-  },
-
-  mixins: [PureRenderMixin],
-
-  getInitialState() {
-    return {
+export default class RegionalSummaryTreemap extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
       selectedTreemap: 'region'
-    };
-  },
+    }
+  }
 
-  selectTreemap(type) {
+  selectTreemap = (type) => {
     this.setState({selectedTreemap: type});
-  },
+  }
 
-  formatData() {
+  formatData = () => {
     const selectedDecade = this.props.decade;
     const selectedTheme = this.props.theme;
     const isPopulation = selectedTheme === 'population';
@@ -77,19 +70,19 @@ export default React.createClass({
       children: constants.USAGE_TYPES.map((type) => {
         return {
           label: titleize(type),
-          className: `type-${utils.slugify(type).toLowerCase()}`,
+          className: `type-${slugify(type).toLowerCase()}`,
           children: constants.REGIONS.map((region) => {
             const entry = R.nth(0, dataByRegion[region]);
             return {
               label: `Region ${region.toUpperCase()}`,
-              className: `type-${utils.slugify(type).toLowerCase()}`,
+              className: `type-${slugify(type).toLowerCase()}`,
               value: entry[type]
             };
           })
         };
       })
     };
-  },
+  }
 
   render() {
     if (!this.props.viewData) {
@@ -125,4 +118,10 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+RegionalSummaryTreemap.propTypes = {
+  viewData: CustomPropTypes.ViewData,
+  decade: PropTypes.oneOf(constants.DECADES).isRequired,
+  theme: PropTypes.oneOf(themesAndPopulation).isRequired
+};

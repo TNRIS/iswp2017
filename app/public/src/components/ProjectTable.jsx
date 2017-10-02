@@ -1,28 +1,25 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import {Table, Tr, Td} from 'reactable';
 import ToggleDisplay from 'react-toggle-display';
 import format from 'format-number';
 import history from '../history';
 
-import PropTypes from '../utils/CustomPropTypes';
+import CustomPropTypes from '../utils/CustomPropTypes';
 
 const itemsPerPage = 10;
 
-export default React.createClass({
-  propTypes: {
-    projectData: PropTypes.ProjectData.isRequired,
-    type: React.PropTypes.oneOf(['region', 'county', 'entity', 'source']).isRequired
-  },
+export default class ProjectTable extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {filter: ''};
+  }
 
-  mixins: [LinkedStateMixin, PureRenderMixin],
-
-  getInitialState() {
-    return {};
-  },
+  handleTableFilterChange = (evt) => {
+    this.setState({filter: EventTarget.target.value});
+  }
 
   render() {
     let projectData = this.props.projectData;
@@ -45,13 +42,13 @@ export default React.createClass({
         title = 'Recommended Projects';
         break;
       default: title = 'Recommended Projects Serving Area of Interest';
-    };
+    }
 
     projectData.map((d) => {
       const id = d.WMSProjectId;
       d["linkRef"] = function () {history.push({pathname: `/project/${id}`})};
     });
-
+    
     return (
       <div className="recommended-projects-container">
         <h4>{title}</h4>
@@ -64,7 +61,7 @@ export default React.createClass({
           </p>
           <ToggleDisplay show={projectData.length > itemsPerPage}>
             <input type="text" placeholder="Type to filter table" className="table-filter"
-              valueLink={this.linkState('filter')} />
+              value={this.state.filter} onChange={this.handleTableFilterChange}/>
           </ToggleDisplay>
           <div className="table-container">
             <Table className="table-condensed u-full-width projects-table"
@@ -89,7 +86,7 @@ export default React.createClass({
                         {d.ProjectSponsors}
                       </Td>
                       <Td column="Capital Cost" value={d.CapitalCost}>
-                        {`\$${format()(d.CapitalCost)}`}
+                        {`${format()(d.CapitalCost)}`}
                       </Td>
                     </Tr>
                   );
@@ -101,5 +98,9 @@ export default React.createClass({
       </div>
     );
   }
+}
 
-});
+ProjectTable.propTypes = {
+  projectData: CustomPropTypes.ProjectData.isRequired,
+  type: PropTypes.oneOf(['region', 'county', 'entity', 'source']).isRequired
+}

@@ -1,69 +1,77 @@
-var path = require('path');
-var AssetsPlugin = require('assets-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const AssetsPlugin = require('assets-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var isProdBuild = process.env.NODE_ENV === 'production' ||
+
+const isProdBuild = process.env.NODE_ENV === 'production' ||
   process.env.NODE_ENV === 'staging';
 
-var extractText = new ExtractTextPlugin(
+const extractText = new ExtractTextPlugin(
   isProdBuild ? 'styles.[hash].css' : 'styles.css'
 );
 
-var assets = new AssetsPlugin({
+const assets = new AssetsPlugin({
   prettyPrint: true,
-  path: path.join(__dirname, 'app')
+  path: path.join(__dirname, 'app'),
 });
 
-var uglify = new webpack.optimize.UglifyJsPlugin();
+const uglify = new webpack.optimize.UglifyJsPlugin();
 
-var plugins = [extractText, assets];
+const plugins = [extractText, assets];
 if (isProdBuild) {
   plugins.push(uglify);
 }
 
 module.exports = {
-  entry: path.join(__dirname, 'app/public/src/entry.jsx'),
+  entry: ['babel-polyfill', path.join(__dirname, 'app/public/src/entry.jsx')],
   output: {
     path: path.join(__dirname, 'app/public/dist/'),
-    filename: isProdBuild ? 'scripts.[hash].js' : 'scripts.js'
+    filename: isProdBuild ? 'scripts.[hash].js' : 'scripts.js',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.css$/,
         include: [
           path.resolve(__dirname, 'app/public/src/vendor/'),
           path.resolve(__dirname, 'node_modules'),
         ],
-        loader: ExtractTextPlugin.extract('css')
+        use: extractText.extract({
+          fallback: 'style-loader',
+          use: 'css-loader',
+        }),
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass')
+        use: extractText.extract({
+          fallback: 'style-loader',
+          use: 'css-loader!sass-loader',
+        }),
       },
       {
         test: /\.(es|jsx)$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       },
       {
-        //include react-pivot specifically as requiring babel-loader
+        // include react-pivot specifically as requiring babel-loader
         // due to the way it is packaged
         test: /\.(jsx)$/,
         include: /node_modules\/react-pivot/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       },
       {
         test: /\.svg$/,
         exclude: /node_modules/,
-        loader: 'babel!svg-react-loader'
-      }
-    ]
+        loader: 'babel-loader!svg-react-loader',
+      },
+    ],
   },
   resolve: {
-    // allows extension-less require/import statements for files with these extensions
-    extensions: ['', '.es', '.js', '.jsx']
+    // allows extension-less require/import statements for 
+    // files with these extensions
+    extensions: ['.es', '.js', '.jsx'],
   },
-  plugins: plugins
+  plugins,
 };

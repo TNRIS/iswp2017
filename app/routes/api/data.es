@@ -7,8 +7,14 @@ import DataController from 'controllers/data';
 const dataController = new DataController();
 const bind = (method) => dataController[method].bind(dataController);
 
-const omitRowsNote = 'Setting the query string to <code>omitRows=true</code> will omit raw data rows.';
+const omitRowsNote = 'Setting the query string to <code>omitRows=true</code>' +
+                     'will omit raw data rows.';
 
+/**
+ * Create API routes
+ * @param {object} validParams
+ * @return {array} array of routes
+ */
 export default function generateRoutes(validParams) {
   const validCounties = validParams.counties;
   const validRegions = validParams.regions;
@@ -51,7 +57,8 @@ export default function generateRoutes(validParams) {
       config: {
         validate: {
           params: {
-            regionLetter: Joi.string().only(validRegions).insensitive().required()
+            regionLetter:
+              Joi.string().only(validRegions).insensitive().required()
           },
           query: {
             omitRows: Joi.boolean()
@@ -60,7 +67,8 @@ export default function generateRoutes(validParams) {
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
         },
-        description: 'Get water planning data and summaries for the region identified by {regionLetter}.',
+        description: 'Get water planning data and summaries ' +
+                     'for the region identified by {regionLetter}.',
         notes: omitRowsNote
       },
       handler: bind('getForRegion')
@@ -71,7 +79,8 @@ export default function generateRoutes(validParams) {
       config: {
         validate: {
           params: {
-            countyName: Joi.string().only(validCounties).insensitive().required()
+            countyName:
+              Joi.string().only(validCounties).insensitive().required()
           },
           query: {
             omitRows: Joi.boolean()
@@ -80,7 +89,8 @@ export default function generateRoutes(validParams) {
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
         },
-        description: 'Get water planning data and summaries for the county identified by {countyName}.',
+        description: 'Get water planning data and summaries for the ' +
+                     'county identified by {countyName}.',
         notes: omitRowsNote
       },
       handler: bind('getForCounty')
@@ -100,7 +110,8 @@ export default function generateRoutes(validParams) {
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
         },
-        description: 'Get water planning data and summaries for the entity identified by {entityId}.',
+        description: 'Get water planning data and summaries for the ' +
+                     'entity identified by {entityId}.',
         notes: omitRowsNote
       },
       handler: bind('getForEntity')
@@ -120,7 +131,8 @@ export default function generateRoutes(validParams) {
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
         },
-        description: 'Get water source data and summaries for the water source identified by {sourceId}.',
+        description: 'Get water source data and summaries for the ' +
+                     'water source identified by {sourceId}.',
         notes: omitRowsNote
       },
       handler: bind('getForSource')
@@ -131,7 +143,8 @@ export default function generateRoutes(validParams) {
       config: {
         validate: {
           params: {
-            usageType: Joi.string().only(validUsageTypes).insensitive().required()
+            usageType:
+              Joi.string().only(validUsageTypes).insensitive().required()
           },
           query: {
             omitRows: Joi.boolean()
@@ -140,7 +153,8 @@ export default function generateRoutes(validParams) {
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
         },
-        description: 'Get water planning data and summaries for all entities of the usage type identified by {usageType}.',
+        description: 'Get water planning data and summaries for all entities ' +
+                     'of the usage type identified by {usageType}.',
         notes: omitRowsNote
       },
       handler: bind('getForUsageType')
@@ -160,7 +174,8 @@ export default function generateRoutes(validParams) {
         cache: {
           expiresIn: constants.API_CACHE_EXPIRES_IN
         },
-        description: 'Get project data and summaries for the project identified by {projectId}.',
+        description: 'Get project data and summaries for the ' +
+                     'project identified by {projectId}.',
         notes: omitRowsNote
       },
       handler: bind('getForProject')

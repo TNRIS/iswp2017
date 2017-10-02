@@ -1,6 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
 
@@ -18,51 +19,45 @@ import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 
-export default React.createClass({
-  propTypes: {
-    params: React.PropTypes.shape({
-      entityId: React.PropTypes.integer
-    }).isRequired
-  },
-
-  getInitialState() {
-    return {
+export default class EntityView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       entityData: EntityDataStore.getState().entityData,
       viewChoice: DataViewChoiceStore.getState()
-    };
-  },
+    }
+  }
 
-  componentDidMount() {
+  componentDidMount = () => {
     EntityDataStore.listen(this.onEntityDataChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
 
+    this.fetchData(this.props.match.params);
+  }
 
-    this.fetchData(this.props.params);
-  },
+  componentWillReceiveProps = (nextProps) => {
+    this.fetchData(nextProps.match.params);
+  }
 
-  componentWillReceiveProps(nextProps) {
-    this.fetchData(nextProps.params);
-  },
-
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     EntityDataStore.unlisten(this.onEntityDataChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
-  },
+  }
 
-  onEntityDataChange(state) {
+  onEntityDataChange = (state) => {
     this.setState({entityData: state.entityData});
-  },
+  }
 
-  onDataViewChoiceChange(state) {
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
-  },
+  }
 
-  fetchData(params) {
+  fetchData = (params) => {
     EntityDataStore.fetch({entityId: params.entityId});
-  },
+  }
 
   render() {
-    const entityId = this.props.params.entityId;
+    const entityId = this.props.match.params.entityId;
     const entityData = this.state.entityData;
     const title = entityData.entity ? entityData.entity.EntityName
       : '';
@@ -85,7 +80,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" noFadeIn />
+                        <Spinner name="double-bounce" fadeIn='none' />
                       </div>
                     </div>
                   </div>
@@ -184,4 +179,12 @@ export default React.createClass({
     );
   }
 
-});
+}
+
+EntityView.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      entityId: PropTypes.integer
+    }).isRequired
+  })
+};

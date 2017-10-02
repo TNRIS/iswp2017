@@ -1,23 +1,16 @@
 /*global L*/
 
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
-import utils from '../../utils';
+import {getMapPadding} from '../../utils';
 import history from '../../history';
 import constants from '../../constants';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import CdbUtil from '../../utils/CdbUtil';
 
-export default React.createClass({
-  propTypes: {
-    entityData: PropTypes.EntityData
-  },
-
-  mixins: [PureRenderMixin],
-
-  componentDidMount() {
-    this.map = L.map(this.refs.map,
+export default class EntityViewMap extends React.Component {
+  componentDidMount = () => {
+    this.map = L.map(this.mapDiv,
       constants.VIEW_MAP_OPTIONS
     );
 
@@ -31,7 +24,7 @@ export default React.createClass({
     }).addTo(this.map);
 
     this.map.fitBounds(constants.DEFAULT_MAP_BOUNDS, {
-      paddingTopLeft: utils.getMapPadding()
+      paddingTopLeft: getMapPadding()
     });
 
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
@@ -52,9 +45,9 @@ export default React.createClass({
         this.utfGrid.on('mousemove', this.showCountyLabel);
         this.utfGrid.on('mouseout', this.hideCountyLabel);
       });
-  },
+  }
 
-  componentDidUpdate() {
+  componentDidUpdate = () => {
     if (!this.props.entityData.entity) {
       return;
     }
@@ -71,27 +64,27 @@ export default React.createClass({
         this.map.addLayer(this.entityLayer);
         this.entityLayer.bringToFront();
         this.map.fitBounds([[entity.Latitude, entity.Longitude], [entity.Latitude, entity.Longitude]], {
-          paddingTopLeft: utils.getMapPadding(),
+          paddingTopLeft: getMapPadding(),
           maxZoom: 9
         });
       });
-  },
+  }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     if (this.utfGrid) {
       this.utfGrid.off('click', this.navigateToCounty);
       this.utfGrid.off('mousemove', this.showCountyLabel);
       this.utfGrid.off('mouseout', this.hideCountyLabel);
     }
-  },
+  }
 
-  navigateToCounty({data}) {
+  navigateToCounty = ({data}) => {
     if (data) {
       history.push({pathname: `/county/${data.name}`});
     }
-  },
+  }
 
-  showCountyLabel(event) {
+  showCountyLabel = (event) => {
     if (!this.label) {
       this.label = new L.Label({className: 'label-county'});
     }
@@ -100,18 +93,22 @@ export default React.createClass({
     if (!this.map.hasLayer(this.label)) {
       this.map.addLayer(this.label);
     }
-  },
+  }
 
-  hideCountyLabel() {
+  hideCountyLabel = () => {
     if (this.label && this.map.hasLayer(this.label)) {
       this.map.removeLayer(this.label);
       this.label = null;
     }
-  },
+  }
 
   render() {
     return (
-      <div ref="map" className="view-map"></div>
+      <div ref={(mapDiv) => {this.mapDiv = mapDiv;}} className="view-map"></div>
     );
   }
-});
+}
+
+EntityViewMap.propTypes = {
+  entityData: CustomPropTypes.EntityData
+};

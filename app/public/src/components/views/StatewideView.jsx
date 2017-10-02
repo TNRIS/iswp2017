@@ -18,42 +18,74 @@ import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 
-export default React.createClass({
-  getInitialState() {
-    return {
+/**
+ * 
+ */
+export default class StatewideView extends React.Component {
+  /**
+   * Statewide view component
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
       data: StatewideDataStore.getState().data,
       viewChoice: DataViewChoiceStore.getState()
     };
-  },
+  }
 
-  componentDidMount() {
+  /**
+   * 
+   */
+  componentDidMount = () => {
     StatewideDataStore.listen(this.onChange);
     DataViewChoiceStore.listen(this.onDataViewChoiceChange);
     this.fetchData();
-  },
+  }
 
-  componentWillReceiveProps() {
+  /**
+   * 
+   */
+  componentWillReceiveProps = () => {
     this.fetchData();
-  },
+  }
 
-  componentWillUnmount() {
+  /**
+   * 
+   */
+  componentWillUnmount = () => {
     StatewideDataStore.unlisten(this.onChange);
     DataViewChoiceStore.unlisten(this.onDataViewChoiceChange);
-  },
+  }
 
-  onChange(state) {
+  /**
+   * 
+   * @param {*} state 
+   */
+  onChange = (state) => {
     this.setState(state);
-  },
+  }
 
-  onDataViewChoiceChange(state) {
+  /**
+   * 
+   * @param {*} state 
+   */
+  onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
-  },
+  }
 
-  fetchData() {
+  /**
+   * 
+   */
+  fetchData = () => {
     // Fetch statewide data
     StatewideDataStore.fetch();
-  },
+  }
 
+  /**
+   * Render the component
+   * @return {Component}
+   */
   render() {
     const data = this.state.data;
 
@@ -75,7 +107,7 @@ export default React.createClass({
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <Spinner spinnerName="double-bounce" noFadeIn />
+                        <Spinner name="double-bounce" fadeIn='none' />
                       </div>
                     </div>
                   </div>
@@ -176,10 +208,8 @@ export default React.createClass({
               );
             })()
           }
-
         </section>
       </div>
     );
   }
-
-});
+}

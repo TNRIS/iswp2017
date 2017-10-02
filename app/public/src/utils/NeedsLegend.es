@@ -1,18 +1,15 @@
 /*global L:false*/
 
-import R from 'ramda';
+import constants from '../constants';
 
-import {NEEDS_LEGEND_CLASSES} from '../constants';
-
-function getColorForValue(npdValue) {
-  const legendClass = R.find(
-    (c) => { return c.limit >= npdValue; },
-    NEEDS_LEGEND_CLASSES
-  );
+export function getColorForValue(npdValue) {
+  const legendClass = constants.NEEDS_LEGEND_CLASSES.find(
+    (c) => {return c.limit >= npdValue;}
+  )
   return legendClass.color;
 }
 
-function create() {
+export function create() {
   const legend = L.control({
     position: 'bottomleft'
   });
@@ -39,12 +36,12 @@ function create() {
 
     const ul = L.DomUtil.create('ul', '', this._div);
 
-    for (let i = NEEDS_LEGEND_CLASSES.length - 1; i >= 0; i--) {
-      const colorEntry = NEEDS_LEGEND_CLASSES[i];
-      const prevColorEntry = NEEDS_LEGEND_CLASSES[i - 1];
+    for (let i = constants.NEEDS_LEGEND_CLASSES.length - 1; i >= 0; i--) {
+      const colorEntry = constants.NEEDS_LEGEND_CLASSES[i];
+      const prevColorEntry = constants.NEEDS_LEGEND_CLASSES[i - 1];
       const legendEntry = L.DomUtil.create('li', 'legend-entry', ul);
 
-      if (colorEntry.limit === NEEDS_LEGEND_CLASSES[0].limit) {
+      if (colorEntry.limit === constants.NEEDS_LEGEND_CLASSES[0].limit) {
         legendEntry.innerHTML = `${circleTpl({color: colorEntry.color})} Less than 10%`;
       }
       else {
@@ -61,8 +58,3 @@ function create() {
 
   return legend;
 }
-
-export default {
-  create,
-  getColorForValue
-};

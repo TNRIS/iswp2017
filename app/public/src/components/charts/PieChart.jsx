@@ -1,39 +1,30 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 import Chartist from 'chartist';
 import format from 'format-number';
 import classnames from 'classnames';
 import classList from 'dom-classlist';
 import round from 'round-precision';
 
-import utils from '../../utils';
-
 const tooltipClass = 'ct-tooltip';
 const heightAdjust = 9;
 
-export default React.createClass({
-  propTypes: {
-    chartData: React.PropTypes.object,
-    chartOptions: React.PropTypes.object
-  },
-
-  mixins: [PureRenderMixin],
-
-  componentDidMount() {
+export default class PieChart extends React.PureComponent{
+  componentDidMount = () => {
     this.updateChart(this.props);
     window.addEventListener('scroll', this.clearInteraction);
-  },
+  }
 
-  componentWillUpdate(nextProps) {
+  componentWillUpdate = (nextProps) => {
     if (nextProps !== this.props) {
       this.updateChart(nextProps);
     }
-  },
+  }
 
-  componentWillUnmount() {
-    if (this.chart) {
+  componentWillUnmount = () => {
+    if (this.chart instanceof Chartist.Pie) {
       try {
         this.chart.detach();
       }
@@ -42,13 +33,13 @@ export default React.createClass({
       }
     }
     window.removeEventListener('scroll', this.clearInteraction);
-  },
+  }
 
-  onMouseOut() {
+  onMouseOut = () => {
     this.clearInteraction();
-  },
+  }
 
-  onMouseOver(event) {
+  onMouseOver = (event) => {
     // use library to check classList because IE doesn't implement classList on SVG elements
     const isOverBar = classList(event.target).contains('ct-slice-pie');
     if (!isOverBar) {
@@ -56,7 +47,7 @@ export default React.createClass({
       return;
     }
     //else
-    const tooltip = this.refs.tooltip;
+    const tooltip = this.tooltip;
 
     // bug in chartist results in 0s not being attached via ct:value
     // ref: https://github.com/gionkunz/chartist-js/issues/464
@@ -75,17 +66,17 @@ export default React.createClass({
     tooltip.style.top = `${event.clientY - height - heightAdjust}px`;
     tooltip.style.left = `${event.clientX - width / 2}px`;
     tooltip.className = classnames(tooltipClass);
-  },
+  }
 
-  clearInteraction() {
+  clearInteraction = () => {
     this.hideTooltip();
-  },
+  }
 
-  hideTooltip() {
-    this.refs.tooltip.className = classnames(tooltipClass, 'hide');
-  },
+  hideTooltip = () => {
+    this.tooltip.className = classnames(tooltipClass, 'hide');
+  }
 
-  updateChart(props) {
+  updateChart = (props) => {
     if (!props.chartData) { return; }
 
     const total = R.sum(R.pluck('value', props.chartData.series));
@@ -101,24 +92,30 @@ export default React.createClass({
 
     const chartOptions = R.merge(defaultOptions, props.chartOptions || {});
 
-    if (this.chart) {
+    if (this.chart instanceof Chartist.Pie) {
       this.chart.update(props.chartData, chartOptions);
     }
     else {
-      this.chart = new Chartist.Pie(this.refs.chart,
+      this.chart = new Chartist.Pie(this.chart,
         props.chartData, chartOptions);
     }
-  },
+  }
 
   render() {
     return (
       <div className="pie-chart-container">
-        <div ref="chart" className="ct-chart"
+        <div ref={(chart) => {this.chart = chart;}} className="ct-chart"
           onMouseMove={this.onMouseOver}
           onMouseOut={this.onMouseOut}>
         </div>
-        <div ref="tooltip" className={classnames(tooltipClass, 'hide')}></div>
+        <div ref={(tooltip) => {this.tooltip = tooltip;}} 
+        className={classnames(tooltipClass, 'hide')}></div>
       </div>
     );
   }
-});
+}
+
+PieChart.propTypes = {
+  chartData: PropTypes.object,
+  chartOptions: PropTypes.object
+}

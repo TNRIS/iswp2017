@@ -1,7 +1,7 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 import Chartist from 'chartist';
 import classnames from 'classnames';
 import classList from 'dom-classlist';
@@ -9,32 +9,25 @@ import isFirefox from 'is-firefox';
 import format from 'format-number';
 
 import SeriesHighlightActions from '../../actions/SeriesHighlightActions';
-import utils from '../../utils';
+import {getChartLeftPadding, slugify} from '../../utils';
 
 const tooltipClass = 'ct-tooltip';
 const heightAdjust = 14;
 
-export default React.createClass({
-  propTypes: {
-    chartData: React.PropTypes.object,
-    chartOptions: React.PropTypes.object,
-  },
-
-  mixins: [PureRenderMixin],
-
-  componentDidMount() {
+export default class LineChart extends React.PureComponent{
+  componentDidMount = () => {
     this.updateChart(this.props);
     window.addEventListener('scroll', this.clearInteraction);
-  },
+  }
 
-  componentWillUpdate(nextProps) {
+  componentWillUpdate = (nextProps) => {
     if (nextProps !== this.props) {
       this.updateChart(nextProps);
     }
-  },
+  }
 
-  componentWillUnmount() {
-    if (this.chart) {
+  componentWillUnmount = () => {
+    if (this.chart instanceof Chartist.Line) {
       try {
         this.chart.detach();
       }
@@ -43,14 +36,15 @@ export default React.createClass({
       }
     }
     window.removeEventListener('scroll', this.clearInteraction);
-  },
+  }
 
-  onMouseOut() {
+  onMouseOut = () => {
     this.clearInteraction();
-  },
+  }
 
-  onMouseOver(event) {
-    // use library to check classList because IE doesn't implement classList on SVG elements
+  onMouseOver = (event) => {
+    // use library to check classList because IE doesn't 
+    // implement classList on SVG elements
     const isOverPoint = classList(event.target).contains('ct-point');
 
     if (!isOverPoint) {
@@ -63,7 +57,7 @@ export default React.createClass({
       +me.getAttribute('x1'), +me.getAttribute('y2')
     );
     const parent = me.parentNode;
-    const tooltip = this.refs.tooltip;
+    const tooltip = this.tooltip;
 
     const seriesName = parent.attributes['ct:meta'] ?
       parent.attributes['ct:meta'].value : 'default';
@@ -86,19 +80,21 @@ export default React.createClass({
     // to the hovered chart element
     tooltip.style.top = `${matrix.f - height - heightAdjust}px`;
     tooltip.style.left = `${matrix.e - width / 2}px`;
-    tooltip.className = classnames(tooltipClass, `tooltip-${utils.slugify(seriesName.toLowerCase())}`);
-  },
+    tooltip.className = classnames(
+      tooltipClass, 
+      `tooltip-${slugify(seriesName.toLowerCase())}`);
+  }
 
-  clearInteraction() {
+  clearInteraction = () => {
     SeriesHighlightActions.clearSeries();
     this.hideTooltip();
-  },
+  }
 
-  hideTooltip() {
-    this.refs.tooltip.className = classnames(tooltipClass, 'hide');
-  },
+  hideTooltip = () => {
+    this.tooltip.className = classnames(tooltipClass, 'hide');
+  }
 
-  updateChart(props) {
+  updateChart = (props) => {
     if (!props.chartData) { return; }
 
     const defaultOptions = {
@@ -106,7 +102,7 @@ export default React.createClass({
       lineSmooth: false,
       width: '100%',
       chartPadding: {
-        left: utils.getChartLeftPadding(props.chartData),
+        left: getChartLeftPadding(props.chartData),
         right: 40,
         //chartist calculates internal padding strangely in firefox
         // so accomodate for that here, ref #161
@@ -125,26 +121,31 @@ export default React.createClass({
       chartOptions.chartPadding.left -= 10;
     }
 
-    if (this.chart) {
+    if (this.chart instanceof Chartist.Line) {
       this.chart.update(props.chartData, chartOptions);
     }
     else {
-      this.chart = new Chartist.Line(this.refs.chart,
+      this.chart = new Chartist.Line(this.chart,
         props.chartData, chartOptions
       );
     }
-  },
+  }
 
   render() {
     return (
       <div style={{position: 'relative'}}>
-        <div ref="chart" className="ct-chart"
+        <div ref={(chart) => {this.chart = chart;}} className="ct-chart"
           onMouseOver={this.onMouseOver}
           onMouseOut={this.onMouseOut}>
         </div>
-        <div ref="tooltip" className={classnames(tooltipClass, 'hide')}></div>
+        <div ref={(tooltip) => {this.tooltip = tooltip;}} 
+        className={classnames(tooltipClass, 'hide')}></div>
       </div>
     );
   }
+}
 
-});
+LineChart.propTypes = {
+  chartData: PropTypes.object,
+  chartOptions: PropTypes.object,
+}

@@ -1,13 +1,12 @@
 
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import BarChart from './BarChart';
 import ChartDataTable from '../ChartDataTable';
 import ChartLegend from '../ChartLegend';
 import constants from '../../constants';
-import PropTypes from '../../utils/CustomPropTypes';
+import CustomPropTypes from '../../utils/CustomPropTypes';
 import TitlePlugin from '../../utils/ChartistAxisTitlePlugin';
 import Units from '../Units';
 
@@ -19,16 +18,10 @@ const chartOptions = {
         axisTitle: 'acre-feet/year'
       }
     })
-  ]
+  ] 
 };
 
-export default React.createClass({
-  propTypes: {
-    viewData: PropTypes.ViewData
-  },
-
-  mixins: [PureRenderMixin],
-
+export default class ThemeTotalsByDecadeChart extends React.PureComponent {
   render() {
     const viewData = this.props.viewData;
 
@@ -78,5 +71,8 @@ export default React.createClass({
       </div>
     );
   }
+}
 
-});
+ThemeTotalsByDecadeChart.propTypes = {
+  viewData: CustomPropTypes.ViewData
+};

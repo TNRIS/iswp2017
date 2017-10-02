@@ -1,7 +1,7 @@
 
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import classnames from 'classnames';
 import titleize from 'titleize';
 import format from 'format-number';
@@ -10,7 +10,7 @@ import round from 'round-precision';
 
 import constants from '../constants';
 import PieChart from './charts/PieChart';
-import PropTypes from '../utils/CustomPropTypes';
+import CustomPropTypes from '../utils/CustomPropTypes';
 import Units from './Units';
 import {slugify} from '../utils';
 
@@ -35,14 +35,7 @@ function toPieSeries(totals, decade) {
   .sort((a, b) => b.value - a.value);
 }
 
-export default React.createClass({
-  propTypes: {
-    viewData: PropTypes.ViewData,
-    decade: React.PropTypes.oneOf(constants.DECADES).isRequired
-  },
-
-  mixins: [PureRenderMixin],
-
+export default class StrategiesBreakdown extends React.PureComponent {
   render() {
     const viewData = this.props.viewData;
 
@@ -117,4 +110,9 @@ export default React.createClass({
       </div>
     );
   }
-});
+}
+
+StrategiesBreakdown.propTypes = {
+  viewData: CustomPropTypes.ViewData,
+  decade: PropTypes.oneOf(constants.DECADES).isRequired
+}
