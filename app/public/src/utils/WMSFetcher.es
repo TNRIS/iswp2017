@@ -12,7 +12,7 @@ export default {
   */
   fetch: ({wmsId}) => {
     if (!wmsId) {
-      throw new Error("entityId is required");
+      throw new Error("wmsId is required");
     }
 
     let uri = `${constants.API_BASE}/wms/${wmsId}`;

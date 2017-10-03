@@ -57,6 +57,7 @@ export default class EntityView extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     const entityId = this.props.match.params.entityId;
     const entityData = this.state.entityData;
     const title = entityData.entity ? entityData.entity.EntityName

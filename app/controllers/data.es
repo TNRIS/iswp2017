@@ -337,6 +337,22 @@ class DataController {
       .then(R.compose(reply, R.mergeAll))
       .catch(handleApiError(reply));
   }
+
+  getForWMS(request, reply) {
+    Hoek.assert(request.params.wmsId, 'request.params.wmsId is required');
+
+    const wmsId = request.params.wmsId;
+    const selectWmsData = db.select()
+      .from(constants.DATA_TABLES.strategies)
+      .where('WMSId', wmsId)
+      .then((rows) => {return {wms: {rows}};});
+    
+    const dataPromises = [selectWmsData];
+
+    Promise.all(dataPromises)
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
+  }
 }
 
 export default DataController;

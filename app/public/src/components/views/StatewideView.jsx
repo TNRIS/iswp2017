@@ -88,6 +88,7 @@ export default class StatewideView extends React.Component {
    */
   render() {
     const data = this.state.data;
+    console.log(this.state.data)
 
     return (
       <div className="statewide-view">

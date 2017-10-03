@@ -13,6 +13,7 @@ import EntityFetcher from '../utils/EntityFetcher';
 import ProjectFetcher from '../utils/ProjectFetcher';
 import {sourceNames} from '../utils/SourceNames';
 import {WMSTypes} from '../constants/WMSTypes';
+import WMSFetcher from '../utils/WMSFetcher';
 
 const navCategoryOptions = [
   {value: "statewide", label: "All of Texas"},
@@ -22,7 +23,7 @@ const navCategoryOptions = [
   {value: "usagetype", label: "Usage Type"},
   {value: "source", label: "Water Source"},
   {value: "project", label: "WMS Project"},
-  {value: "wms", label: "WMS"},
+  {value: "wms", label: "Water Management Strategy"},
   {value: "wmstype", label: "WMS Type"}
 ];
 
@@ -145,7 +146,8 @@ export default class HeaderNav extends React.Component {
       });
   }
 
-  wmsSearch(input, callback) {
+  wmsSearch = (input, callback) => {
+    console.log('searching...');
     if (input.length < 3) {
       return callback(null, {options: []});
     }
@@ -153,19 +155,29 @@ export default class HeaderNav extends React.Component {
     WMSFetcher.search(input)
       .then((wmses) => {
         const options = wmses.map((wms) => {
-          return {value: wms.WMSProjectId, label: project.ProjectName};
+          return {value: wms.WMSId, label: wms.WmsName};
         });
         callback(null, {options});
       })
       .catch((err) => {
         callback(err);
       });
-  },
+  }
 
-  isNavButtonEnabled() {
-    return (this.state.navCategory === 'statewide')
-      || !R.isEmpty(this.state.subNavValue);
-  },
+  wmsTypeSelectOptions = (input, callback) => {
+    setTimeout(() => {
+      callback(null, {
+        options: WMSTypes.WMS_TYPES.map((type) => {
+          return {value: type.toLowerCase(), label: titleize(type)};
+        }),
+        complete: true
+      });
+    }, 500);
+  };
+
+  isNavButtonEnabled = () => {
+    return (this.state.navCategory === 'statewide') || !R.isEmpty(this.state.subNavValue);
+  }
 
   navigate = () => {
     switch (this.state.navCategory) {
@@ -203,6 +215,7 @@ export default class HeaderNav extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <div className="header-nav">
         <div className="wrapper">
@@ -284,22 +297,22 @@ export default class HeaderNav extends React.Component {
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'wmstype'}>
               <div className="select-container" aria-live="polite">
-                <Select
+                <Select.Async
                   placeholder="Select WMS Type"
                   ignoreCase
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue}
-                  options={wmsTypeSelectOptions} />
+                  loadOptions={this.wmsTypeSelectOptions} />
               </div>
             </ToggleDisplay>
             <ToggleDisplay show={this.state.navCategory === 'wms'}>
               <div className="select-container project-select" aria-live="polite">
-                <Select
-                  placeholder="Find WMS"
+                <Select.Async
+                  placeholder="Find Water Management Strategy"
                   ignoreCase
                   autoload={false}
                   searchPromptText="Enter at least 3 characters to search"
-                  asyncOptions={this.projectSearch}
+                  loadOptions={this.wmsSearch}
                   onChange={this.onSubNavChange}
                   value={this.state.subNavValue} />
               </div>

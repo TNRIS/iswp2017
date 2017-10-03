@@ -11,6 +11,8 @@ import SourceView from './components/views/SourceView';
 import ProjectView from './components/views/ProjectView';
 import EntityView from './components/views/EntityView';
 import StatewideView from './components/views/StatewideView';
+import WMSView from './components/views/WMSView';
+import WMSTypeView from './components/views/WMSTypeView';
 
 /**
  * Main application component
@@ -31,6 +33,8 @@ export default class App extends React.Component {
           <Route name="sourceview" path="/source/:sourceId" component={SourceView}/>
           <Route name="projectview" path="/project/:projectId" component={ProjectView}/>
           <Route name="usagetypeview" path="/usagetype/:typeId" component={UsageTypeView}/>
+          <Route name="wmsview" path="/wms/:wmsId" component={WMSView}/>
+          <Route name="wmstypeview" path="/wmstype/:wmsTypeId" component={WMSTypeView}/>
           <Route name="placeview" path="/:type/:typeId" component={PlaceView}/>
           <Redirect exact from='/' to="/statewide"/>
         </Switch>
