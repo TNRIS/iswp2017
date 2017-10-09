@@ -1,4 +1,4 @@
-extends: 
+extends:
 - google
 - eslint:recommended
 - plugin:react/recommended
@@ -13,7 +13,7 @@ plugins:
 rules:
   comma-dangle: 0
   func-style:
-    - error
+    - 2
     - declaration
     - allowArrowFunctions: true
   no-console: 0
