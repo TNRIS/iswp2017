@@ -1,4 +1,3 @@
-
 import Joi from 'joi';
 
 import constants from 'lib/constants';
@@ -46,7 +45,6 @@ export default function generateRoutes(validParams) {
             name: Joi.string().min(3).required()
           }
         },
-        //no cache for search
         description: 'Get WMS by name.'
       },
       handler: bind('getByNamePartial')

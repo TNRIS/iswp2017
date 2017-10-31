@@ -147,7 +147,6 @@ export default class HeaderNav extends React.Component {
   }
 
   wmsSearch = (input, callback) => {
-    console.log('searching...');
     if (input.length < 3) {
       return callback(null, {options: []});
     }
@@ -168,7 +167,7 @@ export default class HeaderNav extends React.Component {
     setTimeout(() => {
       callback(null, {
         options: WMSTypes.WMS_TYPES.map((type) => {
-          return {value: type.toLowerCase(), label: titleize(type)};
+          return {value: type, label: titleize(type)};
         }),
         complete: true
       });
@@ -215,7 +214,6 @@ export default class HeaderNav extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="header-nav">
         <div className="wrapper">

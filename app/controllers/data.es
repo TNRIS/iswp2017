@@ -353,6 +353,22 @@ class DataController {
       .then(R.compose(reply, R.mergeAll))
       .catch(handleApiError(reply));
   }
+
+  getForWMSType(request, reply) {
+    Hoek.assert(request.params.wmsType, 'request.params.wmsType is required');
+
+    const wmsType = request.params.wmsType;
+    const selectWmsTypeData = db.select()
+      .from('vw2017MapWMSProjectsByWMSType')
+      .where('WMSType', wmsType)
+      .then((rows) => {return {wms: {rows}};});
+
+    const dataPromises = [selectWmsTypeData];
+
+    Promise.all(dataPromises)
+      .then(R.compose(reply, R.mergeAll))
+      .catch(handleApiError(reply));
+  }
 }
 
 export default DataController;

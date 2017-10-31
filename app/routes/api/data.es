@@ -22,6 +22,8 @@ export default function generateRoutes(validParams) {
   const validUsageTypes = validParams.usageTypes;
   const validProjects = validParams.projects;
   const validSources = validParams.sources;
+  const validWmsIds = validParams.wms;
+  const validWmsTypes = validParams.wmsType;
   return [
     {
       method: 'GET',
@@ -179,6 +181,45 @@ export default function generateRoutes(validParams) {
         notes: omitRowsNote
       },
       handler: bind('getForProject')
+    },
+      {
+      method: 'GET',
+      path: '/data/wms/{WMSId}',
+      config: {
+        validate: {
+          params: {
+            WMSType: Joi.number().only(validWmsIds).required()
+          },
+          query: {
+            omitRows: Joi.boolean()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        },
+        description: 'Get WMS data based on WMS Id.',  /* TODO: Update description **/
+        notes: omitRowsNote
+      },
+      handler: bind('getForWMS')
+    }, {
+      method: 'GET',
+      path: '/data/wmstype/{WMSType}',
+      config: {
+        validate: {
+          params: {
+            WMSType: Joi.string().only(validWmsTypes).required()
+          },
+          query: {
+            omitRows: Joi.boolean()
+          }
+        },
+        cache: {
+          expiresIn: constants.API_CACHE_EXPIRES_IN
+        },
+        description: 'Get WMS type data based on WMS Type.',  /* TODO: Update description **/
+        notes: omitRowsNote
+      },
+      handler: bind('getForWMSType')
     }
   ];
 }

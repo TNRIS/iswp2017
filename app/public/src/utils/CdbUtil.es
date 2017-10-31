@@ -4,7 +4,7 @@ import axios from 'axios';
 import condenseWhitespace from 'condense-whitespace';
 
 const countyTable = 'county_extended';
-const regionTable = 'regional_water_planning_areas';
+const regionTable = 'rwpas';
 const sourceTable = 'iswp_sourcefeatures2017';
 
 function getLayer(opts) {
@@ -16,14 +16,16 @@ function getLayer(opts) {
     }]
   };
 
-  return axios.post('https://tnris.cartodb.com/api/v1/map/', mapConfig)
+  console.log(mapConfig);
+
+  return axios.post('https://tnris-flood.cartodb.com/api/v1/map/', mapConfig)
     .then(({data}) => {
       const layerid = data.layergroupid;
-      const tilesUrl = `https://tnris.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`;
+      const tilesUrl = `https://tnris-flood.cartodb.com/api/v1/map/${layerid}/{z}/{x}/{y}.png`;
       if (opts.interactivity) {
         return {
           tilesUrl,
-          gridUrl: `https://tnris.cartodb.com/api/v1/map/${layerid}/0/{z}/{x}/{y}.grid.json`
+          gridUrl: `https://tnris-flood.cartodb.com/api/v1/map/${layerid}/0/{z}/{x}/{y}.grid.json`
         };
       }
       return {tilesUrl};
@@ -199,7 +201,7 @@ function getCounty(name) {
 function getRegion(letter) {
   const query = `SELECT letter, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
     FROM ${regionTable} WHERE UPPER(letter) = UPPER('${letter}') LIMIT 1`;
-  return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
+  return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
     .then(({data}) => data);
 }
 
@@ -207,7 +209,7 @@ function getSource(ids) {
   const idsList = ids.join(",");
   const query = `SELECT sourceid, name, sourcetype, isnew, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
     FROM ${sourceTable} WHERE sourceid IN (${idsList}) ORDER BY drawingord`;
-  return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
+  return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
     .then(({data}) => data);
 }
 
@@ -216,14 +218,14 @@ function apiSources(id) {
   if (id) {
     query += ` WHERE sourceid = ${id}`
   }
-  return axios.get(`https://tnris.cartodb.com/api/v2/sql?q=${query}`)
+  return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
     .then(({data}) => data);
 }
 
 function apiNameSources(searchName) {
   const query = `SELECT DISTINCT sourceid, name, sourcetype, isnew, drawingord, featuretyp FROM ${sourceTable} WHERE name LIKE '${searchName}' ORDER BY name`;
 
-  return axios.get(`https://tnris.cartodb.com/api/v2/sql?q=${query}`)
+  return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?q=${query}`)
     .then(({data}) => data);
 }
 
@@ -233,7 +235,7 @@ function apiGeoJsonSources(id) {
   if (id) {
     query += ` WHERE sourceid = ${id}`
   }
-  return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
+  return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
     .then(({data}) => data);
 }
 

@@ -5,7 +5,8 @@ import genEntityRoutes from './entities';
 import genPlacesRoutes from './places';
 import genSourceRoutes from './sources';
 import genProjectRoutes from './projects';
-import genWMSRoutes from './wms'
+import genWMSRoutes from './wms';
+import genWMSTypeRoutes from './wmsType';
 
 /**
  * Add API routes
@@ -24,6 +25,7 @@ function addTo(server, basePath = '/') {
   const sourceRoutes = genSourceRoutes(validParams);
   const projectRoutes = genProjectRoutes(validParams);
   const wmsRoutes = genWMSRoutes(validParams);
+  const wmsTypeRoutes = genWMSTypeRoutes(validParams);
 
   addRoutes(server, dataRoutes, basePath);
   addRoutes(server, entityRoutes, basePath);
@@ -31,6 +33,7 @@ function addTo(server, basePath = '/') {
   addRoutes(server, sourceRoutes, basePath);
   addRoutes(server, projectRoutes, basePath);
   addRoutes(server, wmsRoutes, basePath);
+  addRoutes(server, wmsTypeRoutes, basePath);
 
   server.route({
     method: 'GET',
@@ -75,8 +78,13 @@ function addTo(server, basePath = '/') {
             },
             {
               name: 'WMS',
-              description: 'WMS',
+              description: 'Method to retrieve water management strategies',
               routes: wmsRoutes
+            },
+            {
+              name: 'WMSType',
+              description: 'Method to return water management strategies by type',
+              routes: wmsTypeRoutes
             }
           ]
         }

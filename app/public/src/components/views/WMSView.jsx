@@ -8,9 +8,8 @@ export default class WMSView extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         return (
-            <div>WMS View</div>
+            <div>{this.props.match.params.wmsId}</div>
         )
     }
 }

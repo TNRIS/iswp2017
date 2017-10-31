@@ -8,9 +8,9 @@ export default class WMSTypeView extends React.Component {
     }
 
     render() {
-        console.log(this.props)
+        console.log(this.props);
         return (
-            <div>{this.props.match.params.wmsTypeId}</div>
+            <div>{this.props.match.params.wmsType}</div>
         )
     }
 }
@@ -18,7 +18,7 @@ export default class WMSTypeView extends React.Component {
 WMSTypeView.propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({
-        wmsTypeId: PropTypes.string.isRequired
+        wmsType: PropTypes.string.isRequired
       }).isRequired
     })
   }
