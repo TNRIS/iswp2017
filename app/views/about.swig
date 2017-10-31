@@ -372,7 +372,7 @@
                 All other icons are public domain and can be found at the <a href="https://thenounproject.com/" title="Noun Project">Noun Project</a>.
               </li>
               <li>
-                <a href="http://subtlepatterns.com/seamless-paper-texture/" title="Seamless Paper Texture">Seamless Paper Texture</a> by Merry (<a href="http://creativecommons.org/licenses/by-sa/3.0/" title="CC BY-SA">CC BY-SA</a>).
+                <a href="https://www.toptal.com/designers/subtlepatterns/seamless-paper-texture/" title="Seamless Paper Texture">Seamless Paper Texture</a> by Merry (<a href="http://creativecommons.org/licenses/by-sa/3.0/" title="CC BY-SA">CC BY-SA</a>).
               </li>
             </ul>
           </section>
