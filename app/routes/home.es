@@ -7,7 +7,7 @@ import {addRoutes} from 'lib/utils';
 /**
  * Returns a 404 error
  * @param {object} request - server request
- * @param {object} reply - server reply 
+ * @param {object} reply - server reply
  * @return {view} 404 error
  */
 function to404(request, reply) {
@@ -16,7 +16,7 @@ function to404(request, reply) {
 
 /**
  * Add routes to the server
- * @param {object} server - server instance 
+ * @param {object} server - server instance
  * @param {string} basePath - base path string
  */
 function addTo(server, basePath = '/') {
@@ -116,6 +116,19 @@ function addTo(server, basePath = '/') {
         },
       },
       handler: {view: 'index'},
+    },
+    {
+        method: 'GET',
+        path: '/wms/{wmsId}',
+        config: {
+            validate: {
+                params: {
+                    wmsId: Joi.number().only(validParams.wms).required(),
+                },
+                failAction: to404
+            },
+        },
+        handler: {view: 'index'}
     },
     {
       method: 'GET',

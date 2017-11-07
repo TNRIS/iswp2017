@@ -38,6 +38,7 @@ function toPieSeries(totals, decade) {
 export default class StrategiesBreakdown extends React.PureComponent {
   render() {
     const viewData = this.props.viewData;
+    console.log(viewData);
 
     if (!viewData) {
       return <div/>;
@@ -66,7 +67,7 @@ export default class StrategiesBreakdown extends React.PureComponent {
     if (stratTotal === 0) {
       breakdown = <p> The strategies do not affect any water user groups in the chosen decade: {decade} </p>;
     } else {
-      breakdown = 
+      breakdown =
         <div className="row">
           <div className="six columns strategies-by-source-type-container">
             <h5>Share by Water Resource</h5>

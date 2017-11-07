@@ -18,7 +18,6 @@ function fetchData({type, typeId}) {
   if (typeId) {
     uri += `/${typeId}`;
   }
-
   return axios.get(uri)
     .then((response) => response.data)
     .catch(() => {

@@ -12,7 +12,7 @@ import ViewStateStore from '../stores/ViewStateStore';
 import EntityFetcher from '../utils/EntityFetcher';
 import ProjectFetcher from '../utils/ProjectFetcher';
 import {sourceNames} from '../utils/SourceNames';
-import {WMSTypes} from '../constants/WMSTypes';
+import WMSTypes from '../constants/WMSTypes';
 import WMSFetcher from '../utils/WMSFetcher';
 
 const navCategoryOptions = [

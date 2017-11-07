@@ -44,6 +44,24 @@ export default class ThemeMaps extends React.Component {
       projectsData = placeData.data['wugregion'];
     }
 
+    if (this.props.view === 'wms') {
+        return (
+            <div>
+              <h4>
+                Water Management Strategy - {selectedDecade} - {themeTitle}
+                <Units theme={selectedTheme} />
+              </h4>
+              <div className="twelve columns">
+                <ThemeMap
+                  theme={selectedTheme}
+                  data={placeData.data[selectedTheme]}
+                  decade={selectedDecade}
+                  projects={projectsData} />
+              </div>
+            </div>
+        );
+    }
+
     return (
       <div>
         <h4>
@@ -67,5 +85,6 @@ export default class ThemeMaps extends React.Component {
 ThemeMaps.propTypes = {
   placeData: CustomPropTypes.PlaceData,
   decade: PropTypes.oneOf(constants.DECADES).isRequired,
-  theme: PropTypes.oneOf(themesAndPopulation).isRequired
+  theme: PropTypes.oneOf(themesAndPopulation).isRequired,
+  view: PropTypes.string
 };

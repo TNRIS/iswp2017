@@ -19,7 +19,7 @@ import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
 
 /**
- * 
+ *
  */
 export default class StatewideView extends React.Component {
   /**
@@ -35,7 +35,7 @@ export default class StatewideView extends React.Component {
   }
 
   /**
-   * 
+   *
    */
   componentDidMount = () => {
     StatewideDataStore.listen(this.onChange);
@@ -44,14 +44,14 @@ export default class StatewideView extends React.Component {
   }
 
   /**
-   * 
+   *
    */
   componentWillReceiveProps = () => {
     this.fetchData();
   }
 
   /**
-   * 
+   *
    */
   componentWillUnmount = () => {
     StatewideDataStore.unlisten(this.onChange);
@@ -59,23 +59,23 @@ export default class StatewideView extends React.Component {
   }
 
   /**
-   * 
-   * @param {*} state 
+   *
+   * @param {*} state
    */
   onChange = (state) => {
     this.setState(state);
   }
 
   /**
-   * 
-   * @param {*} state 
+   *
+   * @param {*} state
    */
   onDataViewChoiceChange = (state) => {
     this.setState({viewChoice: state});
   }
 
   /**
-   * 
+   *
    */
   fetchData = () => {
     // Fetch statewide data
@@ -88,7 +88,6 @@ export default class StatewideView extends React.Component {
    */
   render() {
     const data = this.state.data;
-    console.log(this.state.data)
 
     return (
       <div className="statewide-view">

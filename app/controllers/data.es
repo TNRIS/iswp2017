@@ -34,7 +34,8 @@ const projectTables = {
   region: 'vw2017MapWMSProjects',
   county: 'vw2017MapWMSProjectByCounty',
   entity: 'vw2017MapWMSProjectByEntity',
-  source: 'vw2017MapWMSProjectBySource'
+  source: 'vw2017MapWMSProjectBySource',
+  wmstype: 'vw2017MapWMSProjectsByWMSType'
   // project: 'vw2017MapWMSProjectByWMS'//Not included as project information in project view is pulled from the vw2017MapWMSProjectByEntityWUGSplit table
   //usagetype: vw2017MapWMSProjectByWUGType //Not included because results are too large
 };
@@ -338,32 +339,66 @@ class DataController {
       .catch(handleApiError(reply));
   }
 
+  /**
+   * Gets data based on WMS
+   * @param  {object} request [description]
+   * @param  {onject} reply   [description]
+   */
   getForWMS(request, reply) {
     Hoek.assert(request.params.wmsId, 'request.params.wmsId is required');
 
     const wmsId = request.params.wmsId;
-    const selectWmsData = db.select()
-      .from(constants.DATA_TABLES.strategies)
-      .where('WMSId', wmsId)
-      .then((rows) => {return {wms: {rows}};});
-    
-    const dataPromises = [selectWmsData];
+    const themes = R.keys(constants.DATA_TABLES);
+
+    const dataPromises = ['strategies'].map(dataSelectionsByTheme({
+      whereKey: 'WmsId',
+      whereVal: wmsId,
+      omitRows: !!request.query.omitRows
+    }));
+
+    dataPromises.push(
+        db.select()
+          .from(constants.DATA_TABLES.strategies)
+          .where('WMSId', wmsId)
+          .then((rows) => {return {wms: {rows}};})
+    )
+
+    dataPromises.push(
+        db.select()
+          .from(constants.PROJECT_TABLES.wms)
+          .where('WMSId', wmsId)
+          .where('DisplayProjectInMap', 'Y')
+          .then((projects) => { return {projects}; })
+    )
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
       .catch(handleApiError(reply));
   }
 
+  /**
+   * Get for WMS Type
+   * @param  {object} request [description]
+   * @param  {object} reply   [description]
+   */
   getForWMSType(request, reply) {
     Hoek.assert(request.params.wmsType, 'request.params.wmsType is required');
+    console.log('getForWMSType');
 
+    const themes = R.keys(constants.DATA_TABLES);
     const wmsType = request.params.wmsType;
-    const selectWmsTypeData = db.select()
-      .from('vw2017MapWMSProjectsByWMSType')
-      .where('WMSType', wmsType)
-      .then((rows) => {return {wms: {rows}};});
+    const dataPromises = themes.map(dataSelectionsByTheme({
+      whereKey: 'WmsType',
+      whereVal: wmsType,
+      omitRows: !!request.query.omitRows
+    }));
 
-    const dataPromises = [selectWmsTypeData];
+    const selectWmsTypeData = db.select()
+      .from(projectTables.wmstype)
+      .where('WMSType', wmsType)
+      .then((projects) => { return {projects}; });
+
+    dataPromises.push(selectWmsTypeData);
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))

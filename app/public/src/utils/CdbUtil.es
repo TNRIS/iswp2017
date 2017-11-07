@@ -16,8 +16,6 @@ function getLayer(opts) {
     }]
   };
 
-  console.log(mapConfig);
-
   return axios.post('https://tnris-flood.cartodb.com/api/v1/map/', mapConfig)
     .then(({data}) => {
       const layerid = data.layergroupid;

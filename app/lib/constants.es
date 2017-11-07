@@ -19,7 +19,8 @@ export default {
     strategies: 'vw2017MapWMSWugSupply'
   },
   PROJECT_TABLES: {
-    strategies: 'vw2017MapWMSProjectByEntityWUGSplit'
+    strategies: 'vw2017MapWMSProjectByEntityWUGSplit',
+    wms: 'vw2017MapWMSProjectByWMS'
   },
   API_CACHE_EXPIRES_IN: 60 * 60 * 24 * 1000
 };

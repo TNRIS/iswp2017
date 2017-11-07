@@ -18,6 +18,7 @@ export default class DataViewChoiceWrap extends React.Component {
     ]).isRequired,
     decade: PropTypes.oneOf(constants.DECADES).isRequired,
     theme: PropTypes.oneOf(themesAndPopulation).isRequired,
+    hideTheme: PropTypes.bool,
     hidePopulation: PropTypes.bool
   };
 
@@ -68,14 +69,27 @@ export default class DataViewChoiceWrap extends React.Component {
       wrapStyle.paddingTop = this.refs.stickyEl.offsetHeight * 1.20;
     }
 
+    const heading = () => {
+        if (this.props.hideTheme) {
+            return (
+                <h4>Data by Planning Decade</h4>
+            )
+        } else {
+            return (
+                <h4>Data by Planning Decade and Theme</h4>
+            )
+        }
+    }
+
     return (
       <div className="view-choice-wrap" ref="viewChoiceSection" style={wrapStyle}>
         <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
           ref="stickyEl">
-          <h4>Data by Planning Decade and Theme</h4>
+          {heading()}
           <DataViewChoiceSelectors
             decade={this.props.decade}
             theme={this.props.theme}
+            displayTheme={this.props.displayTheme}
             hidePopulation={this.props.hidePopulation} />
         </div>
 
