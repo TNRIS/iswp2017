@@ -80,7 +80,7 @@
               Interactive maps are included to view and explore the state water plan data geographically. Here are some tools that will help you navigate and use the maps:
             </p>
             <ul>
-              <li><strong>Pan –</strong> To move the map click and hold the left mouse button and drag the map to a new place.</li>
+              <li><strong>Pan –</strong> To move the map; click and hold the left mouse button and drag the map to a new place.</li>
               <li><strong>Zoom –</strong> To see more details or a larger area on the map you can zoom in and out using the +/- sign buttons in the top right. Double left clicking your mouse on a map area will also zoom you into that location.</li>
               <li><strong>Statewide View –</strong> To quickly view all of Texas click on the button in the upper right with the Texas graphic.</li>
               <li><strong>Lock Extent –</strong> To freeze the map at a specific location and zoom level click the lock button on the right side of the screen. The button will darken when turned on and lock the map extent as you click through the different theme and decade buttons.</li>
@@ -220,7 +220,7 @@
             <h3>Downloading Data</h3>
             <p><a href="#Top"><small>Back to Top</small></a></p>
 
-            <p>Data is available for you to download as Comma-Separated Value (.csv) files through links at the bottom of each page. Downloads of statewide datasets are available at the bottom of the application homepage, and all water volumes are in units of acre-feet/year.</p>
+            <p>Data is available for you to download as Comma-Separated Value (.csv) files through links at the bottom of each application page. Downloads of statewide datasets are available at the bottom of the application homepage, and all water volumes are in units of acre-feet/year.</p>
 
             <p>
               For any questions regarding the data or how to apply it, please contact: <a href="mailto:WRPdatarequests@twdb.texas.gov" title="">WRPdatarequests@twdb.texas.gov</a>
