@@ -26,7 +26,7 @@ const additionalFields = {
   ],
   needs: R.map((year) => `NPD${year}`, constants.YEARS),
   strategies: [
-    'WmsName', 'WmsType', 'SourceName', 'SourceType', 'MapSourceId'
+    'WMSId', 'WmsName', 'WmsType', 'SourceName', 'SourceType', 'MapSourceId'
   ]
 };
 

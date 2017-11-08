@@ -31,6 +31,19 @@ function mapSourceAnchor(mapSourceId, mapSourceName) {
     return (mapSourceName)
 }
 
+/**
+ * Function to return anchor for wmsID
+ * @param  {int | none} wmsId             ID of mapSource if exists
+ * @param  {string}     wmsName           name of the wms
+ * @return {func | string}                returns the anchor function or name of wms
+ */
+function strategyAnchor(wmsId, wmsName) {
+  if (wmsId) {
+    return toAnchor(`/wms/${wmsId}`, wmsName)
+  }
+  return (wmsName)
+}
+
 const commonDimensions = [
     {
         value: 'EntityName',
@@ -57,7 +70,9 @@ const additionalDimensions = {
     strategies: [
         {
             value: 'WmsName',
-            title: 'Strategy'
+            title: 'Strategy',
+            // added wmsId to row through reduce (memo)
+            template: (val, row) => strategyAnchor(row.wmsId, val)
         }, {
             value: 'WmsType',
             title: 'WMS Type',
@@ -196,6 +211,7 @@ export default class PlacePivotTable extends React.PureComponent {
             memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${decade}`];
             memo.entityId = row.EntityId; //save the EntityId so a link can be made
             memo.mapSourceId = row.MapSourceId
+            memo.wmsId = row.WMSId
             return memo;
         };
 
