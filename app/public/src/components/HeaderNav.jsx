@@ -27,6 +27,10 @@ const navCategoryOptions = [
   {value: "wmstype", label: "WMS Type"}
 ];
 
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
 export default class HeaderNav extends React.Component {
   constructor(props) {
     super(props);
@@ -154,9 +158,9 @@ export default class HeaderNav extends React.Component {
     WMSFetcher.search(input)
       .then((wmses) => {
         const options = wmses.map((wms) => {
-          return {value: wms.WMSId, label: wms.WmsName};
+            return {value: wms.WMSId, label: wms.WmsName};
         });
-        callback(null, {options});
+        callback(null, {options: R.uniq(options)});
       })
       .catch((err) => {
         callback(err);
