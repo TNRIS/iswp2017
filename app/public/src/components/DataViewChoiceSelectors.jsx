@@ -23,8 +23,7 @@ export default class DataViewChoiceSelectors extends React.PureComponent {
         if (this.props.displayTheme) {
             return (
                 <div>
-                  <span className="inline-label show-medium">Theme:
-                  </span>
+                  <span className="inline-label show-medium">Theme:{" "}</span>
                   <ThemeSelector
                     value={this.props.theme}
                     onSelect={this.onThemeSelect}
@@ -36,8 +35,7 @@ export default class DataViewChoiceSelectors extends React.PureComponent {
     return (
       <div className="selectors">
         <div>
-          <span className="inline-label show-medium">Decade:
-          </span>
+          <span className="inline-label show-medium">Decade:{" "}</span>
           <DecadeSelector value={this.props.decade} onSelect={this.onDecadeSelect}/>
         </div>
         {themeSelector()}

@@ -72,7 +72,7 @@ export default class ProjectTable extends React.PureComponent {
                             {d.ProjectSponsors}
                         </Td>
                         <Td column="Capital Cost" value={d.CapitalCost}>
-                            {`${format()(d.CapitalCost)}`}
+                            {`${format({prefix: '$'})(d.CapitalCost)}`}
                         </Td>
                     </Tr>);
                 }));
@@ -89,7 +89,7 @@ export default class ProjectTable extends React.PureComponent {
                             {d.ProjectSponsors}
                         </Td>
                         <Td column="Capital Cost" value={d.CapitalCost}>
-                            {`${format()(d.CapitalCost)}`}
+                            {`${format({prefix: '$'})(d.CapitalCost)}`}
                         </Td>
                     </Tr>);
                 }))
