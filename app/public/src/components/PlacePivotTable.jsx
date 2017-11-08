@@ -18,6 +18,19 @@ function toAnchor(href, text) {
     return `<a href="${href}">${text}</a>`;
 }
 
+/**
+ * Function to check for mapSourceId and return anchor or plain text
+ * @param  {int | none} mapSourceId       ID of mapSource if exists
+ * @param  {string}     mapSourceName     name of the map source
+ * @return {func | string}                returns the anchor function or name of source
+ */
+function mapSourceAnchor(mapSourceId, mapSourceName) {
+    if (mapSourceId) {
+        return toAnchor(mapSourceId, mapSourceName)
+    }
+    return (mapSourceName)
+}
+
 const commonDimensions = [
     {
         value: 'EntityName',
@@ -46,8 +59,14 @@ const additionalDimensions = {
             value: 'WmsName',
             title: 'Strategy'
         }, {
+            value: 'WmsType',
+            title: 'WMS Type',
+            template: (val) => toAnchor(`/wmstype/${val}`, val)
+        }, {
             value: 'SourceName',
-            title: 'Source'
+            title: 'Source',
+             // added mapSourceId to row through reduce (memo)
+            template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
         }
     ]
 };
@@ -152,6 +171,7 @@ export default class PlacePivotTable extends React.PureComponent {
     }
 
     render() {
+        console.log(this.props);
         const viewData = this.props.viewData;
         if (!viewData) {
             return (<div/>);
@@ -175,6 +195,7 @@ export default class PlacePivotTable extends React.PureComponent {
         const reduce = (row, memo) => {
             memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${decade}`];
             memo.entityId = row.EntityId; //save the EntityId so a link can be made
+            memo.mapSourceId = row.MapSourceId
             return memo;
         };
 
@@ -197,7 +218,15 @@ export default class PlacePivotTable extends React.PureComponent {
                     // assign a unique key to force rerender of table
                     // when decade or theme are changed
                     // otherwise it will not react to prop changes
-                    key={hat()} eventBus={this.eventBus} rows={tableData} dimensions={availableDimensions} activeDimensions={activeDimensions} reduce={reduce} calculations={calculations} sortBy={sortBy} sortDir={sortDir} nPaginateRows={50}/>
+                    key={hat()} eventBus={this.eventBus}
+                    rows={tableData}
+                    dimensions={availableDimensions}
+                    activeDimensions={activeDimensions}
+                    reduce={reduce}
+                    calculations={calculations}
+                    sortBy={sortBy}
+                    sortDir={sortDir}
+                    nPaginateRows={50}/>
             </div>;
         }
 
