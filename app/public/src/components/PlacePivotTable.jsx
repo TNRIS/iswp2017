@@ -64,7 +64,9 @@ const additionalDimensions = {
     supplies: [
         {
             value: 'SourceName',
-            title: 'Source'
+            title: 'Source',
+            // added mapSourceId to row through reduce (memo)
+           template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
         }
     ],
     strategies: [
