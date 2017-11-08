@@ -25,8 +25,8 @@ function toAnchor(href, text) {
  * @return {func | string}                returns the anchor function or name of source
  */
 function mapSourceAnchor(mapSourceId, mapSourceName) {
-    if (mapSourceId) {
-        return toAnchor(mapSourceId, mapSourceName)
+    if (mapSourceId && mapSourceName !== 'DIRECT REUSE') {
+        return toAnchor(`/source/${mapSourceId}`, mapSourceName)
     }
     return (mapSourceName)
 }
