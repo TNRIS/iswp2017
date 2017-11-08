@@ -20,7 +20,7 @@ export default class DataViewChoiceSelectors extends React.PureComponent {
 
   render() {
     const themeSelector = () => {
-        if (this.props.displayTheme) {
+        if (!this.props.hideTheme) {
             return (
                 <div>
                   <span className="inline-label show-medium">Theme:{" "}</span>

@@ -89,7 +89,7 @@ export default class DataViewChoiceWrap extends React.Component {
           <DataViewChoiceSelectors
             decade={this.props.decade}
             theme={this.props.theme}
-            displayTheme={this.props.displayTheme}
+            hideTheme={this.props.hideTheme}
             hidePopulation={this.props.hidePopulation} />
         </div>
 
