@@ -298,6 +298,7 @@ class DataController {
     const selectProjectsProm = db.select()
       .from(projectTables.source)
       .where('MapSourceId', sourceId)
+      .where('DisplayProjectInMap', 'Y')
       .then((projects) => { return {projects}; });
 
     dataPromises.push(selectProjectsProm);
