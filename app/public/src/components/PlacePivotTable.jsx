@@ -227,8 +227,8 @@ export default class PlacePivotTable extends React.PureComponent {
         let table = null;
         if (R.isEmpty(tableData)) {
             table = <p>
-                Sorry, there is no {themeTitle}
-                data.</p>;
+                      Sorry, there is no {themeTitle} data.
+                    </p>;
         } else {
             table = <div className="table-container">
                 <PivotTable
