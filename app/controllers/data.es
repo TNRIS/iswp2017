@@ -349,7 +349,6 @@ class DataController {
     Hoek.assert(request.params.wmsId, 'request.params.wmsId is required');
 
     const wmsId = request.params.wmsId;
-    const themes = R.keys(constants.DATA_TABLES);
 
     const dataPromises = ['strategies'].map(dataSelectionsByTheme({
       whereKey: 'WmsId',
