@@ -19,21 +19,26 @@ export default class DataViewChoiceSelectors extends React.PureComponent {
   }
 
   render() {
+    const themeSelector = () => {
+        if (!this.props.hideTheme) {
+            return (
+                <div>
+                  <span className="inline-label show-medium">Theme:{" "}</span>
+                  <ThemeSelector
+                    value={this.props.theme}
+                    onSelect={this.onThemeSelect}
+                    includePopulation={!this.props.hidePopulation}/>
+                </div>
+            )
+        }
+    }
     return (
       <div className="selectors">
         <div>
-          <span className="inline-label show-medium">Decade:
-          </span>
+          <span className="inline-label show-medium">Decade:{" "}</span>
           <DecadeSelector value={this.props.decade} onSelect={this.onDecadeSelect}/>
         </div>
-        <div>
-          <span className="inline-label show-medium">Theme:
-          </span>
-          <ThemeSelector
-            value={this.props.theme}
-            onSelect={this.onThemeSelect}
-            includePopulation={!this.props.hidePopulation}/>
-        </div>
+        {themeSelector()}
       </div>
     );
   }
@@ -46,5 +51,6 @@ DataViewChoiceSelectors.propTypes = {
   theme: PropTypes
     .oneOf(themesAndPopulation)
     .isRequired,
-  hidePopulation: PropTypes.bool
+  hidePopulation: PropTypes.bool,
+  hideTheme: PropTypes.bool
 }

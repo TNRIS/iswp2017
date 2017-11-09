@@ -34,7 +34,7 @@ export default class App extends React.Component {
           <Route name="projectview" path="/project/:projectId" component={ProjectView}/>
           <Route name="usagetypeview" path="/usagetype/:typeId" component={UsageTypeView}/>
           <Route name="wmsview" path="/wms/:wmsId" component={WMSView}/>
-          <Route name="wmstypeview" path="/wmstype/:wmsTypeId" component={WMSTypeView}/>
+          <Route name="wmstypeview" path="/wmstype/:wmsType" component={WMSTypeView}/>
           <Route name="placeview" path="/:type/:typeId" component={PlaceView}/>
           <Redirect exact from='/' to="/statewide"/>
         </Switch>

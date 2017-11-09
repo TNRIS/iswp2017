@@ -1,25 +1,18 @@
-
 import R from 'ramda';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {Table, Tr, Td} from 'reactable';
 import ToggleDisplay from 'react-toggle-display';
 import format from 'format-number';
 
 import constants from '../constants';
-import PropTypes from '../utils/CustomPropTypes';
+import CustomPropTypes from '../utils/CustomPropTypes';
 import Units from './Units';
 import {objFromKeys} from '../utils';
 
-export default createReactClass({
-  displayName: 'EntityStrategiesTable',
-
-  propTypes: {
-    viewData: PropTypes.ViewData
-  },
-
-  mixins: [PureRenderMixin],
+export default class EntityStrategiesTable extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
 
   render() {
     const viewData = this.props.viewData;
@@ -36,7 +29,6 @@ export default createReactClass({
     const wmsNames = R.keys(groupedByName);
     const decades = constants.DECADES;
     const hasStrategies = viewData.strategies.rows.length > 0;
-
     return (
       <div className="entity-strategies-container">
         <h4>
@@ -65,7 +57,7 @@ export default createReactClass({
                   return (
                     <Tr key={wmsName}>
                       <Td column="Strategy" value={wmsName}>
-                        {wmsName}
+                        <a href={'/wms/' + rows[0].WMSId}>{wmsName}</a>
                       </Td>
                       {
                         decades.map((decade) => {
@@ -83,5 +75,9 @@ export default createReactClass({
         </ToggleDisplay>
       </div>
     );
-  },
-});
+  }
+}
+
+EntityStrategiesTable.propTypes = {
+  viewData: CustomPropTypes.ViewData
+}

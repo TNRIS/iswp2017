@@ -2,30 +2,13 @@
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import React from 'react';
-import createReactClass from 'create-react-class';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+
 
 import constants from '../constants';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
-export default createReactClass({
-  displayName: 'DownloadDataLink',
-
-  propTypes: {
-    theme: PropTypes.oneOf(themesAndPopulation).isRequired,
-    viewName: PropTypes.string,
-    type: PropTypes.oneOf([
-      'statewide', 'region', 'county', 'entity', 'usagetype', 'source', 'project'
-    ]).isRequired,
-    typeId: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ])
-  },
-
-  mixins: [PureRenderMixin],
-
+export default class DownloadDataLink extends React.PureComponent {
   render() {
     const theme = this.props.theme;
     const themeTitle = constants.THEME_TITLES[theme];
@@ -46,4 +29,16 @@ export default createReactClass({
       </a>
     );
   }
-});
+}
+
+DownloadDataLink.propTypes = {
+    theme: PropTypes.oneOf(themesAndPopulation).isRequired,
+    viewName: PropTypes.string,
+    type: PropTypes.oneOf([
+      'statewide', 'region', 'county', 'entity', 'usagetype', 'source', 'project', 'wmstype', 'wms'
+    ]).isRequired,
+    typeId: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ])
+}

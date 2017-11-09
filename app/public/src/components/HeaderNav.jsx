@@ -12,7 +12,7 @@ import ViewStateStore from '../stores/ViewStateStore';
 import EntityFetcher from '../utils/EntityFetcher';
 import ProjectFetcher from '../utils/ProjectFetcher';
 import {sourceNames} from '../utils/SourceNames';
-import {WMSTypes} from '../constants/WMSTypes';
+import WMSTypes from '../constants/WMSTypes';
 import WMSFetcher from '../utils/WMSFetcher';
 
 const navCategoryOptions = [
@@ -26,6 +26,10 @@ const navCategoryOptions = [
   {value: "wms", label: "Water Management Strategy"},
   {value: "wmstype", label: "WMS Type"}
 ];
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
 
 export default class HeaderNav extends React.Component {
   constructor(props) {
@@ -147,7 +151,6 @@ export default class HeaderNav extends React.Component {
   }
 
   wmsSearch = (input, callback) => {
-    console.log('searching...');
     if (input.length < 3) {
       return callback(null, {options: []});
     }
@@ -155,9 +158,9 @@ export default class HeaderNav extends React.Component {
     WMSFetcher.search(input)
       .then((wmses) => {
         const options = wmses.map((wms) => {
-          return {value: wms.WMSId, label: wms.WmsName};
+            return {value: wms.WMSId, label: wms.WmsName};
         });
-        callback(null, {options});
+        callback(null, {options: R.uniq(options)});
       })
       .catch((err) => {
         callback(err);
@@ -168,7 +171,7 @@ export default class HeaderNav extends React.Component {
     setTimeout(() => {
       callback(null, {
         options: WMSTypes.WMS_TYPES.map((type) => {
-          return {value: type.toLowerCase(), label: titleize(type)};
+          return {value: type, label: titleize(type)};
         }),
         complete: true
       });
@@ -215,7 +218,6 @@ export default class HeaderNav extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="header-nav">
         <div className="wrapper">
