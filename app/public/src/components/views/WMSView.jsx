@@ -75,7 +75,6 @@ export default class WMSView extends React.Component {
     }
 
     render() {
-        console.log(this.state);
         const wmsId = this.props.match.params.wmsId;
         const wmsData = this.state.wmsData;
 

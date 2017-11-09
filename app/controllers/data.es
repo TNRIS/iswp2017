@@ -383,7 +383,6 @@ class DataController {
    */
   getForWMSType(request, reply) {
     Hoek.assert(request.params.wmsType, 'request.params.wmsType is required');
-    console.log('getForWMSType');
 
     const themes = R.keys(constants.DATA_TABLES);
     const wmsType = request.params.wmsType;
