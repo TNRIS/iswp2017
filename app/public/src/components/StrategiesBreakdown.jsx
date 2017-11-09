@@ -38,7 +38,6 @@ function toPieSeries(totals, decade) {
 export default class StrategiesBreakdown extends React.PureComponent {
   render() {
     const viewData = this.props.viewData;
-    console.log(viewData);
 
     if (!viewData) {
       return <div/>;

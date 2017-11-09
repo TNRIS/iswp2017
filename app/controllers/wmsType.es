@@ -9,7 +9,6 @@ const wmsTypeTable = 'vw2017MapWMSProjectsByWMSType';
 class WMSTypeController {
     getByType(request, reply) {
         Hoek.assert(request.params.WMSType, 'request.params.WMSType is required');
-        console.log("Getting data...");
 
         const wmsType = request.params.WMSType;
 

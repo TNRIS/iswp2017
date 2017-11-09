@@ -298,6 +298,7 @@ class DataController {
     const selectProjectsProm = db.select()
       .from(projectTables.source)
       .where('MapSourceId', sourceId)
+      .where('DisplayProjectInMap', 'Y')
       .then((projects) => { return {projects}; });
 
     dataPromises.push(selectProjectsProm);
@@ -348,7 +349,6 @@ class DataController {
     Hoek.assert(request.params.wmsId, 'request.params.wmsId is required');
 
     const wmsId = request.params.wmsId;
-    const themes = R.keys(constants.DATA_TABLES);
 
     const dataPromises = ['strategies'].map(dataSelectionsByTheme({
       whereKey: 'WmsId',
@@ -383,7 +383,6 @@ class DataController {
    */
   getForWMSType(request, reply) {
     Hoek.assert(request.params.wmsType, 'request.params.wmsType is required');
-    console.log('getForWMSType');
 
     const themes = R.keys(constants.DATA_TABLES);
     const wmsType = request.params.wmsType;

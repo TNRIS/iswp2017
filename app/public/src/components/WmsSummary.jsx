@@ -10,7 +10,6 @@ export default class WmsSummary extends React.PureComponent {
 
     render() {
         const props = this.props;
-        console.log(props);
 
         if (!props.wmsData || R.isEmpty(R.keys(props.wmsData))) {
             return (<div className="view-summary">

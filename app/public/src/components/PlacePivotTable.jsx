@@ -188,7 +188,6 @@ export default class PlacePivotTable extends React.PureComponent {
     }
 
     render() {
-        console.log(this.props);
         const viewData = this.props.viewData;
         if (!viewData) {
             return (<div/>);

@@ -7,7 +7,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 import constants from '../constants';
 import DecadeSelector from './DecadeSelector';
-import PrjThemeSelector from './PrjThemeSelector';
 import DataViewChoiceActions from '../actions/DataViewChoiceActions';
 
 const themesAndPopulation = R.append('population', constants.THEMES);

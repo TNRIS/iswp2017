@@ -7,7 +7,6 @@ export const WmsDataSource = {
   // "fetch" will become a method on WmsDataStore --> WmsDataStore.fetch({wmsType})
   fetch: {
     remote(state, params) {
-        console.log(state, params)
       return Promise.all([
         DataFetcher.fetch({type: 'wms', typeId: params.wmsId}),
         WMSFetcher.fetch({WMSId: params.wmsId})

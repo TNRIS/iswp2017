@@ -14,7 +14,6 @@ export default {
     }
 
     let uri = `${constants.API_BASE}/wmstype/${wmsType}`;
-    console.log(uri);
     return axios.get(uri).then(({data}) => data);
   }
 };

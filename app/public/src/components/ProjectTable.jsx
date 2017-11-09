@@ -19,7 +19,7 @@ export default class ProjectTable extends React.PureComponent {
     }
 
     handleTableFilterChange = (evt) => {
-        this.setState({filter: EventTarget.target.value});
+        this.setState({filter: evt.target.value});
     }
 
     render() {

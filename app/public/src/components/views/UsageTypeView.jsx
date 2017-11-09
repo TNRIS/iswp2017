@@ -76,7 +76,6 @@ export default class UsageTypeView extends React.Component {
 
   render() {
     const viewData = this.state.viewData;
-    console.log(this.state);
     const usageType = this.props.match.params.typeId;
 
     const title = titleize(usageType) + ' Usage';
