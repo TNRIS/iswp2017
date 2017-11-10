@@ -1,5 +1,5 @@
 demo*.zip
-src/webpack-assets.json
+src/app/webpack-assets.json
 src/app/db/cache.db
 src/app/public/dist/*
 !src/app/public/dist/.gitkeep
