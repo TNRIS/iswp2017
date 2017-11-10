@@ -1,0 +1,6 @@
+{
+  "main": {
+    "js": "scripts.js",
+    "css": "styles.css"
+  }
+}

@@ -1,8 +1,8 @@
-/demo*.zip
-webpack-assets.json
-cache.db
-app/public/dist/*
-!app/public/dist/.gitkeep
+demo*.zip
+src/webpack-assets.json
+src/app/db/cache.db
+src/app/public/dist/*
+!src/app/public/dist/.gitkeep
 
 gill-sans/
 gill-sans.*
@@ -29,13 +29,8 @@ coverage
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
+src/build/Release
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
-node_modules
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+src/node_modules

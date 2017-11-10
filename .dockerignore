@@ -1,4 +1,14 @@
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
+# git
 .git
 .gitignore
+
+# IDEs
+src/.idea
+
+# optional files
+src/eslintrc.yml
+src/README.md
+src/LICENSE.md
+src/test/
+src/node_modules/
+src/npm-shrinkwrap.json

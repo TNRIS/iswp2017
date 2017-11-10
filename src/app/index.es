@@ -1,4 +1,5 @@
 import Hapi from 'hapi';
+import path from 'path';
 import Inert from 'inert';
 import Vision from 'vision';
 import Etags from 'hapi-etags';
@@ -23,7 +24,7 @@ const server = new Hapi.Server({
       cors: true,
       files: {
         // FIXME: make this a relative path
-        relativeTo: '/home/dhickman/Dev/iswp2017/app/public',
+        relativeTo: path.join(__dirname, 'public'),
       }
     }
   }
