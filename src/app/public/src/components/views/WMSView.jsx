@@ -86,8 +86,6 @@ export default class WMSView extends React.Component {
         }
 
         const title = wmsName
-        const themeKeys = this.state.hidePopulation ? constants.THEMES
-          : R.prepend('population', constants.THEMES);
 
         return (
         <div className="wms-view">

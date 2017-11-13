@@ -78,10 +78,6 @@ export default class WMSTypeView extends React.Component {
         const wmsTypeData = this.state.wmsTypeData;
         const wmsType = this.props.match.params.wmsType;
         const title = titleize(wmsType);
-        const viewName = titleize(wmsType);
-        const themeKeys = this.state.hidePopulation
-            ? constants.THEMES
-            : R.prepend('population', constants.THEMES);
 
         return (<div className="wms-type-view">
             <Helmet title={title}/>
