@@ -44,11 +44,17 @@ export default class ThemeMaps extends React.Component {
       projectsData = placeData.data['wugregion'];
     }
 
-    if (this.props.view === 'wms') {
+    if (this.props.view === 'wms' || this.props.view === 'wmsType') {
+        let mapTitle
+        if (this.props.view === 'wms') {
+            mapTitle = 'Water Management Strategy'
+        } else if (this.props.view === 'wmsType') {
+            mapTitle = 'Water Management Strategy Type'
+        }
         return (
             <div>
               <h4>
-                Water Management Strategy - {selectedDecade} - {themeTitle}
+                {mapTitle} - {selectedDecade} - {themeTitle}
                 <Units theme={selectedTheme} />
               </h4>
               <div className="twelve columns">

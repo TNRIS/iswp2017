@@ -47,6 +47,9 @@ export default class ProjectTable extends React.PureComponent {
             case 'wms':
                 title = 'Recommended Projects related to Water Management Strategy';
                 break;
+            case 'wmstype':
+                title = 'Recommended Projects related to Water Management Strategy Type'
+                break;
             default:
                 title = 'Recommended Projects Serving Area of Interest';
         }
@@ -124,5 +127,5 @@ export default class ProjectTable extends React.PureComponent {
 
 ProjectTable.propTypes = {
     projectData: CustomPropTypes.ProjectData.isRequired,
-    type: PropTypes.oneOf(['region', 'county', 'entity', 'source', 'wms']).isRequired
+    type: PropTypes.oneOf(['region', 'county', 'entity', 'source', 'wms', 'wmstype']).isRequired
 }

@@ -386,15 +386,24 @@ class DataController {
 
     const themes = R.keys(constants.DATA_TABLES);
     const wmsType = request.params.wmsType;
-    const dataPromises = themes.map(dataSelectionsByTheme({
+
+    const dataPromises = ['strategies'].map(dataSelectionsByTheme({
       whereKey: 'WmsType',
       whereVal: wmsType,
       omitRows: !!request.query.omitRows
     }));
 
+    dataPromises.push(
+        db.select()
+          .from(constants.DATA_TABLES.strategies)
+          .where('WmsType', wmsType)
+          .then((rows) => {return {wmstype: {rows}};})
+    )
+
     const selectWmsTypeData = db.select()
       .from(projectTables.wmstype)
       .where('WMSType', wmsType)
+      .where('DisplayProjectInMap', 'Y')
       .then((projects) => { return {projects}; });
 
     dataPromises.push(selectWmsTypeData);

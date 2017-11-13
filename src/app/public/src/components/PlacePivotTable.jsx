@@ -38,10 +38,10 @@ function mapSourceAnchor(mapSourceId, mapSourceName) {
  * @return {func | string}                returns the anchor function or name of wms
  */
 function strategyAnchor(wmsId, wmsName) {
-  if (wmsId) {
-    return toAnchor(`/wms/${wmsId}`, wmsName)
-  }
-  return (wmsName)
+    if (wmsId) {
+        return toAnchor(`/wms/${wmsId}`, wmsName)
+    }
+    return (wmsName)
 }
 
 const commonDimensions = [
@@ -60,34 +60,6 @@ const commonDimensions = [
     }
 ];
 
-const additionalDimensions = {
-    supplies: [
-        {
-            value: 'SourceName',
-            title: 'Source',
-            // added mapSourceId to row through reduce (memo)
-           template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
-        }
-    ],
-    strategies: [
-        {
-            value: 'WmsName',
-            title: 'Strategy',
-            // added wmsId to row through reduce (memo)
-            template: (val, row) => strategyAnchor(row.wmsId, val)
-        }, {
-            value: 'WmsType',
-            title: 'WMS Type',
-            template: (val) => toAnchor(`/wmstype/${val}`, val)
-        }, {
-            value: 'SourceName',
-            title: 'Source',
-             // added mapSourceId to row through reduce (memo)
-            template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
-        }
-    ]
-};
-
 export default class PlacePivotTable extends React.PureComponent {
 
     constructor(props) {
@@ -96,7 +68,7 @@ export default class PlacePivotTable extends React.PureComponent {
         this.state = {
             viewState: viewState,
             activeDimensions: this.getViewDefaultActiveDimensions(viewState),
-            sortBy: 'Entity', //TODO: get default based on viewState?
+            sortBy: 'Entity', // TODO: get default based on viewState?
             sortDir: 'asc'
         }
     }
@@ -180,11 +152,72 @@ export default class PlacePivotTable extends React.PureComponent {
 
         //add additional dimensions to the active dimensions list
         const theme = this.props.theme;
+        const additionalDimensions = this.getAddionalDimensions();
+
         if (additionalDimensions[theme]) {
             activeDimensions = R.concat(R.pluck('title', additionalDimensions[theme]), activeDimensions);
         }
 
         return activeDimensions;
+    }
+
+    getAddionalDimensions = () => {
+        if (this.props.view === 'wmstype') {
+            return {
+                supplies: [
+                    {
+                        value: 'SourceName',
+                        title: 'Source',
+                        // added mapSourceId to row through reduce (memo)
+                        template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
+                    }
+                ],
+                strategies: [
+                    {
+                        value: 'WmsType',
+                        title: 'WMS Type',
+                        template: (val) => toAnchor(`/wmstype/${val}`, val)
+                    }, {
+                        value: 'WmsName',
+                        title: 'Strategy',
+                        // added wmsId to row through reduce (memo)
+                        template: (val, row) => strategyAnchor(row.wmsId, val)
+                    }, {
+                        value: 'SourceName',
+                        title: 'Source',
+                        // added mapSourceId to row through reduce (memo)
+                        template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
+                    }
+                ]
+            };
+        }
+        return {
+            supplies: [
+                {
+                    value: 'SourceName',
+                    title: 'Source',
+                    // added mapSourceId to row through reduce (memo)
+                    template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
+                }
+            ],
+            strategies: [
+                {
+                    value: 'WmsName',
+                    title: 'Strategy',
+                    // added wmsId to row through reduce (memo)
+                    template: (val, row) => strategyAnchor(row.wmsId, val)
+                }, {
+                    value: 'WmsType',
+                    title: 'WMS Type',
+                    template: (val) => toAnchor(`/wmstype/${val}`, val)
+                }, {
+                    value: 'SourceName',
+                    title: 'Source',
+                    // added mapSourceId to row through reduce (memo)
+                    template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
+                }
+            ]
+        };
     }
 
     render() {
@@ -203,6 +236,7 @@ export default class PlacePivotTable extends React.PureComponent {
         const activeDimensions = this.state.activeDimensions;
         const sortBy = this.state.sortBy;
         const sortDir = this.state.sortDir;
+        const additionalDimensions = this.getAddionalDimensions();
 
         if (additionalDimensions[selectedTheme]) {
             additionalDimensions[selectedTheme].forEach((d) => availableDimensions.push(d));
@@ -227,23 +261,18 @@ export default class PlacePivotTable extends React.PureComponent {
         let table = null;
         if (R.isEmpty(tableData)) {
             table = <p>
-                      Sorry, there is no {themeTitle} data.
-                    </p>;
+                Sorry, there is no {themeTitle}
+                data.
+            </p>;
         } else {
             table = <div className="table-container">
                 <PivotTable
                     // assign a unique key to force rerender of table
+
                     // when decade or theme are changed
+
                     // otherwise it will not react to prop changes
-                    key={hat()} eventBus={this.eventBus}
-                    rows={tableData}
-                    dimensions={availableDimensions}
-                    activeDimensions={activeDimensions}
-                    reduce={reduce}
-                    calculations={calculations}
-                    sortBy={sortBy}
-                    sortDir={sortDir}
-                    nPaginateRows={50}/>
+                    key={hat()} eventBus={this.eventBus} rows={tableData} dimensions={availableDimensions} activeDimensions={activeDimensions} reduce={reduce} calculations={calculations} sortBy={sortBy} sortDir={sortDir} nPaginateRows={50}/>
             </div>;
         }
 
@@ -259,6 +288,7 @@ export default class PlacePivotTable extends React.PureComponent {
 }
 
 PlacePivotTable.propTypes = {
+    view: PropTypes.string,
     viewData: CustomPropTypes.ViewData,
     decade: PropTypes.oneOf(constants.DECADES).isRequired,
     theme: PropTypes.oneOf(themesAndPopulation).isRequired

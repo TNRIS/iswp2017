@@ -131,6 +131,19 @@ function addTo(server, basePath = '/') {
         handler: {view: 'index'}
     },
     {
+        method: 'GET',
+        path: '/wmstype/{wmsType}',
+        config: {
+            validate: {
+                params: {
+                    wmsType: Joi.string().only(validParams.wmsType).insensitive().required(),
+                },
+                failAction: to404
+            }
+        },
+        handler: {view: 'index'}
+    },
+    {
       method: 'GET',
       path: '/about',
       handler: {view: 'about'},

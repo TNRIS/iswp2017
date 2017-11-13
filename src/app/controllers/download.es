@@ -149,6 +149,19 @@ class DownloadController {
         .catch(handleApiError(reply));
     }
 
+    getWmsTypeCsv(request, reply) {
+        Hoek.assert(request.params.theme, 'request.params.theme is required');
+        Hoek.assert(request.params.wmsType, 'request.params.wmsType is required');
+
+        const theme = request.params.theme.toLowerCase();
+        const wmsType = request.params.wmsType;
+
+        selectData(theme, 'WmsType', wmsType)
+          .then(omitCols)
+          .then(toCsvReply(reply, `wmstype_${wmsType}_${theme}.csv`))
+          .catch(handleApiError(reply));
+      }
+
 }
 
 export default DownloadController;

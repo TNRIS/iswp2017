@@ -168,6 +168,24 @@ function addTo(server, basePath = '/') {
                 }
             },
             handler: bind('getWmsCsv')
+    }, {
+            method: 'GET',
+            path: '/wmstype/{wmsType}/{theme}',
+            config: {
+                validate: {
+                    params: {
+                        theme: Joi.string()
+                            .only(themes)
+                            .insensitive()
+                            .required(),
+                        wmsType: Joi.string()
+                            .only(validParams.wmsType)
+                            .insensitive()
+                            .required()
+                    }
+                }
+            },
+            handler: bind('getWmsTypeCsv')
     }];
 
     addRoutes(server, routes, basePath);

@@ -26,8 +26,5 @@ RUN yarn install --production
 # run webpack
 RUN yarn run webpack
 
-# expose app port
-EXPOSE 3334
-
 # set default container command
-ENTRYPOINT ["yarn", "run", "-dddd", "start"]
+ENTRYPOINT ["yarn", "run", "start"]

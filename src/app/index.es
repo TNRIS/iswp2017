@@ -23,7 +23,6 @@ const server = new Hapi.Server({
       // enable cors on all routes
       cors: true,
       files: {
-        // FIXME: make this a relative path
         relativeTo: path.join(__dirname, 'public'),
       }
     }
