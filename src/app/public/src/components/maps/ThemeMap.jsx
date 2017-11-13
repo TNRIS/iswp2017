@@ -411,7 +411,6 @@ export default class ThemeMap extends React.Component {
         } else {
             this.map.addLayer(this.projectLayer);
             ThemeMapStateActions.hidePrj();
-            this.applyBounds(this.map.getBounds().extend(this.projectLayer.getBounds()));
         }
     }
 
