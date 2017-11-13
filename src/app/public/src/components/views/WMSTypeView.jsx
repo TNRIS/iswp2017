@@ -104,7 +104,7 @@ export default class WMSTypeView extends React.Component {
                                 <div className="row panel-row">
                                     <div className="twelve columns">
                                         <span className="view-name">{title}</span>
-                                        <ProjectTable type="entity" projectData={wmsTypeData.data.projects}/>
+                                        <ProjectTable type="wmstype" projectData={wmsTypeData.data.projects}/>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +119,9 @@ export default class WMSTypeView extends React.Component {
                                     <div className="row panel-row">
                                       <div className="twelve columns">
                                         <span className="view-name">{wmsType}</span>
-                                        <PlacePivotTable viewData={wmsTypeData.data}
+                                        <PlacePivotTable
+                                          view="wmstype"
+                                          viewData={wmsTypeData.data}
                                           decade={this.state.viewChoice.selectedDecade}
                                           theme={this.state.viewChoice.selectedTheme} />
                                         <h5>Download Data</h5>
