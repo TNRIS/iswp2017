@@ -140,7 +140,7 @@ export default class WMSTypeView extends React.Component {
                                               return (
                                                 <li key={`download-${theme}`}>
                                                   <DownloadDataLink
-                                                    type="wms"
+                                                    type="wmstype"
                                                     typeId={wmsType}
                                                     theme={theme}
                                                     viewName={wmsType} />
