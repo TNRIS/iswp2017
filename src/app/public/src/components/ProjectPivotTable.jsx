@@ -130,7 +130,7 @@ export default createReactClass({
     if (R.isEmpty(tableData)) {
       table = <p> Sorry, there is no population data.</p>;
     } else {
-      table = 
+      table =
         <div className="table-container">
           <PivotTable
             //assign a unique key to force rerender of table
@@ -160,4 +160,3 @@ export default createReactClass({
     );
   },
 });
-

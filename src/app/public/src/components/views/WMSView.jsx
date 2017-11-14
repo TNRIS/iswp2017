@@ -1,7 +1,6 @@
 import R from 'ramda';
 import React from 'react';
 import PropTypes from 'prop-types';
-import titleize from 'titleize';
 import Spinner from 'react-spinkit';
 import Helmet from 'react-helmet';
 

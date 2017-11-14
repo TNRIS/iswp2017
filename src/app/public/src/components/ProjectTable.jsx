@@ -50,14 +50,17 @@ export default class ProjectTable extends React.PureComponent {
             case 'wmstype':
                 title = 'Recommended Projects related to Water Management Strategy Type'
                 break;
+            case 'project':
+                title = 'Recommended Water Management Strategies related to Project'
+                break;
             default:
                 title = 'Recommended Projects Serving Area of Interest';
         }
 
         projectData.map((d) => {
-            const id = d.WMSProjectId;
-            d["linkRef"] = function() {
-                history.push({pathname: `/project/${id}`})
+              const id = d.WMSProjectId;
+              d["linkRef"] = function() {
+                  history.push({pathname: `/project/${id}`})
             };
         });
 
@@ -76,6 +79,17 @@ export default class ProjectTable extends React.PureComponent {
                         </Td>
                         <Td column="Capital Cost" value={d.CapitalCost}>
                             {`${format({prefix: '$'})(d.CapitalCost)}`}
+                        </Td>
+                    </Tr>);
+                }));
+            } else if (this.props.type === 'project') {
+                return (projectData.map((d) => {
+                    return (<Tr key={d.WMSId}>
+                        <Td column="Strategy" value={d.WMSName}>
+                            <a className="pointerHover" onClick={() => {history.push({pathname: `/wms/${d.WMSId}`})}}>{d.WMSName}</a>
+                        </Td>
+                        <Td column="WMS Sponsor Region" value={d.WmsProjectSponsorRegion}>
+                            <a className="pointerHover" onClick={() => {history.push({pathname: `/region/${d.WMSSponsorRegion.trim()}`})}}>{d.WmsProjectSponsorRegion}</a>
                         </Td>
                     </Tr>);
                 }));
@@ -104,16 +118,16 @@ export default class ProjectTable extends React.PureComponent {
             <ToggleDisplay show={projectData.length === 0}>
                 <p>There are no recommended projects.</p>
             </ToggleDisplay>
-            <ToggleDisplay show={projectData.length > 0}>
+            <ToggleDisplay show={projectData.length > 0 && this.props.type !== 'project'}>
                 <p>
                     Total capital cost of recommended projects:
-                    <strong>${format()(totalCost)}</strong>.
+                    <strong> ${format()(totalCost)}</strong>.
                 </p>
                 <ToggleDisplay show={projectData.length > itemsPerPage}>
                     <input type="text" placeholder="Type to filter table" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
                 </ToggleDisplay>
                 <div className="table-container">
-                    <Table className="table-condensed u-full-width projects-table" sortable="sortable" itemsPerPage={perPage} pageButtonLimit={5} filterable={['Project', 'Decade Online', 'Sponsor']} hideFilterInput="hideFilterInput" filterBy={this.state.filter} defaultSort={{
+                    <Table className="table-condensed u-full-width projects-table" sortable={true} itemsPerPage={perPage} pageButtonLimit={5} filterable={['Project', 'Decade Online', 'Sponsor']} hideFilterInput="hideFilterInput" filterBy={this.state.filter} defaultSort={{
                             column: 'Project',
                             direction: 'asc'
                         }}>
@@ -121,11 +135,25 @@ export default class ProjectTable extends React.PureComponent {
                     </Table>
                 </div>
             </ToggleDisplay>
+            <ToggleDisplay show={projectData.length > 0 && this.props.type === 'project'}>
+                <ToggleDisplay show={projectData.length > itemsPerPage}>
+                    <input type="text" placeholder="Type to filter table" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
+                </ToggleDisplay>
+                <div className="table-container">
+                    <Table className="table-condensed u-full-width projects-table" sortable={true} itemsPerPage={perPage} pageButtonLimit={5} filterable={['Strategy']} hideFilterInput="hideFilterInput" filterBy={this.state.filter} defaultSort={{
+                            column: 'Strategy',
+                            direction: 'asc'
+                        }}>
+                        {projTable()}
+                    </Table>
+                </div>
+                <p className="note">Only strategy names that have strategy supplies assigned to a Water User Group are linked to a water management strategy page.</p>
+            </ToggleDisplay>
         </div>);
     }
 }
 
 ProjectTable.propTypes = {
     projectData: CustomPropTypes.ProjectData.isRequired,
-    type: PropTypes.oneOf(['region', 'county', 'entity', 'source', 'wms', 'wmstype']).isRequired
+    type: PropTypes.oneOf(['region', 'county', 'entity', 'source', 'wms', 'wmstype', 'project']).isRequired
 }

@@ -333,7 +333,12 @@ class DataController {
       .where('WMSProjectId', projectId)
       .then((rows) => { return {strategies: {rows} }; });
 
-    const dataPromises = [selectProjectsData];
+    const selectProjectsDataByWms = db.select()
+      .from(constants.PROJECT_TABLES.wms)
+      .where('WMSProjectId', projectId)
+      .then((rows) => { return {wms: {rows} }; });
+
+    const dataPromises = [selectProjectsData, selectProjectsDataByWms];
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))

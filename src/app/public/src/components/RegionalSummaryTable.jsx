@@ -15,12 +15,12 @@ import Units from './Units';
 const themesAndPopulation = R.append('population', constants.THEMES);
 
 /**
- * 
+ *
  */
 export default class RegionalSummaryTable extends React.PureComponent {
   /**
    * Renders the regional summary table
-   * @return {Component} 
+   * @return {Component}
    */
   render() {
     if (!this.props.viewData) {
@@ -35,7 +35,7 @@ export default class RegionalSummaryTable extends React.PureComponent {
     const selectedData = this.props.viewData[
       selectedTheme].regionalSummary[selectedDecade];
 
-    // - styling (more condensed, asc/desc column markers, 
+    // - styling (more condensed, asc/desc column markers,
     // align numbers right, totals row and col)
     const typeTotals = constants.USAGE_TYPES.map((type) => {
       return R.sum(R.pluck(type, selectedData));
@@ -102,7 +102,7 @@ export default class RegionalSummaryTable extends React.PureComponent {
       </div>
     );
   }
-};
+}
 
 RegionalSummaryTable.propTypes = {
   viewData: CustomPropTypes.ViewData,

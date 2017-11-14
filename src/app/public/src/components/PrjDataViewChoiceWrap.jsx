@@ -10,7 +10,7 @@ import PrjDataViewChoiceSelectors from './PrjDataViewChoiceSelectors';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
-export default class extends React.Component {
+export default class PrjDataViewChoiceWrap extends React.Component {
   static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),

@@ -11,6 +11,7 @@ import ProjectPivotTable from '../ProjectPivotTable';
 import ProjectDataStore from '../../stores/ProjectDataStore';
 import ProjectViewMap from '../maps/ProjectViewMap';
 import ProjectSummary from '../ProjectSummary';
+import ProjectTable from '../ProjectTable';
 import PrjDataViewChoiceWrap from '../PrjDataViewChoiceWrap';
 import ThemeMaps from '../maps/ThemeMaps';
 
@@ -89,6 +90,14 @@ export default class ProjectView extends React.Component {
 
               return (
                 <div>
+                  <div className="container">
+                      <div className="row panel-row">
+                          <div className="twelve columns">
+                              <span className="view-name">{title}</span>
+                              <ProjectTable type="project" projectData={projectData.data.wms.rows}/>
+                          </div>
+                      </div>
+                  </div>
                   <PrjDataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
                     theme={selectedTheme}>
                     <div className="container">

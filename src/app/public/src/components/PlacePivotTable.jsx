@@ -100,6 +100,7 @@ export default class PlacePivotTable extends React.PureComponent {
         let newActive = R.clone(this.state.activeDimensions);
 
         const isSameTheme = newProps.theme === this.props.theme;
+        const additionalDimensions = this.getAdditionalDimensions();
         const hasNewAdditional = !!additionalDimensions[newProps.theme];
         const hasOldAdditional = !!additionalDimensions[this.props.theme];
 
@@ -152,7 +153,7 @@ export default class PlacePivotTable extends React.PureComponent {
 
         //add additional dimensions to the active dimensions list
         const theme = this.props.theme;
-        const additionalDimensions = this.getAddionalDimensions();
+        const additionalDimensions = this.getAdditionalDimensions();
 
         if (additionalDimensions[theme]) {
             activeDimensions = R.concat(R.pluck('title', additionalDimensions[theme]), activeDimensions);
@@ -161,7 +162,7 @@ export default class PlacePivotTable extends React.PureComponent {
         return activeDimensions;
     }
 
-    getAddionalDimensions = () => {
+    getAdditionalDimensions = () => {
         if (this.props.view === 'wmstype') {
             return {
                 supplies: [
@@ -236,7 +237,7 @@ export default class PlacePivotTable extends React.PureComponent {
         const activeDimensions = this.state.activeDimensions;
         const sortBy = this.state.sortBy;
         const sortDir = this.state.sortDir;
-        const additionalDimensions = this.getAddionalDimensions();
+        const additionalDimensions = this.getAdditionalDimensions();
 
         if (additionalDimensions[selectedTheme]) {
             additionalDimensions[selectedTheme].forEach((d) => availableDimensions.push(d));
