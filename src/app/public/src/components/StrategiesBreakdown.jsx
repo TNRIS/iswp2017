@@ -85,7 +85,7 @@ export default class StrategiesBreakdown extends React.PureComponent {
                     return (
                       <Tr key={`{type}{decade}`}>
                         <Td column="Strategy Type" value={type}>
-                          {titleize(type)}
+                          {<a href={"/wmstype/" + type}>{type}</a>}
                         </Td>
                         <Td column="Amount" value={val}>
                           {`${pct}% (${format()(val)})`}
