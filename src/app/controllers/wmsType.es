@@ -3,20 +3,20 @@ import Hoek from 'hoek';
 import db from 'db';
 import {handleApiError} from 'lib/utils';
 
-const wmsTypeTable = 'vw2017MapWMSProjectsByWMSType';
+const wmsTypeTable = 'vw2017MapWMSProjectsByWmsType';
 
 
-class WMSTypeController {
+class WmsTypeController {
     getByType(request, reply) {
-        Hoek.assert(request.params.WMSType, 'request.params.WMSType is required');
+        Hoek.assert(request.params.WmsType, 'request.params.WmsType is required');
 
-        const wmsType = request.params.WMSType;
+        const wmsType = request.params.WmsType;
 
         db.select().from(wmsTypeTable)
-            .where('WMSType', wmsType)
+            .where('WmsType', wmsType)
             .then(reply)
             .catch(handleApiError(reply));
     }
 }
 
-export default WMSTypeController;
+export default WmsTypeController;

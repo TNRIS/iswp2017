@@ -57,7 +57,7 @@ export default class EntityStrategiesTable extends React.PureComponent {
                   return (
                     <Tr key={wmsName}>
                       <Td column="Strategy" value={wmsName}>
-                        <a href={'/wms/' + rows[0].WMSId}>{wmsName}</a>
+                        <a href={'/wms/' + rows[0].WmsId}>{wmsName}</a>
                       </Td>
                       {
                         decades.map((decade) => {

@@ -26,7 +26,7 @@ const additionalFields = {
   ],
   needs: R.map((year) => `NPD${year}`, constants.YEARS),
   strategies: [
-    'WMSId', 'WmsName', 'WmsType', 'SourceName', 'SourceType', 'MapSourceId'
+    'WmsId', 'WmsName', 'WmsType', 'SourceName', 'SourceType', 'MapSourceId'
   ]
 };
 
@@ -35,7 +35,7 @@ const projectTables = {
   county: 'vw2017MapWMSProjectByCounty',
   entity: 'vw2017MapWMSProjectByEntity',
   source: 'vw2017MapWMSProjectBySource',
-  wmstype: 'vw2017MapWMSProjectsByWMSType'
+  wmstype: 'vw2017MapWMSProjectsByWmsType'
   // project: 'vw2017MapWMSProjectByWMS'//Not included as project information in project view is pulled from the vw2017MapWMSProjectByEntityWUGSplit table
   //usagetype: vw2017MapWMSProjectByWUGType //Not included because results are too large
 };
@@ -154,7 +154,7 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
       isStrategies ? selectDecadeSumsGroupedByField(
         'strategies', 'SourceType', whereKey, whereVal) : null,
       isStrategies ? selectDecadeSumsGroupedByField(
-        'strategies', 'WMSType', whereKey, whereVal) : null
+        'strategies', 'WmsType', whereKey, whereVal) : null
     ];
 
     return Promise.all(dataPromises)
@@ -169,7 +169,7 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
 
         if (isStrategies) {
           results.strategies.strategySourceTotals = zipByField('SourceType', stratSourceSums);
-          results.strategies.strategyTypeTotals = zipByField('WMSType', stratTypeSums);
+          results.strategies.strategyTypeTotals = zipByField('WmsType', stratTypeSums);
         }
 
         return results;
@@ -218,20 +218,20 @@ class DataController {
       omitRows: !!request.query.omitRows
     }));
 
-    //For Region projects, we select based on WMSProjectSponsorRegion
+    //For Region projects, we select based on WmsProjectSponsorRegion
     const selectProjectsProm = db.select()
       .from(projectTables.region)
-      .where('WMSProjectSponsorRegion', region)
+      .where('WmsProjectSponsorRegion', region)
       .then((projects) => { return {projects}; });
 
     dataPromises.push(selectProjectsProm);
 
-    const selectWUGRegionProm = db.select()
+    const selectWugRegionProm = db.select()
       .from(projectTables.region)
-      .where('WUGRegion', region)
+      .where('WugRegion', region)
       .then((wugregion) => { return {wugregion}; });
 
-    dataPromises.push(selectWUGRegionProm);
+    dataPromises.push(selectWugRegionProm);
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
@@ -330,12 +330,12 @@ class DataController {
     const projectId = request.params.projectId;
     const selectProjectsData = db.select()
       .from(constants.PROJECT_TABLES.strategies)
-      .where('WMSProjectId', projectId)
+      .where('WmsProjectId', projectId)
       .then((rows) => { return {strategies: {rows} }; });
 
     const selectProjectsDataByWms = db.select()
       .from(constants.PROJECT_TABLES.wms)
-      .where('WMSProjectId', projectId)
+      .where('WmsProjectId', projectId)
       .then((rows) => { return {wms: {rows} }; });
 
     const dataPromises = [selectProjectsData, selectProjectsDataByWms];
@@ -364,14 +364,14 @@ class DataController {
     dataPromises.push(
         db.select()
           .from(constants.DATA_TABLES.strategies)
-          .where('WMSId', wmsId)
+          .where('WmsId', wmsId)
           .then((rows) => {return {wms: {rows}};})
     )
 
     dataPromises.push(
         db.select()
           .from(constants.PROJECT_TABLES.wms)
-          .where('WMSId', wmsId)
+          .where('WmsId', wmsId)
           .where('DisplayProjectInMap', 'Y')
           .then((projects) => { return {projects}; })
     )
@@ -386,10 +386,9 @@ class DataController {
    * @param  {object} request [description]
    * @param  {object} reply   [description]
    */
-  getForWMSType(request, reply) {
+  getForWmsType(request, reply) {
     Hoek.assert(request.params.wmsType, 'request.params.wmsType is required');
 
-    const themes = R.keys(constants.DATA_TABLES);
     const wmsType = request.params.wmsType;
 
     const dataPromises = ['strategies'].map(dataSelectionsByTheme({
@@ -407,7 +406,7 @@ class DataController {
 
     const selectWmsTypeData = db.select()
       .from(projectTables.wmstype)
-      .where('WMSType', wmsType)
+      .where('WmsType', wmsType)
       .where('DisplayProjectInMap', 'Y')
       .then((projects) => { return {projects}; });
 

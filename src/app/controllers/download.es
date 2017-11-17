@@ -131,7 +131,7 @@ class DownloadController {
     const projectId = request.params.projectId;
 
     db.select().from(constants.PROJECT_TABLES[theme])
-      .where('WMSProjectId', projectId)
+      .where('WmsProjectId', projectId)
       .then(toCsvReply(reply, `project_${projectId}.csv`))
       .catch(handleApiError(reply));
   }

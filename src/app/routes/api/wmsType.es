@@ -1,9 +1,9 @@
 import Joi from 'joi';
 
 import constants from 'lib/constants';
-import WMSTypeController from 'controllers/wmsType';
+import WmsTypeController from 'controllers/wmsType';
 
-const wmsTypeController = new WMSTypeController();
+const wmsTypeController = new WmsTypeController();
 const bind = (method) => wmsTypeController[method].bind(wmsTypeController);
 
 export default function generateRoutes(validParams) {
@@ -12,11 +12,11 @@ export default function generateRoutes(validParams) {
     return [
         {
             method: 'GET',
-            path: '/wmstype/{WMSType}',
+            path: '/wmstype/{WmsType}',
             config: {
                 validate: {
                     params: {
-                        WMSType: Joi.string().only(validWmsType).required()
+                        WmsType: Joi.string().only(validWmsType).required()
                     }
                 },
                 cache: {

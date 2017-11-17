@@ -219,7 +219,7 @@ export default function generateRoutes(validParams) {
         description: 'Get WMS type data based on WMS Type.',
         notes: omitRowsNote
       },
-      handler: bind('getForWMSType')
+      handler: bind('getForWmsType')
     }
   ];
 }

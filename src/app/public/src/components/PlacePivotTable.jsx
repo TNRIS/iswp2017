@@ -24,11 +24,11 @@ function toAnchor(href, text) {
  * @param  {string}     mapSourceName     name of the map source
  * @return {func | string}                returns the anchor function or name of source
  */
-function mapSourceAnchor(mapSourceId, mapSourceName) {
-    if (mapSourceId && mapSourceName !== 'DIRECT REUSE') {
-        return toAnchor(`/source/${mapSourceId}`, mapSourceName)
+function mapSourceAnchor(MapSourceId, MapSourceName) {
+    if (MapSourceId && MapSourceName !== 'DIRECT REUSE') {
+        return toAnchor(`/source/${MapSourceId}`, MapSourceName)
     }
-    return (mapSourceName)
+    return (MapSourceName)
 }
 
 /**
@@ -37,11 +37,11 @@ function mapSourceAnchor(mapSourceId, mapSourceName) {
  * @param  {string}     wmsName           name of the wms
  * @return {func | string}                returns the anchor function or name of wms
  */
-function strategyAnchor(wmsId, wmsName) {
-    if (wmsId) {
-        return toAnchor(`/wms/${wmsId}`, wmsName)
+function strategyAnchor(WmsId, WmsName) {
+    if (WmsId) {
+        return toAnchor(`/wms/${WmsId}`, WmsName)
     }
-    return (wmsName)
+    return (WmsName)
 }
 
 const commonDimensions = [
@@ -89,7 +89,9 @@ export default class PlacePivotTable extends React.PureComponent {
                 });
             }
         });
-        this.eventBus.on('activeDimensions', (val) => this.setState({activeDimensions: val}));
+        this.eventBus.on('activeDimensions', (val) => {
+            this.setState({activeDimensions: val})
+        });
         this.eventBus.on('sortBy', (val) => this.setState({sortBy: val}));
         this.eventBus.on('sortDir', (val) => this.setState({sortDir: val}));
 
@@ -163,7 +165,7 @@ export default class PlacePivotTable extends React.PureComponent {
     }
 
     getAdditionalDimensions = () => {
-        if (this.props.view === 'wmstype') {
+        if (this.props.view === 'wmsType') {
             return {
                 supplies: [
                     {
@@ -182,43 +184,44 @@ export default class PlacePivotTable extends React.PureComponent {
                         value: 'WmsName',
                         title: 'Strategy',
                         // added wmsId to row through reduce (memo)
-                        template: (val, row) => strategyAnchor(row.wmsId, val)
+                        template: (val, row) => strategyAnchor(row.WmsId, val)
                     }, {
                         value: 'SourceName',
                         title: 'Source',
                         // added mapSourceId to row through reduce (memo)
-                        template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
+                        template: (val, row) => mapSourceAnchor(row.MapSourceId, val)
+                    }
+                ]
+            };
+        } else {
+            return {
+                supplies: [
+                    {
+                        value: 'SourceName',
+                        title: 'Source',
+                        // added mapSourceId to row through reduce (memo)
+                        template: (val, row) => mapSourceAnchor(row.MapSourceId, val)
+                    }
+                ],
+                strategies: [
+                    {
+                        value: 'WmsName',
+                        title: 'Strategy',
+                        // added wmsId to row through reduce (memo)
+                        template: (val, row) => strategyAnchor(row.WmsId, val)
+                    }, {
+                        value: 'WmsType',
+                        title: 'WMS Type',
+                        template: (val) => toAnchor(`/wmstype/${val}`, val)
+                    }, {
+                        value: 'SourceName',
+                        title: 'Source',
+                        // added mapSourceId to row through reduce (memo)
+                        template: (val, row) => mapSourceAnchor(row.MapSourceId, val)
                     }
                 ]
             };
         }
-        return {
-            supplies: [
-                {
-                    value: 'SourceName',
-                    title: 'Source',
-                    // added mapSourceId to row through reduce (memo)
-                    template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
-                }
-            ],
-            strategies: [
-                {
-                    value: 'WmsName',
-                    title: 'Strategy',
-                    // added wmsId to row through reduce (memo)
-                    template: (val, row) => strategyAnchor(row.wmsId, val)
-                }, {
-                    value: 'WmsType',
-                    title: 'WMS Type',
-                    template: (val) => toAnchor(`/wmstype/${val}`, val)
-                }, {
-                    value: 'SourceName',
-                    title: 'Source',
-                    // added mapSourceId to row through reduce (memo)
-                    template: (val, row) => mapSourceAnchor(row.mapSourceId, val)
-                }
-            ]
-        };
     }
 
     render() {
@@ -240,14 +243,16 @@ export default class PlacePivotTable extends React.PureComponent {
         const additionalDimensions = this.getAdditionalDimensions();
 
         if (additionalDimensions[selectedTheme]) {
-            additionalDimensions[selectedTheme].forEach((d) => availableDimensions.push(d));
+            additionalDimensions[selectedTheme].forEach((d) => {
+                availableDimensions.push(d);
+            });
         }
 
         const reduce = (row, memo) => {
             memo.valueTotal = (memo.valueTotal || 0) + row[`Value_${decade}`];
             memo.entityId = row.EntityId; //save the EntityId so a link can be made
-            memo.mapSourceId = row.MapSourceId
-            memo.wmsId = row.WMSId
+            memo.MapSourceId = row.MapSourceId
+            memo.WmsId = row.WmsId
             return memo;
         };
 
@@ -262,8 +267,7 @@ export default class PlacePivotTable extends React.PureComponent {
         let table = null;
         if (R.isEmpty(tableData)) {
             table = <p>
-                Sorry, there is no {themeTitle}
-                data.
+                Sorry, there is no {themeTitle} data.
             </p>;
         } else {
             table = <div className="table-container">

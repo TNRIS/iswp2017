@@ -22,11 +22,11 @@ export default function generateRoutes(validParams) {
     },
     {
       method: 'GET',
-      path: '/wms/{WMSId}',
+      path: '/wms/{WmsId}',
       config: {
         validate: {
           params: {
-            WMSId: Joi.number().only(validWMS).required()
+            WmsId: Joi.number().only(validWMS).required()
           }
         },
         cache: {

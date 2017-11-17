@@ -7,15 +7,15 @@ import constants from '../constants';
 export default {
   /**
   *
-  * @param {String} WMSId the id of the wms
+  * @param {String} WmsId the id of the wms
   *
   */
-  fetch: ({WMSId}) => {
-    if (!WMSId) {
-      throw new Error("WMSId is required");
+  fetch: ({WmsId}) => {
+    if (!WmsId) {
+      throw new Error("WmsId is required");
     }
 
-    let uri = `${constants.API_BASE}/wms/${WMSId}`;
+    let uri = `${constants.API_BASE}/wms/${WmsId}`;
 
     return axios.get(uri).then((response) => {
       return R.nth(0, response.data);

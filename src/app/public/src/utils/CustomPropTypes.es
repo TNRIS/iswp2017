@@ -64,9 +64,9 @@ const ProjectData = PropTypes.arrayOf(PropTypes.shape({
   OnlineDecade: PropTypes.oneOf(constants.DECADES).isRequired,
   ProjectName: PropTypes.string.isRequired,
   ProjectSponsors: PropTypes.string.isRequired,
-  WMSProjectId: PropTypes.number,
   WmsProjectId: PropTypes.number,
-  WMSProjectSponsorRegion: PropTypes.oneOf(constants.REGIONS),
+  WmsProjectId: PropTypes.number,
+  WmsProjectSponsorRegion: PropTypes.oneOf(constants.REGIONS),
   WmsProjectSponsorRegion: PropTypes.oneOf(constants.REGIONS)
 }));
 

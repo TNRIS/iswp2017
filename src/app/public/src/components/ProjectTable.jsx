@@ -25,7 +25,7 @@ export default class ProjectTable extends React.PureComponent {
     render() {
         let projectData = this.props.projectData;
         if (this.props.type === 'region') {
-            const groupedById = R.groupBy(R.prop('WMSProjectId'))(this.props.projectData);
+            const groupedById = R.groupBy(R.prop('WmsProjectId'))(this.props.projectData);
             projectData = R.map((group) => {
                 const prj = R.nth(0, group);
                 return prj;
@@ -58,7 +58,7 @@ export default class ProjectTable extends React.PureComponent {
         }
 
         projectData.map((d) => {
-              const id = d.WMSProjectId;
+              const id = d.WmsProjectId;
               d["linkRef"] = function() {
                   history.push({pathname: `/project/${id}`})
             };
@@ -67,7 +67,7 @@ export default class ProjectTable extends React.PureComponent {
         const projTable = () => {
             if (this.props.type === 'wms') {
                 return (projectData.map((d) => {
-                    return (<Tr key={d.WMSId}>
+                    return (<Tr key={d.WmsId}>
                         <Td column="Project" value={d.ProjectName}>
                             <a className="pointerHover" onClick={d.linkRef}>{d.ProjectName}</a>
                         </Td>
@@ -84,18 +84,18 @@ export default class ProjectTable extends React.PureComponent {
                 }));
             } else if (this.props.type === 'project') {
                 return (projectData.map((d) => {
-                    return (<Tr key={d.WMSId}>
-                        <Td column="Strategy" value={d.WMSName}>
-                            <a className="pointerHover" onClick={() => {history.push({pathname: `/wms/${d.WMSId}`})}}>{d.WMSName}</a>
+                    return (<Tr key={d.WmsId}>
+                        <Td column="Strategy" value={d.WmsName}>
+                            <a className="pointerHover" onClick={() => {history.push({pathname: `/wms/${d.WmsId}`})}}>{d.WmsName}</a>
                         </Td>
                         <Td column="WMS Sponsor Region" value={d.WmsProjectSponsorRegion}>
-                            <a className="pointerHover" onClick={() => {history.push({pathname: `/region/${d.WMSSponsorRegion.trim()}`})}}>{d.WmsProjectSponsorRegion}</a>
+                            <a className="pointerHover" onClick={() => {history.push({pathname: `/region/${d.WmsSponsorRegion.trim()}`})}}>{d.WmsProjectSponsorRegion}</a>
                         </Td>
                     </Tr>);
                 }));
             } else {
                 return (projectData.map((d) => {
-                    return (<Tr key={d.WMSProjectId}>
+                    return (<Tr key={d.WmsProjectId}>
                         <Td column="Project" value={d.ProjectName}>
                             <a className="pointerHover" onClick={d.linkRef}>{d.ProjectName}</a>
                         </Td>

@@ -132,7 +132,7 @@ export default class ProjectView extends React.Component {
                                   <li key={`download-${selectedTheme}`}>
                                     <DownloadDataLink
                                       type="project"
-                                      typeId={projectData.project.WMSProjectId}
+                                      typeId={projectData.project.WmsProjectId}
                                       theme={selectedTheme} />
                                   </li>
                                 );

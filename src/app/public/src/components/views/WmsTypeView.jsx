@@ -17,7 +17,7 @@ import ProjectTable from '../ProjectTable';
 import PlacePivotTable from '../PlacePivotTable';
 import DownloadDataLink from '../DownloadDataLink';
 
-export default class WMSTypeView extends React.Component {
+export default class WmsTypeView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -120,7 +120,7 @@ export default class WMSTypeView extends React.Component {
                                       <div className="twelve columns">
                                         <span className="view-name">{wmsType}</span>
                                         <PlacePivotTable
-                                          view="wmstype"
+                                          view="wmsType"
                                           viewData={wmsTypeData.data}
                                           decade={this.state.viewChoice.selectedDecade}
                                           theme={this.state.viewChoice.selectedTheme} />
@@ -159,7 +159,7 @@ export default class WMSTypeView extends React.Component {
     }
 }
 
-WMSTypeView.propTypes = {
+WmsTypeView.propTypes = {
     match: PropTypes.shape({
         params: PropTypes.shape({wmsType: PropTypes.string.isRequired}).isRequired
     })

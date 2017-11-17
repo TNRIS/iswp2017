@@ -9,7 +9,7 @@ export const WmsDataSource = {
     remote(state, params) {
       return Promise.all([
         DataFetcher.fetch({type: 'wms', typeId: params.wmsId}),
-        WMSFetcher.fetch({WMSId: params.wmsId})
+        WMSFetcher.fetch({WmsId: params.wmsId})
     ]).then(([data, wms]) => {
         return {data, wms};
       });

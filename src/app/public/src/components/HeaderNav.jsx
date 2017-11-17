@@ -12,7 +12,7 @@ import ViewStateStore from '../stores/ViewStateStore';
 import EntityFetcher from '../utils/EntityFetcher';
 import ProjectFetcher from '../utils/ProjectFetcher';
 import {sourceNames} from '../utils/SourceNames';
-import WMSTypes from '../constants/WMSTypes';
+import WmsTypes from '../constants/WmsTypes';
 import WMSFetcher from '../utils/WMSFetcher';
 
 const navCategoryOptions = [
@@ -141,7 +141,7 @@ export default class HeaderNav extends React.Component {
     ProjectFetcher.search(input)
       .then((projects) => {
         const options = projects.map((project) => {
-          return {value: project.WMSProjectId, label: project.ProjectName};
+          return {value: project.WmsProjectId, label: project.ProjectName};
         });
         callback(null, {options});
       })
@@ -158,7 +158,7 @@ export default class HeaderNav extends React.Component {
     WMSFetcher.search(input)
       .then((wmses) => {
         const options = wmses.map((wms) => {
-            return {value: wms.WMSId, label: wms.WmsName};
+            return {value: wms.WmsId, label: wms.WmsName};
         });
         callback(null, {options: R.uniq(options)});
       })
@@ -170,7 +170,7 @@ export default class HeaderNav extends React.Component {
   wmsTypeSelectOptions = (input, callback) => {
     setTimeout(() => {
       callback(null, {
-        options: WMSTypes.WMS_TYPES.map((type) => {
+        options: WmsTypes.WMS_TYPES.map((type) => {
           return {value: type, label: titleize(type)};
         }),
         complete: true

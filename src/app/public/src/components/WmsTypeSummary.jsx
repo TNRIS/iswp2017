@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
 
-import WMSTypes from '../constants/WMSTypes';
+import WmsTypes from '../constants/WmsTypes';
 import CustomPropTypes from '../utils/CustomPropTypes';
 import WmsTypeIcon from './WmsTypeIcon';
 
@@ -27,7 +27,7 @@ export default class WmsTypeSummary extends React.PureComponent {
           <WmsTypeIcon type={wmsType} />
           {wmsType}
         </h2>
-        <p>{WMSTypes.WMS_TYPE_DESCRIPTIONS[wmsType]}</p>
+        <p>{WmsTypes.WMS_TYPE_DESCRIPTIONS[wmsType]}</p>
       </div>
     );
   }

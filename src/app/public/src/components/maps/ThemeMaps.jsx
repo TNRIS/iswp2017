@@ -44,7 +44,7 @@ export default class ThemeMaps extends React.Component {
       projectsData = placeData.data['wugregion'];
     }
 
-    if (this.props.view === 'wms' || this.props.view === 'wmsType') {
+    if (this.props.view === 'wms' || this.props.view === 'wmstype') {
         let mapTitle
         if (this.props.view === 'wms') {
             mapTitle = 'Water Management Strategy'

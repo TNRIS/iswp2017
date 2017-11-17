@@ -11,7 +11,7 @@ const wmsTable = 'vw2017MapWMSWugSupply';
 
 class WMSController {
   getAll(request, reply) {
-    db.select().from(wmsTable).orderBy('WMSId')
+    db.select().from(wmsTable).orderBy('WmsId')
       .then(reply)
       .catch(handleApiError(reply));
   }
@@ -31,10 +31,10 @@ class WMSController {
   }
 
   getOne(request, reply) {
-    Hoek.assert(request.params.WMSId, 'request.params.WMSId is required');
+    Hoek.assert(request.params.WmsId, 'request.params.WmsId is required');
 
     db.select().from(wmsTable)
-      .where('WMSId', request.params.WMSId)
+      .where('WmsId', request.params.WmsId)
       .limit(1)
       .then(reply)
       .catch(handleApiError(reply));
