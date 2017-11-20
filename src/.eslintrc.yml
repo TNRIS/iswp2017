@@ -1,0 +1,22 @@
+extends:
+- google
+- eslint:recommended
+- plugin:react/recommended
+parser: babel-eslint
+parserOptions:
+  ecmaVersion: 7
+  sourceType: module
+  ecmaFeatures:
+    jsx: true
+plugins:
+  - react
+rules:
+  comma-dangle: 0
+  func-style:
+    - 2
+    - declaration
+    - allowArrowFunctions: true
+  no-console: 0
+env:
+  browser: true
+  es6: true
