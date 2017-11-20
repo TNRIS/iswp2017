@@ -120,8 +120,8 @@ export default class ProjectTable extends React.PureComponent {
             </ToggleDisplay>
             <ToggleDisplay show={projectData.length > 0 && this.props.type !== 'project'}>
                 <p>
-                    Total capital cost of recommended projects:
-                    <strong> ${format()(totalCost)}</strong>.
+                    Total capital cost of recommended projects:{" "}
+                    <strong>${format()(totalCost)}</strong>.
                 </p>
                 <ToggleDisplay show={projectData.length > itemsPerPage}>
                     <input type="text" placeholder="Type to filter table" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>

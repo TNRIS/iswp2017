@@ -283,8 +283,7 @@ export default class PlacePivotTable extends React.PureComponent {
 
         return (<div>
             <h4>
-                Raw Data - {decade}
-                - {themeTitle}
+                Raw Data{" "}-{" "}{decade}{" "}-{" "}{themeTitle}
                 <Units theme={selectedTheme}/>
             </h4>
             {table}

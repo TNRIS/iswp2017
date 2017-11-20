@@ -421,9 +421,8 @@ export default class ThemeMap extends React.Component {
                 }}></div>
             <p className="note">Each water user group is mapped to a single point near its primary location; therefore, an entity with a large or multiple service areas may be displayed outside the specific area being queried.</p>
             {
-                this.props.theme === 'strategies' && <p className="note">Red triangles indicate capital projects associated with strategy supplies that have been assigned to a Water User Group.
-                        <a className="pointerHover" onClick={this.toggleProjects}>{this.state.showProjects}
-                            Projects</a>
+                this.props.theme === 'strategies' && <p className="note">Red triangles indicate capital projects associated with strategy supplies that have been assigned to a Water User Group.{" "}
+                        <a className="pointerHover" onClick={this.toggleProjects}>{this.state.showProjects}{" "}Projects</a>
                     </p>
             }
         </div>);

@@ -74,7 +74,6 @@ export default class WmsTypeView extends React.Component {
         return viewState && viewState.id !== 'municipal';
     }
     render() {
-        console.log(this.state.wmsTypeData)
         const wmsTypeData = this.state.wmsTypeData;
         const wmsType = this.props.match.params.wmsType;
         const title = titleize(wmsType);
