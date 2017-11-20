@@ -132,6 +132,10 @@ export default class PlacePivotTable extends React.PureComponent {
         ViewStateStore.unlisten(this.onViewStateChange);
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props !== nextProps && this.state !== nextState
+    }
+
     onViewStateChange = (storeState) => {
         this.setState({viewState: storeState.viewState});
     }
