@@ -61,7 +61,6 @@ const commonDimensions = [
 ];
 
 export default class PlacePivotTable extends React.PureComponent {
-
     constructor(props) {
         super(props);
         const viewState = ViewStateStore.getState().viewState;
@@ -133,7 +132,7 @@ export default class PlacePivotTable extends React.PureComponent {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return this.props !== nextProps && this.state !== nextState
+        return this.props !== nextProps || this.state !== nextState
     }
 
     onViewStateChange = (storeState) => {
@@ -270,16 +269,12 @@ export default class PlacePivotTable extends React.PureComponent {
 
         let table = null;
         if (R.isEmpty(tableData)) {
-            table = <p>
-                Sorry, there is no {themeTitle} data.
-            </p>;
+            table = <p>Sorry, there is no {themeTitle} data.</p>;
         } else {
             table = <div className="table-container">
                 <PivotTable
                     // assign a unique key to force rerender of table
-
                     // when decade or theme are changed
-
                     // otherwise it will not react to prop changes
                     key={hat()} eventBus={this.eventBus} rows={tableData} dimensions={availableDimensions} activeDimensions={activeDimensions} reduce={reduce} calculations={calculations} sortBy={sortBy} sortDir={sortDir} nPaginateRows={50}/>
             </div>;

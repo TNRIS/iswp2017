@@ -141,7 +141,6 @@ export default class ProjectView extends React.Component {
                           </ul>
                         </div>
                       </div>
-
                     </div>
                   </PrjDataViewChoiceWrap>
                 </div>
