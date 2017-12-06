@@ -140,7 +140,7 @@ export default class WmsTypeView extends React.Component {
                                                     type="wmstype"
                                                     typeId={wmsType}
                                                     theme={theme}
-                                                    viewName={wmsType} />
+                                                    viewName={titleize(wmsType) + ' WMS Type'} />
                                                 </li>
                                               );
                                             })

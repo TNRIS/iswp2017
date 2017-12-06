@@ -177,11 +177,6 @@ export default class PlaceView extends React.Component {
                           decade={this.state.viewChoice.selectedDecade}
                           theme={this.state.viewChoice.selectedTheme}/>
                         <h5>Download Data</h5>
-                        <DownloadDataLink
-                          type={this.props.match.params.type}
-                          typeId={this.props.match.params.typeId}
-                          theme={this.state.viewChoice.selectedTheme}
-                          viewName={viewName}/>
                         <ul>
                           {R
                             .prepend('population', constants.THEMES)
@@ -189,8 +184,7 @@ export default class PlaceView extends React.Component {
                               if (R.isEmpty(placeData)) {
                                 return (
                                   <li key={`download-${theme}`}>
-                                    No {constants.THEME_TITLES[theme]}
-                                    data exists for {viewName}
+                                    No {constants.THEME_TITLES[theme]} data exists for {viewName}
                                   </li>
                                 );
                               }

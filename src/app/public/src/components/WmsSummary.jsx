@@ -2,6 +2,8 @@ import R from 'ramda';
 import React from 'react';
 import Spinner from 'react-spinkit';
 
+import WmsSummarySubhead from './WmsSummarySubhead';
+
 
 export default class WmsSummary extends React.PureComponent {
     constructor(props) {
@@ -17,13 +19,15 @@ export default class WmsSummary extends React.PureComponent {
             </div>);
         }
 
-        const regionLink = '/region/' + props.wmsData.wms.WmsSponsorRegion.toUpperCase()
+        const wmsSponsorRegion = props.wmsData.wms.WmsSponsorRegion.toUpperCase();
 
-        return (<div className="view-summary usage-type-summary">
+        return (<div className="view-summary wms-summary">
             <h2>
                 {props.wmsData.wms.WmsName.toUpperCase()}
             </h2>
-            <a href={regionLink}>Water Management Strategy Sponsor Region {props.wmsData.wms.WmsSponsorRegion.toUpperCase()}</a>
+            <div className="subhead">
+              <WmsSummarySubhead wmsSponsorRegion={wmsSponsorRegion} />
+            </div>
         </div>);
     }
 }

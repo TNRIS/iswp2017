@@ -17,10 +17,10 @@ export default class DownloadDataLink extends React.PureComponent {
       : `/download/${this.props.type}/${this.props.typeId}/${theme}`;
 
     let dlTitle = `${R.defaultTo('', this.props.viewName)} ${themeTitle}`;
-    if (this.props.type == 'project') {
-      dlTitle = `WMS Project`;
-    }
-
+    // removed in fall 2017 updates
+    // if (this.props.type == 'project') {
+    //   dlTitle = `WMS Project`;
+    // }
     return (
       <a href={href} download target="_blank"
         className="download-data-link"

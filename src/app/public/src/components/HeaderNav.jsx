@@ -310,7 +310,7 @@ export default class HeaderNav extends React.Component {
             <ToggleDisplay show={this.state.navCategory === 'wms'}>
               <div className="select-container project-select" aria-live="polite">
                 <Select.Async
-                  placeholder="Find Water Management Strategy"
+                  placeholder="Find WMS"
                   ignoreCase
                   autoload={false}
                   searchPromptText="Enter at least 3 characters to search"

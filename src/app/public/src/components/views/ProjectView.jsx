@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
+import titleize from 'titleize';
 
 import constants from '../../constants';
 import DownloadDataLink from '../DownloadDataLink';
@@ -133,7 +134,8 @@ export default class ProjectView extends React.Component {
                                     <DownloadDataLink
                                       type="project"
                                       typeId={projectData.project.WmsProjectId}
-                                      theme={selectedTheme} />
+                                      theme={selectedTheme}
+                                      viewName={titleize(title) + ' WMS Project'}/>
                                   </li>
                                 );
                               })()

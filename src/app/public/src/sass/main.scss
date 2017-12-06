@@ -194,7 +194,7 @@ h4 > .units {
       }
     }
 
-    
+
   }
 
   &.treemap-selector,
@@ -341,6 +341,10 @@ $top-height: 34rem;
   }
 
   .view-summary.prj-summary {
+    min-height: 0;
+  }
+
+  .view-summary.wms-summary {
     min-height: 0;
   }
 }

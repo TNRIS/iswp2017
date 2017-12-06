@@ -168,7 +168,7 @@ export default class UsageTypeView extends React.Component {
                                       type="usagetype"
                                       typeId={usageType}
                                       theme={theme}
-                                      viewName={viewName} />
+                                      viewName={viewName + ' Usage Type'} />
                                   </li>
                                 );
                               })

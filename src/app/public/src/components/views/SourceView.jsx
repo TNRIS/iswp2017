@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
+import titleize from 'titleize';
 
 import constants from '../../constants';
 import DownloadDataLink from '../DownloadDataLink';
@@ -131,7 +132,8 @@ export default class SourceView extends React.Component {
                                     <DownloadDataLink
                                       type="source"
                                       typeId={sourceData.boundary.features[0].properties.sourceid}
-                                      theme={theme} />
+                                      theme={theme}
+                                      viewName={titleize(title) + ' Source'} />
                                   </li>
                                 );
                               })
