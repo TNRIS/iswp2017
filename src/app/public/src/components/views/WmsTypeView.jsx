@@ -78,6 +78,18 @@ export default class WmsTypeView extends React.Component {
         const wmsType = this.props.match.params.wmsType;
         const title = titleize(wmsType);
 
+        let projectTable;
+
+        if (wmsTypeData.hasOwnProperty('data') && wmsTypeData.data.hasOwnProperty('projects')) {
+            projectTable = 
+                <div className="row panel-row">
+                    <div className="twelve columns">
+                        <span className="view-name">{title}</span>
+                        <ProjectTable type="wmstype" projectData={wmsTypeData.data.projects}/>
+                    </div>
+                </div>
+        }
+
         return (<div className="wms-type-view">
             <Helmet title={title}/>
             <section>
@@ -100,12 +112,7 @@ export default class WmsTypeView extends React.Component {
                         }
                         return (<div>
                             <div className="container">
-                                <div className="row panel-row">
-                                    <div className="twelve columns">
-                                        <span className="view-name">{title}</span>
-                                        <ProjectTable type="wmstype" projectData={wmsTypeData.data.projects}/>
-                                    </div>
-                                </div>
+                            {projectTable}
                             </div>
                             <DataViewChoiceWrap decade={this.state.viewChoice.selectedDecade} hideTheme={true} theme="strategies" hidePopulation={this.state.hidePopulation}>
                                 <div className="container">

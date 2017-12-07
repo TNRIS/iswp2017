@@ -264,7 +264,8 @@ export default class ThemeMap extends React.Component {
                     'OnlineDecade': prj.OnlineDecade,
                     'ProjectSponsors': prj.ProjectSponsors,
                     'CapitalCost': "$" + displayCost,
-                    'WmsProjectId': prj.WmsProjectId
+                    'WmsProjectId': prj.WmsProjectId,
+                    'DisplayProjectInMap': prj.DisplayProjectInMap
                 };
 
                 return {
@@ -284,6 +285,9 @@ export default class ThemeMap extends React.Component {
                     const marker = L.marker(latlng, {icon: icon});
                     this.spiderfier.addMarker(marker);
                     return marker;
+                },
+                filter: (feature) => {
+                    return feature.properties.DisplayProjectInMap !== 'N';
                 }
             });
 

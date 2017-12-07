@@ -66,9 +66,14 @@ export default class SourceViewMap extends React.Component {
 
     this.map.addLayer(this.boundaryLayer);
 
-    this.map.fitBounds(this.boundaryLayer.getBounds(), {
-      paddingTopLeft: getMapPadding()
-    });
+    try {
+      this.map.fitBounds(this.boundaryLayer.getBounds(), {
+        paddingTopLeft: getMapPadding()
+      });
+    } catch(err) {
+      return;
+    }
+
   }
 
 

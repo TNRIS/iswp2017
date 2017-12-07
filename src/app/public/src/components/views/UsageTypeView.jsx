@@ -148,7 +148,8 @@ export default class UsageTypeView extends React.Component {
                       <div className="row panel-row">
                         <div className="twelve columns">
                           <span className="view-name">{viewName}</span>
-                          <PlacePivotTable viewData={viewData}
+                          <PlacePivotTable viewData={viewData} 
+                            view='usagetype'
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
                           <h5>Download Data</h5>

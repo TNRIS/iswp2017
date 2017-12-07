@@ -59,6 +59,7 @@ export default class SourceView extends React.Component {
 
   render() {
     const sourceData = this.state.sourceData;
+    console.log(sourceData);
     const title = sourceData.boundary ? sourceData.boundary.features[0].properties.name : '';
     const selectedTheme = !(constants.SRC_THEMES.includes(this.state.viewChoice.selectedTheme)) ? "supplies" : this.state.viewChoice.selectedTheme;
 
@@ -98,8 +99,7 @@ export default class SourceView extends React.Component {
                     </div>
                   </div>
 
-                  <SrcDataViewChoiceWrap decade={this.state.viewChoice.selectedDecade}
-                    theme={selectedTheme}>
+                  <SrcDataViewChoiceWrap decade={this.state.viewChoice.selectedDecade} theme={selectedTheme}>
                     <div className="container">
                       <div className="row panel-row">
                         <div className="twelve columns">

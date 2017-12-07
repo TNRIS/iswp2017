@@ -217,11 +217,15 @@ export default class PrjThemeMap extends React.PureComponent {
 
       this.projectLayer = L.geoJson(projectFeature, {
         pointToLayer: (feature, latlng) => {
+          console.log(feature);
           const marker = L.marker(latlng, {
             icon: icon
           });
           this.spiderfier.addMarker(marker);
           return marker;
+        },
+        filter: (feature) => {
+          return feature.properties.DisplayProjectInMap !== 'N';
         }
       });
 

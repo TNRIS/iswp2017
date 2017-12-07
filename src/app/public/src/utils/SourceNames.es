@@ -952,5 +952,6 @@ export const sourceNames = [
 	{"sourceid": 871, "name": "YEGUA-JACKSON AQUIFER | WASHINGTON"}, 
 	{"sourceid": 872, "name": "YEGUA-JACKSON AQUIFER | WEBB"}, 
 	{"sourceid": 1063, "name": "YEGUA-JACKSON AQUIFER | WILSON"}, 
-	{"sourceid": 873, "name": "YEGUA-JACKSON AQUIFER | ZAPATA"}
+	{"sourceid": 873, "name": "YEGUA-JACKSON AQUIFER | ZAPATA"},
+	{"sourceid": 820, "name": "ATMOSPHERE"}
 ];

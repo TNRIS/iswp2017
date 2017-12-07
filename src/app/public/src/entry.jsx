@@ -34,6 +34,7 @@ history.listen((loc) => {
 
 // setup listener to update the ViewState based on location
 history.listen((loc) => {
+  console.log(loc.pathname);
   ViewStateActions.updateViewState(loc.pathname);
 });
 

@@ -11,11 +11,12 @@ import {formatCountyName} from '../utils/CountyNames';
 import CustomPropTypes from '../utils/CustomPropTypes';
 import Units from './Units';
 import ViewStateStore from '../stores/ViewStateStore';
+import {Link} from 'react-router-dom';
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
 function toAnchor(href, text) {
-    return `<a href="${href}">${text}</a>`;
+    return '<a href="' + href + '" onclick=this.context.router.history.push(' + href + ')>' + text + '</a>';
 }
 
 /**
@@ -276,7 +277,16 @@ export default class PlacePivotTable extends React.PureComponent {
                     // assign a unique key to force rerender of table
                     // when decade or theme are changed
                     // otherwise it will not react to prop changes
-                    key={hat()} eventBus={this.eventBus} rows={tableData} dimensions={availableDimensions} activeDimensions={activeDimensions} reduce={reduce} calculations={calculations} sortBy={sortBy} sortDir={sortDir} nPaginateRows={50}/>
+                    key={hat()} 
+                    eventBus={this.eventBus} 
+                    rows={tableData} 
+                    dimensions={availableDimensions} 
+                    activeDimensions={activeDimensions}
+                    reduce={reduce}
+                    calculations={calculations}
+                    sortBy={sortBy}
+                    sortDir={sortDir}
+                    nPaginateRows={50}/>
             </div>;
         }
 
