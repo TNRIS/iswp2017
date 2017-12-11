@@ -63,7 +63,7 @@ function testProjects(data) {
   Code.expect(data.projects).to.be.an.array();
   Code.expect(data.projects[0]).to.include([
     "CapitalCost", "OnlineDecade", "ProjectName", "ProjectSponsors",
-    "WMSProjectId", "WMSProjectSponsorRegion"
+    "WmsProjectId", "WMSProjectSponsorRegion"
   ]);
 }
 
