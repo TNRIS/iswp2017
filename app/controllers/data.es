@@ -152,7 +152,7 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
       isStrategies ? selectDecadeSumsGroupedByField(
         'strategies', 'SourceType', whereKey, whereVal) : null,
       isStrategies ? selectDecadeSumsGroupedByField(
-        'strategies', 'WMSType', whereKey, whereVal) : null
+        'strategies', 'WmsType', whereKey, whereVal) : null
     ];
 
     return Promise.all(dataPromises)
@@ -167,7 +167,7 @@ function dataSelectionsByTheme({whereKey, whereVal, omitRows = false} = {}) {
 
         if (isStrategies) {
           results.strategies.strategySourceTotals = zipByField('SourceType', stratSourceSums);
-          results.strategies.strategyTypeTotals = zipByField('WMSType', stratTypeSums);
+          results.strategies.strategyTypeTotals = zipByField('WmsType', stratTypeSums);
         }
 
         return results;
@@ -216,20 +216,20 @@ class DataController {
       omitRows: !!request.query.omitRows
     }));
 
-    //For Region projects, we select based on WMSProjectSponsorRegion
+    //For Region projects, we select based on WmsProjectSponsorRegion
     const selectProjectsProm = db.select()
       .from(projectTables.region)
-      .where('WMSProjectSponsorRegion', region)
+      .where('WmsProjectSponsorRegion', region)
       .then((projects) => { return {projects}; });
 
     dataPromises.push(selectProjectsProm);
 
-    const selectWUGRegionProm = db.select()
+    const selectWugRegionProm = db.select()
       .from(projectTables.region)
-      .where('WUGRegion', region)
+      .where('WugRegion', region)
       .then((wugregion) => { return {wugregion}; });
 
-    dataPromises.push(selectWUGRegionProm);
+    dataPromises.push(selectWugRegionProm);
 
     Promise.all(dataPromises)
       .then(R.compose(reply, R.mergeAll))
@@ -327,7 +327,7 @@ class DataController {
     const projectId = request.params.projectId;
     const selectProjectsData = db.select()
       .from(constants.PROJECT_TABLES.strategies)
-      .where('WMSProjectId', projectId)
+      .where('WmsProjectId', projectId)
       .then((rows) => { return {strategies: {rows} }; });
 
     const dataPromises = [selectProjectsData];

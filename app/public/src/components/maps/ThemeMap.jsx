@@ -67,7 +67,7 @@ export default React.createClass({
         <p>Decade Online: ${props.OnlineDecade}</p>
         <p>Sponsor: ${props.ProjectSponsors}</p>
         <p>Capital Cost: ${props.CapitalCost}</p>
-        <a id="project_${props.WMSProjectId}">View Project Page</a>
+        <a id="project_${props.WmsProjectId}">View Project Page</a>
       `;
       const content = props.EntityId ? entityContent : projectContent;
       popup.setContent(content);
@@ -285,7 +285,7 @@ export default React.createClass({
           'OnlineDecade': prj.OnlineDecade,
           'ProjectSponsors': prj.ProjectSponsors,
           'CapitalCost': "$" + displayCost,
-          'WMSProjectId': prj.WMSProjectId
+          'WmsProjectId': prj.WmsProjectId
         };
 
         return {

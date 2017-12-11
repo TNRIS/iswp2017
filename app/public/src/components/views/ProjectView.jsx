@@ -127,7 +127,7 @@ export default React.createClass({
                                   <li key={`download-${selectedTheme}`}>
                                     <DownloadDataLink
                                       type="project"
-                                      typeId={projectData.project.WMSProjectId}
+                                      typeId={projectData.project.WmsProjectId}
                                       theme={selectedTheme} />
                                   </li>
                                 );

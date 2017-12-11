@@ -64,8 +64,8 @@ const ProjectData = React.PropTypes.arrayOf(React.PropTypes.shape({
   OnlineDecade: React.PropTypes.oneOf(constants.DECADES).isRequired,
   ProjectName: React.PropTypes.string.isRequired,
   ProjectSponsors: React.PropTypes.string.isRequired,
-  WMSProjectId: React.PropTypes.number.isRequired,
-  WMSProjectSponsorRegion: React.PropTypes.oneOf(constants.REGIONS).isRequired
+  WmsProjectId: React.PropTypes.number.isRequired,
+  WmsProjectSponsorRegion: React.PropTypes.oneOf(constants.REGIONS).isRequired
 }));
 
 export default {

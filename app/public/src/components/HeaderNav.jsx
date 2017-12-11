@@ -105,7 +105,7 @@ export default React.createClass({
     ProjectFetcher.search(input)
       .then((projects) => {
         const options = projects.map((project) => {
-          return {value: project.WMSProjectId, label: project.ProjectName};
+          return {value: project.WmsProjectId, label: project.ProjectName};
         });
         callback(null, {options});
       })

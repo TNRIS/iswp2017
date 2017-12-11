@@ -83,7 +83,7 @@ export default function generateRoutes(validParams) {
         },
         description: 'Get all water management strategy projects in the water user group region identified by {regionLetter}.'
       },
-      handler: bind('getWUGRegion')
+      handler: bind('getWugRegion')
     }
   ];
 }

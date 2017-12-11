@@ -27,7 +27,7 @@ export default React.createClass({
   render() {
     let projectData = this.props.projectData;
     if (this.props.type === 'region') {
-      const groupedById = R.groupBy(R.prop('WMSProjectId'))(this.props.projectData);
+      const groupedById = R.groupBy(R.prop('WmsProjectId'))(this.props.projectData);
       projectData = R.map((group) => {
         const prj = R.nth(0, group);
         return prj;
@@ -48,7 +48,7 @@ export default React.createClass({
     };
 
     projectData.map((d) => {
-      const id = d.WMSProjectId;
+      const id = d.WmsProjectId;
       d["linkRef"] = function () {history.push({pathname: `/project/${id}`})};
     });
 
@@ -78,7 +78,7 @@ export default React.createClass({
               {
                 projectData.map((d) => {
                   return (
-                    <Tr key={d.WMSProjectId}>
+                    <Tr key={d.WmsProjectId}>
                       <Td column="Project" value={d.ProjectName}>
                         <a className="pointerHover" onClick={d.linkRef}>{d.ProjectName}</a>
                       </Td>

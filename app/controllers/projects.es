@@ -9,7 +9,7 @@ const projectTable = 'vw2017MapWMSProjects';
 
 class ProjectsController {
   getAll(request, reply) {
-    db.select().from(projectTable).orderBy('WMSProjectId')
+    db.select().from(projectTable).orderBy('WmsProjectId')
       .then(reply)
       .catch(handleApiError(reply));
   }
@@ -32,7 +32,7 @@ class ProjectsController {
     Hoek.assert(request.params.projectId, 'request.params.projectId is required');
 
     db.select().from(projectTable)
-      .where('WMSProjectId', request.params.projectId)
+      .where('WmsProjectId', request.params.projectId)
       .limit(1)
       .then(reply)
       .catch(handleApiError(reply));
@@ -42,16 +42,16 @@ class ProjectsController {
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
     db.select().from(projectTable)
-      .where('WMSProjectSponsorRegion', request.params.regionLetter.toUpperCase())
+      .where('WmsProjectSponsorRegion', request.params.regionLetter.toUpperCase())
       .then(reply)
       .catch(handleApiError(reply));
   }
 
-  getWUGRegion(request, reply) {
+  getWugRegion(request, reply) {
     Hoek.assert(request.params.regionLetter, 'request.params.regionLetter is required');
 
     db.select().from(projectTable)
-      .where('WUGRegion', request.params.regionLetter.toUpperCase())
+      .where('WugRegion', request.params.regionLetter.toUpperCase())
       .then(reply)
       .catch(handleApiError(reply));
   }

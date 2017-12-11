@@ -23,12 +23,12 @@ const commonDimensions = [
     template: (val, row) => toAnchor(`/entity/${row.entityId}`, val)
   },
   {
-    value: 'WUGCounty',
+    value: 'WugCounty',
     title: 'County',
     template: (val) => toAnchor(`/county/${formatCountyName(val)}`, val)
   },
   {
-    value: 'WUGRegion',
+    value: 'WugRegion',
     title: 'Region',
     template: (val) => toAnchor(`/region/${val}`, val)
   }
