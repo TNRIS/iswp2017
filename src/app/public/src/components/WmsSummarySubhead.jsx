@@ -12,8 +12,8 @@ export default class WmsSummarySubhead extends React.PureComponent {
     const wmsSponsorRegion = this.props.wmsSponsorRegion;
     return (
       <p>
-        Water Management Strategy Sponsor Region{` `}
-        <Link to={`/region/${wmsSponsorRegion}`} title={`View Sponsor Region ${wmsSponsorRegion}`}>{wmsSponsorRegion}</Link>
+        Water Management Strategy Sponsor{` `}
+        <Link to={`/region/${wmsSponsorRegion}`} title={`View Sponsor Region ${wmsSponsorRegion}`}>Region {wmsSponsorRegion}</Link>
       </p>
     );
   }
