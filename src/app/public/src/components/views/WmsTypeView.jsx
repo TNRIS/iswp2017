@@ -16,6 +16,8 @@ import ThemeMaps from '../maps/ThemeMaps';
 import ProjectTable from '../ProjectTable';
 import PlacePivotTable from '../PlacePivotTable';
 import DownloadDataLink from '../DownloadDataLink';
+import HeaderNav from '../HeaderNav';
+
 
 export default class WmsTypeView extends React.Component {
     constructor(props) {
@@ -23,7 +25,8 @@ export default class WmsTypeView extends React.Component {
         this.state = {
             wmsTypeData: WmsTypeDataStore.getState().wmsTypeData,
             viewChoice: DataViewChoiceStore.getState(),
-            hidePopulation: this.shouldHidePopulation(ViewStateStore.getState().viewState)
+            hidePopulation: this.shouldHidePopulation(ViewStateStore.getState().viewState),
+            isFetching: false
         }
     }
 
@@ -39,8 +42,8 @@ export default class WmsTypeView extends React.Component {
     }
 
     componentDidUpdate = () => {
-        //if population theme selection is hidden but it is the currently selected theme,
-        // then update the theme choice to 'needs'
+        // if population theme selection is hidden but it is the currently 
+        // selected theme, then update the theme choice to 'needs'
         if (this.state.hidePopulation && this.state.viewChoice.selectedTheme === 'population') {
             DataViewChoiceActions.updateThemeChoice('strategies');
         }
@@ -73,6 +76,7 @@ export default class WmsTypeView extends React.Component {
     shouldHidePopulation = (viewState) => {
         return viewState && viewState.id !== 'municipal';
     }
+
     render() {
         const wmsTypeData = this.state.wmsTypeData;
         const wmsType = this.props.match.params.wmsType;
@@ -84,13 +88,15 @@ export default class WmsTypeView extends React.Component {
             projectTable = 
                 <div className="row panel-row">
                     <div className="twelve columns">
-                        <span className="view-name">{title}</span>
+                        <span className="view-name">WMS TYPE - {title}</span>
                         <ProjectTable type="wmstype" projectData={wmsTypeData.data.projects}/>
                     </div>
                 </div>
         }
 
-        return (<div className="wms-type-view">
+        return (
+        <div className="wms-type-view">
+            <HeaderNav view="wmstype" />
             <Helmet title={title}/>
             <section>
                 <div className="view-top usage-type-view-top">
@@ -118,13 +124,13 @@ export default class WmsTypeView extends React.Component {
                                 <div className="container">
                                     <div className="row panel-row">
                                         <div className="twelve columns">
-                                            <span className="view-name">{title}</span>
+                                            <span className="view-name">WMS TYPE - {title}</span>
                                             <ThemeMaps placeData={wmsTypeData} view={'wmsType'} decade={this.state.viewChoice.selectedDecade} theme={this.state.viewChoice.selectedTheme}/>
                                         </div>
                                     </div>
                                     <div className="row panel-row">
                                       <div className="twelve columns">
-                                        <span className="view-name">{wmsType}</span>
+                                        <span className="view-name">WMS TYPE - {title}</span>
                                         <PlacePivotTable
                                           view="wmsType"
                                           viewData={wmsTypeData.data}

@@ -2,6 +2,8 @@
 import alt from '../alt';
 import ViewStateActions from '../actions/ViewStateActions';
 
+import history from '../history';
+
 class ViewStateStore {
   constructor() {
     this.viewState = {};

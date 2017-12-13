@@ -11,7 +11,7 @@ import {formatCountyName} from '../utils/CountyNames';
 import CustomPropTypes from '../utils/CustomPropTypes';
 import Units from './Units';
 import ViewStateStore from '../stores/ViewStateStore';
-import {Link} from 'react-router-dom';
+
 
 const themesAndPopulation = R.append('population', constants.THEMES);
 
@@ -26,7 +26,7 @@ function toAnchor(href, text) {
  * @return {func | string}                returns the anchor function or name of source
  */
 function mapSourceAnchor(MapSourceId, MapSourceName) {
-    if (MapSourceId && MapSourceName !== 'DIRECT REUSE') {
+    if (MapSourceId) {
         return toAnchor(`/source/${MapSourceId}`, MapSourceName)
     }
     return (MapSourceName)
@@ -140,8 +140,8 @@ export default class PlacePivotTable extends React.PureComponent {
         this.setState({viewState: storeState.viewState});
     }
 
-    getViewDefaultActiveDimensions = (viewState) => {
-        const view = viewState.view;
+    getViewDefaultActiveDimensions = () => {
+        const view = this.props.view;
         let activeDimensions = [];
         switch (view) {
             case 'region':

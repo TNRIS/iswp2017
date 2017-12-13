@@ -7,7 +7,8 @@ export const sourceNames = [
 	{"sourceid": 6, "name": "AMISTAD-FALCON LAKE/RESERVOIR SYSTEM"}, 
 	{"sourceid": 7, "name": "AMON G. CARTER LAKE/RESERVOIR"}, 
 	{"sourceid": 884, "name": "ANSON NORTH LAKE/RESERVOIR"}, 
-	{"sourceid": 9, "name": "ATHENS LAKE/RESERVOIR"}, 
+	{"sourceid": 9, "name": "ATHENS LAKE/RESERVOIR"},
+	{"sourceid": 820, "name": "ATMOSPHERE"},
 	{"sourceid": 885, "name": "AUSTIN CHALK AQUIFER | KINNEY"}, 
 	{"sourceid": 886, "name": "AUSTIN CHALK AQUIFER | UVALDE"}, 
 	{"sourceid": 887, "name": "BAIRD LAKE/RESERVOIR"}, 
@@ -168,6 +169,7 @@ export const sourceNames = [
 	{"sourceid": 167, "name": "DANIEL LAKE/RESERVOIR"}, 
 	{"sourceid": 168, "name": "DANSBY POWER PLANT/BRYAN UTILITIES LAKE/RESERVOIR"}, 
 	{"sourceid": 898, "name": "DIMPLE LAKE/RESERVOIR"}, 
+	{"sourceid": 169, "name": "DIRECT REUSE"},
 	{"sourceid": 170, "name": "DOCKUM AQUIFER | ANDREWS"}, 
 	{"sourceid": 171, "name": "DOCKUM AQUIFER | ARMSTRONG"}, 
 	{"sourceid": 899, "name": "DOCKUM AQUIFER | BAILEY"}, 
@@ -451,6 +453,7 @@ export const sourceNames = [
 	{"sourceid": 830, "name": "LITTLE WICHITA RIVER LAKE/RESERVOIR SYSTEM"}, 
 	{"sourceid": 410, "name": "LIVINGSTON-WALLISVILLE LAKE/RESERVOIR SYSTEM"}, 
 	{"sourceid": 411, "name": "LLANO LAKE/RESERVOIR"}, 
+	{"sourceid": 412, "name": "LOCAL SURFACE WATER SUPPLY"},
 	{"sourceid": 413, "name": "LOMA LAKE/RESERVOIR"}, 
 	{"sourceid": 414, "name": "LOST CREEK-JACKSBORO LAKE/RESERVOIR SYSTEM"}, 
 	{"sourceid": 415, "name": "LOWER BOIS D ARC LAKE/RESERVOIR"}, 
@@ -952,6 +955,5 @@ export const sourceNames = [
 	{"sourceid": 871, "name": "YEGUA-JACKSON AQUIFER | WASHINGTON"}, 
 	{"sourceid": 872, "name": "YEGUA-JACKSON AQUIFER | WEBB"}, 
 	{"sourceid": 1063, "name": "YEGUA-JACKSON AQUIFER | WILSON"}, 
-	{"sourceid": 873, "name": "YEGUA-JACKSON AQUIFER | ZAPATA"},
-	{"sourceid": 820, "name": "ATMOSPHERE"}
+	{"sourceid": 873, "name": "YEGUA-JACKSON AQUIFER | ZAPATA"}
 ];

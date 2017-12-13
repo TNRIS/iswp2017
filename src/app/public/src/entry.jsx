@@ -25,6 +25,7 @@ import './vendor/js/leaflet.easybutton.js';
 
 import './sass/main.scss';
 
+// TODO reenable Google Analytics
 // setup listener so Google Analytics can send pageviews on location change
 history.listen((loc) => {
   if (window && window.ga) {
@@ -33,8 +34,7 @@ history.listen((loc) => {
 });
 
 // setup listener to update the ViewState based on location
-history.listen((loc) => {
-  console.log(loc.pathname);
+history.listen(loc => {
   ViewStateActions.updateViewState(loc.pathname);
 });
 

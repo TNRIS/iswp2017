@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Spinner from 'react-spinkit';
 import Helmet from 'react-helmet';
+import titleize from 'titleize';
 
 import WmsDataStore from "../../stores/WmsDataStore.es";
 import DataViewChoiceActions from '../../actions/DataViewChoiceActions';
@@ -15,6 +16,7 @@ import ProjectTable from '../ProjectTable';
 import PlacePivotTable from '../PlacePivotTable';
 import constants from '../../constants';
 import DownloadDataLink from '../DownloadDataLink';
+import HeaderNav from '../HeaderNav';
 
 
 export default class WMSView extends React.Component {
@@ -88,6 +90,7 @@ export default class WMSView extends React.Component {
 
         return (
         <div className="wms-view">
+            <HeaderNav view="wms" />
             <Helmet title={title}/>
             <section>
                 <div className="view-top usage-type-view-top">
@@ -111,7 +114,7 @@ export default class WMSView extends React.Component {
                             <div className="container">
                                 <div className="row panel-row">
                                     <div className="twelve columns">
-                                        <span className="view-name">{title}</span>
+                                        <span className="view-name">WATER MANAGEMENT STRATEGY - {title}</span>
                                         <ProjectTable type="wms" projectData={wmsData.data.projects}/>
                                     </div>
                                 </div>
@@ -120,13 +123,13 @@ export default class WMSView extends React.Component {
                                 <div className="container">
                                     <div className="row panel-row">
                                         <div className="twelve columns">
-                                            <span className="view-name">{title}</span>
+                                            <span className="view-name">WATER MANAGEMENT STRATEGY - {title}</span>
                                             <ThemeMaps placeData={wmsData} view={'wms'} decade={this.state.viewChoice.selectedDecade} theme="strategies"/>
                                         </div>
                                     </div>
                                     <div className="row panel-row">
                                       <div className="twelve columns">
-                                        <span className="view-name">{wmsName}</span>
+                                        <span className="view-name">WATER MANAGEMENT STRATEGY - {title}</span>
                                         <PlacePivotTable viewData={wmsData.data}
                                           decade={this.state.viewChoice.selectedDecade}
                                           theme={this.state.viewChoice.selectedTheme} />
@@ -147,7 +150,7 @@ export default class WMSView extends React.Component {
                                                     type="wms"
                                                     typeId={wmsId}
                                                     theme={theme}
-                                                    viewName={wmsName} />
+                                                    viewName={titleize(wmsName)} />
                                                 </li>
                                               );
                                             })

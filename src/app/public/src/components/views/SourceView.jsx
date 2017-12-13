@@ -15,6 +15,8 @@ import SourceSummary from '../SourceSummary';
 import SrcDataViewChoiceWrap from '../SrcDataViewChoiceWrap';
 import ThemeMaps from '../maps/ThemeMaps';
 import ProjectTable from '../ProjectTable';
+import HeaderNav from '../HeaderNav';
+
 
 export default class SourceView extends React.Component {
   constructor(props) {
@@ -59,12 +61,12 @@ export default class SourceView extends React.Component {
 
   render() {
     const sourceData = this.state.sourceData;
-    console.log(sourceData);
     const title = sourceData.boundary ? sourceData.boundary.features[0].properties.name : '';
     const selectedTheme = !(constants.SRC_THEMES.includes(this.state.viewChoice.selectedTheme)) ? "supplies" : this.state.viewChoice.selectedTheme;
 
     return (
       <div className="source-view">
+      <HeaderNav view="source" />
       <Helmet title={title} />
         <section>
           <div className="view-top source-view-top">
@@ -93,7 +95,7 @@ export default class SourceView extends React.Component {
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <span className="view-name">{title}</span>
+                        <span className="view-name">WATER SOURCE - {title}</span>
                         <ProjectTable type="source" projectData={sourceData.data.projects} />
                       </div>
                     </div>
@@ -103,7 +105,7 @@ export default class SourceView extends React.Component {
                     <div className="container">
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <span className="view-name">{title}</span>
+                          <span className="view-name">WATER SOURCE - {title}</span>
                           <ThemeMaps placeData={sourceData}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={selectedTheme} />
@@ -112,7 +114,7 @@ export default class SourceView extends React.Component {
 
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <span className="view-name">{title}</span>
+                          <span className="view-name">WATER SOURCE - {title}</span>
                           <PlacePivotTable viewData={sourceData.data}
                           decade={this.state.viewChoice.selectedDecade}
                           theme={selectedTheme} />
