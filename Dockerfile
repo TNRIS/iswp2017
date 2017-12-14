@@ -4,7 +4,7 @@ FROM node:8
 RUN apt-get update
 
 # set NODE_ENV to staging
-ENV NODE_ENV staging
+ENV NODE_ENV production
 
 # install babel
 RUN yarn add --save-dev \
