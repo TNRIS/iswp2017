@@ -177,7 +177,9 @@ export default class PlaceView extends React.Component {
                         <PlacePivotTable
                           viewData={placeData.data}
                           decade={this.state.viewChoice.selectedDecade}
-                          theme={this.state.viewChoice.selectedTheme}/>
+                          theme={this.state.viewChoice.selectedTheme}
+                          view={params.type.toLowerCase()}
+                          />
                         <h5>Download Data</h5>
                         <ul>
                           {R

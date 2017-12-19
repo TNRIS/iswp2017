@@ -132,7 +132,9 @@ export default class WMSView extends React.Component {
                                         <span className="view-name">WATER MANAGEMENT STRATEGY - {title}</span>
                                         <PlacePivotTable viewData={wmsData.data}
                                           decade={this.state.viewChoice.selectedDecade}
-                                          theme={this.state.viewChoice.selectedTheme} />
+                                          theme={this.state.viewChoice.selectedTheme}
+                                          view="wms"
+                                           />
                                         <h5>Download Data</h5>
                                         <ul>
                                           {

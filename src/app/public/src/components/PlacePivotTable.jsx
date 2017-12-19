@@ -150,9 +150,6 @@ export default class PlacePivotTable extends React.PureComponent {
             case 'county':
                 activeDimensions = ['Region', 'Entity'];
                 break;
-            case 'usagetype':
-                activeDimensions = ['Entity'];
-                break;
             default:
                 activeDimensions = ['Region', 'County', 'Entity'];
         }

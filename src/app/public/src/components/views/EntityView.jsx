@@ -143,7 +143,9 @@ export default class EntityView extends React.Component {
                             <span className="view-name">WATER USER GROUP - {title}</span>
                             <PlacePivotTable viewData={entityData.data}
                             decade={this.state.viewChoice.selectedDecade}
-                            theme={this.state.viewChoice.selectedTheme} />
+                            theme={this.state.viewChoice.selectedTheme} 
+                            view="entity"
+                            />
                             <h4>Download Data</h4>
                             <ul>
                               {
