@@ -47,7 +47,7 @@ export default class ThemeMaps extends React.Component {
     if (this.props.view === 'wms' || this.props.view === 'wmstype') {
         let mapTitle
         if (this.props.view === 'wms') {
-            mapTitle = 'Water Management Strategy'
+            mapTitle = 'Water User Groups'
         } else if (this.props.view === 'wmsType') {
             mapTitle = 'Water Management Strategy Type'
         }

@@ -6,6 +6,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import scale from 'scale-number-range';
 import format from 'format-number';
+import {Link} from 'react-router-dom';
 
 import CdbUtil from '../../utils/CdbUtil';
 import constants from '../../constants';
@@ -54,9 +55,7 @@ export default class ThemeMap extends React.Component {
         <p>Capital Cost: ${props.CapitalCost}</p>
         <a id="project_${props.WmsProjectId}">View Project Page</a>
       `;
-            const content = props.EntityId
-                ? entityContent
-                : projectContent;
+            const content = props.EntityId ? entityContent : projectContent;
             popup.setContent(content);
             popup.setLatLng(marker.getLatLng());
             map.openPopup(popup);
@@ -264,7 +263,8 @@ export default class ThemeMap extends React.Component {
                     'OnlineDecade': prj.OnlineDecade,
                     'ProjectSponsors': prj.ProjectSponsors,
                     'CapitalCost': "$" + displayCost,
-                    'WmsProjectId': prj.WmsProjectId
+                    'WmsProjectId': prj.WmsProjectId,
+                    'DisplayProjectInMap': prj.DisplayProjectInMap
                 };
 
                 return {
@@ -284,6 +284,9 @@ export default class ThemeMap extends React.Component {
                     const marker = L.marker(latlng, {icon: icon});
                     this.spiderfier.addMarker(marker);
                     return marker;
+                },
+                filter: (feature) => {
+                    return feature.properties.DisplayProjectInMap !== 'N';
                 }
             });
 
@@ -341,13 +344,19 @@ export default class ThemeMap extends React.Component {
                                     }
                             }
                         },
+                        onEachFeature: (feature, layer) => {
+                            const sourceContent = `
+                                <h3>${feature.properties.name}</h3>
+                                <a id="source_${feature.properties.sourceid}">View Source Page</a>
+                            `;
+                            layer.bindPopup(sourceContent);
+                        },
                         pointToLayer: (feature, latlng) => {
                             return L.circleMarker(latlng, {radius: 8});
                         }
                     });
                     this.sourceLayer.on("mousemove", this.showSourceLabel);
                     this.sourceLayer.on("mouseout", this.hideSourceLabel);
-                    this.sourceLayer.on("click", this.viewSourcePage);
                     //add the layer to the map.
                     this.map.addLayer(this.sourceLayer);
                     this.entitiesLayer.bringToFront();
@@ -384,11 +393,6 @@ export default class ThemeMap extends React.Component {
             this.map.removeLayer(this.label);
             this.label = null;
         }
-    }
-
-    viewSourcePage = (event) => {
-        const id = event.layer.feature.properties.sourceid;
-        history.push({pathname: `/source/${id}`});
     }
 
     applyBounds = (bounds) => {

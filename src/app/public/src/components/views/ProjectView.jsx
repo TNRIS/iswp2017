@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
+import titleize from 'titleize';
 
 import constants from '../../constants';
 import DownloadDataLink from '../DownloadDataLink';
@@ -14,6 +15,8 @@ import ProjectSummary from '../ProjectSummary';
 import ProjectTable from '../ProjectTable';
 import PrjDataViewChoiceWrap from '../PrjDataViewChoiceWrap';
 import ThemeMaps from '../maps/ThemeMaps';
+import HeaderNav from '../HeaderNav';
+
 
 export default class ProjectView extends React.Component {
   constructor(props) {
@@ -63,7 +66,7 @@ export default class ProjectView extends React.Component {
 
     return (
       <div className="project-view">
-
+      <HeaderNav view="project" />
       <Helmet title={title} />
 
         <section>
@@ -93,7 +96,7 @@ export default class ProjectView extends React.Component {
                   <div className="container">
                       <div className="row panel-row">
                           <div className="twelve columns">
-                              <span className="view-name">{title}</span>
+                              <span className="view-name">WMS PROJECT - {title}</span>
                               <ProjectTable type="project" projectData={projectData.data.wms.rows}/>
                           </div>
                       </div>
@@ -104,7 +107,7 @@ export default class ProjectView extends React.Component {
 
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <span className="view-name">{title}</span>
+                          <span className="view-name">WMS PROJECT - {title}</span>
                           <ThemeMaps placeData={projectData}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={selectedTheme} />
@@ -113,7 +116,7 @@ export default class ProjectView extends React.Component {
 
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <span className="view-name">{title}</span>
+                          <span className="view-name">WMS PROJECT - {title}</span>
                           <ProjectPivotTable viewData={projectData.data}
                           decade={this.state.viewChoice.selectedDecade}
                           theme={selectedTheme} />
@@ -133,7 +136,8 @@ export default class ProjectView extends React.Component {
                                     <DownloadDataLink
                                       type="project"
                                       typeId={projectData.project.WmsProjectId}
-                                      theme={selectedTheme} />
+                                      theme={selectedTheme}
+                                      viewName={titleize(title) + ' WMS Project'}/>
                                   </li>
                                 );
                               })()
@@ -141,7 +145,6 @@ export default class ProjectView extends React.Component {
                           </ul>
                         </div>
                       </div>
-
                     </div>
                   </PrjDataViewChoiceWrap>
                 </div>

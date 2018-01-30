@@ -38,13 +38,18 @@ const validParametersModule = {
     dbPromises.push(distinctValues('WmsProjectId', 'vw2017MapWMSProjects'));
     dbPromises.push(distinctValues('WmsId', 'vw2017MapWMSWugSupply'));
     dbPromises.push(distinctValues('WmsType', 'vw2017MapWMSProjectsByWmsType'));
-
     dbPromises.push(distinctSources());
 
     Promise.all(dbPromises)
       .then(([counties, regions, entityIds, usageTypes, projects, wms, wmsType, sources]) => {
         // save the names and ids to the server object for 
         // use by route validation rules
+
+        // Added because there are no project for DROUGHT MANAGEMENT
+        if (!wmsType.includes('DROUGHT MANAGMENT')) {
+          R.sort(wmsType.push('DROUGHT MANAGEMENT'));
+        }
+
         server.expose({
           counties,
           regions,

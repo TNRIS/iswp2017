@@ -17,6 +17,7 @@ import StatewideViewMap from '../maps/StatewideViewMap';
 import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
+import HeaderNav from '../HeaderNav';
 
 /**
  *
@@ -91,6 +92,7 @@ export default class StatewideView extends React.Component {
     const data = this.state.data;
     return (
       <div className="statewide-view">
+        <HeaderNav view="statewide" />
         <Helmet title="Statewide Summary" />
         <section>
           <div className="view-top statewide-view-top">

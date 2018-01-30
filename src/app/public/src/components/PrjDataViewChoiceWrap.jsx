@@ -45,12 +45,12 @@ export default class PrjDataViewChoiceWrap extends React.Component {
     }
 
     const y = document.documentElement.scrollTop || document.body.scrollTop || 0;
-    if (!this.refs.viewChoiceSection) {
+    if (!this.viewChoiceSection) {
       return;
     }
 
-    const stickyTop = this.refs.viewChoiceSection.offsetTop;
-    if (y >= stickyTop) {
+    const stickyTop = this.viewChoiceSection.offsetTop;
+    if (y >= (stickyTop-58.1)) {
       this.setState({isStuck: true});
     }
     else {
@@ -65,12 +65,11 @@ export default class PrjDataViewChoiceWrap extends React.Component {
   render() {
     const wrapStyle = {};
     if (this.shouldCheckStick() && this.state.isStuck) {
-      wrapStyle.paddingTop = this.refs.stickyEl.offsetHeight * 1.20;
+      wrapStyle.paddingTop = (this.stickyEl.offsetHeight * 1.20);
     }
     return (
-      <div className="view-choice-wrap" ref="viewChoiceSection" style={wrapStyle}>
-        <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")}
-          ref="stickyEl">
+      <div className="view-choice-wrap" ref={(viewChoiceSection) => {this.viewChoiceSection = viewChoiceSection;}} style={wrapStyle}>
+        <div className={classnames({"sticky": this.state.isStuck}, "view-choice-container")} ref={(stickyEl) => {this.stickyEl = stickyEl;}}>
           <h4>Data by Planning Decade</h4>
           <PrjDataViewChoiceSelectors
             decade={this.props.decade}

@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import Spinner from 'react-spinkit';
+import titleize from 'titleize';
 
 import constants from '../../constants';
 import DataViewChoiceStore from '../../stores/DataViewChoiceStore';
@@ -18,6 +19,7 @@ import ProjectTable from '../ProjectTable';
 import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
+import HeaderNav from '../HeaderNav';
 
 export default class EntityView extends React.Component {
   constructor(props) {
@@ -59,11 +61,11 @@ export default class EntityView extends React.Component {
   render() {
     const entityId = this.props.match.params.entityId;
     const entityData = this.state.entityData;
-    const title = entityData.entity ? entityData.entity.EntityName
-      : '';
+    const title = entityData.entity ? entityData.entity.EntityName : '';
 
     return (
       <div className="entity-view">
+        <HeaderNav view="entity" />
         <Helmet title={title} />
         <section>
           <div className="view-top entity-view-top">
@@ -92,21 +94,21 @@ export default class EntityView extends React.Component {
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <span className="view-name">{title}</span>
+                        <span className="view-name">WATER USER GROUP - {title}</span>
                         <ThemeTotalsByDecadeChart viewData={entityData.data} />
                       </div>
                     </div>
 
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <span className="view-name">{title}</span>
+                        <span className="view-name">WATER USER GROUP - {title}</span>
                         <EntityStrategiesTable viewData={entityData.data} />
                       </div>
                     </div>
 
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <span className="view-name">{title}</span>
+                        <span className="view-name">WATER USER GROUP - {title}</span>
                         <ProjectTable type="entity" projectData={entityData.data.projects} />
                       </div>
                     </div>
@@ -117,7 +119,7 @@ export default class EntityView extends React.Component {
                       <div className="container">
                         <div className="row panel-row">
                           <div className="twelve columns">
-                            <span className="view-name">{title}</span>
+                            <span className="view-name">WATER USER GROUP - {title}</span>
                             <ThemeMaps placeData={entityData}
                               decade={this.state.viewChoice.selectedDecade}
                               theme={this.state.viewChoice.selectedTheme} />
@@ -128,7 +130,7 @@ export default class EntityView extends React.Component {
                           (
                             <div className="row panel-row">
                               <div className="twelve columns">
-                                <span className="view-name">{title}</span>
+                                <span className="view-name">WATER USER GROUP - {title}</span>
                                 <StrategiesBreakdown viewData={entityData.data}
                                   decade={this.state.viewChoice.selectedDecade} />
                               </div>
@@ -138,10 +140,12 @@ export default class EntityView extends React.Component {
 
                         <div className="row panel-row">
                           <div className="twelve columns">
-                            <span className="view-name">{title}</span>
+                            <span className="view-name">WATER USER GROUP - {title}</span>
                             <PlacePivotTable viewData={entityData.data}
                             decade={this.state.viewChoice.selectedDecade}
-                            theme={this.state.viewChoice.selectedTheme} />
+                            theme={this.state.viewChoice.selectedTheme} 
+                            view="entity"
+                            />
                             <h4>Download Data</h4>
                             <ul>
                               {
@@ -158,7 +162,8 @@ export default class EntityView extends React.Component {
                                       <DownloadDataLink
                                         type="entity"
                                         typeId={entityId}
-                                        theme={theme} />
+                                        theme={theme}
+                                        viewName={titleize(title) + ' WUG'} />
                                     </li>
                                   );
                                 })
