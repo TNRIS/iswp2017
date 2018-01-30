@@ -70,6 +70,12 @@
 
             <img src="/public/static/img/HowDoIFindData2.png" width="90%" style="padding:10px;">
 
+            <p>
+              Additionally, you can filter by specific data within the table using the 'solo' feature. To do this, hover the mouse over the data element you wish to filter by until a 'solo' button appears. Selecting this feature will filter all the data in the table based on your selection. Multiple filters may be added using the same method, and all applied filters will be listed in the area above the column headers. To remove a solo filter, simply click the 'X' button to the left of the item listed in the area above the column headers.
+            </p>
+
+            <img src="/public/static/img/HowDoIFindData3.png" width="90%" style="padding:10px;">
+
           </section>
 
           <section id="HowDoIUseTheMap">
