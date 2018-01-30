@@ -132,7 +132,7 @@ export default class ProjectTable extends React.PureComponent {
                     <strong>${format()(totalCost)}</strong>.
                 </p>
                 <ToggleDisplay show={projectData.length > itemsPerPage}>
-                    <input type="text" placeholder="Type to filter table" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
+                    <input type="text" placeholder="Type to filter by project name" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
                 </ToggleDisplay>
                 <div className="table-container">
                     <Table className="table-condensed u-full-width projects-table" sortable={true} itemsPerPage={perPage} pageButtonLimit={5} filterable={['Project', 'Decade Online', 'Sponsor']} hideFilterInput="hideFilterInput" filterBy={this.state.filter} defaultSort={{
@@ -145,7 +145,7 @@ export default class ProjectTable extends React.PureComponent {
             </ToggleDisplay>
             <ToggleDisplay show={projectData.length > 0 && this.props.type === 'project'}>
                 <ToggleDisplay show={projectData.length > itemsPerPage}>
-                    <input type="text" placeholder="Type to filter table" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
+                    <input type="text" placeholder="Type to filter by project name" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
                 </ToggleDisplay>
                 <div className="table-container">
                     <Table className="table-condensed u-full-width projects-table" sortable={true} itemsPerPage={perPage} pageButtonLimit={5} filterable={['Strategy']} hideFilterInput="hideFilterInput" filterBy={this.state.filter} defaultSort={{
