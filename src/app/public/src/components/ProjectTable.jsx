@@ -148,7 +148,7 @@ export default class ProjectTable extends React.PureComponent {
                     <input type="text" placeholder="Type to filter by project name" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
                 </ToggleDisplay>
                 <div className="table-container">
-                    <Table className="table-condensed u-full-width projects-table" sortable={true} itemsPerPage={perPage} pageButtonLimit={5} filterable={['Strategy']} hideFilterInput="hideFilterInput" filterBy={this.state.filter} defaultSort={{
+                    <Table className="table-condensed u-full-width projects-table project-view" sortable={true} itemsPerPage={perPage} pageButtonLimit={5} filterable={['Strategy']} hideFilterInput="hideFilterInput" filterBy={this.state.filter} defaultSort={{
                             column: 'Strategy',
                             direction: 'asc'
                         }}>
