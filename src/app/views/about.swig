@@ -107,7 +107,7 @@
               <li>Sources will only display in the map if at least one water user group has an existing supply or water management strategy supply amount greater than zero tied to it in the selected decade.</li>
               <li>Only the following sources are mapped: groundwater, indirect reuse, reservoir, system, run-of-river, and seawater.</li>
               <li>If a water user group is related to a zero value for a specific theme and decade it will not display on the map, except for WUGs with zero associated population on the project page. For example, the needs map theme will not display a WUG point if they have zero needs in the selected decade.</li>
-              <li>If the water management strategy water supplies for a project are not assigned to a specific water user group, then the project will not display on the map. For example, the Region L project called “Integrated Water-Power Project” will display in the list because it is a recommended project, but it does not have any WUGs associated with its strategy supplies so it will not display in the map.</li>
+              <li>Information about recommended WMS projects that are not specifically associated with water user groups are displayed on the WMS Project application page although, because the water supply is not assigned to water user groups, neither the WMS project or associated supply will display on any of the other application pages until that strategy supply has been assigned to a water user group. These types of projects are recommended by the region to develop supply where a benefiting water user group has not yet been identified.</li>
             </ul>
 
           </section>
