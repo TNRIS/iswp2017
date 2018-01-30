@@ -276,9 +276,6 @@
             <p>
               Statewide summaries of the data presented were published in the <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/" title="2017 State Water Plan">2017 State Water Plan</a>.
             </p>
-            <p>
-              In the future, we will be adding geographical information water sources, recommended water management strategy projects, and other associated data.
-            </p>
           </section>
 
           <section id="SitePolicies">
