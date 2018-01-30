@@ -4,6 +4,8 @@ import React from 'react';
 import Select from 'react-select';
 import ToggleDisplay from 'react-toggle-display';
 import titleize from 'titleize';
+import classnames from 'classnames';
+import debounce from 'debounce';
 
 import constants from '../constants';
 import {countyNames} from '../utils/CountyNames';
@@ -27,28 +29,56 @@ const navCategoryOptions = [
   {value: "wmstype", label: "WMS Type"}
 ];
 
-function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-}
 
 export default class HeaderNav extends React.Component {
   constructor(props) {
     super(props);
-    const viewState = ViewStateStore.getState().viewState;
     this.state = {
-      navButtonEnabled: viewState.view === 'statewide',
-      navCategory: viewState.view,
-      subNavValue: ''
+      navButtonEnabled: this.props.view === 'statewide',
+      navCategory: this.props.view,
+      subNavValue: '',
+      isStuck: false
     }
   }
 
   componentDidMount = () => {
+    window.addEventListener('scroll', this.handleScroll);
+    //use debounced version for window resize
+    this.debouncedHandleScroll = debounce(this.handleScroll, 200);
+    window.addEventListener('resize', this.debouncedHandleScroll);
+
     ViewStateStore.listen(this.onViewStateChange);
   }
 
   componentWillUnmount = () => {
+    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('resize', this.debouncedHandleScroll);
     ViewStateStore.unlisten(this.onViewStateChange);
   }
+
+  handleScroll = () => {
+    if (!this.shouldCheckStick()) {
+      this.setState({isStuck: false});
+      return;
+    }
+
+    const y = document.documentElement.scrollTop || document.body.scrollTop || 0;
+    if (!this.refs.headerNav) {
+      return;
+    }
+
+    const stickyTop = this.refs.headerNav.offsetTop;
+    if (y >= stickyTop) {
+      this.setState({isStuck: true});
+    }
+    else {
+      this.setState({isStuck: false});
+    }
+  };
+
+  shouldCheckStick = () => {
+    return window.matchMedia("(min-width: 550px)").matches;
+  };
 
   onViewStateChange = (storeState) => {
     this.setState({
@@ -212,15 +242,21 @@ export default class HeaderNav extends React.Component {
       history.push({pathname: `/wmstype/${this.state.subNavValue.value}`});
       break;
     default:
-      return;
+      break;
     }
     this.setState({subNavValue: ''});
   }
 
   render() {
+    const wrapStyle = {};
+    if (this.shouldCheckStick() && this.state.isStuck) {
+      wrapStyle.paddingTop = this.refs.stickyEl.offsetHeight * 1.20;
+    }
+
     return (
-      <div className="header-nav">
-        <div className="wrapper">
+      <div style={wrapStyle} ref="headerNav">
+      <div className={classnames("header-nav", {"sticky-nav-header": this.state.isStuck})} ref="stickyEl">
+        <div className={classnames("wrapper")}>
           <form>
             <label htmlFor="nav-category-select">View data for</label>
             <div className="select-container category-select" aria-live="polte">
@@ -310,7 +346,7 @@ export default class HeaderNav extends React.Component {
             <ToggleDisplay show={this.state.navCategory === 'wms'}>
               <div className="select-container project-select" aria-live="polite">
                 <Select.Async
-                  placeholder="Find Water Management Strategy"
+                  placeholder="Find WMS"
                   ignoreCase
                   autoload={false}
                   searchPromptText="Enter at least 3 characters to search"
@@ -327,6 +363,7 @@ export default class HeaderNav extends React.Component {
             </button>
           </form>
         </div>
+      </div>
       </div>
     );
   }

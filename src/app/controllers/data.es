@@ -298,7 +298,6 @@ class DataController {
     const selectProjectsProm = db.select()
       .from(projectTables.source)
       .where('MapSourceId', sourceId)
-      .where('DisplayProjectInMap', 'Y')
       .then((projects) => { return {projects}; });
 
     dataPromises.push(selectProjectsProm);
@@ -372,7 +371,6 @@ class DataController {
         db.select()
           .from(constants.PROJECT_TABLES.wms)
           .where('WmsId', wmsId)
-          .where('DisplayProjectInMap', 'Y')
           .then((projects) => { return {projects}; })
     )
 
@@ -407,7 +405,6 @@ class DataController {
     const selectWmsTypeData = db.select()
       .from(projectTables.wmstype)
       .where('WmsType', wmsType)
-      .where('DisplayProjectInMap', 'Y')
       .then((projects) => { return {projects}; });
 
     dataPromises.push(selectWmsTypeData);

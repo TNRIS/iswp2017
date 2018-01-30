@@ -70,6 +70,12 @@
 
             <img src="/public/static/img/HowDoIFindData2.png" width="90%" style="padding:10px;">
 
+            <p>
+              Additionally, you can filter by specific data within the table using the 'solo' feature. To do this, hover the mouse over the data element you wish to filter by until a 'solo' button appears. Selecting this feature will filter all the data in the table based on your selection. Multiple filters may be added using the same method, and all applied filters will be listed in the area above the column headers. To remove a solo filter, simply click the 'X' button to the left of the item listed in the area above the column headers.
+            </p>
+
+            <img src="/public/static/img/HowDoIFindData3.png" width="90%" style="padding:10px;">
+
           </section>
 
           <section id="HowDoIUseTheMap">
@@ -83,7 +89,7 @@
               <li><strong>Pan –</strong> To move the map; click and hold the left mouse button and drag the map to a new place.</li>
               <li><strong>Zoom –</strong> To see more details or a larger area on the map you can zoom in and out using the +/- sign buttons in the top right. Double left clicking your mouse on a map area will also zoom you into that location.</li>
               <li><strong>Statewide View –</strong> To quickly view all of Texas click on the button in the upper right with the Texas graphic.</li>
-              <li><strong>Lock Extent –</strong> To freeze the map at a specific location and zoom level click the lock button on the right side of the screen. The button will darken when turned on and lock the map extent as you click through the different theme and decade buttons.</li>
+              <li><strong>Lock Extent –</strong> To freeze the map at a specific location and zoom level click the lock button on the right side of the screen. The button will darken when turned on and lock the map extent as you click through the different theme and decade buttons. This function may be turned off by clicking the lock button a second time.</li>
               <li><strong>Map Information –</strong> Symbol descriptions, notes, and disclaimers may appear just below the map panel to provide more information about what is being displayed.</li>
               <li><strong>Hover Labels –</strong> Some map items will display labels when you hover your mouse over them. Clicking on any of these items will navigate you away from the current page to a page related to that item in the interactive state water plan.</li>
               <li><strong>Decade Buttons –</strong> These are in the banner above the map and filter the map data by decade. For example, Project symbols will begin displaying on the map in the decade that matches the project’s online decade and continue to show in all subsequent decades.</li>
@@ -100,8 +106,9 @@
               <li>The map for a selected region page will only display projects that benefit water user group splits within that planning region.</li>
               <li>Sources will only display in the map if at least one water user group has an existing supply or water management strategy supply amount greater than zero tied to it in the selected decade.</li>
               <li>Only the following sources are mapped: groundwater, indirect reuse, reservoir, system, run-of-river, and seawater.</li>
+              <li>If an unmapped source type (EX: Direct Reuse) has related WMS WUG supplies or a project with capital costs, it will be represented on the map by the location of the project and/or benefitting WUG.</li>
               <li>If a water user group is related to a zero value for a specific theme and decade it will not display on the map, except for WUGs with zero associated population on the project page. For example, the needs map theme will not display a WUG point if they have zero needs in the selected decade.</li>
-              <li>If the water management strategy water supplies for a project are not assigned to a specific water user group, then the project will not display on the map. For example, the Region L project called “Integrated Water-Power Project” will display in the list because it is a recommended project, but it does not have any WUGs associated with its strategy supplies so it will not display in the map.</li>
+              <li>Information about recommended WMS projects that are not specifically associated with water user groups are displayed on the WMS Project application page although, because the water supply is not assigned to water user groups, neither the WMS project or associated supply will display on any of the other application pages until that strategy supply has been assigned to a water user group. These types of projects are recommended by the region to develop supply where a benefiting water user group has not yet been identified.</li>
             </ul>
 
           </section>
@@ -269,9 +276,6 @@
             </p>
             <p>
               Statewide summaries of the data presented were published in the <a href="http://www.twdb.texas.gov/waterplanning/swp/2017/" title="2017 State Water Plan">2017 State Water Plan</a>.
-            </p>
-            <p>
-              In the future, we will be adding geographical information water sources, recommended water management strategy projects, and other associated data.
             </p>
           </section>
 

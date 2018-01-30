@@ -72,6 +72,7 @@ section.content {
   background-color: $twdb-blue;
   padding: 1rem 0;
   margin-bottom: 10px;
+  margin-top: 58.1px;
 
   @media (max-width: $media-m) {
     .selector {
@@ -194,7 +195,7 @@ h4 > .units {
       }
     }
 
-    
+
   }
 
   &.treemap-selector,
@@ -343,6 +344,10 @@ $top-height: 34rem;
   .view-summary.prj-summary {
     min-height: 0;
   }
+
+  .view-summary.wms-summary {
+    min-height: 0;
+  }
 }
 
 .place-view .container {
@@ -384,6 +389,16 @@ $top-height: 34rem;
     width: 340px;
     height: 30px;
   }
+}
+
+.sticky-nav-header {
+  z-index: 1002;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  border-bottom: 1px solid white;
 }
 
 .sticky {

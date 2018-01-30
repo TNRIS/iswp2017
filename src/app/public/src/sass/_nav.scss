@@ -49,6 +49,7 @@ $nav-color: lighten($twdb-blue, 10%);
 .header-nav {
   background-color: $nav-color;
   padding: 1rem 0;
+  border-bottom: 1px solid white;
 
   form {
     margin: 0;

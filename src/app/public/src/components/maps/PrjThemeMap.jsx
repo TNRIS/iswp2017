@@ -222,6 +222,9 @@ export default class PrjThemeMap extends React.PureComponent {
           });
           this.spiderfier.addMarker(marker);
           return marker;
+        },
+        filter: (feature) => {
+          return feature.properties.DisplayProjectInMap !== 'N';
         }
       });
 

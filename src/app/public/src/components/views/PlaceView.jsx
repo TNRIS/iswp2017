@@ -20,6 +20,7 @@ import StrategiesBreakdown from '../StrategiesBreakdown';
 import ThemeMaps from '../maps/ThemeMaps';
 import ThemeTotalsByDecadeChart from '../charts/ThemeTotalsByDecadeChart';
 import ThemeTypesByDecadeChart from '../charts/ThemeTypesByDecadeChart';
+import HeaderNav from '../HeaderNav';
 
 
 export default class PlaceView extends React.Component {
@@ -73,7 +74,8 @@ export default class PlaceView extends React.Component {
       .toLowerCase() === 'region';
 
     return (
-      <div className="place-view">
+      <div className={"place-view"}>
+        <HeaderNav view={params.type.toLowerCase()} />
         <Helmet title={viewName}/>
         <section>
           <div className="view-top place-view-top">
@@ -175,13 +177,10 @@ export default class PlaceView extends React.Component {
                         <PlacePivotTable
                           viewData={placeData.data}
                           decade={this.state.viewChoice.selectedDecade}
-                          theme={this.state.viewChoice.selectedTheme}/>
-                        <h5>Download Data</h5>
-                        <DownloadDataLink
-                          type={this.props.match.params.type}
-                          typeId={this.props.match.params.typeId}
                           theme={this.state.viewChoice.selectedTheme}
-                          viewName={viewName}/>
+                          view={params.type.toLowerCase()}
+                          />
+                        <h5>Download Data</h5>
                         <ul>
                           {R
                             .prepend('population', constants.THEMES)
@@ -189,8 +188,7 @@ export default class PlaceView extends React.Component {
                               if (R.isEmpty(placeData)) {
                                 return (
                                   <li key={`download-${theme}`}>
-                                    No {constants.THEME_TITLES[theme]}
-                                    data exists for {viewName}
+                                    No {constants.THEME_TITLES[theme]} data exists for {viewName}
                                   </li>
                                 );
                               }

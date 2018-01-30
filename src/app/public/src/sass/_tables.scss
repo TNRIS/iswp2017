@@ -28,6 +28,10 @@
     &:last-child {
       text-align: right;
     }
+
+    .reactPivot-solo {
+      font-weight: bold;
+    }
   }
 }
 
@@ -108,6 +112,12 @@
   }
 }
 
+.projects-table.project-view {
+  th {
+    width: 50%;
+  }
+}
+
 .entity-strategies-table {
   .reactable-th-strategy {
     min-width: 300px;
@@ -158,4 +168,3 @@
     opacity: 0.5;
   }
 }
-

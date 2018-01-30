@@ -69,7 +69,7 @@ export default class ProjectTable extends React.PureComponent {
                 return (projectData.map((d) => {
                     return (<Tr key={d.WmsId}>
                         <Td column="Project" value={d.ProjectName}>
-                            <a className="pointerHover" onClick={d.linkRef}>{d.ProjectName}</a>
+                            <a className="pointerHover" onClick={() => {history.push({pathname: `/project/${d.WmsProjectId}`})}}>{d.ProjectName}</a>
                         </Td>
                         <Td column="Decade Online" value={d.OnlineDecade}>
                             {d.OnlineDecade}
@@ -86,7 +86,15 @@ export default class ProjectTable extends React.PureComponent {
                 return (projectData.map((d) => {
                     return (<Tr key={d.WmsId}>
                         <Td column="Strategy" value={d.WmsName}>
-                            <a className="pointerHover" onClick={() => {history.push({pathname: `/wms/${d.WmsId}`})}}>{d.WmsName}</a>
+                            {(() => {
+                                if (d.DisplayProjectInMap === 'N') {
+                                    return d.WmsName;
+                                } else {
+                                    return (
+                                        <a className="pointerHover" onClick={() => {history.push({pathname: `/wms/${d.WmsId}`})}}>{d.WmsName}</a>
+                                    )
+                                }
+                            })()}
                         </Td>
                         <Td column="WMS Sponsor Region" value={d.WmsProjectSponsorRegion}>
                             <a className="pointerHover" onClick={() => {history.push({pathname: `/region/${d.WmsSponsorRegion.trim()}`})}}>{d.WmsProjectSponsorRegion}</a>
@@ -97,7 +105,7 @@ export default class ProjectTable extends React.PureComponent {
                 return (projectData.map((d) => {
                     return (<Tr key={d.WmsProjectId}>
                         <Td column="Project" value={d.ProjectName}>
-                            <a className="pointerHover" onClick={d.linkRef}>{d.ProjectName}</a>
+                            <a className="pointerHover" onClick={() => {history.push({pathname: `/project/${d.WmsProjectId}`})}}>{d.ProjectName}</a>
                         </Td>
                         <Td column="Decade Online" value={d.OnlineDecade}>
                             {d.OnlineDecade}
@@ -124,7 +132,7 @@ export default class ProjectTable extends React.PureComponent {
                     <strong>${format()(totalCost)}</strong>.
                 </p>
                 <ToggleDisplay show={projectData.length > itemsPerPage}>
-                    <input type="text" placeholder="Type to filter table" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
+                    <input type="text" placeholder="Type to filter by project name" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
                 </ToggleDisplay>
                 <div className="table-container">
                     <Table className="table-condensed u-full-width projects-table" sortable={true} itemsPerPage={perPage} pageButtonLimit={5} filterable={['Project', 'Decade Online', 'Sponsor']} hideFilterInput="hideFilterInput" filterBy={this.state.filter} defaultSort={{
@@ -137,10 +145,10 @@ export default class ProjectTable extends React.PureComponent {
             </ToggleDisplay>
             <ToggleDisplay show={projectData.length > 0 && this.props.type === 'project'}>
                 <ToggleDisplay show={projectData.length > itemsPerPage}>
-                    <input type="text" placeholder="Type to filter table" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
+                    <input type="text" placeholder="Type to filter by project name" className="table-filter" value={this.state.filter} onChange={this.handleTableFilterChange}/>
                 </ToggleDisplay>
                 <div className="table-container">
-                    <Table className="table-condensed u-full-width projects-table" sortable={true} itemsPerPage={perPage} pageButtonLimit={5} filterable={['Strategy']} hideFilterInput="hideFilterInput" filterBy={this.state.filter} defaultSort={{
+                    <Table className="table-condensed u-full-width projects-table project-view" sortable={true} itemsPerPage={perPage} pageButtonLimit={5} filterable={['Strategy']} hideFilterInput="hideFilterInput" filterBy={this.state.filter} defaultSort={{
                             column: 'Strategy',
                             direction: 'asc'
                         }}>

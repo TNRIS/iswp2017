@@ -65,9 +65,8 @@ const ProjectData = PropTypes.arrayOf(PropTypes.shape({
   ProjectName: PropTypes.string.isRequired,
   ProjectSponsors: PropTypes.string.isRequired,
   WmsProjectId: PropTypes.number,
-  WmsProjectId: PropTypes.number,
   WmsProjectSponsorRegion: PropTypes.oneOf(constants.REGIONS),
-  WmsProjectSponsorRegion: PropTypes.oneOf(constants.REGIONS)
+  DisplayProjectInMap: PropTypes.string
 }));
 
 export default {

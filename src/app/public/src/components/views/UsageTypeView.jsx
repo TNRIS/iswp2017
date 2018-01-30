@@ -18,6 +18,8 @@ import ThemeMaps from '../maps/ThemeMaps';
 import UsageTypeSummary from '../UsageTypeSummary';
 import UsageTypeDataStore from '../../stores/UsageTypeDataStore';
 import ViewStateStore from '../../stores/ViewStateStore';
+import HeaderNav from '../HeaderNav';
+
 
 export default class UsageTypeView extends React.Component {
   constructor(props) {
@@ -86,6 +88,7 @@ export default class UsageTypeView extends React.Component {
 
     return (
       <div className="usage-type-view">
+        <HeaderNav view="usagetype" />
         <Helmet title={title} />
         <section>
           <div className="view-top usage-type-view-top">
@@ -113,7 +116,7 @@ export default class UsageTypeView extends React.Component {
                   <div className="container">
                     <div className="row panel-row">
                       <div className="twelve columns">
-                        <span className="view-name">{viewName}</span>
+                        <span className="view-name">USAGE TYPE - {viewName}</span>
                         <ThemeTotalsByDecadeChart viewData={viewData} />
                       </div>
                     </div>
@@ -126,7 +129,7 @@ export default class UsageTypeView extends React.Component {
                     <div className="container">
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <span className="view-name">{viewName}</span>
+                          <span className="view-name">USAGE TYPE - {viewName}</span>
                           <ThemeMaps placeData={{data: viewData}}
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
@@ -137,7 +140,7 @@ export default class UsageTypeView extends React.Component {
                         (
                           <div className="row panel-row">
                             <div className="twelve columns">
-                              <span className="view-name">{viewName}</span>
+                              <span className="view-name">USAGE TYPE - {viewName}</span>
                               <StrategiesBreakdown viewData={viewData}
                                 decade={this.state.viewChoice.selectedDecade} />
                             </div>
@@ -147,8 +150,9 @@ export default class UsageTypeView extends React.Component {
 
                       <div className="row panel-row">
                         <div className="twelve columns">
-                          <span className="view-name">{viewName}</span>
-                          <PlacePivotTable viewData={viewData}
+                          <span className="view-name">USAGE TYPE - {viewName}</span>
+                          <PlacePivotTable viewData={viewData} 
+                            view='usagetype'
                             decade={this.state.viewChoice.selectedDecade}
                             theme={this.state.viewChoice.selectedTheme} />
                           <h5>Download Data</h5>
@@ -168,7 +172,7 @@ export default class UsageTypeView extends React.Component {
                                       type="usagetype"
                                       typeId={usageType}
                                       theme={theme}
-                                      viewName={viewName} />
+                                      viewName={viewName + ' Usage Type'} />
                                   </li>
                                 );
                               })

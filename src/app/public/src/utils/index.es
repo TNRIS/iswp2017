@@ -38,7 +38,7 @@ export function getChartLeftPadding(chartData) {
 export function getViewName(type, typeId) {
   switch (type.toLowerCase()) {
   case 'region':
-    return `Region ${typeId.toUpperCase()}`;
+    return `Planning Region ${typeId.toUpperCase()}`;
   case 'county':
     return `${formatCountyName(typeId)} County`;
   default:

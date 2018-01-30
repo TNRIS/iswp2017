@@ -12,10 +12,11 @@ import CustomPropTypes from '../utils/CustomPropTypes';
 import Units from './Units';
 import ViewStateStore from '../stores/ViewStateStore';
 
+
 const themesAndPopulation = R.append('population', constants.THEMES);
 
 function toAnchor(href, text) {
-    return `<a href="${href}">${text}</a>`;
+    return '<a href="' + href + '" onclick=this.context.router.history.push(' + href + ')>' + text + '</a>';
 }
 
 /**
@@ -25,7 +26,7 @@ function toAnchor(href, text) {
  * @return {func | string}                returns the anchor function or name of source
  */
 function mapSourceAnchor(MapSourceId, MapSourceName) {
-    if (MapSourceId && MapSourceName !== 'DIRECT REUSE') {
+    if (MapSourceId) {
         return toAnchor(`/source/${MapSourceId}`, MapSourceName)
     }
     return (MapSourceName)
@@ -61,7 +62,6 @@ const commonDimensions = [
 ];
 
 export default class PlacePivotTable extends React.PureComponent {
-
     constructor(props) {
         super(props);
         const viewState = ViewStateStore.getState().viewState;
@@ -132,12 +132,16 @@ export default class PlacePivotTable extends React.PureComponent {
         ViewStateStore.unlisten(this.onViewStateChange);
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props !== nextProps || this.state !== nextState
+    }
+
     onViewStateChange = (storeState) => {
         this.setState({viewState: storeState.viewState});
     }
 
-    getViewDefaultActiveDimensions = (viewState) => {
-        const view = viewState.view;
+    getViewDefaultActiveDimensions = () => {
+        const view = this.props.view;
         let activeDimensions = [];
         switch (view) {
             case 'region':
@@ -145,9 +149,6 @@ export default class PlacePivotTable extends React.PureComponent {
                 break;
             case 'county':
                 activeDimensions = ['Region', 'Entity'];
-                break;
-            case 'usagetype':
-                activeDimensions = ['Entity'];
                 break;
             default:
                 activeDimensions = ['Region', 'County', 'Entity'];
@@ -266,18 +267,23 @@ export default class PlacePivotTable extends React.PureComponent {
 
         let table = null;
         if (R.isEmpty(tableData)) {
-            table = <p>
-                Sorry, there is no {themeTitle} data.
-            </p>;
+            table = <p>Sorry, there is no {themeTitle} data.</p>;
         } else {
             table = <div className="table-container">
                 <PivotTable
                     // assign a unique key to force rerender of table
-
                     // when decade or theme are changed
-
                     // otherwise it will not react to prop changes
-                    key={hat()} eventBus={this.eventBus} rows={tableData} dimensions={availableDimensions} activeDimensions={activeDimensions} reduce={reduce} calculations={calculations} sortBy={sortBy} sortDir={sortDir} nPaginateRows={50}/>
+                    key={hat()} 
+                    eventBus={this.eventBus} 
+                    rows={tableData} 
+                    dimensions={availableDimensions} 
+                    activeDimensions={activeDimensions}
+                    reduce={reduce}
+                    calculations={calculations}
+                    sortBy={sortBy}
+                    sortDir={sortDir}
+                    nPaginateRows={50}/>
             </div>;
         }
 
