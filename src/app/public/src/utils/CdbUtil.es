@@ -192,7 +192,7 @@ const tolerance = 0.001;
 function getCounty(name) {
   const query = `SELECT name, ST_SimplifyPreserveTopology(the_geom, ${tolerance}) as the_geom
     FROM ${countyTable} WHERE LOWER(name) = LOWER('${name}') LIMIT 1`;
-  return axios.get(`https://tnris.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
+  return axios.get(`https://tnris-flood.cartodb.com/api/v2/sql?format=GeoJSON&q=${query}`)
     .then(({data}) => data);
 }
 
