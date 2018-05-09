@@ -64,7 +64,7 @@
     "hapi-require-https": "^2.0.5",
     "hat": "0.0.3",
     "history": "4.7.2",
-    "hoek": "^5.0.0",
+    "hoek": "^5.0.3",
     "inert": "^4.2.1",
     "intersperse": "^1.0.0",
     "is-firefox": "^1.0.3",
