@@ -1,5 +1,3 @@
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/TNRIS/iswp2017.svg?columns=all)](https://waffle.io/TNRIS/iswp2017)
-
 # Interactive State Water Plan (ISWP) 2017
 
 Web application for the 2017 Texas State Water Plan.
