@@ -70,7 +70,7 @@
     "intersperse": "^1.0.0",
     "is-firefox": "^1.0.3",
     "joi": "^11.1.1",
-    "knex": "^0.13.0",
+    "knex": "^0.19.5",
     "merge": "^1.2.0",
     "node-sass": "^4.5.3",
     "papaparse": "^4.1.2",
