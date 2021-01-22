@@ -27,20 +27,28 @@ export default class ProjectViewMap extends React.PureComponent {
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
       constants.BASE_MAP_LAYER.options
     );
-
     this.map.addLayer(baseLayer);
     
+    const countiesUrl = CdbUtil.createCountiesLayer();
+    const countiesLayer = this.countiesLayer = L.tileLayer(countiesUrl.tilesUrl);
+    const countiesLabelsUrl = CdbUtil.createCountiesLabelsLayer();
+    const countiesLabelsLayer = this.countiesLabelsLayer = L.tileLayer(countiesLabelsUrl.tilesUrl);
 
-    CdbUtil.createCountiesLayer()
-    .then((result) => {
-      this.map.addLayer(L.tileLayer(result.tilesUrl));
-      this.utfGrid = L.utfGrid(result.gridUrl, {
-        useJsonP: false
-      });
-      this.map.addLayer(this.utfGrid);
-      this.utfGrid.on('click', this.navigateToCounty);
-      this.utfGrid.on('mousemove', this.showCountyLabel);
-      this.utfGrid.on('mouseout', this.hideCountyLabel);
+    this.map.addLayer(countiesLayer);
+    this.utfGrid = L.utfGrid(countiesUrl.gridUrl, {
+      useJsonP: false
+    });
+    this.map.addLayer(this.utfGrid);
+    this.utfGrid.on('click', this.navigateToCounty);
+    this.utfGrid.on('mousemove', this.showCountyLabel);
+    this.utfGrid.on('mouseout', this.hideCountyLabel);
+    this.map.on('zoomend', () => {
+        if (this.map.getZoom() < 7) {
+            this.map.removeLayer(countiesLabelsLayer);
+        }
+        else {
+            this.map.addLayer(countiesLabelsLayer);
+        }
     });
   }
 
