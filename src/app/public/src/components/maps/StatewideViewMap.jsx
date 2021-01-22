@@ -29,15 +29,17 @@ export default class StatewideViewMap extends React.PureComponent {
 
     this.map.addLayer(baseLayer);
 
-    CdbUtil.createRegionsLayer()
-      .then((result) => {
-        this.map.addLayer(L.tileLayer(result.tilesUrl));
-        this.utfGrid = L.utfGrid(result.gridUrl, {
-          useJsonP: false
-        });
-        this.map.addLayer(this.utfGrid);
-        this.utfGrid.on('click', this.navigateToRegion);
-      });
+    const regionsUrl = CdbUtil.createRegionsLayer();
+    this.map.addLayer(L.tileLayer(regionsUrl.tilesUrl));
+    this.utfGrid = L.utfGrid(regionsUrl.gridUrl, {
+      useJsonP: false
+    });
+    this.map.addLayer(this.utfGrid);
+    this.utfGrid.on('click', this.navigateToRegion);
+
+    const regionsLabelsUrl = CdbUtil.createRegionsLabelsLayer();
+    const regionsLabelsLayer = this.regionsLabelsLayer = L.tileLayer(regionsLabelsUrl.tilesUrl);
+    this.map.addLayer(regionsLabelsLayer);
   }
 
   componentWillUnmount = () => {
