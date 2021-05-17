@@ -71,7 +71,7 @@
     "is-firefox": "^1.0.3",
     "joi": "^11.1.1",
     "knex": "^0.13.0",
-    "merge": "^1.2.0",
+    "merge": "^2.1.1",
     "node-sass": "^4.5.3",
     "papaparse": "^4.1.2",
     "prop-types": "^15.6.0",
