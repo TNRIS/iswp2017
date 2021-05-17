@@ -95,7 +95,7 @@
     "svg-react-loader": "^0.4.5",
     "swig": "^1.4.2",
     "titleize": "^1.0.0",
-    "underscore": "^1.8.3",
+    "underscore": "^1.12.1",
     "vision": "^4.1.1",
     "webpack": "^3.6.0",
     "wildemitter": "^1.2.0"
