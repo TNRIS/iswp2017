@@ -100,12 +100,22 @@ export default class PrjThemeMap extends React.PureComponent {
     const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url,
       constants.BASE_MAP_LAYER.options
     );
-
     this.map.addLayer(baseLayer);
-    CdbUtil.createCountiesLayer()
-      .then((result) => {
-        this.map.addLayer(L.tileLayer(result.tilesUrl));
-      });
+    
+    const countiesUrl = CdbUtil.createCountiesLayer();
+    const countiesLayer = this.countiesLayer = L.tileLayer(countiesUrl.tilesUrl);
+    const countiesLabelsUrl = CdbUtil.createCountiesLabelsLayer();
+    const countiesLabelsLayer = this.countiesLabelsLayer = L.tileLayer(countiesLabelsUrl.tilesUrl);
+
+    this.map.addLayer(countiesLayer);
+    this.map.on('zoomend', () => {
+        if (this.map.getZoom() < 7) {
+            this.map.removeLayer(countiesLabelsLayer);
+        }
+        else {
+            this.map.addLayer(countiesLabelsLayer);
+        }
+    });
 
     this.updateMap(this.props);
 

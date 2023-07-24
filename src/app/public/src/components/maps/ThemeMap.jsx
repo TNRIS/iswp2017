@@ -102,10 +102,21 @@ export default class ThemeMap extends React.Component {
         toggleLockButton.addTo(this.map);
 
         const baseLayer = L.tileLayer(constants.BASE_MAP_LAYER.url, constants.BASE_MAP_LAYER.options);
-
         map.addLayer(baseLayer);
-        CdbUtil.createCountiesLayer().then((result) => {
-            this.map.addLayer(L.tileLayer(result.tilesUrl));
+
+        const countiesUrl = CdbUtil.createCountiesLayer();
+        const countiesLayer = this.countiesLayer = L.tileLayer(countiesUrl.tilesUrl);
+        const countiesLabelsUrl = CdbUtil.createCountiesLabelsLayer();
+        const countiesLabelsLayer = this.countiesLabelsLayer = L.tileLayer(countiesLabelsUrl.tilesUrl);
+
+        this.map.addLayer(countiesLayer);
+        map.on('zoomend', () => {
+            if (map.getZoom() < 7) {
+                this.map.removeLayer(countiesLabelsLayer);
+            }
+            else {
+                this.map.addLayer(countiesLabelsLayer);
+            }
         });
 
         this.updateMap(this.props);
@@ -321,7 +332,7 @@ export default class ThemeMap extends React.Component {
             const surfacewaterStyle = constants.SURFACEWATER_SOURCE;
             const isnewStyle = constants.ISNEW_SOURCE;
             const riverwaterStyle = constants.RIVERWATER_SOURCE;
-            //use the unique list of map source IDs to query the source dataset on Carto
+            //use the unique list of map source IDs to query the source dataset
             if (sources.length != 0) {
                 CdbUtil.getSource(sources).then((results) => {
                     //create layer from source dataset response and wire events
