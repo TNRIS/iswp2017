@@ -1,5 +1,10 @@
 FROM node:8
 
+#Debian repositories were moved.
+RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' \
+           -e 's|security.debian.org|archive.debian.org/|g' \
+           -e '/stretch-updates/d' /etc/apt/sources.list
+
 # update debian
 RUN apt-get update
 
