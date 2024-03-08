@@ -60,7 +60,7 @@
           <a href="mailto:InteractiveSWP@twdb.texas.gov" title="Contact Us">Contact Us</a>
         </p>
         <a href="http://tnris.org">
-          <img class="tnris-logo" src="/public/static/img/tnris_logo.svg" alt="TNRIS logo" />
+          <img class="tnris-logo" src="/public/static/img/txgio_logo.svg" alt="TNRIS logo" />
         </a>
       </footer>
     </div>
