@@ -59,7 +59,7 @@
           <a href="http://www2.tsl.state.tx.us/trail" title="TRAIL">TRAIL</a> |
           <a href="mailto:InteractiveSWP@twdb.texas.gov" title="Contact Us">Contact Us</a>
         </p>
-        <a href="http://geographic.texas.gov">
+        <a href="https://geographic.texas.gov">
           <img class="tnris-logo" src="/public/static/img/txgio_logo.svg" alt="TNRIS logo" />
         </a>
       </footer>
